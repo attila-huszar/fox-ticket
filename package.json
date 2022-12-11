@@ -25,5 +25,8 @@
     "@typescript-eslint/parser": "^5.0.0",
     "concurrently": "^7.6.0",
     "eslint": "^8.29.0"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
   }
 }
