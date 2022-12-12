@@ -1,13 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import status from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
-import { HelloWorldRequest } from '../interfaces/helloWorld';
+import {
+  HelloWorldRequest,
+  HelloWorldResponse,
+} from '../interfaces/helloWorld';
 import * as helloService from '../services/helloService';
 
 export async function getHelloWorld(
   req: Request<unknown, unknown, unknown, HelloWorldRequest>,
-  res: Response,
-  next: NextFunction
+  res: Response<HelloWorldResponse>,
+  next: NextFunction,
 ): Promise<void> {
   const personId = Number(req.query.personId);
 
