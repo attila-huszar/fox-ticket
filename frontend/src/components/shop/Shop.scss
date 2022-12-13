@@ -1,3 +1,109 @@
-#button{
+#btnShop {
+  display: flex;
+  color: orange;
+  height: 25px;
+  width: 100px;
+  justify-content: space-around;
+  align-items: center;
+}
+#imgShop {
+  height: 20px;
+}
+.headText {
+  grid-area: headText;
+  margin: 0;
+  padding-top: 5px;
+  font-weight: bold;
   color: orange;
 }
+.tickets {
+  grid-area: tickets;
+  color: darkgray;
+  text-align: center;
+}
+.tickets:hover {
+  color: gray;
+  text-decoration: underline red 2px;
+  font-weight: 500;
+}
+.passes {
+  grid-area: passes;
+  color: darkgray;
+  text-align: center;
+}
+.passes:hover {
+  color: gray;
+  text-decoration: underline red 2px;
+  font-weight: 500;
+}
+
+.header {
+  background-color: #ececec;
+  text-align: center;
+  border: solid lightgray;
+  width: 650px;
+  height: 75px;
+}
+.headerTicketPasses {
+  display: grid;
+  grid-template-columns: 15% 15% 70%;
+  padding-top: 25px;
+  grid-template-areas: 
+  "tickets passes .";
+}
+
+.ticketDescription{
+  grid-area: ticketDescription;
+  margin: 0;
+  font-weight: 700;
+}
+
+.ticketValidityTimeDescription{
+  grid-area: ticketValidityTimeDescription;
+  margin: 0;
+  color: gray;
+}
+
+.ticketPrice{
+  grid-area: ticketPrice;
+  margin: 0;
+  color: gray;
+}
+
+.ticketValidityTime{
+  grid-area: ticketValidityTime;
+  margin: 0;
+  color: gray;
+}
+
+.btnAddToCart{
+  grid-area: btnAddToCart;
+  margin: 0;
+  grid-column: 3;
+  grid-row: 1/3;
+  height: 30px;
+  border-radius: 5px;
+  background-color: orange;
+  border-color: orange;
+  color: white;
+  font-weight: 700;
+}
+
+.addToCartTicketField{
+  display: grid;
+  background-color: #ececec;
+  border: solid lightgray;
+  text-align: center;
+  align-content: center;
+  justify-content: space-around;  
+  width: 650px;
+  height: 60px;
+  align-items: center;
+  grid-template-columns: 40% 20% 25%;
+  grid-template-rows: 30% 30% ;
+  grid-template-areas: 
+  "ticketDescription ticketPrice "
+  "ticketValidityTimeDescription ticketValidityTime";
+  
+}
+

@@ -1,3 +1,90 @@
-#button{
-    color: orange;
+#btnCart{
+  display: flex;
+  color: orange;
+  height: 25px;
+  width: 100px;
+  justify-content: space-around;
+  align-items: center;
   }
+
+  #imgCart {
+  height: 20px;
+  }
+  
+  .cartField{
+    background-color: #ececec;
+    border: solid lightgray;
+    width: 500px;
+    height: 140px;
+  }
+  .myCart{
+    color: orange;
+    font-weight: 700;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 25px;
+  }
+.ticketOrPassName{
+  grid-area: ticketOrPassName;
+  margin: 0;
+}
+.quantity{
+  grid-area: quantity;
+  margin: 0;
+}
+.btnRemoveTicketPass{
+  grid-area: btnRemoveTicketPass;
+  margin: 0;
+  border-radius: 5px;
+  background-color: orangered;
+  border-color: orangered;
+  color: white;
+  font-weight: 600;
+}
+
+.listOfTicketAndPass{
+  display: grid;
+  grid-template-columns: 50% 10% 25%;
+  grid-template-areas: 
+  "ticketOrPassName quantity btnRemoveTicketPass";
+  text-align: center;
+  align-content: center;
+  justify-content: space-around;  
+}
+
+.btnBuy{
+  grid-area: btnBuy;
+  height: 40px;
+  width: 90px;
+  border-radius: 5px;
+  background-color: orange;
+  border-color: orange;
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.btnReset{
+  grid-area: btnReset;
+  height: 40px;
+  width: 90px;
+  border-radius: 5px;
+  background-color: orangered;
+  border-color: orangered;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.fieldBuyAndReset{
+  height: 50px;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-areas: 
+  ". btnBuy btnReset .";
+}
