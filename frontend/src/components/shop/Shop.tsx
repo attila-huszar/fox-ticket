@@ -8,6 +8,7 @@ export default function Shop() {
   const handleClick = (e: any) => {
     e.preventDefault();
     setIsShown(!isShown);
+    
   };
 
   return (
@@ -19,22 +20,24 @@ export default function Shop() {
 
       {isShown && (
         <>
-        <div className="header">
-          <p className="headText">Tickets & passes</p>
-          <div className="headerTicketPasses">
-            {/* TICKET and PASSES - will switch accordingy */}
-            <a className="tickets">TICKETS</a>
-            <a className="passes">PASSES</a>
+          <div className="header">
+            <p className="headText">Tickets & passes</p>
+            <div className="headerTicketPasses">
+              {/* TICKET and PASSES - will switch accordingy */}
+              <a className="tickets">TICKETS</a>
+              <a className="passes">PASSES</a>
+            </div>
           </div>
-        </div >
-        {/* addToCartTicketField - data is a hardCoded field at this stage */}
-        <div className="addToCartTicketField" >
-        <p className="ticketDescription">One day ticket</p>
-        <p className="ticketValidityTimeDescription">You can use this ticket for 24 hours</p>
-        <p className="ticketPrice">900 Ft</p>
-        <p className="ticketValidityTime">24 h</p>
-        <button className="btnAddToCart">Add to cart</button>
-        </div>
+          {/* addToCartTicketField - data is a hardCoded field at this stage */}
+          <div className="addToCartTicketField">
+            <p className="ticketDescription">One day ticket</p>
+            <p className="ticketValidityTimeDescription">
+              You can use this ticket for 24 hours
+            </p>
+            <p className="ticketPrice">900 Ft</p>
+            <p className="ticketValidityTime">24 h</p>
+            <button className="btnAddToCart">Add to cart</button>
+          </div>
         </>
       )}
     </div>
