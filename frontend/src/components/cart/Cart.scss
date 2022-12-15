@@ -1,39 +1,43 @@
-#btnCart{
+#btnCart {
   display: flex;
   color: orange;
   height: 25px;
   width: 100px;
   justify-content: space-around;
   align-items: center;
-  }
+}
 
-  #imgCart {
+#imgCart {
   height: 20px;
-  }
-  
-  .cartField{
-    background-color: #ececec;
-    border: solid lightgray;
-    width: 500px;
-    height: 140px;
-  }
-  .myCart{
-    color: orange;
-    font-weight: 700;
-    margin: auto;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 25px;
-  }
-.ticketOrPassName{
+}
+
+.cartField {
+  background-color: #ececec;
+  border: solid lightgray;
+  width: 500px;
+  height: 140px;
+}
+
+.myCart {
+  color: orange;
+  font-weight: 700;
+  margin: auto;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 25px;
+}
+
+.ticketOrPassName {
   grid-area: ticketOrPassName;
   margin: 0;
 }
-.quantity{
+
+.quantity {
   grid-area: quantity;
   margin: 0;
 }
-.btnRemoveTicketPass{
+
+.btnRemoveTicketPass {
   grid-area: btnRemoveTicketPass;
   margin: 0;
   border-radius: 5px;
@@ -43,17 +47,16 @@
   font-weight: 600;
 }
 
-.listOfTicketAndPass{
+.listOfTicketAndPass {
   display: grid;
   grid-template-columns: 50% 10% 25%;
-  grid-template-areas: 
-  "ticketOrPassName quantity btnRemoveTicketPass";
+  grid-template-areas: "ticketOrPassName quantity btnRemoveTicketPass";
   text-align: center;
   align-content: center;
-  justify-content: space-around;  
+  justify-content: space-around;
 }
 
-.btnBuy{
+.btnBuy {
   grid-area: btnBuy;
   height: 40px;
   width: 90px;
@@ -61,13 +64,13 @@
   background-color: orange;
   border-color: orange;
   margin-top: 10px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   color: white;
   font-weight: 700;
   font-size: 15px;
 }
 
-.btnReset{
+.btnReset {
   grid-area: btnReset;
   height: 40px;
   width: 90px;
@@ -81,10 +84,9 @@
   font-size: 15px;
 }
 
-.fieldBuyAndReset{
+.fieldBuyAndReset {
   height: 50px;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-areas: 
-  ". btnBuy btnReset .";
+  grid-template-areas: ". btnBuy btnReset .";
 }

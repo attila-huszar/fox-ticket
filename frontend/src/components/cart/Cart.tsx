@@ -5,7 +5,7 @@ import shopIcon from "./shopicon.png";
 export default function Cart() {
   const [isShown, setIsShown] = useState(false);
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
     setIsShown(!isShown);
   };

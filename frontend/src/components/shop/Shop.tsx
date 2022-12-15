@@ -1,11 +1,11 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Shop.scss";
 import storeImg from "./store.png";
 
 export default function Shop() {
   const [isShown, setIsShown] = useState(false);
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault();
     setIsShown(!isShown);
     
