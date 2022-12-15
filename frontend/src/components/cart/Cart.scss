@@ -1,6 +1,8 @@
 #btnCart {
   display: flex;
-  color: orange;
+  color: white;
+  border-radius: 10px;
+  background-image: linear-gradient(to bottom right, black, gray);
   height: 25px;
   width: 100px;
   justify-content: space-around;
@@ -8,23 +10,26 @@
 }
 
 #imgCart {
-  height: 20px;
+  height: 17px;
 }
 
 .cartField {
-  background-color: #ececec;
-  border: solid lightgray;
+  background-color: white;
+  border-radius: 5px;
   width: 500px;
   height: 140px;
+  box-shadow: 0px 5px 10px 0px lightgray;
 }
 
 .myCart {
-  color: orange;
-  font-weight: 700;
+  color: black;
+  font-weight: 500;
   margin: auto;
+  border-radius: 5px;
   text-align: center;
   margin-bottom: 15px;
   font-size: 25px;
+  box-shadow: 0 1px 10px 0 lightgray;
 }
 
 .ticketOrPassName {
@@ -41,10 +46,12 @@
   grid-area: btnRemoveTicketPass;
   margin: 0;
   border-radius: 5px;
-  background-color: orangered;
-  border-color: orangered;
+  background-image: linear-gradient(to bottom right, black, gray);
+  border: none;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
+  border-radius: 10px;
+  letter-spacing: 0;
 }
 
 .listOfTicketAndPass {
@@ -61,13 +68,15 @@
   height: 40px;
   width: 90px;
   border-radius: 5px;
-  background-color: orange;
-  border-color: orange;
+  background-image: linear-gradient(to bottom right, black, gray);
+  border: none;
   margin-top: 10px;
   margin-bottom: 10px;
   color: white;
-  font-weight: 700;
+  font-weight: 200;
   font-size: 15px;
+  border-radius: 20px;
+  letter-spacing: 1px;
 }
 
 .btnReset {
@@ -75,13 +84,15 @@
   height: 40px;
   width: 90px;
   border-radius: 5px;
-  background-color: orangered;
-  border-color: orangered;
+  background-image: linear-gradient(to bottom right, black, gray);
+  border: none;
   margin-top: 10px;
   margin-bottom: 10px;
   color: white;
-  font-weight: 700;
+  font-weight: 200;
   font-size: 15px;
+  border-radius: 20px;
+  letter-spacing: 1px;
 }
 
 .fieldBuyAndReset {
