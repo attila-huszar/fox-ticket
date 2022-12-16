@@ -1,11 +1,11 @@
 # Packages
-[NextUI](https://nextui.org/docs/guide/getting-started)
-[React Query](https://react-query-v3.tanstack.com/overview)
-[React Icons](https://react-icons.github.io/react-icons)
-[Zod Validation](https://www.npmjs.com/package/zod)
-[Mirage JS Mock Data](https://www.npmjs.com/package/miragejs)
-[JSON Web Tokens](https://jwt.io/) Tba
-[QR Generator](https://www.npmjs.com/package/react-qr-code)
+[NextUI](https://nextui.org/docs/guide/getting-started)  
+[React Query](https://react-query-v3.tanstack.com/overview)  
+[React Icons](https://react-icons.github.io/react-icons)  
+[Zod Validation](https://www.npmjs.com/package/zod)  
+[Mirage JS Mock Data](https://www.npmjs.com/package/miragejs)  
+[JSON Web Tokens](https://jwt.io/) Tba  
+[QR Generator](https://www.npmjs.com/package/react-qr-code)  
 
 ## Available Scripts
 In the project directory, you can run:
