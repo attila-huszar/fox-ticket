@@ -1,0 +1,62 @@
+body{
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-color: white;
+  padding-top: 40px;
+}
+
+h2{
+  grid-column: 1/4;
+  grid-row: 1/2;
+  font-size: 25px;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+  color: rgb(50, 50, 50);
+  gap: 20px;
+}
+
+.articles-main{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 3fr 3fr;
+  row-gap: 10px;
+  column-gap: 10px;
+  // border: 2px solid black;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.article{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 95%;
+  width: 100%;
+  border-radius: 5px;
+}
+//     /* Add shadows to create the "card" effect */
+//   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+//   transition: 0.3s;
+//   padding: 2px 16px;
+// }
+
+// .article:hover {
+//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+// }
+
+
+#readButton{
+  margin: 20px 30px 0 0;
+}
+
+#littlePic{
+  margin-top: 10px;
+  overflow-y: visible;
+}
