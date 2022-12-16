@@ -7,36 +7,12 @@
   margin: 0;
   padding: 0;
 }
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
+
 input,
-button,
-textarea,
-select {
+button {
   font: inherit;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-}
-p {
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-#root,
-#__next {
-  isolation: isolate;
-}
+
 body {
   display: flex;
   flex-direction: column;
@@ -47,6 +23,7 @@ body {
   background-color: #ebebeb;
   padding-top: 40px;
 }
+
 h1 {
   display: flex;
   font-size: 30px;
@@ -58,11 +35,7 @@ h1 {
   color: rgb(50, 50, 50);
   gap: 20px;
 }
-#logo {
-  display: flex;
-  max-width: 80px;
-  max-height: auto;
-}
+
 .form {
   display: flex;
   color: #525252;
@@ -76,6 +49,12 @@ h1 {
 .settings {
   display: flex;
   flex-direction: column;
+}
+.error {
+  text-align: center;
+  color: red;
+  margin-top: 20px;
+  margin-bottom: -30px;
 }
 .input-container {
   position: relative;
@@ -130,8 +109,7 @@ h1 {
   justify-content: space-around;
   margin: 20px 0;
 }
-#submit-btn,
-#reg-submit-btn {
+#submit-btn {
   width: 125px;
   height: 50px;
   border-radius: 40px;
@@ -144,29 +122,12 @@ h1 {
   font-size: 18px;
   text-align: center;
 }
-#reg-btn,
-#back-btn {
-  width: 125px;
-  height: 50px;
-  border-radius: 40px;
-  background-color: lightgray;
-  box-shadow: 0 4px 15px 0 lightgray;
-  border: none;
-  color: rgb(50, 50, 50);
-  letter-spacing: 0.5px;
-  font-size: 18px;
-  text-align: center;
-}
-#submit-btn:hover,
-#reg-submit-btn:hover {
+
+#submit-btn:hover {
   background-position: 100% 0;
   transition: all 0.4s ease-in-out;
 }
-#reg-btn:hover,
-#back-btn:hover {
-  border: 2px dashed;
-  transition: all 0.08s ease-out;
-}
+
 #forgot-pass {
   float: right;
   top: 5px;
