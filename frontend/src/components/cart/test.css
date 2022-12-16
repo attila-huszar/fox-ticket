@@ -1,0 +1,266 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+p {
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-color: #ebebeb;
+  padding-top: 40px;
+}
+h1 {
+  display: flex;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+  color: rgb(50, 50, 50);
+  gap: 20px;
+}
+#logo {
+  display: flex;
+  max-width: 80px;
+  max-height: auto;
+}
+.form {
+  display: flex;
+  color: #525252;
+  padding: 40px clamp(40px, 10vw, 75px);
+  background-color: white;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 50px 5px #c0c0c0;
+}
+.Login {
+  display: flex;
+  flex-direction: column;
+}
+.input-container {
+  position: relative;
+  min-width: 150px;
+}
+.input-container .eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  translate: 0 -50%;
+  cursor: pointer;
+}
+.input-field {
+  font-size: 18px;
+  width: 100%;
+  height: 55px;
+  border-radius: 5px;
+  outline: none;
+  padding: 15px 10px 0 10px;
+}
+.input-field:valid {
+  border-color: #77a16f !important;
+}
+#id_password {
+  padding-right: 32px;
+}
+.input-field:focus ~ .floating-label,
+.input-field:not(:placeholder-shown) ~ .floating-label {
+  top: 25%;
+  font-size: 12px;
+  opacity: 0.75;
+}
+.floating-label {
+  font-size: 18px;
+  color: rgb(50, 50, 50);
+  position: absolute;
+  pointer-events: none;
+  left: 10px;
+  top: 50%;
+  translate: 0 -50%;
+  transition: 0.2s ease all;
+}
+.sep {
+  height: 30px;
+}
+#btnCart {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  position: relative;
+  top: 25px;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+#submit-btn,
+#reg-submit-btn {
+  width: 125px;
+  height: 50px;
+  border-radius: 40px;
+  background-size: 300% 100%;
+  background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+  box-shadow: 0 4px 15px 0 lightgray;
+  border: none;
+  color: white;
+  letter-spacing: 0.5px;
+  font-size: 18px;
+  text-align: center;
+}
+#reg-btn,
+#back-btn {
+  width: 125px;
+  height: 50px;
+  border-radius: 40px;
+  background-color: lightgray;
+  box-shadow: 0 4px 15px 0 lightgray;
+  border: none;
+  color: rgb(50, 50, 50);
+  letter-spacing: 0.5px;
+  font-size: 18px;
+  text-align: center;
+}
+#login-btn:hover,
+#reg-submit-btn:hover {
+  background-position: 100% 0;
+  transition: all 0.4s ease-in-out;
+}
+#reg-btn:hover,
+#back-btn:hover {
+  border: 2px dashed;
+  transition: all 0.08s ease-out;
+}
+#forgot-pass {
+  float: right;
+  top: 5px;
+  font-size: 12px;
+  color: #525252;
+  font-style: italic;
+  text-decoration: none;
+}
+
+[data-tooltip] {
+  --arrow-size: 5px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Positioning and visibility settings of the tooltip */
+[data-tooltip]:before,
+[data-tooltip]:after {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  left: 50%;
+  bottom: calc(100% + var(--arrow-size));
+  pointer-events: none;
+  transition: 0.2s;
+  will-change: transform;
+}
+
+/* The actual tooltip with a dynamic width */
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  padding: 10px 18px;
+  min-width: 50px;
+  max-width: 300px;
+  width: max-content;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: rgba(59, 72, 80, 0.9);
+  background-image: linear-gradient(30deg, rgba(59, 72, 80, 0.44), rgba(59, 68, 75, 0.44), rgba(60, 82, 88, 0.44));
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2);
+  color: white;
+  text-align: center;
+  white-space: pre-wrap;
+  transform: translate(-50%, calc(0px - var(--arrow-size))) scale(0.5);
+}
+
+/* Tooltip arrow */
+[data-tooltip]:after {
+  content: "";
+  border-style: solid;
+  border-width: var(--arrow-size) var(--arrow-size) 0px var(--arrow-size); /* CSS triangle */
+  border-color: rgba(55, 64, 70, 0.9) transparent transparent transparent;
+  transition-duration: 0s; /* If the mouse leaves the element, 
+                                  the transition effects for the 
+                                  tooltip arrow are "turned off" */
+  transform-origin: top; /* Orientation setting for the
+                                  slide-down effect */
+  transform: translateX(-50%) scaleY(0);
+}
+
+/* Tooltip becomes visible at hover */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  opacity: 1;
+}
+/* Scales from 0.5 to 1 -> grow effect */
+[data-tooltip]:hover:before {
+  transition-delay: 0.3s;
+  transform: translate(-50%, calc(0px - var(--arrow-size))) scale(1);
+}
+/* Arrow slide down effect only on mouseenter (NOT on mouseleave) */
+[data-tooltip]:hover:after {
+  transition-delay: 0.5s; /* Starting after the grow effect */
+  transition-duration: 0.2s;
+  transform: translateX(-50%) scaleY(1);
+}
+
+/* BOTTOM */
+[data-tooltip-location="bottom"]:before,
+[data-tooltip-location="bottom"]:after {
+  top: calc(100% + var(--arrow-size));
+  bottom: auto;
+}
+
+[data-tooltip-location="bottom"]:before {
+  transform: translate(-50%, var(--arrow-size)) scale(0.5);
+}
+[data-tooltip-location="bottom"]:hover:before {
+  transform: translate(-50%, var(--arrow-size)) scale(1);
+}
+
+[data-tooltip-location="bottom"]:after {
+  border-width: 0px var(--arrow-size) var(--arrow-size) var(--arrow-size);
+  border-color: transparent transparent rgba(55, 64, 70, 0.9) transparent;
+  transform-origin: bottom;
+}

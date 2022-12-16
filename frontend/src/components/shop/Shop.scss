@@ -1,0 +1,122 @@
+#btnShop {
+  display: flex;
+  border-radius: 10px;
+  background-image: linear-gradient(to bottom right, black, gray);
+  color: white;
+  height: 25px;
+  width: 100px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#imgShop {
+  height: 17px;
+  filter: grayscale(100%);
+}
+
+.header {
+  background-color: #ececec;
+  background-color: white;
+  box-shadow: 0px 10px 10px 0px lightgray;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  width: 650px;
+  height: 82px;
+}
+
+.headText {
+  grid-area: headText;
+  margin: 0;
+  padding-top: 5px;
+  font-weight: 400px;
+  font-size: 20px;
+  color: black;
+}
+
+.tickets {
+  grid-area: tickets;
+  color: darkgray;
+  text-align: center;
+}
+
+.tickets:hover {
+  color: gray;
+  text-decoration: underline black 2px;
+  font-weight: 500;
+}
+
+.passes {
+  grid-area: passes;
+  color: darkgray;
+  text-align: center;
+}
+
+.passes:hover {
+  color: gray;
+  text-decoration: underline black 2px;
+  font-weight: 500;
+}
+
+.headerTicketPasses {
+  display: grid;
+  grid-template-columns: 15% 15% 70%;
+  padding-top: 25px;
+  grid-template-areas: "tickets passes .";
+}
+
+.ticketDescription {
+  grid-area: ticketDescription;
+  margin: 0;
+  font-weight: 700;
+}
+
+.ticketValidityTimeDescription {
+  grid-area: ticketValidityTimeDescription;
+  margin: 0;
+  color: gray;
+}
+
+.ticketPrice {
+  grid-area: ticketPrice;
+  margin: 0;
+  color: gray;
+}
+
+.ticketValidityTime {
+  grid-area: ticketValidityTime;
+  margin: 0;
+  color: gray;
+}
+
+.btnAddToCart {
+  grid-area: btnAddToCart;
+  margin: 0;
+  grid-column: 3;
+  grid-row: 1/3;
+  height: 30px;
+  border-radius: 10px;
+  background-image: linear-gradient(to bottom right, black, gray);
+  color: white;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.addToCartTicketField {
+  display: grid;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 3px 5px 10px 3px lightgray;
+  text-align: center;
+  align-content: center;
+  justify-content: space-around;
+  width: 650px;
+  height: 60px;
+  align-items: center;
+  grid-template-columns: 40% 20% 25%;
+  grid-template-rows: 30% 30%;
+  grid-template-areas:
+    "ticketDescription ticketPrice "
+    "ticketValidityTimeDescription ticketValidityTime";
+}

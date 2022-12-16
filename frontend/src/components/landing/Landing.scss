@@ -1,17 +1,8 @@
-.Landing {
-  text-align: center;
+.menu{
+  display: flex;
 }
 
-.Landing-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .Landing-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .Landing-header {
   background-color: #282c34;
@@ -24,15 +15,3 @@
   color: white;
 }
 
-.Landing-link {
-  color: #61dafb;
-}
-
-@keyframes Landing-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
