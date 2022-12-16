@@ -1,0 +1,91 @@
+body {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-color: #ebebeb;
+}
+
+.Landing-logo {
+  height: 3cm;
+  display: flex;
+  width: auto;
+  margin-top: -19%;
+
+}
+
+.logout-logo {
+  height: 0.66cm;
+  filter: grayscale(100%);
+}
+
+.userProfile-logo {
+  height: 0.66cm;
+  filter: grayscale(100%);
+}
+
+.purchase-logo {
+  height: 0.66cm;
+  filter: grayscale(100%);
+}
+
+.button {
+  // height: 1.1cm;
+  // width: 4cm;
+  font: inherit;
+  // text-transform: uppercase;
+  // letter-spacing: 1px;
+  // gap: 20px;
+  // align-items: center;
+  // background-color: #ebebeb;
+  // border: 1px solid rgba(0, 0, 0, 0.1);
+  // border-radius: 0.25rem;
+  // box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  // display: inline-flex;
+  font-weight: 600;
+  // justify-content: center;
+  width: 140px;
+  height: 50px;
+  border-radius: 40px;
+  background-color: lightgray;
+  box-shadow: 0 4px 15px 0 lightgray;
+  border: none;
+  color: rgb(50, 50, 50);
+  letter-spacing: 0.5px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.button:hover,
+.button:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button:active {
+  background-color: #f0f0f1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+
+.Header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 1px;
+  gap: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 50px 20px #c0c0c0;
+  height: 4.5cm;
+  background-color: #f5f5f5;
+}

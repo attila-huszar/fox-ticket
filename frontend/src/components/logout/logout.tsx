@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../header/header";
 
-export default function Landing(): any {
+export default function Logout(): any {
   return (
     <div className="Landing">
       <body>
