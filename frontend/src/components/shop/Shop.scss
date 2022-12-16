@@ -11,6 +11,7 @@
 
 #imgShop {
   height: 17px;
+  filter: grayscale(100%);
 }
 
 .header {
@@ -62,7 +63,6 @@
   grid-template-columns: 15% 15% 70%;
   padding-top: 25px;
   grid-template-areas: "tickets passes .";
-
 }
 
 .ticketDescription {
