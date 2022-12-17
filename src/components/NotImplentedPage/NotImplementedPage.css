@@ -1,41 +1,15 @@
 h1 {
-  display: flex;
-  font-size: 30px;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 40px;
-  color: rgb(50, 50, 50);
-  gap: 20px;
-}
-
-#goHomeButton {
-  position: absolute;
-  left: 45%;
-  top: 300px;
-  width: 125px;
-  height: 50px;
-  border-radius: 40px;
-  background-size: 300% 100%;
-  background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
-  box-shadow: 0 4px 15px 0 lightgray;
-  border: none;
-  color: white;
-  letter-spacing: 0.5px;
-  font-size: 18px;
+  padding: 50px;
+  font-size: 2rem;
   text-align: center;
 }
 
-#goHomeButton:hover {
-  background-position: 100% 0;
-  transition: all 0.4s ease-in-out;
+#goHomeButton {
+  margin: auto;
 }
 
 #logo {
-  position: absolute;
-  left: 44%;
-  display: flex;
+  margin: 0 auto 50px;
   max-width: 150px;
   max-height: auto;
 }
