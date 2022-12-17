@@ -1,12 +1,11 @@
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "./fox.png";
+import { Button } from "@nextui-org/react";
+import { TbSmartHome } from "react-icons/tb";
+import logo from "../../assets/fox.png";
 import "./NotImplementedPage.css";
 
 export default function NotImplementedPage() {
-  const refLogo = useRef<HTMLImageElement>(null);
   const navigate = useNavigate();
-
   const routeChange = () => {
     const path = "/";
     navigate(path);
@@ -14,13 +13,11 @@ export default function NotImplementedPage() {
 
   return (
     <div className="NotImplementedPage">
-      <div className="notImplemented-body">
-        <h1>This page is not implemented yet!</h1>
-        <img src={logo} ref={refLogo} id="logo" alt="logo" />
-        <button type="submit" onClick={routeChange} id="goHomeButton" className="button">
-          Go Home
-        </button>
-      </div>
+      <h1>This page is not implemented yet</h1>
+      <img src={logo} id="logo" alt="logo" />
+      <Button shadow size="lg" icon={<TbSmartHome />} auto color="gradient" rounded ghost onPress={routeChange} id="goHomeButton">
+        Home
+      </Button>
     </div>
   );
 }
