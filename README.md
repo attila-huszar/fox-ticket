@@ -5,7 +5,10 @@
 [usehooks-ts React hooks library](https://usehooks-ts.com/)  
 [Zod Validation](https://www.npmjs.com/package/zod)  
 [Mirage JS Mock Data](https://www.npmjs.com/package/miragejs)  
-[JSON Web Tokens](https://jwt.io/) Tba  
+[JSON Web Tokens](https://www.npmjs.com/package/jsonwebtoken) ([TS types](https://www.npmjs.com/package/@types/jsonwebtoken))  
+[bcrypt Password hash](https://www.npmjs.com/package/bcrypt) ([TS types](https://www.npmjs.com/package/@types/bcrypt))  
+[cookie-parser](https://www.npmjs.com/package/cookie-parser) ([TS types](https://www.npmjs.com/package/@types/cookie-parser))  
+[dotenv](https://www.npmjs.com/package/dotenv)  
 [QR Generator](https://www.npmjs.com/package/react-qr-code)  
 
 ## Available Scripts

@@ -8,8 +8,9 @@ export default function App() {
   return (
     <Navbar
       disableScrollHandler={true}
-      variant="sticky"
+      variant="floating"
       css={{
+        background: "none",
         "@xsMax": {
           w: "100%",
           jc: "space-between",
