@@ -1,7 +1,6 @@
 import { createTheme, NextUIProvider, Switch } from "@nextui-org/react";
 import { useDarkMode } from "usehooks-ts";
 import { TbSun, TbMoon } from "react-icons/tb";
-import "./DarkMode.css";
 
 const lightTheme = createTheme({
   type: "light",
@@ -10,7 +9,7 @@ const darkTheme = createTheme({
   type: "dark",
 });
 
-export default function DarkMode() {
+export default function Theme() {
   const { isDarkMode, toggle } = useDarkMode();
 
   return (
