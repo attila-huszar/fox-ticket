@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-// import Landing from "./Landing/..."
-// import Login from "./Login/..."
-// import Register from "./Register/..."
-import NotImplementedPage from "./NotImplentedPage/NotImplementedPage";
-import DarkMode from "./DarkMode";
+import Landing from "./Landing";
+import Navbar from "./Navbar";
+import NotImplementedPage from "./NotImplementedPage";
 
 export default function App() {
   useEffect(() => {
@@ -20,11 +18,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <DarkMode />
+      <Navbar />
       <Routes>
-        {/* <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} /> */}
+        <Route path="/" element={<Landing />} />
         <Route path="/*" element={<NotImplementedPage />} />
       </Routes>
     </BrowserRouter>
