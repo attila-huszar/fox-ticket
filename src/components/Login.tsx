@@ -4,12 +4,21 @@ import { Mail } from "./Mail";
 import { Password } from "./Password";
 
 export default function Login() {
+  const [token, setToken] = React.useState(null);
   const [visible, setVisible] = React.useState(false);
+
   const handler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
     console.log("closed");
   };
+
+  const handleLogin = async () => {
+    setVisible(false);
+    //const token = await fakeAuth();
+    //setToken(token);
+  };
+  
   return (
     <div>
       <Button auto color="warning" shadow onClick={handler}>
@@ -42,7 +51,7 @@ export default function Login() {
           <Button auto flat color="error" onClick={closeHandler}>
             Close
           </Button>
-          <Button auto onClick={closeHandler} color="secondary">
+          <Button auto onClick={handleLogin} color="secondary">
             Sign in
           </Button>
         </Modal.Footer>

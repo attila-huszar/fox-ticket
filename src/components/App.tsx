@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Landing from "./Landing";
+import Home from "./Home";
 import Navbar from "./Navbar";
 import NotImplementedPage from "./NotImplementedPage";
 
@@ -20,8 +20,8 @@ export default function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/*" element={<NotImplementedPage />} />
+        <Route index element={<Home />} />
+        <Route path="*" element={<NotImplementedPage />} />
       </Routes>
     </BrowserRouter>
   );
