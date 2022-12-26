@@ -4,17 +4,25 @@ import { Card, Col, Row, Button, Text } from "@nextui-org/react";
 import logo from "./logo.jpg";
 import foxlogo from "./fox.png";
 
-export default function ShowArticles(){
-  return(
-      <div className="articles-main">
+export default function ShowArticles() {
+  return (
+    <div className="articles-main">
       <h2 id="articles-header">Latest News</h2>
       {data.articles.map((article) => (
         <div className="articles">
           <div className="article" key={article.title}>
-            <Card css={{ w: "100%", h: "400px" }}>
-              <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+            <Card css={{ w: "100%", h: "300px" }} id="cardNews">
+              <Card.Header
+                css={{ position: "absolute", zIndex: 1, top: 5 }}
+                id="cardHeader"
+              >
                 <Col>
-                  <Text size={12} weight="bold" transform="uppercase" color="#9E9E9E">
+                  <Text
+                    size={12}
+                    weight="bold"
+                    transform="uppercase"
+                    color="#9E9E9E"
+                  >
                     {article.author}
                   </Text>
                   <Text h3 color="white">
@@ -22,7 +30,7 @@ export default function ShowArticles(){
                   </Text>
                 </Col>
               </Card.Header>
-              <Card.Body css={{ p: 0 }}>
+              <Card.Body css={{ p: 0 }} id="cardBody">
                 <Card.Image
                   src={logo}
                   objectFit="cover"
@@ -33,31 +41,40 @@ export default function ShowArticles(){
               </Card.Body>
               <Card.Footer
                 isBlurred
+                id="cardFooter"
                 css={{
                   position: "absolute",
                   bgBlur: "#0f111466",
                   borderTop: "$borderWeights$light solid $gray800",
-                  bottom: 0,
+                  bottom: -30,
                   zIndex: 1,
                 }}
               >
                 <Row>
                   <Col>
                     <Row>
-                      <Col span={3}>
-                        <Card.Image id="littlePic"
+                      <Col span={4}>
+                        <Card.Image
+                          id="littlePic"
                           src={foxlogo}
-                          css={{ bg: "black", br: "50%" }}
-                          height={80}
-                          width={70}
-                          alt="Breathing app icon"
+                          height={50}
+                          width={40}
+                          alt="News app icon"
                         />
                       </Col>
                       <Col>
-                        <Text color="#d1d1d1" size={12}>
+                        <Text
+                          color="#d1d1d1"
+                          size={12}
+                          id="appnameInCardFooter"
+                        >
                           Fox Ticket App
                         </Text>
-                        <Text color="#d1d1d1" size={11}>
+                        <Text
+                          color="#d1d1d1"
+                          size={11}
+                          id="fewWordsInCardFooter"
+                        >
                           Read an interesting story.
                         </Text>
                       </Col>
@@ -65,7 +82,8 @@ export default function ShowArticles(){
                   </Col>
                   <Col>
                     <Row justify="flex-end">
-                      <Button id="readButton"
+                      <Button
+                        id="readButton"
                         flat
                         auto
                         rounded
@@ -85,9 +103,9 @@ export default function ShowArticles(){
                 </Row>
               </Card.Footer>
             </Card>
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
     </div>
   );
 }
