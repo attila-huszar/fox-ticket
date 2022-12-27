@@ -22,9 +22,10 @@
 [HTTP Status codes](https://www.npmjs.com/package/http-status)  
 [MySQL 2](https://www.npmjs.com/package/mysql2)  
 [Sequelize](https://www.npmjs.com/package/sequelize)  
-[pino-http HTTP logger](https://www.npmjs.com/package/pino-http)  
-[pino-pretty Formatter](https://www.npmjs.com/package/pino-pretty)  
-  Run backend only with "npx nodemon server.ts | npx pino-pretty" (npx if devDep)
+[nodemon](https://www.npmjs.com/package/nodemon)  
+[pino HTTP logger](https://www.npmjs.com/package/pino-http)  
+[pino Formatter](https://www.npmjs.com/package/pino-pretty)  
+_Run backend only with "npx nodemon server.ts | npx pino-pretty" (npx if devDep)_
 
 ## Available Scripts
 
