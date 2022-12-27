@@ -2,85 +2,52 @@ import dotenv from "dotenv";
 import express from "express";
 import cookieparser from "cookie-parser";
 import jwt from "jsonwebtoken";
+import pino from "pino-http";
 // import bodyParser from "body-parser";
 
-dotenv.config({ path: "../.env.development.local" }); // configuring dotenv
+dotenv.config({ path: "../.env.development.local" });
 
 const app = express();
 
-// Setting up middlewares to parse request body and cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieparser());
+app.use(pino());
 
 const userCredentials = {
   username: "admin",
   password: "admin123",
-  email: "admin@gmail.com",
+  role: "admin",
 };
 
 app.post("/login", (req, res) => {
-  // Destructuring username & password from body
   const { username, password } = req.body;
-
   if (username === userCredentials.username && password === userCredentials.password) {
-    // Creating access token
-    const accessToken = jwt.sign(
-      {
-        username: userCredentials.username,
-        email: userCredentials.email,
-      },
-      process.env.ACCESS_TOKEN_SECRET as string,
-      {
-        expiresIn: "10m",
-      }
-    );
+    const accessToken = jwt.sign({ username: userCredentials.username }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "10m" });
 
-    // Creating refresh token not that expiry of refresh token is greater than the access token
-    const refreshToken = jwt.sign(
-      {
-        username: userCredentials.username,
-      },
-      process.env.REFRESH_TOKEN_SECRET as string,
-      { expiresIn: "1d" }
-    );
+    const refreshToken = jwt.sign({ username: userCredentials.username }, process.env.REFRESH_TOKEN_SECRET as string, { expiresIn: "30d" });
 
-    // Assigning refresh token in http-only cookie
-    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "none", secure: true, maxAge: 24 * 60 * 60 * 1000 });
+    res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: "none", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
     return res.json({ accessToken });
+
   } else {
-    // Return unauthorized error if credentials don't match
-    return res.status(406).json({
-      message: "Invalid credentials",
-    });
+    return res.status(406).json({ message: "Invalid credentials" });
   }
 });
 
 app.post("/refresh", (req, res) => {
-  if (req.headers.cookie) {
-    // Destructuring refreshToken from cookie
-    const refreshToken = req.headers.cookie;
+  if (req.cookies.jwt) {
+    const refreshToken = req.cookies.jwt;
 
-    // Verifying refresh token
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string, (err: any, decoded: any) => {
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string, (err: any, _decoded: any) => {
       if (err) {
-        // Wrong Refresh Token
-        return res.status(406).json({ message: "Wrong Refresh Token" });
+        return res.status(406).json({ message: "Unauthorized: Wrong Token" });
       } else {
-        // Correct token we send a new access token
-        const accessToken = jwt.sign(
-          {
-            username: userCredentials.username,
-            email: userCredentials.email,
-          },
-          process.env.ACCESS_TOKEN_SECRET as string,
-          {
-            expiresIn: "10m",
-          }
-        );
+        const accessToken = jwt.sign({ username: userCredentials.username }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "10m" });
         return res.json({ accessToken });
       }
     });
+    
   } else {
     return res.status(406).json({ message: "Unauthorized" });
   }
