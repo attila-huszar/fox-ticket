@@ -1,6 +1,4 @@
-# Packages
-
-## Frontend
+## Frontend Packages
 
 [NextUI](https://nextui.org/docs/guide/getting-started)  
 [React Query](https://react-query-v3.tanstack.com/overview)  
@@ -11,8 +9,10 @@
 [React Helmet](https://www.npmjs.com/package/react-helmet-async)  
 [QR Generator](https://www.npmjs.com/package/react-qr-code)
 
-## Backend
+## Backend Packages
 
+[Express](https://www.npmjs.com/package/express) ([TS types](https://www.npmjs.com/package/@types/express))  
+[Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)  
 [JSON Web Tokens](https://www.npmjs.com/package/jsonwebtoken) ([TS types](https://www.npmjs.com/package/@types/jsonwebtoken))  
 [bcrypt Password hash](https://www.npmjs.com/package/bcrypt) ([TS types](https://www.npmjs.com/package/@types/bcrypt))  
 [cookie-parser](https://www.npmjs.com/package/cookie-parser) ([TS types](https://www.npmjs.com/package/@types/cookie-parser))  
