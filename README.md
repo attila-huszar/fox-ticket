@@ -15,7 +15,6 @@
 [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)  
 [JSON Web Tokens](https://www.npmjs.com/package/jsonwebtoken) ([TS types](https://www.npmjs.com/package/@types/jsonwebtoken))  
 [bcrypt Password hash](https://www.npmjs.com/package/bcrypt) ([TS types](https://www.npmjs.com/package/@types/bcrypt))  
-[cookie-parser](https://www.npmjs.com/package/cookie-parser) ([TS types](https://www.npmjs.com/package/@types/cookie-parser))  
 [CORS](https://www.npmjs.com/package/cors) ([TS types](https://www.npmjs.com/package/@types/cors))  
 [Helmet](https://www.npmjs.com/package/helmet)  
 [dotenv](https://www.npmjs.com/package/dotenv)  
