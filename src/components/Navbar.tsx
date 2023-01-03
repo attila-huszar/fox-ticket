@@ -33,7 +33,7 @@ export default function Header() {
         },
       }}>
       <Navbar.Brand css={{ mr: "$4" }}>
-        <img src={logo} alt="Logo" id="logo_nav" />
+        <img src={logo} alt="Logo" style={{ width: "50px", height: "auto" }} />
         <Text b color="inherit" css={{ m: "$10" }} hideIn="sm">
           FOX TICKET
         </Text>
