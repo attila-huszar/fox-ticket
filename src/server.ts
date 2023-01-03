@@ -36,7 +36,7 @@ const users: User[] = [
 ];
 
 const generateAccessToken = (user: User) => {
-  return jwt.sign({ name: user.name, role: user.role }, process.env.ACCESS_TOKEN_SECRET as Secret, { expiresIn: "10s" });
+  return jwt.sign({ name: user.name, role: user.role }, process.env.ACCESS_TOKEN_SECRET as Secret, { expiresIn: "10m" });
 };
 
 const generateRefreshToken = (user: User) => {

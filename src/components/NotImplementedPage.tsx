@@ -5,8 +5,8 @@ import logo from "../assets/fox.png";
 import "./NotImplementedPage.css";
 
 export default function NotImplementedPage() {
-  let navigate = useNavigate();
-  const routeChange = () => {
+  const navigate = useNavigate();
+  const navigateRoot = () => {
     let path = "/";
     navigate(path);
   };
@@ -15,7 +15,7 @@ export default function NotImplementedPage() {
     <div className="NotImplementedPage">
       <h1>This page is not implemented yet</h1>
       <img src={logo} id="logo" alt="logo" />
-      <Button css={"margin: auto"} shadow size="lg" icon={<TbSmartHome />} auto color="gradient" rounded onPress={routeChange} id="homeBtn">
+      <Button css={{ margin: "auto" }} shadow size="lg" icon={<TbSmartHome />} auto color="gradient" rounded onPress={navigateRoot} id="homeBtn">
         Home
       </Button>
     </div>

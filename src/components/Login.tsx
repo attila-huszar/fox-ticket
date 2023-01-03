@@ -1,11 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
-import { Mail } from "./Mail";
-import { Password } from "./Password";
 
 export default function Login() {
-  //const [token, setToken] = React.useState(null);
-  const [visible, setVisible] = React.useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [visible, setVisible] = useState(false);
+
+  const validateEmail = (value: string) => {
+    return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+  };
+
+  const validatePass = (value: string) => {
+    return value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/);
+  };
+
+  interface help {
+    text: string;
+    color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
+  }
+
+  const helper: help = React.useMemo(() => {
+    if (!email)
+      return {
+        text: "",
+        color: "default",
+      };
+    const isValid = validateEmail(email);
+
+    return {
+      text: isValid ? "Valid email" : "Enter a valid email",
+      color: isValid ? "success" : "warning",
+    };
+  }, [email]);
+
+  const helperPass: help = React.useMemo(() => {
+    if (!password)
+      return {
+        text: "",
+        color: "default",
+      };
+    const isValidPass = validatePass(password);
+
+    return {
+      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      color: isValidPass ? "success" : "warning",
+    };
+  }, [password]);
 
   const handler = () => setVisible(true);
   const closeHandler = () => {
@@ -17,7 +57,7 @@ export default function Login() {
     setVisible(false);
     //setToken(token);
   };
-  
+
   return (
     <div>
       <Button auto color="warning" shadow onClick={handler}>
@@ -35,9 +75,31 @@ export default function Login() {
         </Modal.Header>
         <Modal.Body>
           <Spacer y={0.4} />
-          <Input clearable underlined fullWidth labelPlaceholder="Email" color="secondary" size="lg" contentLeft={<Mail fill="currentColor" size={undefined} height={undefined} width={undefined} />} />
-          <Spacer y={0.6} />
-          <Input clearable underlined fullWidth labelPlaceholder="Password" color="secondary" size="lg" contentLeft={<Password fill="currentColor" size={undefined} height={60} width={undefined} />} />
+          <Input
+            onChange={e => setEmail(e.target.value)}
+            required
+            bordered
+            status={helper.color}
+            color={helper.color}
+            helperColor={helper.color}
+            helperText={helper.text}
+            fullWidth
+            labelPlaceholder="Email"
+            size="lg"
+          />
+          <Spacer y={1.6} />
+          <Input.Password
+            onChange={e => setPassword(e.target.value)}
+            required
+            bordered
+            status={helperPass.color}
+            color={helperPass.color}
+            helperColor={helperPass.color}
+            helperText={helperPass.text}
+            type="password"
+            labelPlaceholder="Password"
+            size="lg"
+          />
           <Spacer y={0.2} />
           <Row justify="space-between">
             <Checkbox color="secondary">
