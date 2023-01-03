@@ -1,26 +1,36 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Landing from "./landing/Landing";
-import Login from "./login/login";
-import Logout from "./logout/logout";
-import Profile from "./profile/profile";
-import Purchases from "./purchases/purchases";
-import Register from "./register/register";
-
-export function handleClick(e: any) {
-  e.preventDefault();
-}
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import "./App.css";
+import Home from "./Home";
+import Navbar from "./Navbar";
+import NotImplementedPage from "./NotImplementedPage";
+import Landing from "./Landing";
+import Login from "./Login";
+import Logout from "./logout";
+import Profile from "./profile";
+import Purchases from "./purchases";
+// import Register from "./register/register";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/purchases" element={<Purchases />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </BrowserRouter>
+    <HelmetProvider>
+      <Helmet>
+        <title>Fox ticket</title>
+        <script src="./noflash.js" type="text/javascript" />
+      </Helmet>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/purchases" element={<Purchases />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="*" element={<NotImplementedPage />} />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }

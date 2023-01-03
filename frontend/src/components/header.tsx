@@ -1,11 +1,10 @@
 import React from "react";
 import foxticketLogo from "./foxticketLogo.png";
-import "./header.scss";
 import { Link } from "react-router-dom";
 import logout from "./logout.png";
 import userProfileLogo from "./userprofile.png";
 import purchaseLogo from "./store.png";
-import handleClick from "../App";
+import handleClick from "./App";
 
 export default function Header(): any {
   return (
