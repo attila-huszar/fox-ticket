@@ -17,7 +17,7 @@ export default function Header() {
     navigate(path);
   };
   const navigateDropdown = (key: React.Key) => {
-    let path: string = String(key);
+    let path = String(key);
     navigate(path);
   };
 
@@ -66,9 +66,7 @@ export default function Header() {
             },
           }}>
           <Input
-            clearable
-            contentLeft={<TbSearch />}
-            contentLeftStyling={false}
+            contentRight={<TbSearch style={{ color: "grey" }} />}
             css={{
               w: "100%",
               "@xsMax": {

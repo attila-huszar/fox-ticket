@@ -21,6 +21,7 @@
 [HTTP Status codes](https://www.npmjs.com/package/http-status)  
 [MySQL 2](https://www.npmjs.com/package/mysql2)  
 [Sequelize](https://www.npmjs.com/package/sequelize)  
+[Sequelize Typescript](https://www.npmjs.com/package/sequelize-typescript)  
 [nodemon](https://www.npmjs.com/package/nodemon)  
 [pino HTTP logger](https://www.npmjs.com/package/pino-http)  
 [pino Formatter](https://www.npmjs.com/package/pino-pretty)  
