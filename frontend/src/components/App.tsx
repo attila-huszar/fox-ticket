@@ -9,7 +9,7 @@ import Login from "./Login";
 import Logout from "./logout";
 import Profile from "./profile";
 import Purchases from "./purchases";
-// import Register from "./register/register";
+import Register from "./register";
 
 export default function App() {
   return (
@@ -27,7 +27,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotImplementedPage />} />
         </Routes>
       </BrowserRouter>

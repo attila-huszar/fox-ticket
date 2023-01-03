@@ -14,6 +14,7 @@ import Login from "./Login";
 import Profile from "./profile";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import Register from "./register";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ export default function Header() {
         <Navbar.Item hideIn="sm">
           <Button auto flat as={Link} onClick={navigateRegister}>
             Sign Up
+            <Register />
           </Button>
         </Navbar.Item>
         <Navbar.Item
