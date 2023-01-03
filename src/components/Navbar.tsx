@@ -1,10 +1,26 @@
+import { useNavigate } from "react-router-dom";
 import { Navbar, Text, Avatar, Dropdown, Input, Button, Link } from "@nextui-org/react";
 import logo from "../assets/fox.png";
 import { TbHelp, TbLogout, TbSearch, TbSettings } from "react-icons/tb";
 import Theme from "./Theme";
 import Login from "./Login";
+import React from "react";
 
-export default function App() {
+export default function Header() {
+  const navigate = useNavigate();
+  const navigateRoot = () => {
+    let path = "/";
+    navigate(path);
+  };
+  const navigateCart = () => {
+    let path = "/cart";
+    navigate(path);
+  };
+  const navigateDropdown = (key: React.Key) => {
+    let path: string = String(key);
+    navigate(path);
+  };
+
   return (
     <Navbar
       disableScrollHandler={true}
@@ -22,11 +38,11 @@ export default function App() {
           FOX TICKET
         </Text>
         <Navbar.Content hideIn="sm" variant="highlight">
-          <Navbar.Link isActive href="/">
-            Dashboard
+          <Navbar.Link isActive onPress={navigateRoot}>
+            News
           </Navbar.Link>
-          <Navbar.Link href="#">Team</Navbar.Link>
-          <Navbar.Link href="#">Settings</Navbar.Link>
+          <Navbar.Link onPress={navigateCart}>Tickets</Navbar.Link>
+          <Navbar.Link onPress={navigateCart}>Cart</Navbar.Link>
         </Navbar.Content>
       </Navbar.Brand>
 
@@ -73,8 +89,8 @@ export default function App() {
             <Dropdown.Trigger>
               <Avatar bordered as="button" color="secondary" size="md" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
             </Dropdown.Trigger>
-            <Dropdown.Menu aria-label="User menu actions" color="secondary" onAction={key => console.log(key)}>
-              <Dropdown.Item key="profile" css={{ height: "$18" }}>
+            <Dropdown.Menu aria-label="User menu actions" color="secondary" onAction={key => navigateDropdown(key)}>
+              <Dropdown.Item key="/profile" css={{ height: "$18" }}>
                 <Text b color="inherit" css={{ d: "flex" }}>
                   Signed in as
                 </Text>
@@ -82,13 +98,13 @@ export default function App() {
                   email@example.com
                 </Text>
               </Dropdown.Item>
-              <Dropdown.Item key="settings" icon={<TbSettings />} withDivider>
+              <Dropdown.Item key="/settings" icon={<TbSettings />} withDivider>
                 My Settings
               </Dropdown.Item>
-              <Dropdown.Item key="help_and_feedback" icon={<TbHelp />}>
+              <Dropdown.Item key="/help_and_feedback" icon={<TbHelp />}>
                 Help & Feedback
               </Dropdown.Item>
-              <Dropdown.Item key="logout" icon={<TbLogout />} withDivider color="error">
+              <Dropdown.Item key="/logout" icon={<TbLogout />} withDivider color="error">
                 Log Out
               </Dropdown.Item>
             </Dropdown.Menu>
