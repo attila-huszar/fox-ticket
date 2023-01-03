@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
-import express from "express";
-import jwt from "jsonwebtoken";
+import express, { Request, Response, NextFunction } from "express";
+import jwt, { Secret } from "jsonwebtoken";
 import { pinoHttp } from "pino-http";
-import { apiLimiter, regLimiter } from "./rate-limiter";
+import { apiLimiter, regLimiter } from "./middleware/rate-limiter";
 
 dotenv.config({ path: "../.env.development.local" });
 const app = express();
@@ -12,41 +12,98 @@ app.use(express.urlencoded({ extended: false }));
 app.use(pinoHttp());
 app.use("/api", apiLimiter);
 
-const userCredentials = {
-  user: "admin",
-  pass: "admin123",
-  role: "admin",
+type User = {
+  name: string;
+  pass: string;
+  role: "user" | "admin";
 };
 
-app.post("/login", (req, res) => {
-  const { user, pass } = req.body;
-  if (user === userCredentials.user && pass === userCredentials.pass) {
-    const accessToken = jwt.sign({ user: userCredentials.user }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "10m" });
+interface userAuth extends Request {
+  user?: string;
+}
 
-    const refreshToken = jwt.sign({ user: userCredentials.user }, process.env.REFRESH_TOKEN_SECRET as string, { expiresIn: "30d" });
+const users: User[] = [
+  {
+    name: "john",
+    pass: "admin",
+    role: "admin",
+  },
+  {
+    name: "jane",
+    pass: "user",
+    role: "user",
+  },
+];
 
-    res.cookie("foxticket", refreshToken, { httpOnly: true, sameSite: "strict", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
-    return res.json({ accessToken });
+const generateAccessToken = (user: User) => {
+  return jwt.sign({ name: user.name, role: user.role }, process.env.ACCESS_TOKEN_SECRET as Secret, { expiresIn: "10s" });
+};
+
+const generateRefreshToken = (user: User) => {
+  return jwt.sign({ name: user.name, role: user.role }, process.env.REFRESH_TOKEN_SECRET as Secret, { expiresIn: "30d" });
+};
+
+const auth = (req: userAuth, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as Secret, (err, user: any) => {
+      if (err) {
+        return res.status(403).json({ message: "Invalid Token" });
+      }
+
+      req.user = user.name;
+      next();
+    });
   } else {
-    return res.status(406).json({ message: "Invalid credentials" });
+    res.status(401).json({ message: "Invalid credentials" });
+  }
+};
+
+app.post("/login", (req: Request, res: Response) => {
+  const { name, pass } = req.body;
+  const user = users.find(u => {
+    return u.name === name && u.pass === pass;
+  });
+
+  if (user) {
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    res.cookie("foxticket", refreshToken, { path: "/refresh", httpOnly: true, sameSite: "strict", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
+
+    res.json({ user: user.name, role: user.role, accessToken });
+  } else {
+    res.status(401).json({ message: "Invalid credentials" });
   }
 });
 
-app.post("/refresh", regLimiter, (req, res) => {
-  if (req.headers.cookie) {
-    const refreshToken = req.headers.cookie.split("=")[1];
+app.post("/refresh", regLimiter, (req: Request, res: Response) => {
+  const refreshToken = req.headers.cookie?.split("=")[1];
 
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string, (err: any, _decoded: any) => {
+  if (refreshToken) {
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as Secret, (err, user: any) => {
       if (err) {
-        return res.status(406).json({ message: "Unauthorized: Wrong Token" });
+        return res.status(403).json({ message: "Invalid Token" });
       } else {
-        const accessToken = jwt.sign({ user: userCredentials.user }, process.env.ACCESS_TOKEN_SECRET as string, { expiresIn: "10m" });
-        return res.json({ accessToken });
+        const accessToken = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
+
+        res.json({ accessToken });
+        res.cookie("foxticket", refreshToken, { path: "/refresh", httpOnly: true, sameSite: "strict", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
       }
     });
   } else {
-    return res.status(406).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized" });
   }
+});
+
+app.post("/logout", auth, (req: userAuth, res: Response) => {
+  const user = req.user;
+  res.clearCookie("foxticket", { path: "/refresh", httpOnly: true, sameSite: "strict", secure: true });
+  res.status(200).json({ message: `${user} logged out successfully` });
 });
 
 app.listen(process.env.PORT, () => {
