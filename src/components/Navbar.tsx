@@ -1,6 +1,6 @@
 import { Navbar, Text, Avatar, Dropdown, Input, Button, Link } from "@nextui-org/react";
 import logo from "../assets/fox.png";
-import { TbSearch } from "react-icons/tb";
+import { TbHelp, TbLogout, TbSearch, TbSettings } from "react-icons/tb";
 import Theme from "./Theme";
 import Login from "./Login";
 
@@ -68,31 +68,32 @@ export default function App() {
           />
         </Navbar.Item>
 
-        <Dropdown placement="bottom-right">
-          <Navbar.Item>
+        <Navbar.Item>
+          <Dropdown placement="bottom-right">
             <Dropdown.Trigger>
               <Avatar bordered as="button" color="secondary" size="md" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
             </Dropdown.Trigger>
-          </Navbar.Item>
-          <Dropdown.Menu aria-label="User menu actions" color="secondary" onAction={actionKey => console.log({ actionKey })}>
-            <Dropdown.Item key="profile" css={{ height: "$18" }}>
-              <Text b color="inherit" css={{ d: "flex" }}>
-                Signed in as
-              </Text>
-              <Text b color="inherit" css={{ d: "flex" }}>
-                email@example.com
-              </Text>
-            </Dropdown.Item>
-            <Dropdown.Item key="settings" withDivider>
-              My Settings
-            </Dropdown.Item>
-            <Dropdown.Item key="help_and_feedback">Help & Feedback</Dropdown.Item>
-            <Dropdown.Item key="logout" withDivider color="error">
-              Log Out
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-
+            <Dropdown.Menu aria-label="User menu actions" color="secondary" onAction={key => console.log(key)}>
+              <Dropdown.Item key="profile" css={{ height: "$18" }}>
+                <Text b color="inherit" css={{ d: "flex" }}>
+                  Signed in as
+                </Text>
+                <Text b color="inherit" css={{ d: "flex" }}>
+                  email@example.com
+                </Text>
+              </Dropdown.Item>
+              <Dropdown.Item key="settings" icon={<TbSettings />} withDivider>
+                My Settings
+              </Dropdown.Item>
+              <Dropdown.Item key="help_and_feedback" icon={<TbHelp />}>
+                Help & Feedback
+              </Dropdown.Item>
+              <Dropdown.Item key="logout" icon={<TbLogout />} withDivider color="error">
+                Log Out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Navbar.Item>
         <Theme />
       </Navbar.Content>
     </Navbar>
