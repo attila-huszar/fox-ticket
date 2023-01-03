@@ -1,5 +1,6 @@
 import { Button, Input, Spacer, Grid, Text, Col, Row } from "@nextui-org/react";
 import { useState } from "react";
+import React from "react";
 
 export default function ProfileSettings() {
   const [errorMessage, setErrorMessage] = useState("");
