@@ -1,41 +1,48 @@
+import picHuman from "../../article_photos/pic_people-400x500.png"
+import picCar from "../../article_photos/pic_car-400x500.jpg.webp"
+import picAnimal from "../../article_photos/pic_animal-400x500.jpg"
+
 const data = {
   articles: [
     {
       title: "The Man Who Had HIV and Now Does Not",
-      text:
-        "Timothy Brown was diagnosed with HIV in the '90s. In 2006, he found that a new, unrelated disease threatened his life: leukemia. After chemo failed, doctors resorted to a bone marrow transplant. That transplant erased any trace of HIV from his body, and may hold the secret of curing AIDS.",
+      url: "https://nymag.com/health/features/aids-cure-2011-6/",
       author: "Tina Rosenberg",
+      pic: picHuman,
     },
     {
       title: "My ISIS Boyfriend",
-      text:
-        "A French reporter went undercover as potential “caliphette” and recieved a marriage proposal from a senior ISIS commander.",
+      url:
+        "https://nypost.com/2015/03/07/my-isis-boyfriend-a-reporters-undercover-life-with-a-terrorist/",
       author: "Margarette Driscoll",
+      pic: picHuman,
     },
     {
       title: "Backfire",
-      text:
-        "After a cop walks into his station and confesses to murder, an investigation reveals the toll of lethal force on both sides of the gun.",
+      url: "https://projects.thestar.com/backfire-const-adam-hill/",
       author: "Wendy Gillis",
+      pic: picCar,
     },
     {
       title: "Is Zero Hedge a Russian Trojan Horse?",
-      text:
-        "On the shadowy machinations driving pro-Russia conspiracy sites like Zero Hedge.",
+      url:
+        "https://newrepublic.com/article/156788/zero-hedge-russian-trojan-horse",
       author: "Seth Hettena",
+      pic: picHuman,
     },
     {
       title: "That Other School Shooting",
-      text:
-        "On former nursing student One L. Goh, who killed six people at Oikos University in Oakland, California, and what it means to the Korean immigrant community.",
+      url:
+        "https://www.nytimes.com/2013/03/31/magazine/should-it-matter-that-the-shooter-at-oikos-university-was-korean.html",
       author: "Jay Caspian Kang",
+      pic: picHuman,
     },
     {
       title: "Welcome to Dog World",
-      text:
-        "Spending the summer as a tour guide on a glacier.",
-      author: "Blair Braverman",
-    }
+      url: "https://metadogworld.io/",
+      author: "Anonymus",
+      pic: picAnimal,
+    },
   ],
 };
 

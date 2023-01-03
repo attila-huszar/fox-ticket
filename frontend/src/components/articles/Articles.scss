@@ -1,97 +1,43 @@
-body{
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  background-color: white;
-  padding-top: 40px;
+.articles{
+  box-sizing: border-box;
+  height: 400px;
+  display:flex;
+  overflow-x: auto;
+  scroll-snap-align: center;
+  align-items: flex-start;
+  padding-top: 20px;
 }
 
-h2{
-  grid-column: 1/4;
-  grid-row: 1/2;
-  font-size: 25px;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 40px;
-  color: rgb(50, 50, 50);
-  gap: 20px;
+.articles::-webkit-scrollbar{
+  width: 0;
 }
 
-.articles-main{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 3fr 3fr;
-  row-gap: 30px;
-  column-gap: 15px;
-  // border: 2px solid black;
-  border-radius: 10px;
-  width: 95%;
-  margin-left: 35px;
+
+#articles-header{
+  margin-bottom:20px;
 }
 
 .article{
-  height: 95%;
-  width: 100%;
-  border-radius: 5px;
+  min-width: 400;
+  height: 100%;
+  line-height: 30px;
   text-align: center;
-  justify-content: center;
-}
-//     /* Add shadows to create the "card" effect */
-//   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-//   transition: 0.3s;
-//   padding: 2px 16px;
-// }
-
-// .article:hover {
-//   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-// }
-
-.nextui-c-jxECYO{
-  width: 100%;
-  text-align: center;
+  align-items: center;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-
-#readButton{
-  margin: 10px 10px;
+@media screen and (max-width: 800px) {
+  .article {
+    width: 80%; /* The width is 100%, when the viewport is 800px or smaller */
+    margin-left: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    gap: 10px;
+  }
+  #articles-header{
+    margin-bottom:20px;
+  }
 }
 
-#cardNews{
-  border-radius: 5px;
-}
-
-#cardHeader{
-  width: 94%;
-  overflow-wrap: break-word;
-}
-
-#cardFooter{ 
-  width: 94%;
-  height: 30%;
-  padding-top: 0;
-  bottom: -10px;
-}
-
-.nextui-c-cMTZRp nextui-c-cMTZRp-iifGebW-css{
-  position: relative;
-  left: 43px;
-}
-
-//title 
-// .nextui-c-PJLV{
-  
-// }
-
-#fewWordsInCardFooter{
-  margin: 0 auto;
-  padding-left: 10%;
-}
-
-#appnameInCardFooter{
-  margin-bottom: 1%;
-}
