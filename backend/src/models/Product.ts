@@ -11,15 +11,14 @@ export default class Product extends Model {
   name!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
   })
   price!: number;
 
   @Column({
-    type: DataType.BOOLEAN,
+    type: DataType.INTEGER,
     allowNull: false,
-    defaultValue: true,
   })
   duration!: number;
 
