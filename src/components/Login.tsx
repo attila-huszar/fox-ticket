@@ -50,7 +50,6 @@ export default function Login() {
   const handler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
-    console.log("closed");
   };
 
   const handleLogin = async () => {
@@ -63,9 +62,9 @@ export default function Login() {
       <Button auto color="warning" shadow onClick={handler}>
         Login
       </Button>
-      <Modal closeButton blur aria-labelledby="modal-title" open={visible} onClose={closeHandler}>
+      <Modal closeButton blur aria-labelledby="login form" open={visible} onClose={closeHandler}>
         <Modal.Header>
-          <Text id="modal-title" size={18}>
+          <Text id="login form" size={18}>
             Welcome to
             <Text b size={18}>
               {" "}
