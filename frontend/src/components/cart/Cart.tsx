@@ -15,7 +15,6 @@ export default function Cart() {
 
   const closeHandler = () => {
     setVisible(false);
-    console.log("closed");
   };
 
   return (
