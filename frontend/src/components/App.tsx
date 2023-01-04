@@ -10,6 +10,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/shop" element={<Shop/>} />
+        <Route path="*" element={<NotImplementedPage />} />
       </Routes>
     </BrowserRouter>
   );
