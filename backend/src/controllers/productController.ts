@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 import status from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
+import { NewProductRequest } from '../interfaces/newProduct';
 import {
   GetProductRequest,
   GetProductResponse,
-  NewProductRequest,
-} from '../interfaces/newProduct';
+} from '../interfaces/getProduct';
 import * as productService from '../services/productService';
 
 export async function addNewProduct(
