@@ -14,15 +14,12 @@ export async function addNewProduct(
   next: NextFunction
 ): Promise<void> {
   const body = req.body;
-  console.log(body);
 
   try {
     const result = await productService.addNewProduct(body);
 
     res.send(result);
   } catch (error) {
-    console.log(error);
-
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
     } else if (error instanceof NotFoundError) {
@@ -38,7 +35,6 @@ export async function getProductById(
   res: Response<GetProductResponse>,
   next: NextFunction
 ): Promise<void> {
-  console.log(req.query.productId);
   const productId = Number(req.query.productId);
 
   try {
