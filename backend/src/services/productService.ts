@@ -21,7 +21,6 @@ export async function addNewProduct(
 }
 
 export async function getProductById(productId: number) {
-  console.log(productId);
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
