@@ -11,9 +11,3 @@ export interface NewProductRequest {
 export interface NewProductResponse {
   newProduct: Product;
 }
-export interface GetProductRequest {
-  productId: number;
-}
-export interface GetProductResponse {
-  product: Product;
-}
