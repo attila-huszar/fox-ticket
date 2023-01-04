@@ -4,7 +4,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import { pinoHttp } from "pino-http";
 import { apiLimiter, regLimiter } from "./middleware/rate-limiter";
 
-dotenv.config({ path: "../.env.development.local" });
+dotenv.config({ path: "../.env" });
 const app = express();
 
 app.use(express.json());
@@ -62,6 +62,12 @@ const auth = (req: userAuth, res: Response, next: NextFunction) => {
   }
 };
 
+//// Endpoints
+
+// app.get("/", (_req: Request, res: Response) => {
+//   res.redirect(303, "/refresh");
+// });
+
 app.post("/login", (req: Request, res: Response) => {
   const { name, pass } = req.body;
   const user = users.find(u => {
@@ -72,7 +78,7 @@ app.post("/login", (req: Request, res: Response) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
-    res.cookie("foxticket", refreshToken, { path: "/refresh", httpOnly: true, sameSite: "strict", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
+    res.cookie("foxticket", refreshToken, { domain: "localhost", path: "/refresh", httpOnly: true, sameSite: "none", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
 
     res.json({ user: user.name, role: user.role, accessToken });
   } else {
@@ -92,7 +98,7 @@ app.post("/refresh", regLimiter, (req: Request, res: Response) => {
         const refreshToken = generateRefreshToken(user);
 
         res.json({ accessToken });
-        res.cookie("foxticket", refreshToken, { path: "/refresh", httpOnly: true, sameSite: "strict", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
+        res.cookie("foxticket", refreshToken, { domain: "localhost", path: "/refresh", httpOnly: true, sameSite: "none", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
       }
     });
   } else {
@@ -102,10 +108,10 @@ app.post("/refresh", regLimiter, (req: Request, res: Response) => {
 
 app.post("/logout", auth, (req: userAuth, res: Response) => {
   const user = req.user;
-  res.clearCookie("foxticket", { path: "/refresh", httpOnly: true, sameSite: "strict", secure: true });
+  res.clearCookie("foxticket", { path: "/refresh", httpOnly: true, sameSite: "none", secure: true, domain: "localhost" });
   res.status(200).json({ message: `${user} logged out successfully` });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server active on http://localhost:${process.env.PORT}`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server active on http://localhost:${process.env.PORT || 5000}`);
 });

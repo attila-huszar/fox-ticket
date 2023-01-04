@@ -1,28 +1,46 @@
-import { useNavigate } from "react-router-dom";
-import { Navbar, Text, Avatar, Dropdown, Input, Button, Link } from "@nextui-org/react";
+import { useNavigate, NavLink } from "react-router-dom";
+import { Navbar, Text, Avatar, Dropdown, Input, Button } from "@nextui-org/react";
 import logo from "../assets/fox.png";
-import { TbHelp, TbLogout, TbSearch, TbSettings } from "react-icons/tb";
+import { TbHelp, TbLogout, TbSearch, TbUser } from "react-icons/tb";
 import Theme from "./Theme";
 import Login from "./Login";
-import React from "react";
+import "./Header.css";
 
 export default function Header() {
+  // const [isShown, setIsShown] = useState(false);
+  // const handleClick = () => {
+  //   setIsShown((current: any) => !current);
+  // };
+
+  let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3Mjg0OTc1NSwiZXhwIjoxNjcyODUwMzU1fQ.QX_zMO5kwum8vMYUxHCP0jfxbtGILXr1Fcn0v1ADi1o";
+
+  async function logout() {
+    await fetch("http://localhost:5000/logout", {
+      method: "POST",
+      mode: "cors", // no-cors, *cors, same-origin
+      headers: {
+        //'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
+      },
+      // referrer: "http://localhost:5000",
+      // referrerPolicy: "unsafe-url",
+    });
+  }
+
   const navigate = useNavigate();
-  const navigateRoot = () => {
-    let path = "/";
-    navigate(path);
-  };
-  const navigateCart = () => {
-    let path = "/cart";
-    navigate(path);
-  };
+
   const navigateDropdown = (key: React.Key) => {
-    let path = String(key);
-    navigate(path);
+    if (key === "LOGOUT") {
+      logout();
+    } else {
+      let path = String(key);
+      navigate(path);
+    }
   };
 
   return (
     <Navbar
+      isBordered
       disableScrollHandler={true}
       variant="floating"
       css={{
@@ -37,22 +55,30 @@ export default function Header() {
         <Text b color="inherit" css={{ m: "$10" }} hideIn="sm">
           FOX TICKET
         </Text>
-        <Navbar.Content hideIn="sm" variant="highlight">
-          <Navbar.Link isActive onPress={navigateRoot}>
-            News
-          </Navbar.Link>
-          <Navbar.Link onPress={navigateCart}>Tickets</Navbar.Link>
-          <Navbar.Link onPress={navigateCart}>Cart</Navbar.Link>
+        <Navbar.Content hideIn="sm">
+          <NavLink to="/" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
+            Events
+          </NavLink>
+          <NavLink to="/tickets" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
+            Tickets
+          </NavLink>
+          <NavLink to="/cart" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
+            Cart
+          </NavLink>
         </Navbar.Content>
       </Navbar.Brand>
 
       <Navbar.Content>
-        <Navbar.Link hideIn="sm" color="inherit" href="#">
+        <Navbar.Item hideIn="sm">
           <Login />
-        </Navbar.Link>
+          {/* <Button auto shadow color="warning" icon={<TbLogin />}>
+            Login
+            {isShown && <Login />}
+          </Button> */}
+        </Navbar.Item>
 
         <Navbar.Item hideIn="sm">
-          <Button auto flat as={Link} href="#">
+          <Button auto shadow color={"secondary"}>
             Sign Up
           </Button>
         </Navbar.Item>
@@ -88,21 +114,21 @@ export default function Header() {
               <Avatar bordered as="button" color="secondary" size="md" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
             </Dropdown.Trigger>
             <Dropdown.Menu aria-label="User menu actions" color="secondary" onAction={key => navigateDropdown(key)}>
-              <Dropdown.Item key="/profile" css={{ height: "$18" }}>
+              <Dropdown.Item key="" css={{ height: "$18" }}>
                 <Text b color="inherit" css={{ d: "flex" }}>
                   Signed in as
                 </Text>
-                <Text b color="inherit" css={{ d: "flex" }}>
-                  email@example.com
+                <Text b color="warning" css={{ d: "flex" }}>
+                  admin@foxticket.com
                 </Text>
               </Dropdown.Item>
-              <Dropdown.Item key="/settings" icon={<TbSettings />} withDivider>
-                My Settings
+              <Dropdown.Item key="/profile" icon={<TbUser />} withDivider>
+                Profile
               </Dropdown.Item>
               <Dropdown.Item key="/help_and_feedback" icon={<TbHelp />}>
                 Help & Feedback
               </Dropdown.Item>
-              <Dropdown.Item key="/logout" icon={<TbLogout />} withDivider color="error">
+              <Dropdown.Item key="LOGOUT" icon={<TbLogout />} withDivider color="error">
                 Log Out
               </Dropdown.Item>
             </Dropdown.Menu>
