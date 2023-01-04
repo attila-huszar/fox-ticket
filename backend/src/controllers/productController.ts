@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import status from 'http-status';
+import status, { BAD_REQUEST } from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
 import { NewProductRequest } from '../interfaces/newProduct';
 import {
@@ -13,10 +13,10 @@ export async function addNewProduct(
   res: Response<any>,
   next: NextFunction
 ): Promise<void> {
-  const body = req.body;
+  const product = req.body;
 
   try {
-    const result = await productService.addNewProduct(body);
+    const result = await productService.addNewProduct(product);
 
     res.send(result);
   } catch (error) {
