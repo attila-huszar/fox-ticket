@@ -5,7 +5,6 @@ import Shop from "./shop/Shop";
 import NotImplementedPage from './notimplentedpage/NotImplementedPage';
 
 export default function App() {
-
   return (
     <BrowserRouter>
       <Routes>
