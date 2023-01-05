@@ -8,11 +8,8 @@ import {
   Text,
   Spacer,
 } from "@nextui-org/react";
-import { Mail } from "./Mail";
-import { Password } from "./Password";
 
 export default function Login() {
-  //const [token, setToken] = React.useState(null);
   const [visible, setVisible] = React.useState(false);
 
   const handler = () => setVisible(true);
@@ -23,7 +20,6 @@ export default function Login() {
 
   const handleLogin = async () => {
     setVisible(false);
-    //setToken(token);
   };
 
   return (
@@ -56,14 +52,6 @@ export default function Login() {
             labelPlaceholder="Email"
             color="secondary"
             size="lg"
-            contentLeft={
-              <Mail
-                fill="currentColor"
-                size={undefined}
-                height={undefined}
-                width={undefined}
-              />
-            }
           />
           <Spacer y={0.6} />
           <Input
@@ -73,14 +61,6 @@ export default function Login() {
             labelPlaceholder="Password"
             color="secondary"
             size="lg"
-            contentLeft={
-              <Password
-                fill="currentColor"
-                size={undefined}
-                height={60}
-                width={undefined}
-              />
-            }
           />
           <Spacer y={0.2} />
           <Row justify="space-between">
