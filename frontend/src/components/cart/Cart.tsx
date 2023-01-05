@@ -1,38 +1,69 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import "./Cart.scss";
+import React from "react";
 import shopIcon from "./shopicon.png";
 
-export default function Cart() {
-  const [isShown, setIsShown] = useState(false);
+import {
+  Modal,
+  Text,
+  Button,
+  Row,
+  Image
+} from "@nextui-org/react";
 
-  const handleClick = (e: React.SyntheticEvent<EventTarget>) => {
-    e.preventDefault();
-    setIsShown(!isShown);
+export default function Cart() {
+  const [visible, setVisible] = React.useState(false);
+  const handler = () => setVisible(true);
+
+  const closeHandler = () => {
+    setVisible(false);
   };
 
   return (
-    <div>
-      <button id="btnCart" onClick={handleClick}>
-        <img src={shopIcon} id="imgCart" />
-        Cart <p>0</p>
-      </button>
-
-      {isShown && (
-        <>
-          <div className="cartField">
-            <p className="myCart">My cart</p>
-            <div className="listOfTicketAndPass">
-              <p className="ticketOrPassName">One day ticket or Pass</p>
-              <p className="quantity">1</p>
-              <button className="btnRemoveTicketPass">Remove</button>
-            </div>
-            <div className="fieldBuyAndReset">
-              <button className="btnBuy">Buy</button>
-              <button className="btnReset">Reset</button>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
+    <>
+      <Button auto color="secondary" shadow onClick={handler}>
+      <Image
+      src={shopIcon}
+      alt="Cart"
+      css={{width: "20px", height: "15px", margin: "0"}}
+    /> Cart
+      </Button>
+      <Modal
+        closeButton
+        blur
+        aria-labelledby="modal-title"
+        open={visible}
+        onClose={closeHandler}
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={18}>
+            My Cart
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Row justify="space-between">
+            <Text>One day ticket</Text>
+            <Text>1</Text>
+            <Button
+              auto
+              flat
+              color="secondary"
+              css={{ marginTop: "8px", marginBottom: "16px" }}
+            >
+              Remove
+            </Button>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button auto flat color="secondary">
+            Buy
+          </Button>
+          <Button auto flat color="secondary">
+            Reset
+          </Button>
+          <Button auto flat color="secondary" onPress={closeHandler}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
