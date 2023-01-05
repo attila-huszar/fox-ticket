@@ -1,5 +1,6 @@
-import './Landing.scss';
 import ShowArticles from '../articles/Articles';
+import React from "react";
+import "./Landing.scss";
 
 export default function Landing() {
   return (
