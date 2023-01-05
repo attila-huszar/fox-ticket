@@ -1,15 +1,18 @@
 * {
   outline: none;
 }
+a {
+  color: var(--nextui-colors-navbarLink);
+}
 .inactiveLink {
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px;
   transition: ease-out;
   transition-duration: 0.15s;
 }
 .activeLink,
 .inactiveLink:hover {
-  background: LightGray;
+  background: var(--nextui-colors-navbarActive);
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 12px;
 }

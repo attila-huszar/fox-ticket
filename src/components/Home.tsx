@@ -1,17 +1,6 @@
 import { Grid, Card, Text, Col } from "@nextui-org/react";
 
-export default function Landing() {
-  const MockItem = ({ text }: { text: string }) => {
-    return (
-      <Card css={{ h: "$60", $$cardColor: "$colors$gradient" }}>
-        <Card.Body>
-          <Text h6 size={15} color="white" css={{ m: 0 }}>
-            {text}
-          </Text>
-        </Card.Body>
-      </Card>
-    );
-  };
+export default function Home() {
   return (
     <Grid.Container gap={2} justify="center" id="landing">
       <Grid xs={6}>
@@ -96,28 +85,6 @@ export default function Landing() {
             <Card.Image src="https://nextui.org/images/card-example-5.jpeg" objectFit="cover" width="100%" height="100%" alt="Relaxing app background" />
           </Card.Body>
         </Card>
-      </Grid>
-
-      <Grid xs={3}>
-        <MockItem text="1 of 4" />
-      </Grid>
-      <Grid xs={3}>
-        <MockItem text="2 of 4" />
-      </Grid>
-      <Grid xs={3}>
-        <MockItem text="3 of 4" />
-      </Grid>
-      <Grid xs={3}>
-        <MockItem text="4 of 4" />
-      </Grid>
-      <Grid xs={3}>
-        <MockItem text="1 of 3" />
-      </Grid>
-      <Grid xs={6}>
-        <MockItem text="2 of 3" />
-      </Grid>
-      <Grid xs={3}>
-        <MockItem text="3 of 3" />
       </Grid>
     </Grid.Container>
   );
