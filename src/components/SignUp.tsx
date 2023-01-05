@@ -59,12 +59,12 @@ export default function Login() {
 
   return (
     <div>
-      <Button style={{ fontSize: "1rem" }} auto color="secondary" shadow onClick={handler}>
-        Login
+      <Button style={{ fontSize: "1rem" }} auto color="gradient" shadow onClick={handler}>
+        Sign Up
       </Button>
-      <Modal closeButton blur aria-labelledby="login form" open={visible} onClose={closeHandler}>
+      <Modal closeButton blur aria-labelledby="signup form" open={visible} onClose={closeHandler}>
         <Modal.Header>
-          <Text id="login form" size={18}>
+          <Text id="signup form" size={18}>
             Welcome to
             <Text b size={18}>
               {" "}
