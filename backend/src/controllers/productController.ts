@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import status, { BAD_REQUEST } from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
-import { NewProductRequest } from '../interfaces/newProduct';
+import { NewProductRequest, NewProductResponse } from '../interfaces/newProduct';
 import {
   GetProductRequest,
   GetProductResponse,
@@ -10,7 +10,7 @@ import * as productService from '../services/productService';
 
 export async function addNewProduct(
   req: Request<unknown, unknown, NewProductRequest, unknown>,
-  res: Response<any>,
+  res: Response<NewProductResponse>,
   next: NextFunction
 ): Promise<void> {
   const product = req.body;
