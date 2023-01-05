@@ -4,6 +4,8 @@ import {
   NewProductRequest,
   NewProductResponse,
 } from '../interfaces/newProduct';
+import { GetAllProductResponse } from '../interfaces/getAllProduct';
+import Product from '../models/Product';
 
 export async function addNewProduct(
   newProduct: NewProductRequest
@@ -28,6 +30,16 @@ export async function getProductById(productId: number) {
 
   if (product) {
     return { product };
+  } else {
+    throw new NotFoundError();
+  }
+}
+
+export async function getAllProduct(): Promise<GetAllProductResponse> {
+  const products = await productRepo.getAllProduct();
+
+  if (products) {
+    return { allProduct: products };
   } else {
     throw new NotFoundError();
   }

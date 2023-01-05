@@ -8,3 +8,7 @@ export function getProductById(id: number): Promise<Product | null> {
 export function createProduct(newProduct: NewProductRequest): Promise<Product> {
   return Product.create({ ...newProduct });
 }
+
+export function getAllProduct(): Promise<Product[] | null> {
+  return Product.findAll();
+}
