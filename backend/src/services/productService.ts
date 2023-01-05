@@ -24,7 +24,6 @@ export async function getProductById(productId: number) {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
-
   const product = await productRepo.getProductById(productId);
 
   if (product) {
