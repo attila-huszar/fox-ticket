@@ -6,7 +6,7 @@
     "build": "tsc -p .",
     "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config src/server.ts",
     "lint": "eslint .",
-    "start": "node -r dotenv/config dist/src/server.js",
+    "start": "node -r dotenv/config build/src/server.js",
     "test": "jest --watchAll",
     "test:cov": "jest --ci --collectCoverage --passWithNoTests"
   },
