@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import "./App.css";
-import Home from "./Home";
 import Navbar from "./Navbar";
 import NotImplementedPage from "./NotImplementedPage";
 import Landing from "./Landing";
@@ -21,7 +20,6 @@ export default function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route index element={<Home />} />
           <Route path="/" element={<Landing />} />
           <Route path="/purchases" element={<Purchases />} />
           <Route path="/profile" element={<Profile />} />
