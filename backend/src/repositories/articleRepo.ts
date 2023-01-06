@@ -1,4 +1,4 @@
-import { Article } from '../models/Article';
+import Article from '../models/Article';
 import { NewArticleRequest } from '../interfaces/newArticle';
 
 export function getAllArticles(): Promise<Article[]> {
