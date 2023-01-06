@@ -9,6 +9,6 @@ export function createProduct(newProduct: NewProductRequest): Promise<Product> {
   return Product.create({ ...newProduct });
 }
 
-export function getAllProduct(): Promise<Product[] | null> {
+export function getAllProducts(): Promise<Product[] | null> {
   return Product.findAll();
 }
