@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Navbar, Text, Avatar, Dropdown, Input } from "@nextui-org/react";
-import logo from "../static/logo.png";
 import { TbHelp, TbLogout, TbSearch, TbUser } from "react-icons/tb";
 import Theme from "./Theme";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import "./Header.css";
+import logo from "../static/logo.png";
 import profile_defpic from "../static/profile_def.png";
+import "./Header.css";
 
 export default function Header() {
   const [isLoginVisible, setIsLoginVisible] = useState(true);

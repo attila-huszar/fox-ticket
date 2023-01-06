@@ -5,7 +5,7 @@ import Header from "./Header";
 import NotImplementedPage from "./NotImplementedPage";
 import Footer from "./Footer";
 import Profile from "./Profile";
-import { CSSTransition, SwitchTransition, TransitionGroup } from "react-transition-group";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -17,16 +17,16 @@ export default function App() {
         <script src="./noflash.js" type="text/javascript" />
       </Helmet>
       <Header />
-      
-      <SwitchTransition mode="out-in">
-        <CSSTransition key={pathname} timeout={100} classNames="fade" unmountOnExit>
+
+      <TransitionGroup>
+        <CSSTransition key={pathname} timeout={300} classNames="fade" unmountOnExit>
           <Routes>
             <Route index element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotImplementedPage />} />
           </Routes>
         </CSSTransition>
-      </SwitchTransition>
+      </TransitionGroup>
       <Footer />
     </HelmetProvider>
   );
