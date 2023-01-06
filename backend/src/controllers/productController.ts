@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import status, { BAD_REQUEST } from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
+import { GetAllProductsResponse } from '../interfaces/product';
 import {
   NewProductRequest,
   NewProductResponse,
@@ -20,7 +21,6 @@ export async function addNewProduct(
 
   try {
     const result = await productService.addNewProduct(product);
-
     res.send(result);
   } catch (error) {
     if (error instanceof ParameterError) {
@@ -46,10 +46,24 @@ export async function getProductById(
   } catch (error) {
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
-    }
-    if (error instanceof NotFoundError) {
+    } else if (error instanceof NotFoundError) {
       next(new HttpError(status.NOT_FOUND));
+    } else {
+      next(new HttpError(status.INTERNAL_SERVER_ERROR));
     }
+  }
+}
+
+export async function getAllProducts(
+  req: Request,
+  res: Response<GetAllProductsResponse>,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const data = await productService.getAllProducts();
+    res.send(data);
+  } catch (error) {
+    next(new HttpError(status.INTERNAL_SERVER_ERROR));
   }
 }
 

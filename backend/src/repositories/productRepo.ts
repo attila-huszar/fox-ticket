@@ -9,6 +9,10 @@ export function createProduct(newProduct: NewProductRequest): Promise<Product> {
   return Product.create({ ...newProduct });
 }
 
+export function getAllProducts(): Promise<Product[] | null> {
+  return Product.findAll();
+}
+
 export function deleteProductById(productId: number): Promise<number> {
   return Product.destroy({ where: { productId } });
 }

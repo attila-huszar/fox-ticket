@@ -4,6 +4,7 @@ import {
   NewProductRequest,
   NewProductResponse,
 } from '../interfaces/newProduct';
+import { GetAllProductsResponse } from '../interfaces/product';
 import _ from 'lodash';
 import { GetProductResponse } from '../interfaces/getProduct';
 
@@ -46,6 +47,12 @@ export async function getProductById(
   } else {
     throw new NotFoundError();
   }
+}
+
+export async function getAllProducts(): Promise<GetAllProductsResponse> {
+  const products = await productRepo.getAllProducts();
+  
+  return { allProducts: products };
 }
 
 export async function deleteProductById(productId: number): Promise<void> {
