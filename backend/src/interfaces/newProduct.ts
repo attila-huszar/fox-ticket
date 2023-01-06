@@ -9,5 +9,10 @@ export interface NewProductRequest {
   type: string;
 }
 export interface NewProductResponse {
-  newProduct: Product;
+  id: number
+  name: string;
+  price: number;
+  duration: number;
+  description: string;
+  type: string;
 }
