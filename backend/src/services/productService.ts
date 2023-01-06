@@ -4,6 +4,19 @@ import {
   NewProductRequest,
   NewProductResponse,
 } from '../interfaces/newProduct';
+import _ from 'lodash';
+import { GetProductResponse } from '../interfaces/getProduct';
+
+const productResponse = (productObject: object) => {
+  return _.pick(productObject, [
+    'id',
+    'name',
+    'price',
+    'duration',
+    'description',
+    'type',
+  ]);
+};
 
 export async function addNewProduct(
   newProduct: NewProductRequest
@@ -14,21 +27,34 @@ export async function addNewProduct(
   const product = await productRepo.createProduct(newProduct);
 
   if (product) {
-    return { newProduct: product };
+    return productResponse(product) as NewProductResponse;
   } else {
     throw new NotFoundError();
   }
 }
 
-export async function getProductById(productId: number) {
+export async function getProductById(
+  productId: number
+): Promise<GetProductResponse> {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
   const product = await productRepo.getProductById(productId);
 
   if (product) {
-    return { product };
+    return productResponse(product) as GetProductResponse;
   } else {
+    throw new NotFoundError();
+  }
+}
+
+export async function deleteProductById(productId: number): Promise<void> {
+  if (productId < 0 || !Number.isInteger(productId)) {
+    throw new ParameterError('Invalid productId');
+  }
+  const deletedProduct = await productRepo.getProductById(productId);
+
+  if (!deletedProduct) {
     throw new NotFoundError();
   }
 }
