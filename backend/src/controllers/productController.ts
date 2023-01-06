@@ -1,20 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import status, { BAD_REQUEST } from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
-import { GetAllProductsResponse } from '../interfaces/product';
 import {
+  GetAllProductsResponse,
+  ProductResponse,
   NewProductRequest,
-  NewProductResponse,
-} from '../interfaces/newProduct';
-import {
-  GetProductRequest,
-  GetProductResponse,
-} from '../interfaces/getProduct';
+} from '../interfaces/product';
 import * as productService from '../services/productService';
 
 export async function addNewProduct(
   req: Request<unknown, unknown, NewProductRequest, unknown>,
-  res: Response<NewProductResponse>,
+  res: Response<ProductResponse>,
   next: NextFunction
 ): Promise<void> {
   const product = req.body;
@@ -34,8 +30,8 @@ export async function addNewProduct(
 }
 
 export async function getProductById(
-  req: Request<unknown, unknown, unknown, GetProductRequest>,
-  res: Response<GetProductResponse>,
+  req: Request<unknown, unknown, unknown, { productId: string }>,
+  res: Response<ProductResponse>,
   next: NextFunction
 ): Promise<void> {
   const productId = Number(req.query.productId);
