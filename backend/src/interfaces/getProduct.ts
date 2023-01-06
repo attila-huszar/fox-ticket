@@ -4,5 +4,10 @@ export interface GetProductRequest {
   productId: number;
 }
 export interface GetProductResponse {
-  product: Product;
+  id: number;
+  name: string;
+  price: number;
+  duration: number;
+  description: string;
+  type: string;
 }
