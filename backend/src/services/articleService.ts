@@ -1,4 +1,4 @@
-import { Article } from '../models/Article';
+import Article from '../models/Article';
 import * as articleRepo from '../repositories/articleRepo';
 import { GetAllArticlesResponse } from '../interfaces/getArticles';
 import { NewArticleRequest } from '../interfaces/newArticle';
@@ -16,7 +16,7 @@ export async function addNewArticle(
     throw new ParameterError('Invalid article');
   }
   const article = await articleRepo.createArticle(newArticle);
-  console.log(article)
+  console.log(article);
   if (article) {
     return { newArticle: article };
   } else {
