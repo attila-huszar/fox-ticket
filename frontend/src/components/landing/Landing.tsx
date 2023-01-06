@@ -1,11 +1,12 @@
+import ShowArticles from '../articles/Articles';
 import React from "react";
 import "./Landing.scss";
 
 export default function Landing() {
   return (
+    <div className="main">
     <div className="Landing">
-      <div className="menu">
-    
+      <ShowArticles />
     </div>
     </div>
   );
