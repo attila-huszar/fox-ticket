@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./landing/Landing";
 import Cart from "./cart/Cart";
 import Shop from "./shop/Shop";
+import Registration from "./registration/Registration";
 import NotImplementedPage from './notimplentedpage/NotImplementedPage';
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/shop" element={<Shop/>} />
+        <Route path="/registration" element={<Registration/>} />
         <Route path="*" element={<NotImplementedPage />} />
       </Routes>
     </BrowserRouter>
