@@ -1,7 +1,7 @@
 import request from 'supertest';
 import status from 'http-status';
 import app from '../src/app';
-import { Article } from '../src/models/Article';
+import Article from '../src/models/Article';
 
 describe('GET /api/articles', () => {
   it('returns all existing articles', async () => {
@@ -10,7 +10,6 @@ describe('GET /api/articles', () => {
       content: 'tartalom',
       publish_date: String(Date.now()),
     });
-
     const result = await request(app).get(`/api/articles`);
 
     expect(result.statusCode).toEqual(status.OK);
