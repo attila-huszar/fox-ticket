@@ -1,12 +1,11 @@
 import { NotFoundError, ParameterError } from '../errors';
 import * as productRepo from '../repositories/productRepo';
 import {
+  GetAllProductsResponse,
+  ProductResponse,
   NewProductRequest,
-  NewProductResponse,
-} from '../interfaces/newProduct';
-import { GetAllProductsResponse } from '../interfaces/product';
+} from '../interfaces/product';
 import _ from 'lodash';
-import { GetProductResponse } from '../interfaces/getProduct';
 
 const productResponse = (productObject: object) => {
   return _.pick(productObject, [
@@ -21,14 +20,14 @@ const productResponse = (productObject: object) => {
 
 export async function addNewProduct(
   newProduct: NewProductRequest
-): Promise<NewProductResponse> {
+): Promise<ProductResponse> {
   if (!newProduct) {
     throw new ParameterError('Invalid product');
   }
   const product = await productRepo.createProduct(newProduct);
 
   if (product) {
-    return productResponse(product) as NewProductResponse;
+    return productResponse(product) as ProductResponse;
   } else {
     throw new NotFoundError();
   }
@@ -36,14 +35,14 @@ export async function addNewProduct(
 
 export async function getProductById(
   productId: number
-): Promise<GetProductResponse> {
+): Promise<ProductResponse> {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
   const product = await productRepo.getProductById(productId);
 
   if (product) {
-    return productResponse(product) as GetProductResponse;
+    return productResponse(product) as ProductResponse;
   } else {
     throw new NotFoundError();
   }
@@ -51,7 +50,7 @@ export async function getProductById(
 
 export async function getAllProducts(): Promise<GetAllProductsResponse> {
   const products = await productRepo.getAllProducts();
-  
+
   return { allProducts: products };
 }
 
@@ -59,8 +58,8 @@ export async function deleteProductById(productId: number): Promise<void> {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
-  const deletedProduct = await productRepo.getProductById(productId);
-
+  const deletedProduct = await productRepo.deleteProductById(productId);
+  
   if (!deletedProduct) {
     throw new NotFoundError();
   }
