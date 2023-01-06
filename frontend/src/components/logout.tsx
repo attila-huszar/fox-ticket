@@ -1,4 +1,4 @@
-import Landing from "./Landing";
+import Landing from "./landing/Landing";
 
 export default function Logout(): any {
   return (
