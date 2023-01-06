@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
+import { Modal, Input, Button, Text, Spacer } from "@nextui-org/react";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConf, setPasswordConf] = useState("");
+
   const [visible, setVisible] = useState(false);
 
   const validateEmail = (value: string) => {
@@ -14,12 +16,16 @@ export default function Login() {
     return value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/);
   };
 
+  const validateMatch = (value: string) => {
+    if (value === password) return true;
+  };
+
   interface help {
     text: string;
     color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
   }
 
-  const helper: help = React.useMemo(() => {
+  const helperEmail: help = React.useMemo(() => {
     if (!email)
       return {
         text: "",
@@ -47,9 +53,27 @@ export default function Login() {
     };
   }, [password]);
 
-  const handler = () => setVisible(true);
+  const helperPassConf: help = React.useMemo(() => {
+    if (!passwordConf)
+      return {
+        text: "",
+        color: "default",
+      };
+    const isValidPass = validateMatch(passwordConf);
+
+    return {
+      text: isValidPass ? "Passwords Match" : "Passwords Not Matching",
+      color: isValidPass ? "success" : "warning",
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [passwordConf]);
+
+  const signUpHandler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
+    setEmail("");
+    setPassword("");
+    setPasswordConf("");
   };
 
   const handleLogin = async () => {
@@ -59,34 +83,30 @@ export default function Login() {
 
   return (
     <div>
-      <Button style={{ fontSize: "1rem" }} auto color="gradient" shadow onClick={handler}>
+      <Button style={{ fontSize: "1rem" }} auto color="gradient" shadow onClick={signUpHandler}>
         Sign Up
       </Button>
       <Modal closeButton blur aria-labelledby="signup form" open={visible} onClose={closeHandler}>
         <Modal.Header>
           <Text id="signup form" size={18}>
-            Welcome to
-            <Text b size={18}>
-              {" "}
-              Fox Ticket
-            </Text>
+            Please sign up with your email address
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <Spacer y={0.4} />
+          <Spacer y={0.2} />
           <Input
             onChange={e => setEmail(e.target.value)}
             required
             bordered
-            status={helper.color}
-            color={helper.color}
-            helperColor={helper.color}
-            helperText={helper.text}
+            status={helperEmail.color}
+            color={helperEmail.color}
+            helperColor={helperEmail.color}
+            helperText={helperEmail.text}
             fullWidth
             labelPlaceholder="Email"
             size="lg"
           />
-          <Spacer y={1.6} />
+          <Spacer y={1.5} />
           <Input.Password
             onChange={e => setPassword(e.target.value)}
             required
@@ -99,19 +119,27 @@ export default function Login() {
             labelPlaceholder="Password"
             size="lg"
           />
+          <Spacer y={1.5} />
+          <Input.Password
+            onChange={e => setPasswordConf(e.target.value)}
+            labelPlaceholder="Confirm Password"
+            width="350px"
+            required
+            bordered
+            status={helperPassConf.color}
+            color={helperPassConf.color}
+            helperColor={helperPassConf.color}
+            helperText={helperPassConf.text}
+            type="password"
+            size="lg"
+          />
           <Spacer y={0.2} />
-          <Row justify="space-between">
-            <Checkbox color="secondary">
-              <Text size={14}>Remember me</Text>
-            </Checkbox>
-            <Text size={14}>Forgot password?</Text>
-          </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="error" onPress={closeHandler}>
             Close
           </Button>
-          <Button auto onPress={handleLogin} color="secondary">
+          <Button auto onPress={handleLogin} color="gradient">
             Sign in
           </Button>
         </Modal.Footer>

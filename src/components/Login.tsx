@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
 
 export default function Login() {
+  const [visLogin, setVisLogin] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [visible, setVisible] = useState(false);
 
   const validateEmail = (value: string) => {
     return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
@@ -19,7 +19,7 @@ export default function Login() {
     color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
   }
 
-  const helper: help = React.useMemo(() => {
+  const helperEmail: help = React.useMemo(() => {
     if (!email)
       return {
         text: "",
@@ -47,46 +47,53 @@ export default function Login() {
     };
   }, [password]);
 
-  const handler = () => setVisible(true);
+  const LoginBtnHandler = () => setVisLogin(true);
+
   const closeHandler = () => {
-    setVisible(false);
+    setVisLogin(false);
+    setEmail("");
+    setPassword("");
   };
 
-  const handleLogin = async () => {
-    setVisible(false);
+  const loginHandler = async () => {
+    setVisLogin(false);
     //setToken(token);
   };
 
   return (
     <div>
-      <Button style={{ fontSize: "1rem" }} auto color="secondary" shadow onClick={handler}>
+      <Button style={{ fontSize: "1rem" }} auto color="secondary" shadow onClick={LoginBtnHandler}>
         Login
       </Button>
-      <Modal closeButton blur aria-labelledby="login form" open={visible} onClose={closeHandler}>
+      <Modal closeButton blur aria-labelledby="login form" open={visLogin} onClose={closeHandler}>
         <Modal.Header>
-          <Text id="login form" size={18}>
-            Welcome to
-            <Text b size={18}>
-              {" "}
+          <Text size={18}>
+            Welcome to{" "}
+            <Text
+              b
+              size={18}
+              css={{
+                textGradient: "45deg, $blue600 -20%, $pink600 50%",
+              }}>
               Fox Ticket
             </Text>
           </Text>
         </Modal.Header>
         <Modal.Body>
-          <Spacer y={0.4} />
+          <Spacer y={0.2} />
           <Input
             onChange={e => setEmail(e.target.value)}
             required
             bordered
-            status={helper.color}
-            color={helper.color}
-            helperColor={helper.color}
-            helperText={helper.text}
+            status={helperEmail.color}
+            color={helperEmail.color}
+            helperColor={helperEmail.color}
+            helperText={helperEmail.text}
             fullWidth
             labelPlaceholder="Email"
             size="lg"
           />
-          <Spacer y={1.6} />
+          <Spacer y={1.5} />
           <Input.Password
             onChange={e => setPassword(e.target.value)}
             required
@@ -111,7 +118,7 @@ export default function Login() {
           <Button auto flat color="error" onPress={closeHandler}>
             Close
           </Button>
-          <Button auto onPress={handleLogin} color="secondary">
+          <Button auto onPress={loginHandler} color="gradient">
             Sign in
           </Button>
         </Modal.Footer>
