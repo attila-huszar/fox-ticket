@@ -11,7 +11,7 @@ router.use(express.json());
 
 router.get('/hello', helloController.getHelloWorld);
 router.get('/articles', articleController.getAllArticles);
-router.post('/article', articleController.addNewArticle);
+router.post('/articles', articleController.addNewArticle);
 router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
 router.use(apiErrorHandler);
 
