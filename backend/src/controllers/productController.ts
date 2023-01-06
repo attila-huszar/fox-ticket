@@ -1,7 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import status, { BAD_REQUEST } from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
-import { NewProductRequest, NewProductResponse } from '../interfaces/newProduct';
+import {
+  NewProductRequest,
+  NewProductResponse,
+} from '../interfaces/newProduct';
 import {
   GetProductRequest,
   GetProductResponse,
@@ -39,6 +42,26 @@ export async function getProductById(
 
   try {
     const data = await productService.getProductById(productId);
+    res.send(data);
+  } catch (error) {
+    if (error instanceof ParameterError) {
+      next(new HttpError(status.BAD_REQUEST, error.message));
+    }
+    if (error instanceof NotFoundError) {
+      next(new HttpError(status.NOT_FOUND));
+    }
+  }
+}
+
+export async function deleteProductById(
+  req: Request<{ productId: string }, unknown, unknown, unknown>,
+  res: Response<void>,
+  next: NextFunction
+): Promise<void> {
+  const productId = Number(req.params.productId);
+
+  try {
+    const data = await productService.deleteProductById(productId);
     res.send(data);
   } catch (error) {
     if (error instanceof ParameterError) {
