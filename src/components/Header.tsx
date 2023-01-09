@@ -5,13 +5,15 @@ import { TbHelp, TbLogout, TbSearch, TbUser } from "react-icons/tb";
 import Theme from "./Theme";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Cart from "./cart/Cart";
 import logo from "../static/logo.png";
 import profile_defpic from "../static/profile_def.png";
 import "./Header.css";
 
 export default function Header() {
+  // eslint-disable-next-line
   const [isLoginVisible, setIsLoginVisible] = useState(true);
-
+  // eslint-disable-next-line
   const handleLoginVis = () => {
     setIsLoginVisible(isVisible => !isVisible);
     setIsLoginVisible(false);
@@ -65,9 +67,9 @@ export default function Header() {
           <NavLink to="/tickets" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
             Tickets
           </NavLink>
-          <NavLink to="/cart" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
+          {/* <NavLink to="/cart" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
             Cart
-          </NavLink>
+          </NavLink> */}
         </Navbar.Content>
       </Navbar.Brand>
 
@@ -99,7 +101,9 @@ export default function Header() {
             placeholder="Search..."
           />
         </Navbar.Item>
-
+        <Navbar.Item>
+          <Cart />
+        </Navbar.Item>
         <Navbar.Item>
           <Dropdown placement="bottom-right">
             <Dropdown.Trigger>

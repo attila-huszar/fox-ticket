@@ -4,14 +4,15 @@ import sgMail from "@sendgrid/mail";
 import dotenv from "dotenv";
 dotenv.config({ path: "../../sendgrid.env" });
 
-console.log(process.env.SENDGRID_API_KEY)
+const link = `http://localhost:3000/verify=abcd`;
+
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 const msg = {
   to: "cinkes@gmail.com", // Change to your recipient
   from: "attila.huszar@outlook.com", // Change to your verified sender
-  subject: "Sending with SendGrid is Fun",
-  text: "and easy to do anywhere, even with Node.js",
-  html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+  subject: "Email verification - Fox Ticket",
+  text: "",
+  html: `Please verify your email by clicking <strong><a href=${link}>this link</a></strong>`,
 };
 sgMail
   .send(msg)
