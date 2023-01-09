@@ -7,6 +7,7 @@
 [Zod Validation](https://www.npmjs.com/package/zod)  
 [React Helmet](https://www.npmjs.com/package/react-helmet-async)  
 [react-transition-group](https://www.npmjs.com/package/react-transition-group)  
+[React Spring](https://www.react-spring.dev/)  
 [QR Generator](https://www.npmjs.com/package/react-qr-code)
 
 ## Backend Packages
