@@ -5,8 +5,8 @@
 [React Icons](https://react-icons.github.io/react-icons)  
 [usehooks-ts React hooks library](https://usehooks-ts.com/)  
 [Zod Validation](https://www.npmjs.com/package/zod)  
-[Mirage JS Mock Data](https://www.npmjs.com/package/miragejs)  
 [React Helmet](https://www.npmjs.com/package/react-helmet-async)  
+[react-transition-group](https://www.npmjs.com/package/react-transition-group)  
 [QR Generator](https://www.npmjs.com/package/react-qr-code)
 
 ## Backend Packages
@@ -15,6 +15,7 @@
 [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)  
 [JSON Web Tokens](https://www.npmjs.com/package/jsonwebtoken) ([TS types](https://www.npmjs.com/package/@types/jsonwebtoken))  
 [bcrypt Password hash](https://www.npmjs.com/package/bcrypt) ([TS types](https://www.npmjs.com/package/@types/bcrypt))  
+[Mail Service SendGrid Web API](https://www.npmjs.com/package/@sendgrid/mail)  
 [CORS](https://www.npmjs.com/package/cors) ([TS types](https://www.npmjs.com/package/@types/cors))  
 [Helmet](https://www.npmjs.com/package/helmet)  
 [dotenv](https://www.npmjs.com/package/dotenv)  
