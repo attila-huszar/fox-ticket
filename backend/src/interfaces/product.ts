@@ -14,7 +14,7 @@ export interface GetAllProductsResponse {
   }
   
   export interface NewProductRequest {
-    productId: number;
+    id: number;
     name: string;
     price: number;
     duration: number;
