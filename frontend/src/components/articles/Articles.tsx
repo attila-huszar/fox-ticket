@@ -1,4 +1,4 @@
-import "./Articles.scss";
+import "./Articles.css";
 import data from "./Data";
 import { Card, Col, Text, Link } from "@nextui-org/react";
 

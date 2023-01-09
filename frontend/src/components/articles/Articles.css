@@ -1,23 +1,22 @@
-.articles{
+.articles {
   box-sizing: border-box;
   height: 400px;
-  display:flex;
+  display: flex;
   overflow-x: auto;
   scroll-snap-align: center;
   align-items: flex-start;
   padding-top: 20px;
 }
 
-.articles::-webkit-scrollbar{
+.articles::-webkit-scrollbar {
   width: 0;
 }
 
-
-#articles-header{
-  margin-bottom:20px;
+#articles-header {
+  margin-bottom: 20px;
 }
 
-.article{
+.article {
   min-width: 400;
   height: 100%;
   line-height: 30px;
@@ -36,8 +35,7 @@
     overflow-wrap: break-word;
     gap: 10px;
   }
-  #articles-header{
-    margin-bottom:20px;
+  #articles-header {
+    margin-bottom: 20px;
   }
 }
-
