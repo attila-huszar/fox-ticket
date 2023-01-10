@@ -4,6 +4,7 @@ import {
   GetAllProductsResponse,
   ProductResponse,
   NewProductRequest,
+  NewProductRequestValidator,
 } from '../interfaces/product';
 import _ from 'lodash';
 
@@ -21,15 +22,11 @@ const productResponse = (productObject: object) => {
 export async function addNewProduct(
   newProduct: NewProductRequest
 ): Promise<ProductResponse> {
-  if (!newProduct) {
-    throw new ParameterError('Invalid product');
-  }
+  await NewProductRequestValidator.parseAsync(newProduct);
   const product = await productRepo.createProduct(newProduct);
 
   if (product) {
     return productResponse(product) as ProductResponse;
-  } else {
-    throw new NotFoundError();
   }
 }
 
@@ -58,9 +55,5 @@ export async function deleteProductById(productId: number): Promise<void> {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
-  const deletedProduct = await productRepo.deleteProductById(productId);
-  
-  if (!deletedProduct) {
-    throw new NotFoundError();
-  }
+  await productRepo.deleteProductById(productId);
 }
