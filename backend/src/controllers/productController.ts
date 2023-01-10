@@ -5,6 +5,8 @@ import {
   GetAllProductsResponse,
   ProductResponse,
   NewProductRequest,
+  EditProductRequest,
+  EditProductResponse,
 } from '../interfaces/product';
 import * as productService from '../services/productService';
 
@@ -68,10 +70,35 @@ export async function deleteProductById(
   res: Response<void>,
   next: NextFunction
 ): Promise<void> {
+  console.log("controller")
   const productId = Number(req.params.productId);
 
   try {
     const data = await productService.deleteProductById(productId);
+    res.send(data);
+  } catch (error) {
+    if (error instanceof ParameterError) {
+      next(new HttpError(status.BAD_REQUEST, error.message));
+    } else if (error instanceof NotFoundError) {
+      next(new HttpError(status.NOT_FOUND));
+    } else {
+      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+    }
+  }
+}
+
+export async function editProductById(
+  req: Request<{ productId: string }, unknown, EditProductRequest, unknown>,
+  res: Response<EditProductResponse>,
+  next: NextFunction
+): Promise<void> {
+  console.log("controller")
+  const productId = Number(req.params.productId);
+  const editProduct = req.body;
+  console.log(productId)
+  console.log(editProduct)
+  try {
+    const data = await productService.editProductById(productId, editProduct);
     res.send(data);
   } catch (error) {
     if (error instanceof ParameterError) {

@@ -12,6 +12,7 @@ router.use(express.json());
 router.get('/hello', helloController.getHelloWorld);
 router.post('/admin/products', productController.addNewProduct);
 router.get('/admin/products', productController.getProductById);
+router.put('/admin/products/:productId', productController.editProductById);
 router.delete('/admin/products/:productId', productController.deleteProductById);
 router.get('/product', productController.getProductById);
 router.get('/products', productController.getAllProducts);
