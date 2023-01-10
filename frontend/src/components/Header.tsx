@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
-import { Navbar, Text, Avatar, Dropdown, Input } from "@nextui-org/react";
-import { TbHelp, TbLogout, TbSearch, TbUser } from "react-icons/tb";
-import Theme from "./Theme";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import logo from "../static/logo.png";
-import profile_defpic from "../static/profile_def.png";
-import "./Header.css";
-import Cart from "./cart/Cart";
+import { useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { Navbar, Text, Avatar, Dropdown, Input } from '@nextui-org/react';
+import { TbHelp, TbLogout, TbSearch, TbUser } from 'react-icons/tb';
+import Theme from './Theme';
+import Login from './Login';
+import SignUp from './SignUp';
+import logo from '../static/logo.png';
+import profile_defpic from '../static/profile_def.png';
+import './Header.css';
+import Cart from './cart/Cart';
 
 export default function Header() {
   // eslint-disable-next-line
@@ -19,12 +19,13 @@ export default function Header() {
     setIsLoginVisible(false);
   };
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3Mjg0OTc1NSwiZXhwIjoxNjcyODUwMzU1fQ.QX_zMO5kwum8vMYUxHCP0jfxbtGILXr1Fcn0v1ADi1o";
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3Mjg0OTc1NSwiZXhwIjoxNjcyODUwMzU1fQ.QX_zMO5kwum8vMYUxHCP0jfxbtGILXr1Fcn0v1ADi1o';
 
   async function logout() {
-    await fetch("http://localhost:5000/logout", {
-      method: "POST",
-      mode: "cors", // no-cors, *cors, same-origin
+    await fetch('http://localhost:5000/logout', {
+      method: 'POST',
+      mode: 'cors', // no-cors, *cors, same-origin
       headers: {
         //'Content-Type': 'application/json',
         authorization: `Bearer ${token}`,
@@ -35,7 +36,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const navigateDropdown = (key: React.Key) => {
-    if (key === "LOGOUT") {
+    if (key === 'LOGOUT') {
       logout();
     } else {
       const path = String(key);
@@ -49,28 +50,51 @@ export default function Header() {
       disableScrollHandler={true}
       variant="floating"
       css={{
-        background: "var(--nextui-colors-navbarGradient)",
-        "@xsMax": {
-          w: "100%",
-          jc: "space-between",
+        background: 'var(--nextui-colors-navbarGradient)',
+        '@xsMax': {
+          w: '100%',
+          jc: 'space-between',
         },
       }}
     >
-      <Navbar.Brand css={{ mr: "$4" }} style={{ display: "flex", gap: "15px" }}>
-        <img src={logo} alt="logo" style={{ width: "50px", height: "auto" }} />
-        <Text b color="inherit" style={{ margin: "0 10px 0 0", fontFamily: "Helvetica, sans-serif", fontSize: "34px" }}>
+      <Navbar.Brand css={{ mr: '$4' }} style={{ display: 'flex', gap: '15px' }}>
+        <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
+        <Text
+          b
+          color="inherit"
+          style={{
+            margin: '0 10px 0 0',
+            fontFamily: 'Helvetica, sans-serif',
+            fontSize: '34px',
+          }}
+        >
           Fox
         </Text>
-        <Navbar.Content style={{ fontSize: "1.1rem" }}>
-          <NavLink to="/" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
-            Events
+        <Navbar.Content style={{ fontSize: '1.1rem' }}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? 'activeLink' : 'inactiveLink'
+            }
+          >
+            News
           </NavLink>
-          <NavLink to="/shop" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
-            Tickets
+          <NavLink
+            to="/shop"
+            className={({ isActive }) =>
+              isActive ? 'activeLink' : 'inactiveLink'
+            }
+          >
+            Shop
           </NavLink>
-          {/* <NavLink to="/cart" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
-            Cart
-          </NavLink> */}
+          <NavLink
+            to="/mytickets"
+            className={({ isActive }) =>
+              isActive ? 'activeLink' : 'inactiveLink'
+            }
+          >
+            My Tickets
+          </NavLink>
         </Navbar.Content>
       </Navbar.Brand>
 
@@ -81,23 +105,23 @@ export default function Header() {
         <Navbar.Item
           hideIn="sm"
           css={{
-            "@xsMax": {
-              w: "100%",
-              jc: "center",
+            '@xsMax': {
+              w: '100%',
+              jc: 'center',
             },
           }}
         >
           <Input
             contentRight={<TbSearch />}
             css={{
-              w: "100%",
-              "@xsMax": {
-                mw: "300px",
+              w: '100%',
+              '@xsMax': {
+                mw: '300px',
               },
-              "& .nextui-input-content--left": {
-                h: "100%",
-                ml: "$4",
-                dflex: "center",
+              '& .nextui-input-content--left': {
+                h: '100%',
+                ml: '$4',
+                dflex: 'center',
               },
             }}
             placeholder="Search..."
@@ -109,14 +133,24 @@ export default function Header() {
         <Navbar.Item>
           <Dropdown placement="bottom-right">
             <Dropdown.Trigger>
-              <Avatar bordered as="button" color="gradient" size="md" src={profile_defpic} />
+              <Avatar
+                bordered
+                as="button"
+                color="gradient"
+                size="md"
+                src={profile_defpic}
+              />
             </Dropdown.Trigger>
-            <Dropdown.Menu aria-label="User menu actions" color="secondary" onAction={key => navigateDropdown(key)}>
-              <Dropdown.Item key="" css={{ height: "$18" }}>
-                <Text b color="inherit" css={{ d: "flex" }}>
+            <Dropdown.Menu
+              aria-label="User menu actions"
+              color="secondary"
+              onAction={key => navigateDropdown(key)}
+            >
+              <Dropdown.Item key="" css={{ height: '$18' }}>
+                <Text b color="inherit" css={{ d: 'flex' }}>
                   Welcome,
                 </Text>
-                <Text b color="warning" css={{ d: "flex" }}>
+                <Text b color="warning" css={{ d: 'flex' }}>
                   Guest!
                 </Text>
               </Dropdown.Item>
@@ -126,7 +160,12 @@ export default function Header() {
               <Dropdown.Item key="/help_and_feedback" icon={<TbHelp />}>
                 Help & Feedback
               </Dropdown.Item>
-              <Dropdown.Item key="LOGOUT" icon={<TbLogout />} withDivider color="error">
+              <Dropdown.Item
+                key="LOGOUT"
+                icon={<TbLogout />}
+                withDivider
+                color="error"
+              >
                 Log Out
               </Dropdown.Item>
             </Dropdown.Menu>

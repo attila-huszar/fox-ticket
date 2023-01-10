@@ -1,4 +1,4 @@
-const rateLimiter = require("express-rate-limit");
+const rateLimiter = require('express-rate-limit');
 
 export const apiLimiter = rateLimiter({
   windowMs: 5 * 60 * 1000, // 5 minutes
@@ -13,5 +13,6 @@ export const regLimiter = rateLimiter({
   max: 15, // Limit each IP to 5 create account requests per `window` (here, per hour)
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-  message: "Too many accounts created from this IP, please try again after an hour",
+  message:
+    'Too many accounts created from this IP, please try again after an hour',
 });

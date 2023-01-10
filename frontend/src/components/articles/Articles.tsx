@@ -1,16 +1,16 @@
-import "./Articles.css";
-import data from "./Data";
-import { Card, Col, Text, Link } from "@nextui-org/react";
+import './Articles.css';
+import data from './article_data';
+import { Card, Col, Text, Link } from '@nextui-org/react';
 
-export default function ShowArticles() {
+export default function Articles() {
   return (
     <div className="articles-main">
       <h2 id="articles-header">Latest News</h2>
       <div className="articles">
-        {data.articles.map((article) => (
+        {data.articles.map(article => (
           <div className="article" key={article.title}>
-            <Card css={{ w: "100%" }}>
-              <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+            <Card css={{ w: '100%' }}>
+              <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
                 <Col>
                   <Text
                     size={12}
