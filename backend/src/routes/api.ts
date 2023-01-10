@@ -11,7 +11,8 @@ router.use(express.json());
 
 router.get('/hello', helloController.getHelloWorld);
 router.post('/admin/products', productController.addNewProduct);
-router.get('/admin/product', productController.getProductById);
+router.get('/admin/products', productController.getProductById);
+router.delete('/admin/products/:productId', productController.deleteProductById);
 router.get('/product', productController.getProductById);
 router.get('/products', productController.getAllProducts);
 router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
