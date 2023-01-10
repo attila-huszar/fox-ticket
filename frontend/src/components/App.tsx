@@ -16,7 +16,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <Helmet>
-        <title>Fox Test</title>
+        <title>Fox Ticket</title>
         <script src="./noflash.js" type="text/javascript" />
       </Helmet>
       <Header />
