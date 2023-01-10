@@ -13,11 +13,11 @@ import data from './article_data';
 
 export default function Articles() {
   const { setVisible, bindings } = useModal();
-  const [articleId, setArticleId] = useState(0);
+  const [displayedArticleId, setDisplayedArticleId] = useState(0);
 
-  const articleTitle = data.articles[articleId].title;
-  const articleDate = data.articles[articleId].date;
-  const articleText = data.articles[articleId].content;
+  const articleTitle = data.articles[displayedArticleId].title;
+  const articleDate = data.articles[displayedArticleId].date;
+  const articleText = data.articles[displayedArticleId].content;
 
   return (
     <>
@@ -30,7 +30,7 @@ export default function Articles() {
                 key={article.id}
                 onPress={() => {
                   setVisible(true);
-                  setArticleId(article.id);
+                  setDisplayedArticleId(article.id);
                 }}
                 style={{ width: '300px', height: '300px' }}
                 isHoverable
