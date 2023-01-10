@@ -16,3 +16,7 @@ export function getAllProducts(): Promise<Product[] | null> {
 export function deleteProductById(productId: number): Promise<number> {
   return Product.destroy({ where: { id: productId } });
 }
+
+export function getProductByName(productName: string): Promise<Product | null> {
+  return Product.findOne({ where: { name: productName } });
+}
