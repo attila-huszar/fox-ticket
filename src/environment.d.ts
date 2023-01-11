@@ -2,8 +2,8 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       PORT: string;
-      ACCESS_TOKEN_SECRET: string;
-      REFRESH_TOKEN_SECRET: string;
+      ACCESS_TOKEN: string;
+      REFRESH_TOKEN: string;
       NODE_ENV: "development" | "production";
     }
   }
