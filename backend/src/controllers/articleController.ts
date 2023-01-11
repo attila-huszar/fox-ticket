@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import status from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
-import { GetAllArticlesResponse } from '../interfaces/getArticles';
-import * as articleService from '../services/articleService';
 import {
+  GetAllArticlesResponse,
   NewArticleRequest,
   NewArticleResponse,
-} from '../interfaces/newArticle';
+} from '../interfaces/articles';
+import * as articleService from '../services/articleService';
 
 export async function getAllArticles(
   req: Request,
