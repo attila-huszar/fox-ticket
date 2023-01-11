@@ -23,6 +23,7 @@ export default class User extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
   })
   email!: string;
 
@@ -35,18 +36,19 @@ export default class User extends Model {
   @Column({
     type: DataType.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   })
   isAdmin: boolean;
 
   @Column({
     type: DataType.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   })
   isVerified: boolean;
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
   })
   token: string;
 
