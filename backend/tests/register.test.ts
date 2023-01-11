@@ -69,7 +69,7 @@ describe('POST /api/register', () => {
     expect(result.statusCode).toEqual(status.BAD_REQUEST);
     const user = result.body;
     expect(user).toEqual({
-      message: 'Validation error: email is already taken',
+      message: 'Validation error: Email is already taken',
     });
     expect(userRepo.getUserByEmail('asd@asd.com')).toBeTruthy();
   });
