@@ -70,7 +70,6 @@ export async function deleteProductById(
   res: Response<void>,
   next: NextFunction
 ): Promise<void> {
-  console.log("controller")
   const productId = Number(req.params.productId);
 
   try {
@@ -92,11 +91,9 @@ export async function editProductById(
   res: Response<EditProductResponse>,
   next: NextFunction
 ): Promise<void> {
-  console.log("controller")
   const productId = Number(req.params.productId);
   const editProduct = req.body;
-  console.log(productId)
-  console.log(editProduct)
+
   try {
     const data = await productService.editProductById(productId, editProduct);
     res.send(data);

@@ -72,7 +72,7 @@ export async function editProductById(productId: number, editProduct: EditProduc
     throw new ParameterError('Invalid productId');
   }
   const affectedRows = await productRepo.editProductById(productId, editProduct);
-  
+
   if (affectedRows[0] === 0) {
     throw new NotFoundError();
   }
