@@ -5,7 +5,7 @@ import {
   NewArticleRequest,
   NewArticleResponse,
 } from '../interfaces/articles';
-import { NotFoundError, ParameterError } from '../errors';
+import { ParameterError } from '../errors';
 
 export async function getAllArticles(): Promise<GetAllArticlesResponse> {
   const allArticles: Article[] = await articleRepo.getAllArticles();
