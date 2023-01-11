@@ -12,6 +12,5 @@ export function getAllArticles(): Promise<GetAllArticlesResponse> {
 export function createArticle(
   newArticle: NewArticleRequest
 ): Promise<NewArticleResponse> {
-  console.log(newArticle);
   return Article.create({ ...newArticle });
 }
