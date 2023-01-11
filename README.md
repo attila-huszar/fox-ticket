@@ -4,6 +4,7 @@
 [React Query](https://react-query-v3.tanstack.com/overview)  
 [React Icons](https://react-icons.github.io/react-icons)  
 [usehooks-ts React hooks library](https://usehooks-ts.com/)  
+[Axios](https://www.npmjs.com/package/axios)  
 [Zod Validation](https://www.npmjs.com/package/zod)  
 [React Helmet](https://www.npmjs.com/package/react-helmet-async)  
 [react-transition-group](https://www.npmjs.com/package/react-transition-group)  
@@ -14,7 +15,6 @@
 
 [Express](https://www.npmjs.com/package/express) ([TS types](https://www.npmjs.com/package/@types/express))  
 [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)  
-[Axios](https://www.npmjs.com/package/axios)  
 [JSON Web Tokens](https://www.npmjs.com/package/jsonwebtoken) ([TS types](https://www.npmjs.com/package/@types/jsonwebtoken))  
 [bcrypt Password hash](https://www.npmjs.com/package/bcrypt) ([TS types](https://www.npmjs.com/package/@types/bcrypt))  
 [Mail Service SendGrid Web API](https://www.npmjs.com/package/@sendgrid/mail)  
