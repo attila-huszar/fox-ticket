@@ -3,9 +3,9 @@ import * as cartRepo from '../repositories/cartRepo';
 
 export async function removeProductFromCart(
   orderId: number
-): Promise<{ ordetId: number }> {
+): Promise<{ orderId: number }> {
   if (orderId < 0 || !Number.isInteger(orderId)) {
-    throw new ParameterError('Invalid ordertId');
+    throw new ParameterError('Invalid orderId');
   }
 
   const deletedRows = await cartRepo.removeOrderFromCart(orderId);
@@ -13,7 +13,7 @@ export async function removeProductFromCart(
   if (deletedRows == 0) {
     throw new NotFoundError();
   } else {
-    return { ordetId: orderId };
+    return { orderId: orderId };
   }
 }
 

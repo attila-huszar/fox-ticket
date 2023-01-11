@@ -5,7 +5,7 @@ import * as cartService from '../services/cartService';
 
 export async function removeProductFromCart(
   req: Request<{ orderId: number }, unknown, unknown, unknown>,
-  res: Response<{ ordetId: number }>,
+  res: Response<{ orderId: number }>,
   next: NextFunction
 ): Promise<void> {
   const removedOrderId = Number(req.params.orderId);
