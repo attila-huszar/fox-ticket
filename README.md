@@ -14,6 +14,7 @@
 
 [Express](https://www.npmjs.com/package/express) ([TS types](https://www.npmjs.com/package/@types/express))  
 [Express Rate Limit](https://www.npmjs.com/package/express-rate-limit)  
+[Axios](https://www.npmjs.com/package/axios)  
 [JSON Web Tokens](https://www.npmjs.com/package/jsonwebtoken) ([TS types](https://www.npmjs.com/package/@types/jsonwebtoken))  
 [bcrypt Password hash](https://www.npmjs.com/package/bcrypt) ([TS types](https://www.npmjs.com/package/@types/bcrypt))  
 [Mail Service SendGrid Web API](https://www.npmjs.com/package/@sendgrid/mail)  
