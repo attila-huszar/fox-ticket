@@ -77,9 +77,7 @@ export async function editProductById(productId: number, editProduct: EditProduc
 
   if (affectedRows[0] === 0) {
     throw new NotFoundError();
-  }
-
-  else {
+  } else {
    let editedProduct={ 
       id : productId, 
       ...editProduct
