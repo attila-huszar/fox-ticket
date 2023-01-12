@@ -7,8 +7,8 @@
     "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config src/server.ts",
     "lint": "eslint .",
     "start": "node -r dotenv/config build/src/server.js",
-    "test": "jest --watchAll",
-    "test:cov": "jest --ci --collectCoverage --passWithNoTests"
+    "test": "jest --runInBand --watchAll",
+    "test:cov": "jest --runInBand --ci --collectCoverage --passWithNoTests"
   },
   "keywords": [],
   "author": "",
