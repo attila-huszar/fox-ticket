@@ -6,6 +6,7 @@ import {
   NewProductRequest,
   EditProductRequest,
   EditProductResponse,
+  EditProductRequestValidator,
 } from '../interfaces/product';
 import _ from 'lodash';
 
@@ -71,6 +72,7 @@ export async function editProductById(productId: number, editProduct: EditProduc
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
+  await EditProductRequestValidator.parseAsync(editProduct)
   const affectedRows = await productRepo.editProductById(productId, editProduct);
 
   if (affectedRows[0] === 0) {
@@ -82,6 +84,6 @@ export async function editProductById(productId: number, editProduct: EditProduc
       id : productId, 
       ...editProduct
     }
-    return editedProduct;
+    return editedProduct as EditProductResponse;
   }
 }

@@ -21,3 +21,7 @@ export function deleteProductById(productId: number): Promise<number> {
 export function editProductById(productId: number, editProduct: EditProductRequest): Promise<number[]> {
   return Product.update({ ...editProduct }, { where: { id: productId }});
 }
+
+export function getProductByName(productName: string): Promise<Product | null> {
+  return Product.findOne({ where: { name: productName } });
+}
