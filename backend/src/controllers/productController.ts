@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import status, { BAD_REQUEST } from 'http-status';
+import status from 'http-status';
+import { ZodError } from 'zod';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
+import { fromZodError } from 'zod-validation-error';
 import {
   GetAllProductsResponse,
   ProductResponse,
@@ -19,10 +21,8 @@ export async function addNewProduct(
     const result = await productService.addNewProduct(product);
     res.send(result);
   } catch (error) {
-    if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
-    } else if (error instanceof NotFoundError) {
-      next(new HttpError(status.NOT_FOUND));
+    if (error instanceof ZodError) {
+      next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
     } else {
       next(new HttpError(status.INTERNAL_SERVER_ERROR));
     }
