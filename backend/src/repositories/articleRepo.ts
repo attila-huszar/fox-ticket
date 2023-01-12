@@ -5,12 +5,12 @@ import {
   NewArticleResponse,
 } from '../interfaces/articles';
 
-export function getAllArticles(): Promise<GetAllArticlesResponse> {
+export function getAllArticles(): Promise<Article[]> {
   return Article.findAll();
 }
 
 export function createArticle(
   newArticle: NewArticleRequest
-): Promise<NewArticleResponse> {
+): Promise<Article> {
   return Article.create({ ...newArticle });
 }
