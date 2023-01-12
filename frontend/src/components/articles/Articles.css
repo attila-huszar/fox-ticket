@@ -1,0 +1,10 @@
+.articles {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-align: center;
+  padding-bottom: 40px;
+}
+
+.articles::-webkit-scrollbar {
+  width: 0;
+}

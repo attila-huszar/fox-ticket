@@ -1,38 +1,44 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Landing from './landing/Landing';
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import "./App.css";
-import Cart from "./cart/Cart";
-import Shop from "./shop/Shop";
-import Navbar from "./Navbar";
-import NotImplementedPage from "./NotImplementedPage";
-import Login from "./Login";
-import Logout from "./logout";
-import Profile from "./profile";
-import Purchases from "./purchases";
-import Register from "./register";
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import Home from './Home';
+import Header from './Header';
+import Shop from './shop/Shop';
+import MyTickets from './MyTickets';
+import Cart from './cart/Cart';
+import Profile from './Profile';
+import Footer from './Footer';
+import NotImplementedPage from './NotImplementedPage';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 export default function App() {
+  const { pathname } = useLocation();
+
   return (
     <HelmetProvider>
       <Helmet>
-        <title>Fox ticket</title>
+        <title>Fox Ticket</title>
         <script src="./noflash.js" type="text/javascript" />
       </Helmet>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/purchases" element={<Purchases />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/cart" element={<Cart/>} />
-          <Route path="/shop" element={<Shop/>} />
-          <Route path="*" element={<NotImplementedPage />} />
-        </Routes>
-      </BrowserRouter>
+      <Header />
+
+      <TransitionGroup>
+        <CSSTransition
+          key={pathname}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
+        >
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/mytickets" element={<MyTickets />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotImplementedPage />} />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
+      <Footer />
     </HelmetProvider>
   );
 }
