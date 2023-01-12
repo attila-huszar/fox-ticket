@@ -1,8 +1,4 @@
-export type User = {
-  email: string;
-  pass: string;
-  role: "user" | "admin";
-};
+import { User } from "../interfaces/User";
 
 export const users: User[] = [
   {

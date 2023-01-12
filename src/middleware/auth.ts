@@ -1,28 +1,22 @@
 import dotenv from "dotenv";
-import { Request, Response, NextFunction } from "express";
-import jwt, { Secret } from "jsonwebtoken";
+import { Response, NextFunction } from "express";
+import status from "http-status";
+import { AuthorizedRequest } from "../interfaces/AuthorizedRequest";
+import { JwtUser } from "../interfaces/JwtUser";
+import { accessVerify } from "../services/tokenVerify";
 
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: "../../.env" });
 
-export interface userAuth extends Request {
-  user?: string;
-}
-
-export function auth(req: userAuth, res: Response, next: NextFunction) {
-  const authHeader = req.headers.Authorization as string;
+export function auth(req: AuthorizedRequest, res: Response, next: NextFunction) {
+  const authHeader = req.Headers.Authorization;
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
+    const user = accessVerify(token) as JwtUser;
 
-    jwt.verify(token, process.env.ACCESS_TOKEN as Secret, (err: any, user: any) => {
-      if (err) {
-        return res.status(403).json({ message: "Invalid Token" });
-      }
-
-      req.user = user.name;
-      next();
-    });
+    req.email = user.email;
+    next();
   } else {
-    res.status(401).json({ message: "Invalid credentials" });
+    res.status(status.UNAUTHORIZED).json({ message: "Invalid credentials" });
   }
 }
