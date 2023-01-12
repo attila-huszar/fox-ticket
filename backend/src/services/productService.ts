@@ -55,5 +55,9 @@ export async function deleteProductById(productId: number): Promise<void> {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
-  await productRepo.deleteProductById(productId);
+  const result = await productRepo.deleteProductById(productId);
+
+  if (result === 0) {
+    throw new NotFoundError();
+  }
 }
