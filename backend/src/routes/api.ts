@@ -4,6 +4,7 @@ import apiErrorHandler from '../middlewares/apiErrorHandler';
 import * as helloController from '../controllers/helloController';
 import * as articleController from '../controllers/articleController';
 import * as productController from '../controllers/productController';
+import * as userController from '../controllers/userController';
 import { HttpError } from '../errors';
 
 const router = express.Router();
@@ -21,6 +22,7 @@ router.delete(
 );
 router.get('/product', productController.getProductById);
 router.get('/products', productController.getAllProducts);
+router.post('/register', userController.registerUser);
 router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
 router.use(apiErrorHandler);
 

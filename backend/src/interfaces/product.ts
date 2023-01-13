@@ -17,10 +17,10 @@ export interface ProductResponse {
 
 export const NewProductRequestValidator = z
   .object({
-    name: z.string().min(3, 'name must be at least 3'),
-    price: z.number().positive(),
-    duration: z.number().positive(),
-    description: z.string(),
+    name: z.string().min(1, 'Name is required'),
+    price: z.number().positive().min(1, 'Price is required'),
+    duration: z.number().positive().min(1, 'Duration is required'),
+    description: z.string().min(1, 'Description is required'),
     type: z.enum(['pass', 'ticket']),
   })
   .refine(async productRequest => {
