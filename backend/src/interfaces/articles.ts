@@ -6,7 +6,7 @@ export interface GetAllArticlesResponse {
   articles: Article[];
 }
 
-export interface NewArticleResponse {
+export interface ArticleResponse {
   newArticle: Article;
 }
 

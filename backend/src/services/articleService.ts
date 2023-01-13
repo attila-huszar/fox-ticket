@@ -4,7 +4,7 @@ import {
   GetAllArticlesResponse,
   NewArticleRequest,
   NewArticleRequestValidator,
-  NewArticleResponse,
+  ArticleResponse,
 } from '../interfaces/articles';
 import { ParameterError } from '../errors';
 import _ from 'lodash';
@@ -20,12 +20,12 @@ export async function getAllArticles(): Promise<GetAllArticlesResponse> {
 
 export async function addNewArticle(
   newArticle: NewArticleRequest
-): Promise<NewArticleResponse> {
+): Promise<ArticleResponse> {
   if (!newArticle) {
     throw new ParameterError('Invalid article');
   }
   await NewArticleRequestValidator.parseAsync(newArticle);
   const article = await articleRepo.createArticle(newArticle);
 
-  return articleResponse(article) as NewArticleResponse;
+  return articleResponse(article) as ArticleResponse;
 }

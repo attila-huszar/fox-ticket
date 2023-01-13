@@ -6,7 +6,7 @@ import { fromZodError } from 'zod-validation-error';
 import {
   GetAllArticlesResponse,
   NewArticleRequest,
-  NewArticleResponse,
+  ArticleResponse,
 } from '../interfaces/articles';
 import * as articleService from '../services/articleService';
 
@@ -25,7 +25,7 @@ export async function getAllArticles(
 
 export async function addNewArticle(
   req: Request<unknown, unknown, NewArticleRequest, unknown>,
-  res: Response<NewArticleResponse>,
+  res: Response<ArticleResponse>,
   next: NextFunction
 ): Promise<void> {
   const article = req.body;
