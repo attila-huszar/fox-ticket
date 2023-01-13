@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import status from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
+import { ZodError } from 'zod';
+import { fromZodError } from 'zod-validation-error';
 import {
   GetAllArticlesResponse,
   NewArticleRequest,
@@ -34,6 +36,8 @@ export async function addNewArticle(
   } catch (error) {
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
+    } else if (error instanceof ZodError) {
+      next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
     } else if (error instanceof NotFoundError) {
       next(new HttpError(status.NOT_FOUND));
     } else {
