@@ -6,12 +6,12 @@ import { JwtUser } from "../interfaces/JwtUser";
 import { User } from "../interfaces/User";
 
 export async function refresh(req: Request, res: Response, next: NextFunction) {
-  const token = req.headers.cookie?.split("=")[1];
+  const cookie = req.headers.cookie?.split("=")[1];
 
-  if (token) {
-    const decoded = refreshVerify(token) as JwtUser;
+  if (cookie) {
+    const decoded: JwtUser | Error = refreshVerify(cookie);
 
-    if ((decoded as unknown) === "invalid token") return res.status(403).json({ message: "Invalid Token" });
+    if (decoded instanceof Error || !decoded.hasOwnProperty("email")) return res.status(status.FORBIDDEN).json({ message: "Invalid Token" });
 
     const user: User = { email: decoded.email, role: decoded.role };
 

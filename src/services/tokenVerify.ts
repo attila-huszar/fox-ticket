@@ -3,15 +3,20 @@ import jwt, { Secret } from "jsonwebtoken";
 
 dotenv.config({ path: "../../.env" });
 
-export function accessVerify(token: string): string | jwt.JwtPayload | Error {
-  const decoded = jwt.verify(token, process.env.ACCESS_TOKEN as Secret);
-  if (!decoded) throw new Error("Invalid Token");
-  return decoded;
+export function accessVerify(token: string) {
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN as Secret);
+
+    return decoded;
+  } catch (error: any) {
+    return error.message;
+  }
 }
 
-export function refreshVerify(token: string): string | jwt.JwtPayload | Error {
+export function refreshVerify(token: string) {
   try {
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN as Secret);
+
     return decoded;
   } catch (error: any) {
     return error.message;
