@@ -1,6 +1,6 @@
-export interface AuthorizedRequest extends Request {
+export interface AuthorizedRequest {
   email: string;
-  Headers: {
-    Authorization?: string;
+  headers: {
+    authorization?: string;
   };
 }
