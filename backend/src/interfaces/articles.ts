@@ -7,7 +7,7 @@ export interface GetAllArticlesResponse {
 }
 
 export interface ArticleResponse {
-  newArticle: Article;
+  article: Article;
 }
 
 export const NewArticleRequestValidator = z
