@@ -2,9 +2,9 @@
 // https://github.com/sendgrid/sendgrid-nodejs
 import sgMail from "@sendgrid/mail";
 import dotenv from "dotenv";
-dotenv.config({ path: "../../sendgrid.env" });
+dotenv.config({ path: "../../.env" });
 
-const link = `http://localhost:3000/verify=abcd`;
+const link = `http://localhost:3000/verify/?key=abcd`;
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 const msg = {
