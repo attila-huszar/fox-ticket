@@ -21,11 +21,7 @@ export async function emailVerify(): Promise<string> {
     from: "attila.huszar@outlook.com",
     subject: "Email verification - Fox Ticket",
     text: `Please verify your email by copying this link to the browser window: ${link}`,
-    html: `<head><style>
-    body {background-color: powderblue;}
-    h2   {margin: auto;}
-    </style></head>
-    <body><h2>Please verify your email by clicking <strong><a href=${link}>this link</a></strong></h2></body>`,
+    html: `<h2 style="text-align: center;">Please verify your email by clicking <strong><a href=${link}>this link</a></strong></h2>`,
   };
 
   sgMail
