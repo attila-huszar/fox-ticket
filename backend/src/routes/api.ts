@@ -16,10 +16,8 @@ router.get('/articles', articleController.getAllArticles);
 router.post('/articles', articleController.addNewArticle);
 router.post('/admin/products', productController.addNewProduct);
 router.get('/admin/products', productController.getProductById);
-router.delete(
-  '/admin/products/:productId',
-  productController.deleteProductById
-);
+router.put('/admin/products/:productId', productController.editProductById);
+router.delete('/admin/products/:productId', productController.deleteProductById);
 router.get('/product', productController.getProductById);
 router.get('/products', productController.getAllProducts);
 router.post('/register', userController.registerUser);

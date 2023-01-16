@@ -29,3 +29,27 @@ export const NewProductRequestValidator = z
   }, 'Name already exists');
 
 export type NewProductRequest = z.infer<typeof NewProductRequestValidator>;
+
+export interface EditProductResponse {
+  id: number;
+  name: string;
+  price: number;
+  duration: number;
+  description: string;
+  type: string;
+}
+
+export const EditProductRequestValidator = z
+  .object({
+    name: z.string().min(1, 'name is required'),
+    price: z.number().min(1, 'price is required'),
+    duration: z.number().min(1, 'duration is required'),
+    description: z.string().min(1, 'description is required'),
+    type: z.enum(["pass", "ticket"]),
+  })
+  .refine(async EditProductRequest => {
+    const name = await productRepo.getProductByName(EditProductRequest.name);
+    return !name;
+  }, 'Product name already exists');
+
+export type EditProductRequest = z.infer<typeof EditProductRequestValidator>;
