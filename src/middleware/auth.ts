@@ -5,7 +5,7 @@ import { AuthorizedRequest } from "../interfaces/AuthorizedRequest";
 import { JwtUser } from "../interfaces/JwtUser";
 import { accessVerify } from "../services/tokenVerify";
 
-dotenv.config({ path: "../../.env" });
+dotenv.config({ path: "../../.env.local" });
 
 export function auth(req: AuthorizedRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;

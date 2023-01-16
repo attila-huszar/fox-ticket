@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 
-dotenv.config({ path: "../../.env" });
+dotenv.config({ path: "../../.env.local" });
 
 function generateServerSecret(): string {
   let secret: string = "";
