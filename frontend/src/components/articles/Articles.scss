@@ -1,0 +1,43 @@
+.articles{
+  box-sizing: border-box;
+  height: 400px;
+  display:flex;
+  overflow-x: auto;
+  scroll-snap-align: auto;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+
+.articles::-webkit-scrollbar{
+  width: 0;
+}
+
+
+#articles-header{
+  margin-bottom:20px;
+}
+
+.article{
+  min-width: 400;
+  height: 100%;
+  line-height: 30px;
+  text-align: center;
+  align-items: center;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 800px) {
+  .article {
+    width: 80%; /* The width is 100%, when the viewport is 800px or smaller */
+    margin-left: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    gap: 10px;
+  }
+  #articles-header{
+    margin-bottom:20px;
+  }
+}
+
