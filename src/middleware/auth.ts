@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
+import { UNAUTHORIZED } from "http-status";
 import { Response, NextFunction } from "express";
-import status from "http-status";
 import { AuthorizedRequest } from "../interfaces/AuthorizedRequest";
-import { JwtUser } from "../interfaces/JwtUser";
 import { accessVerify } from "../services/tokenVerify";
 
 dotenv.config({ path: __dirname + "./../../.env.local" });
@@ -12,13 +11,13 @@ export function auth(req: AuthorizedRequest, res: Response, next: NextFunction) 
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    const decoded: JwtUser | Error = accessVerify(token) as JwtUser;
+    const decoded = accessVerify(token);
 
-    if (decoded instanceof Error || !decoded.hasOwnProperty("email")) return res.status(status.FORBIDDEN).json({ message: "Invalid Token" });
+    if (decoded instanceof Error || !decoded.hasOwnProperty("email")) return res.status(UNAUTHORIZED).json({ redirect: true, message: decoded });
 
     req.email = decoded.email;
     next();
   } else {
-    res.status(status.UNAUTHORIZED).json({ message: "Invalid credentials" });
+    res.status(UNAUTHORIZED).json({ redirect: true, message: "Invalid Credentials" });
   }
 }
