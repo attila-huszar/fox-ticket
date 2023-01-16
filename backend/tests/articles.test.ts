@@ -76,3 +76,62 @@ describe('POST /api/admin/articles', () => {
     expect(articleRepo.getArticleByTitle('What is the future')).toBeTruthy();
   });
 });
+
+describe('PUT /api/admin/articles/:articleId', () => {
+  it('edit an existing article', async () => {
+    await Article.create({
+      title: 'What is the fuuuuture of travelling',
+      content: 'Something future something about travel',
+    });
+
+    const editedArticle = {
+      title: 'What is the future',
+      content: 'Something about future of travel',
+    };
+
+    const result = await request(app)
+      .put(`/api/admin/articles/1`)
+      .send(editedArticle);
+    expect(result.statusCode).toEqual(status.OK);
+
+    const article = result.body;
+    expect(article).toEqual({
+      id: 1,
+      title: 'What is the future',
+      content: 'Something about future of travel',
+    });
+  });
+
+  it('returns Bad Request for missing parameter', async () => {
+    await Article.create({
+      title: 'What is the fuuuuture of travelling',
+      content: 'Something future something about travel',
+    });
+
+    const editedArticle = {
+      content: 'Something about future of travel',
+    };
+
+    const result = await request(app)
+      .put('/api/admin/articles/1')
+      .send(editedArticle);
+    expect(result.statusCode).toEqual(status.BAD_REQUEST);
+  });
+
+  it('Returns invalid articleId for wrong articleId', async () => {
+    await Article.create({
+      title: 'What is the fuuuuture of travelling',
+      content: 'Something future something about travel',
+    });
+
+    const editedArticle = {
+      title: 'What is the future',
+      content: 'Something about future of travel',
+    };
+
+    const result = await request(app)
+      .put('/api/admin/articles/asd')
+      .send(editedArticle);
+    expect(result.statusCode).toEqual(status.BAD_REQUEST);
+  });
+});
