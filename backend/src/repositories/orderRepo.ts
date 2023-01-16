@@ -1,7 +1,7 @@
 import { NewOrderRequest } from '../interfaces/order';
 import Order from '../models/Order';
 
-export function getAllOrders(userId: number): Promise<Order[] | null> {
+export function getAllOrders(userId: number): Promise<Order[]> {
   return Order.findAll({
     where: {
       userId: userId,

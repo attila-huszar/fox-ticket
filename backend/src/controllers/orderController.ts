@@ -4,7 +4,7 @@ import { HttpError, NotFoundError, ParameterError } from '../errors';
 import {
   GetAllOrdersResponse,
   NewOrderRequest,
-  NewOrderResponse,
+  OrderResponse,
 } from '../interfaces/order';
 import * as orderService from '../services/orderService';
 
@@ -12,20 +12,26 @@ export async function getAllOrders(
   req: Request<{ userId: number }, unknown, unknown, unknown>,
   res: Response<GetAllOrdersResponse>,
   next: NextFunction
-): Promise<any> {
-  const params = Number(req.params.userId);
+): Promise<void> {
+  const userId = Number(req.params.userId);
 
   try {
-    const data = await orderService.getAllOrders(params);
+    const data = await orderService.getAllOrders(userId);
     res.send(data);
   } catch (error) {
-    next(new HttpError(status.INTERNAL_SERVER_ERROR));
+    if (error instanceof ParameterError) {
+      next(new HttpError(status.BAD_REQUEST, error.message));
+    } else if (error instanceof NotFoundError) {
+      next(new HttpError(status.NOT_FOUND));
+    } else {
+      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+    }
   }
 }
 
 export async function addNewOrder(
   req: Request<unknown, unknown, NewOrderRequest, unknown>,
-  res: Response<NewOrderResponse>,
+  res: Response<OrderResponse>,
   next: NextFunction
 ): Promise<void> {
   const order = req.body;
@@ -36,8 +42,6 @@ export async function addNewOrder(
   } catch (error) {
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
-    } else if (error instanceof NotFoundError) {
-      next(new HttpError(status.NOT_FOUND));
     } else {
       next(new HttpError(status.INTERNAL_SERVER_ERROR));
     }

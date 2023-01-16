@@ -7,13 +7,8 @@ import Person from '../src/models/person';
 
 describe('GET /api/purchases/:id', () => {
   it('returns every order with the status for the given id', async () => {
-    const person = {
-      name: 'Bácsi',
-    };
-
-    await Person.create(person);
-
     const user = {
+      id: 1,
       name: 'Bácsi',
       email: 'sasa@sadfa.com',
       password: 'asdfasdf',

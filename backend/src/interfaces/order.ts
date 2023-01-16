@@ -9,7 +9,6 @@ export interface PurchasedOrdersResponse {
 }
 
 export interface NewOrderRequest {
-  id: number;
   orderDate: string;
   status: string;
   paidDate: string;
@@ -17,11 +16,6 @@ export interface NewOrderRequest {
   productId: number;
   userId: number;
 }
-
-export interface NewOrderResponse {
-  newOrder: Order;
-}
-
 export interface OrderResponse {
   id: number;
   orderDate: string;
