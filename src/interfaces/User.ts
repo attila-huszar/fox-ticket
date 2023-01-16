@@ -1,5 +1,6 @@
 export type User = {
   email: string;
   pass?: string;
-  role: "user" | "admin" | "inactive";
+  isAdmin: boolean;
+  isVerified?: boolean;
 };

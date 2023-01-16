@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 
-dotenv.config({ path: "../../.env.local" });
+dotenv.config({ path: __dirname + "./../../.env.local" });
 
 function generateServerSecret(): string {
   let secret: string = "";
@@ -20,14 +20,14 @@ export function resetServerSecret(): void {
   let refresh: string = generateServerSecret();
 
   try {
-    fs.renameSync(path.join(__dirname, "..", "..", ".env"), path.join(__dirname, "..", "..", ".env.old"));
+    fs.renameSync(path.join(__dirname, "..", "..", ".env.local"), path.join(__dirname, "..", "..", ".env.old"));
 
     env = fs.readFileSync(path.join(__dirname, "..", "..", ".env.old"), "utf-8");
 
     let envTemp = env.replace(/(?<=ACCESS_TOKEN=).*/, access);
     let envNew = envTemp.replace(/(?<=REFRESH_TOKEN=).*/, refresh);
 
-    fs.writeFileSync(path.join(__dirname, "..", "..", ".env"), envNew);
+    fs.writeFileSync(path.join(__dirname, "..", "..", ".env.local"), envNew);
   } catch (error: any) {
     console.error(`ERROR: ${error.message}`);
     return;

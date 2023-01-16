@@ -13,7 +13,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
 
     if (decoded instanceof Error || !decoded.hasOwnProperty("email")) return res.status(status.FORBIDDEN).json({ message: "Invalid Token" });
 
-    const user: User = { email: decoded.email, role: decoded.role };
+    const user: User = { email: decoded.email, isAdmin: decoded.isAdmin };
 
     const accessToken = signAccessToken(user);
     const refreshToken = signRefreshToken(user);

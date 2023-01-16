@@ -4,11 +4,19 @@ export const users: User[] = [
   {
     email: "admin@foxticket.com",
     pass: "admin",
-    role: "admin",
+    isAdmin: true,
+    isVerified: true,
   },
   {
     email: "user@foxticket.com",
     pass: "user",
-    role: "user",
+    isAdmin: false,
+    isVerified: true,
+  },
+  {
+    email: "cinkes@gmail.com",
+    pass: "cinkes",
+    isAdmin: true,
+    isVerified: false,
   },
 ];
