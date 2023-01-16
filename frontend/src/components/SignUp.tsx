@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Text, Spacer } from '@nextui-org/react';
+import fetchRegister from '../api/fetchRegister';
 
-export default function Login() {
+export default function SignUp() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConf, setPasswordConf] = useState('');
@@ -77,14 +79,17 @@ export default function Login() {
   }, [passwordConf]);
 
   const signUpHandler = () => setVisible(true);
+
   const closeHandler = () => {
     setVisible(false);
+    setName('');
     setEmail('');
     setPassword('');
     setPasswordConf('');
   };
 
   const handleLogin = async () => {
+    fetchRegister({ name, email, password });
     setVisible(false);
     //setToken(token);
   };
@@ -96,7 +101,7 @@ export default function Login() {
         auto
         color="gradient"
         shadow
-        onClick={signUpHandler}
+        onPress={signUpHandler}
       >
         Sign Up
       </Button>
@@ -114,6 +119,15 @@ export default function Login() {
         </Modal.Header>
         <Modal.Body>
           <Spacer y={0.2} />
+          <Input
+            onChange={e => setName(e.target.value)}
+            required
+            bordered
+            fullWidth
+            labelPlaceholder="Name"
+            size="lg"
+          />
+          <Spacer y={1.5} />
           <Input
             onChange={e => setEmail(e.target.value)}
             required
@@ -160,7 +174,7 @@ export default function Login() {
             Close
           </Button>
           <Button auto onPress={handleLogin} color="gradient">
-            Sign in
+            Sign Up
           </Button>
         </Modal.Footer>
       </Modal>
