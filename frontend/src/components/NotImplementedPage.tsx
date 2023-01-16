@@ -1,23 +1,32 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "@nextui-org/react";
-import { TbSmartHome } from "react-icons/tb";
-import logo from "../assets/fox.png";
-import "./NotImplementedPage.css";
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@nextui-org/react';
+import { TbArrowBackUp } from 'react-icons/tb';
+import logo from '../static/logo.png';
 
 export default function NotImplementedPage() {
   const navigate = useNavigate();
-  const routeChange = () => {
-    const path = "/";
-    navigate(path);
-  };
 
   return (
-    <div className="NotImplementedPage">
-      <h1>This page is not implemented yet</h1>
-      <img src={logo} id="logo" alt="logo" />
-      <Button shadow size="lg" icon={<TbSmartHome />} auto color="gradient" rounded onClick={routeChange} id="homeBtn">
-        Home
+    <>
+      <h1 style={{ padding: '90px', fontSize: '2rem', textAlign: 'center' }}>
+        This page is not implemented yet
+      </h1>
+      <img
+        src={logo}
+        style={{ margin: '0 auto 100px', maxWidth: '150px', maxHeight: 'auto' }}
+        alt="logo"
+      />
+      <Button
+        style={{ margin: 'auto' }}
+        shadow
+        size="lg"
+        icon={<TbArrowBackUp />}
+        auto
+        color="gradient"
+        onPress={() => navigate(-1)}
+      >
+        Back
       </Button>
-    </div>
+    </>
   );
 }
