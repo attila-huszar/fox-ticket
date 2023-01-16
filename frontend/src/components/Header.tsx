@@ -59,6 +59,8 @@ export default function Header() {
     >
       <Navbar.Brand css={{ mr: '$4' }} style={{ display: 'flex', gap: '15px' }}>
         <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
+        <NavLink
+            to="/">
         <Text
           b
           color="inherit"
@@ -70,6 +72,7 @@ export default function Header() {
         >
           Fox
         </Text>
+        </NavLink>
         <Navbar.Content style={{ fontSize: '1.1rem' }}>
           <NavLink
             to="/"
