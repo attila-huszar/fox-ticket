@@ -25,9 +25,8 @@ export default function Articles() {
       <Grid.Container gap={3}>
         <div className="articles">
           {data.articles.map(article => (
-            <Grid>
+            <Grid key={article.id}>
               <Card
-                key={article.id}
                 onPress={() => {
                   setVisible(true);
                   setDisplayedArticleId(article.id);
