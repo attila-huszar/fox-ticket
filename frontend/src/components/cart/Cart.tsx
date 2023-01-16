@@ -1,13 +1,6 @@
-import React from "react";
-import shopIcon from "./shopicon.png";
-
-import {
-  Modal,
-  Text,
-  Button,
-  Row,
-  Image
-} from "@nextui-org/react";
+import React from 'react';
+import { Modal, Text, Button, Row, Badge } from '@nextui-org/react';
+import { TbShoppingCart } from 'react-icons/tb';
 
 export default function Cart() {
   const [visible, setVisible] = React.useState(false);
@@ -19,25 +12,25 @@ export default function Cart() {
 
   return (
     <>
-      <Button auto color="secondary" shadow onClick={handler}>
-      <Image
-      src={shopIcon}
-      alt="Cart"
-      css={{width: "20px", height: "15px", margin: "0"}}
-    /> Cart
-      </Button>
+      <Badge color="error" content={2}>
+        <Button
+          auto
+          color="secondary"
+          shadow
+          rounded
+          icon={<TbShoppingCart />}
+          onClick={handler}
+        ></Button>
+      </Badge>
+
       <Modal
         closeButton
         blur
-        aria-labelledby="modal-title"
+        aria-labelledby="shopping cart"
         open={visible}
         onClose={closeHandler}
       >
-        <Modal.Header>
-          <Text id="modal-title" size={18}>
-            My Cart
-          </Text>
-        </Modal.Header>
+        <Modal.Header></Modal.Header>
         <Modal.Body>
           <Row justify="space-between">
             <Text>One day ticket</Text>
@@ -46,7 +39,7 @@ export default function Cart() {
               auto
               flat
               color="secondary"
-              css={{ marginTop: "8px", marginBottom: "16px" }}
+              css={{ marginTop: '8px', marginBottom: '16px' }}
             >
               Remove
             </Button>
