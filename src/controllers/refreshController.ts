@@ -1,17 +1,16 @@
 import { Request, Response, NextFunction } from "express";
-import status from "http-status";
+import { OK, UNAUTHORIZED } from "http-status";
 import { refreshVerify } from "../services/tokenVerify";
 import { signAccessToken, signRefreshToken } from "../services/tokenSign";
-import { JwtUser } from "../interfaces/JwtUser";
 import { User } from "../interfaces/User";
 
 export async function refresh(req: Request, res: Response, next: NextFunction) {
   const cookie = req.headers.cookie?.split("=")[1];
 
   if (cookie) {
-    const decoded: JwtUser | Error = refreshVerify(cookie);
+    const decoded = refreshVerify(cookie);
 
-    if (decoded instanceof Error || !decoded.hasOwnProperty("email")) return res.status(status.FORBIDDEN).json({ message: "Invalid Token" });
+    if (decoded instanceof Error || !decoded.hasOwnProperty("email")) return res.status(UNAUTHORIZED).json({ success: false, message: decoded });
 
     const user: User = { email: decoded.email, isAdmin: decoded.isAdmin };
 
@@ -19,8 +18,8 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
     const refreshToken = signRefreshToken(user);
 
     res.cookie("jwt", refreshToken, { path: "/refresh", httpOnly: true, sameSite: "none", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
-    res.status(status.OK).json({ accessToken });
+    res.status(OK).json({ user: user.email, admin: user.isAdmin, token: accessToken });
   } else {
-    res.status(status.UNAUTHORIZED).json({ message: "Unauthorized" });
+    res.status(UNAUTHORIZED).json({ success: false, message: "Unauthorized" });
   }
 }

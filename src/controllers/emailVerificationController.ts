@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import status, { FORBIDDEN, OK } from "http-status";
+import { BAD_REQUEST, FORBIDDEN, INTERNAL_SERVER_ERROR, NOT_FOUND, OK } from "http-status";
 import { HttpError, NotFoundError, ParameterError } from "../errors";
 import { User } from "../interfaces/User";
 import { parseJwt } from "../services/parseJwt";
@@ -10,30 +10,28 @@ export async function emailVerification(req: Request, res: Response, next: NextF
 
   if (verificationQuery) {
     try {
-      const jwtRegex = /[a-zA-Z0-9]+\.[a-zA-Z0-9]+\.[a-zA-Z0-9]+/;
-      if (!jwtRegex.test(verificationQuery)) return res.status(status.FORBIDDEN).send({ message: "Malformed verification query" });
+      const jwtRegex = /[a-z0-9]+\.[a-z0-9]+\.[a-z0-9]+/i;
+      if (!jwtRegex.test(verificationQuery)) return res.status(FORBIDDEN).send({ success: false, message: "Malformed verification query" });
 
       const jwtPayload: User = parseJwt(verificationQuery);
-
-      if (jwtPayload.email === "") return res.status(status.FORBIDDEN).json({ message: "Invalid Token" });
-
-      const user = jwtPayload.email;
+      if (!jwtPayload) return res.status(FORBIDDEN).json({ success: false, message: "Invalid verification token" });
+      if (jwtPayload.email === "") return res.status(FORBIDDEN).json({ success: false, message: "Invalid verification token" });
 
       if (verificationQuery === (await verificationKey)) {
-        res.status(OK).send({ message: `${user} verified` });
+        res.status(OK).send({ success: true, email: jwtPayload.email, message: "Verified" });
       } else {
-        res.status(FORBIDDEN).send({ error: true, message: `${user} not verified, expired or invalid token` });
+        res.status(FORBIDDEN).send({ success: false, email: jwtPayload.email, message: "Token is expired or invalid" });
       }
     } catch (error: any) {
       if (error instanceof ParameterError) {
-        next(new HttpError(status.BAD_REQUEST, error.message));
+        next(new HttpError(BAD_REQUEST, error.message));
       } else if (error instanceof NotFoundError) {
-        next(new HttpError(status.NOT_FOUND));
+        next(new HttpError(NOT_FOUND));
       } else {
-        next(new HttpError(status.INTERNAL_SERVER_ERROR));
+        next(new HttpError(INTERNAL_SERVER_ERROR));
       }
     }
   } else {
-    res.status(status.NOT_FOUND).send({ error: true, message: "Verification key missing" });
+    res.redirect("/"); //.send({ success: false, message: "Verification key missing" });
   }
 }
