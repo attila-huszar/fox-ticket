@@ -3,9 +3,15 @@ import * as articleRepo from '../repositories/articleRepo';
 import {
   GetAllArticlesResponse,
   NewArticleRequest,
-  NewArticleResponse,
+  NewArticleRequestValidator,
+  ArticleResponse,
 } from '../interfaces/articles';
 import { ParameterError } from '../errors';
+import _ from 'lodash';
+
+const articleResponse = (article: object) => {
+  return _.pick(article, ['id', 'title', 'content', 'publish_date']);
+};
 
 export async function getAllArticles(): Promise<GetAllArticlesResponse> {
   const allArticles: Article[] = await articleRepo.getAllArticles();
@@ -14,11 +20,12 @@ export async function getAllArticles(): Promise<GetAllArticlesResponse> {
 
 export async function addNewArticle(
   newArticle: NewArticleRequest
-): Promise<NewArticleResponse> {
+): Promise<ArticleResponse> {
   if (!newArticle) {
     throw new ParameterError('Invalid article');
   }
+  await NewArticleRequestValidator.parseAsync(newArticle);
   const article = await articleRepo.createArticle(newArticle);
 
-  return { newArticle: article };
+  return articleResponse(article) as ArticleResponse;
 }
