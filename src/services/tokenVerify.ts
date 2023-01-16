@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import jwt, { Secret } from "jsonwebtoken";
 
-dotenv.config({ path: "../../.env.local" });
+dotenv.config({ path: __dirname + "./../../.env.local" });
 
 export function accessVerify(token: string) {
   try {

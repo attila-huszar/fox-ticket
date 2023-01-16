@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import { app } from "./app";
 
-dotenv.config({ path: "../.env.local" });
+dotenv.config({ path: __dirname + "./../../.env.local" });
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server active on http://localhost:${process.env.PORT || 5000}`);
+app.listen(process.env.SERVER_PORT || 5000, () => {
+  console.log(`Server active on http://localhost:${process.env.SERVER_PORT || 5000}`);
 });

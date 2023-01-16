@@ -14,7 +14,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
 
     res.cookie("jwt", refreshToken, { path: "/refresh", httpOnly: true, sameSite: "none", secure: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
 
-    res.json({ user: user.email, role: user.role, accessToken });
+    res.json({ user: user.email, admin: user.isAdmin, token: accessToken });
   } else {
     res.status(401).json({ message: "Invalid credentials" });
   }
