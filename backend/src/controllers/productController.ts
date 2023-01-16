@@ -11,8 +11,6 @@ import {
   EditProductResponse,
 } from '../interfaces/product';
 import * as productService from '../services/productService';
-import { fromZodError } from 'zod-validation-error';
-import { ZodError } from 'zod';
 
 export async function addNewProduct(
   req: Request<unknown, unknown, NewProductRequest, unknown>,

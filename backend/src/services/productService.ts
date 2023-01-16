@@ -4,13 +4,10 @@ import {
   GetAllProductsResponse,
   ProductResponse,
   NewProductRequest,
-<<<<<<< HEAD
   EditProductRequest,
   EditProductResponse,
   EditProductRequestValidator,
-=======
   NewProductRequestValidator,
->>>>>>> master
 } from '../interfaces/product';
 import _ from 'lodash';
 
