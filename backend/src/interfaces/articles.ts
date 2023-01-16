@@ -10,7 +10,7 @@ export interface ArticleResponse {
   article: Article;
 }
 
-export const NewArticleRequestValidator = z
+export const ArticleRequestValidator = z
   .object({
     title: z.string().min(1, 'Title is required'),
     content: z.string().min(1, 'Content is required'),
@@ -20,4 +20,4 @@ export const NewArticleRequestValidator = z
     return !article;
   }, 'Article title already exists');
 
-export type NewArticleRequest = z.infer<typeof NewArticleRequestValidator>;
+export type ArticleRequest = z.infer<typeof ArticleRequestValidator>;
