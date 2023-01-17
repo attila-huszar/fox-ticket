@@ -3,25 +3,25 @@
 import dotenv from "dotenv";
 import sgMail from "@sendgrid/mail";
 import { User } from "../interfaces/User";
-import { users } from "../services/mockUsers";
-import { signEmailVerification } from "./signEmailVerification";
+import { mockUsers } from "./mockUsers";
+import { signEmailVerification } from "./jwtSign";
 
 dotenv.config({ path: __dirname + "./../../.env.local" });
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-const user: User = users[2];
+const user: User = mockUsers[2];
 
-export async function emailVerify(): Promise<string> {
+export async function sendVerificationEmail(): Promise<string> {
   const verificationKey = signEmailVerification(user);
 
-  const link = `http://localhost:${process.env.SERVER_PORT}/verify?key=${verificationKey}`;
+  const link = `http://${process.env.HOST}:${process.env.SERVER_PORT}/verify?key=${verificationKey}`;
 
   const message = {
     to: user.email,
     from: "attila.huszar@outlook.com",
     subject: "Email verification - Fox Ticket",
     text: `Please verify your email by copying this link to the browser window: ${link}`,
-    html: `<h2 style="text-align: center;">Please verify your email by clicking <strong><a href=${link}>this link</a></strong></h2>`,
+    html: `<h2 style="text-align: center;">Please verify your email by clicking <strong><a href=${link}>this link</a></strong></h2><p style="text-align: center;"><em>Link is valid for 24 hours<em></p>`,
   };
 
   sgMail

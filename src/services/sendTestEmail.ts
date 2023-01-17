@@ -1,4 +1,4 @@
-import { emailVerify } from "./emailVerify";
+import { sendVerificationEmail } from "./sendVerificationEmail";
 import readline from "readline";
 
 export let verificationKey: Promise<string>;
@@ -21,7 +21,7 @@ function askTestEmail(question: string) {
 }
 
 function sendTestEmail(): Promise<string> {
-  const key = emailVerify();
+  const key = sendVerificationEmail();
   return key;
 }
 

@@ -4,7 +4,7 @@ import { User } from "../interfaces/User";
 
 dotenv.config({ path: __dirname + "./../../.env.local" });
 
-export function accessVerify(token: string): User | Error {
+export function verifyAccessToken(token: string): User | Error {
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN as Secret);
     return decoded as User;
@@ -13,7 +13,7 @@ export function accessVerify(token: string): User | Error {
   }
 }
 
-export function refreshVerify(token: string): User | Error {
+export function verifyRefreshToken(token: string): User | Error {
   try {
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN as Secret);
     return decoded as User;

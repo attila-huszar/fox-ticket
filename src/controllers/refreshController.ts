@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { OK, UNAUTHORIZED } from "http-status";
-import { refreshVerify } from "../services/tokenVerify";
-import { signAccessToken, signRefreshToken } from "../services/tokenSign";
+import { verifyRefreshToken } from "../services/jwtVerify";
+import { signAccessToken, signRefreshToken } from "../services/jwtSign";
 import { User } from "../interfaces/User";
 
 export async function refresh(req: Request, res: Response, next: NextFunction) {
   const cookie = req.headers.cookie?.split("=")[1];
 
   if (cookie) {
-    const decoded = refreshVerify(cookie);
+    const decoded = verifyRefreshToken(cookie);
 
     if (decoded instanceof Error || !decoded.hasOwnProperty("email")) return res.status(UNAUTHORIZED).json({ success: false, message: decoded });
 
