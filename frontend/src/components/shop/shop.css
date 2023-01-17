@@ -1,0 +1,22 @@
+@media only screen and (max-device-width: 480px) {
+  root{
+    min-width: 100%;
+  }
+  
+  #cardContainer{
+    width: auto;
+
+  }
+  
+  h1{
+    text-align: center;
+  }
+  
+  #shopCards{
+    display: grid;
+    grid-template-columns: 1fr ;
+    grid-template-rows: repeat(autofill, minmax(300px, 1fr));
+    column-gap: 5%;
+    width: 90%;
+  }
+}
