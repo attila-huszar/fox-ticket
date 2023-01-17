@@ -7,6 +7,7 @@ import * as productController from '../controllers/productController';
 import * as userController from '../controllers/userController';
 import * as cartController from '../controllers/cartController';
 import { HttpError } from '../errors';
+import * as orderController from '../controllers/orderController';
 
 const router = express.Router();
 
@@ -21,6 +22,8 @@ router.put('/admin/products/:productId', productController.editProductById);
 router.delete('/admin/products/:productId', productController.deleteProductById);
 router.get('/product', productController.getProductById);
 router.get('/products', productController.getAllProducts);
+router.get('/purchases/:userId', orderController.getAllOrders);
+router.post('/purchases', orderController.addNewOrder);
 router.post('/register', userController.registerUser);
 router.delete('/orders/:orderId', cartController.removeProductFromCart);
 router.delete('/orders', cartController.removePendingOrderFromCart);
