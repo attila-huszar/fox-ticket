@@ -1,5 +1,9 @@
 import Order from '../models/Order';
 
+export interface PendingOrdersByUserIdResponse {
+  pendingOrders: Order[];
+}
+
 export interface GetAllOrdersResponse {
   allOrders: Order[];
 }

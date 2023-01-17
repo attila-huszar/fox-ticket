@@ -4,6 +4,7 @@ import {
   NewOrderRequest,
   OrderResponse,
   PurchasedOrdersResponse,
+  PendingOrdersByUserIdResponse,
 } from '../interfaces/order';
 import Order from '../models/Order';
 import User from '../models/User';
@@ -45,4 +46,18 @@ export async function addNewOrder(
 
   const order = await orderRepo.createOrder(newOrder);
   return orderResponse(order) as OrderResponse;
+}
+
+export async function getAllPendingOrdersByUserId(
+  userId: number
+): Promise<PendingOrdersByUserIdResponse> {
+  if (userId < 0 || !Number.isInteger(userId)) {
+    throw new ParameterError('Invalid userId');
+  }
+  const user: User = await userRepo.getUserById(userId);
+  if (!user) {
+    throw new NotFoundError("User doesn't exist with this id");
+  }
+  const orders: Order[] = await orderRepo.getPendingOrders(userId);
+  return { pendingOrders: orders };
 }
