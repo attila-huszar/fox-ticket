@@ -2,14 +2,14 @@
 // https://github.com/sendgrid/sendgrid-nodejs
 import dotenv from "dotenv";
 import sgMail from "@sendgrid/mail";
-import { User } from "../interfaces/User";
+import { UserJwt } from "../interfaces/User";
 import { mockUsers } from "./mockUsers";
 import { signEmailVerification } from "./jwtSign";
 
 dotenv.config({ path: __dirname + "./../../.env.local" });
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
-const user: User = mockUsers[2];
+const user: UserJwt = mockUsers[2];
 
 export async function sendVerificationEmail(): Promise<string> {
   const verificationKey = signEmailVerification(user);

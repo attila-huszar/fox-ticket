@@ -1,9 +1,9 @@
-import { User } from "../interfaces/User";
+import { UserJwt } from "../interfaces/User";
 
-export function jwtParse(token: string): User {
+export function jwtParse(token: string): UserJwt {
   const base64 = Buffer.from(token.split(".")[1], "base64").toString();
 
-  let decoded: User = {
+  let decoded: UserJwt = {
     email: "",
     isAdmin: false,
   };

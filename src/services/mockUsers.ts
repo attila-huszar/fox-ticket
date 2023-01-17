@@ -1,6 +1,6 @@
-import { User } from "../interfaces/User";
+import { UserJwt } from "../interfaces/User";
 
-export const mockUsers: User[] = [
+export const mockUsers: UserJwt[] = [
   {
     email: "admin@foxticket.com",
     pass: "admin",
