@@ -35,5 +35,38 @@ describe('GET /api/purchases/:id', () => {
     expect(result.statusCode).toEqual(status.OK);
     const { allOrders } = result.body;
     expect(allOrders.length).toEqual(1);
-  });
+  });  
+});
+
+describe('GET /api/orders/:id', () => {
+  it('returns pending orders for the given UserId', async () => {
+    const user = {
+      id: 1,
+      name: 'Bácsi',
+      email: 'sasa@sadfa.com',
+      password: 'asdfasdf',
+      isAdmin: true,
+      isVerified: true,
+      token: 'sdfgdf',
+    };
+
+    await User.create(user);
+
+    const order = {
+      orderDate: Date.now(),
+      status: 'pending',
+      amount: 1,
+      paidDate: Date.now(),
+      expirationDate: Date.now(),
+      userId: 1,
+    };
+
+    await Order.create(order);
+
+    const result = await request(app).get(`/api/orders/1`);
+
+    expect(result.statusCode).toEqual(status.OK);
+    const { pendingOrders } = result.body;
+    expect(pendingOrders.length).toEqual(1);
+  });  
 });
