@@ -7,21 +7,26 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConf, setPasswordConf] = useState('');
-
+  const [errorMessage, setErrorMessage] = useState('');
   const [visible, setVisible] = useState(false);
 
-  const validateEmail = (value: string) => {
-    return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+  const validateEmail = (email: string) => {
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return emailRegex.test(email);
   };
 
-  const validatePass = (value: string) => {
-    return value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/);
+  const validatePass = (password: string) => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/;
+    return passwordRegex.test(password);
   };
 
   const validateMatch = (value: string) => {
     if (value === password) return true;
   };
 
+  const validateName = (name: string) => {
+    if (name.length > 3 && name.length < 24) return true;
+  };
   interface help {
     text: string;
     color:
@@ -47,6 +52,20 @@ export default function SignUp() {
       color: isValid ? 'success' : 'warning',
     };
   }, [email]);
+
+  const helperName: help = React.useMemo(() => {
+    if (!name)
+      return {
+        text: '',
+        color: 'default',
+      };
+    const isValid = validateName(name);
+
+    return {
+      text: isValid ? 'Valid name' : 'Enter a valid name',
+      color: isValid ? 'success' : 'warning',
+    };
+  }, [name]);
 
   const helperPass: help = React.useMemo(() => {
     if (!password)
@@ -88,10 +107,28 @@ export default function SignUp() {
     setPasswordConf('');
   };
 
-  const handleLogin = async () => {
-    fetchRegister({ name, email, password });
-    setVisible(false);
-    //setToken(token);
+  const handleSignUp = async () => {
+    if (password === passwordConf) {
+      try {
+        await fetchRegister({ name, email, password });
+      } catch (error) {
+        if (error instanceof Error) {
+          const errors = [];
+          errors.push(error.message.split(';'));
+
+          for (let i = 0; i < errors.length; i++) {
+            setErrorMessage(errors[0][i]);
+          }
+          setVisible(true);
+          return;
+        }
+      }
+      setErrorMessage('');
+      //setToken(token);
+      setVisible(false);
+    } else {
+      setErrorMessage('Password does not match');
+    }
   };
 
   return (
@@ -123,6 +160,10 @@ export default function SignUp() {
             onChange={e => setName(e.target.value)}
             required
             bordered
+            status={helperName.color}
+            color={helperName.color}
+            helperColor={helperName.color}
+            helperText={helperName.text}
             fullWidth
             labelPlaceholder="Name"
             size="lg"
@@ -169,11 +210,12 @@ export default function SignUp() {
           />
           <Spacer y={0.2} />
         </Modal.Body>
+        <Text color="error">{errorMessage}</Text>
         <Modal.Footer>
           <Button auto flat color="error" onPress={closeHandler}>
             Close
           </Button>
-          <Button auto onPress={handleLogin} color="gradient">
+          <Button auto onPress={handleSignUp} color="gradient">
             Sign Up
           </Button>
         </Modal.Footer>
