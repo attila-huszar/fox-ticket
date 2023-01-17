@@ -10,7 +10,7 @@ export function getUserByName(username: string): Promise<User | null> {
 }
 
 export function getUserById(userId: number): Promise<User | null> {
-  return User.findOne({ where: { id: userId } });
+  return User.findByPk(userId);
 }
 
 export function getUserByEmail(userEmail: string): Promise<User | null> {
