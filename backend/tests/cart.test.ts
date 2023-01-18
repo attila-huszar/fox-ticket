@@ -4,8 +4,6 @@ import * as cartRepo from '../src/repositories/cartRepo';
 import app from '../src/app';
 import Order from '../src/models/Order';
 
-
-
 describe('DELETE /api/orders/:orderId', () => {
     it('deletes an existing order by ID', async () => {
       const order = await Order.create({
