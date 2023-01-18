@@ -1,4 +1,4 @@
-import { Grid, Button, Container, Card, Row, Text } from "@nextui-org/react";
+import { Grid, Button, Container, Card, Row, Text } from '@nextui-org/react';
 
 export default function Shop() {
   return (
@@ -6,14 +6,16 @@ export default function Shop() {
       <Text h1>Tickets and Passes</Text>
       <Grid.Container gap={2}>
         <Grid sm={12} md={5}>
-          <Card css={{ mw: "350px" }}>
+          <Card css={{ mw: '350px' }}>
             <Card.Header>
-              <Text css={{ margin: "auto" }}>One Day Ticket</Text>
+              <Text css={{ margin: 'auto' }}>One Day Ticket</Text>
             </Card.Header>
             <Card.Divider />
-            <Card.Body css={{ py: "$10" }}>
-              <Text css={{ margin: "auto" }}>You can use this ticket for 24 hours</Text>
-              <Text css={{ margin: "auto" }}>900 Ft</Text>
+            <Card.Body css={{ py: '$10' }}>
+              <Text css={{ margin: 'auto' }}>
+                You can use this ticket for 24 hours
+              </Text>
+              <Text css={{ margin: 'auto' }}>900 Ft</Text>
             </Card.Body>
             <Card.Divider />
             <Card.Footer>

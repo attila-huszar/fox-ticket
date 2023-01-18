@@ -10,18 +10,20 @@ import HttpError from "../errors/httpError";
 import { NextFunction } from "express";
 const express = require("express");
 
-export const apiRouter = express.Router();
+const router = express.Router();
 
-apiRouter.use(express.json());
+router.use(express.json());
 
 //// GET
-apiRouter.get("/", auth, home);
-apiRouter.get("/verify", emailVerification);
+router.get("/", auth, home);
+router.get("/verify", emailVerification);
 
 //// POST
-apiRouter.post("/login", login);
-apiRouter.post("/refresh", refresh);
-apiRouter.post("/logout", auth, logout);
+router.post("/login", login);
+router.post("/refresh", refresh);
+router.post("/logout", auth, logout);
 
 //// 404
-apiRouter.use("/*", (req: Request, res: Response, next: NextFunction) => next(new HttpError(NOT_FOUND)));
+router.use("/*", (req: Request, res: Response, next: NextFunction) => next(new HttpError(NOT_FOUND)));
+
+export default router;

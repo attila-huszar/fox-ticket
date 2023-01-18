@@ -2,7 +2,7 @@ import express from "express";
 import compressionMiddleware from "compression";
 import helmetMiddleware from "helmet";
 //import { apiLimiter } from "./middleware/rateLimiter";
-import { apiRouter } from "./routes/api";
+import apiRouter from "./routes/api";
 import { staticRouter } from "./routes/static";
 import pinoHttp from "pino-http";
 
