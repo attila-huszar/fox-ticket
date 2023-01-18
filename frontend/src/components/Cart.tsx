@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Text, Button, Row, Badge } from '@nextui-org/react';
-import { TbShoppingCart } from 'react-icons/tb';
+import { FiShoppingCart } from 'react-icons/fi';
 
 export default function Cart() {
   const [visible, setVisible] = React.useState(false);
@@ -18,7 +18,7 @@ export default function Cart() {
           color="secondary"
           shadow
           rounded
-          icon={<TbShoppingCart />}
+          icon={<FiShoppingCart />}
           onClick={handler}
         ></Button>
       </Badge>
