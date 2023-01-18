@@ -1,18 +1,10 @@
-import React, { useState } from 'react';
-import {
-  Modal,
-  Input,
-  Row,
-  Checkbox,
-  Button,
-  Text,
-  Spacer,
-} from '@nextui-org/react';
+import React, { useState } from "react";
+import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const validateEmail = (value: string) => {
     return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
@@ -24,43 +16,34 @@ export default function Login() {
 
   interface help {
     text: string;
-    color:
-      | 'success'
-      | 'warning'
-      | 'default'
-      | 'primary'
-      | 'secondary'
-      | 'error'
-      | undefined;
+    color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
   }
 
   const helperEmail: help = React.useMemo(() => {
     if (!email)
       return {
-        text: '',
-        color: 'default',
+        text: "",
+        color: "default",
       };
     const isValid = validateEmail(email);
 
     return {
-      text: isValid ? 'Valid email' : 'Enter a valid email',
-      color: isValid ? 'success' : 'warning',
+      text: isValid ? "Valid email" : "Enter a valid email",
+      color: isValid ? "success" : "warning",
     };
   }, [email]);
 
   const helperPass: help = React.useMemo(() => {
     if (!password)
       return {
-        text: '',
-        color: 'default',
+        text: "",
+        color: "default",
       };
     const isValidPass = validatePass(password);
 
     return {
-      text: isValidPass
-        ? 'Valid password'
-        : 'Minimum eight characters, at least one letter and one number',
-      color: isValidPass ? 'success' : 'warning',
+      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      color: isValidPass ? "success" : "warning",
     };
   }, [password]);
 
@@ -68,8 +51,8 @@ export default function Login() {
 
   const closeHandler = () => {
     setVisLogin(false);
-    setEmail('');
-    setPassword('');
+    setEmail("");
+    setPassword("");
   };
 
   const loginHandler = async () => {
@@ -80,31 +63,28 @@ export default function Login() {
   return (
     <div>
       <Button
-        style={{ fontSize: '1rem' }}
+        css={{
+          fontSize: "1rem",
+          "&:hover, &:focus": {
+            boxShadow: "0 4px 14px 0 var(--nextui-colors-hoverShadow)",
+          },
+        }}
         auto
         color="secondary"
         shadow
-        onClick={LoginBtnHandler}
-      >
+        onClick={LoginBtnHandler}>
         Login
       </Button>
-      <Modal
-        closeButton
-        blur
-        aria-labelledby="login form"
-        open={visLogin}
-        onClose={closeHandler}
-      >
+      <Modal closeButton blur aria-labelledby="login form" open={visLogin} onClose={closeHandler}>
         <Modal.Header>
           <Text size={18}>
-            Welcome to{' '}
+            Welcome to{" "}
             <Text
               b
               size={18}
               css={{
-                textGradient: '45deg, $blue600 -20%, $pink600 50%',
-              }}
-            >
+                textGradient: "45deg, $blue600 -20%, $pink600 50%",
+              }}>
               Fox Ticket
             </Text>
           </Text>
