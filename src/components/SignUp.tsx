@@ -86,7 +86,17 @@ export default function Login() {
 
   return (
     <div>
-      <Button style={{ fontSize: "1rem" }} auto color="gradient" shadow onClick={signUpHandler}>
+      <Button
+        css={{
+          fontSize: "1rem",
+          "&:hover, &:focus": {
+            boxShadow: "0 4px 14px 0 var(--nextui-colors-hoverShadow)",
+          },
+        }}
+        auto
+        color="gradient"
+        shadow
+        onClick={signUpHandler}>
         Sign Up
       </Button>
       <Modal closeButton blur aria-labelledby="signup form" open={visible} onClose={closeHandler}>
