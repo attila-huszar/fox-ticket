@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Modal, Input, Button, Text, Spacer } from '@nextui-org/react';
+import React, { useState } from "react";
+import { Modal, Input, Button, Text, Spacer } from "@nextui-org/react";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConf, setPasswordConf] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConf, setPasswordConf] = useState("");
 
   const [visible, setVisible] = useState(false);
 
@@ -13,75 +13,70 @@ export default function Login() {
   };
 
   const validatePass = (value: string) => {
-    return value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/);
-  };
-
-  const validateMatch = (value: string) => {
-    if (value === password) return true;
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,128}$/;
+    return regex.test(value);
   };
 
   interface help {
     text: string;
-    color:
-      | 'success'
-      | 'warning'
-      | 'default'
-      | 'primary'
-      | 'secondary'
-      | 'error'
-      | undefined;
+    color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
   }
 
   const helperEmail: help = React.useMemo(() => {
     if (!email)
       return {
-        text: '',
-        color: 'default',
+        text: "",
+        color: "default",
       };
     const isValid = validateEmail(email);
 
     return {
-      text: isValid ? 'Valid email' : 'Enter a valid email',
-      color: isValid ? 'success' : 'warning',
+      text: isValid ? "Valid email" : "Enter a valid email",
+      color: isValid ? "success" : "warning",
     };
   }, [email]);
 
   const helperPass: help = React.useMemo(() => {
     if (!password)
       return {
-        text: '',
-        color: 'default',
+        text: "",
+        color: "default",
       };
+
     const isValidPass = validatePass(password);
 
     return {
-      text: isValidPass
-        ? 'Valid password'
-        : 'Minimum eight characters, at least one letter and one number',
-      color: isValidPass ? 'success' : 'warning',
+      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      color: isValidPass ? "success" : "warning",
     };
   }, [password]);
 
   const helperPassConf: help = React.useMemo(() => {
     if (!passwordConf)
       return {
-        text: '',
-        color: 'default',
+        text: "",
+        color: "default",
       };
-    const isValidPass = validateMatch(passwordConf);
+
+    const validateMatch = (value: string) => {
+      if (value === password) return true;
+    };
+
+    const isValidPass = validatePass(passwordConf);
+    const isMatching = validateMatch(passwordConf);
 
     return {
-      text: isValidPass ? 'Passwords Match' : 'Passwords Not Matching',
-      color: isValidPass ? 'success' : 'warning',
+      text: isMatching ? "Passwords Match" : "Passwords Not Matching",
+      color: isValidPass && isMatching ? "success" : "warning",
     };
-  }, [passwordConf]);
+  }, [password, passwordConf]);
 
   const signUpHandler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
-    setEmail('');
-    setPassword('');
-    setPasswordConf('');
+    setEmail("");
+    setPassword("");
+    setPasswordConf("");
   };
 
   const handleLogin = async () => {
@@ -91,22 +86,10 @@ export default function Login() {
 
   return (
     <div>
-      <Button
-        style={{ fontSize: '1rem' }}
-        auto
-        color="gradient"
-        shadow
-        onClick={signUpHandler}
-      >
+      <Button style={{ fontSize: "1rem" }} auto color="gradient" shadow onClick={signUpHandler}>
         Sign Up
       </Button>
-      <Modal
-        closeButton
-        blur
-        aria-labelledby="signup form"
-        open={visible}
-        onClose={closeHandler}
-      >
+      <Modal closeButton blur aria-labelledby="signup form" open={visible} onClose={closeHandler}>
         <Modal.Header>
           <Text id="signup form" size={18}>
             Please sign up with your email address

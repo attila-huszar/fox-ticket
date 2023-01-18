@@ -20,9 +20,5 @@
     "jsx": "react-jsx",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "outDir": "./build"
-  },
-  "include": [
-    "./src/**/*"
-  ]
+  }
 }
