@@ -129,9 +129,7 @@ export default function Header() {
             </Dropdown.Menu>
           </Dropdown>
         </Navbar.Item>
-
         <ThemeSwitch />
-        
       </Navbar.Content>
     </Navbar>
   );

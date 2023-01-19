@@ -1,15 +1,7 @@
-import { useState } from 'react';
-import {
-  Card,
-  Text,
-  Grid,
-  useModal,
-  Modal,
-  Button,
-  Spacer,
-} from '@nextui-org/react';
-import '../styles/Articles.css';
-import data from '../assets/article_data';
+import { useState } from "react";
+import { Card, Text, Grid, useModal, Modal, Button, Spacer } from "@nextui-org/react";
+import "../styles/Articles.css";
+import data from "../assets/article_data";
 
 export default function Articles() {
   const { setVisible, bindings } = useModal();
@@ -21,7 +13,6 @@ export default function Articles() {
 
   return (
     <>
-      <h2 style={{ padding: '20px 0 0 40px' }}>News</h2>
       <Grid.Container gap={3}>
         <div className="articles">
           {data.articles.map(article => (
@@ -32,21 +23,20 @@ export default function Articles() {
                   setVisible(true);
                   setDisplayedArticleId(article.id);
                 }}
-                style={{ width: '300px', height: '300px' }}
+                style={{ width: "300px", height: "300px" }}
                 isHoverable
-                isPressable
-              >
+                isPressable>
                 <Card.Footer
                   isBlurred
                   css={{
-                    position: 'absolute',
-                    bgBlur: '#0f111466',
-                    borderTop: '$borderWeights$light solid $gray800',
+                    height: "80px",
+                    position: "absolute",
+                    bgBlur: "#0f111466",
+                    borderTop: "$borderWeights$light solid $gray800",
                     bottom: 0,
                     zIndex: 1,
-                  }}
-                >
-                  <Text color="white" size={16}>
+                  }}>
+                  <Text color="white" size={16} style={{ display: "-webkit-box", overflow: "hidden", textOverflow: "ellipsis", WebkitLineClamp: "2", WebkitBoxOrient: "vertical" }}>
                     {article.title}
                   </Text>
                 </Card.Footer>
@@ -66,7 +56,7 @@ export default function Articles() {
         <Spacer y={1} />
         <hr
           style={{
-            color: '#f2f2f2',
+            color: "#f2f2f2",
             height: 5,
           }}
         />
@@ -74,7 +64,7 @@ export default function Articles() {
           <Text>
             <em>{articleDate}</em>
           </Text>
-          <Text style={{ whiteSpace: 'pre-line' }}>{articleText}</Text>
+          <Text style={{ whiteSpace: "pre-line" }}>{articleText}</Text>
         </Modal.Body>
         <Modal.Footer>
           <Button auto flat color="primary" onPress={() => setVisible(false)}>
