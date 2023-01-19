@@ -28,6 +28,7 @@ router.post('/purchases', orderController.addNewOrder);
 router.post('/register', userController.registerUser);
 router.delete('/orders/:orderId', cartController.removeProductFromCart);
 router.delete('/orders', cartController.removePendingOrderFromCart);
+router.patch('/orders/:userId', orderController.changeOrderStatusByUserId);
 router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
 router.use(apiErrorHandler);
 
