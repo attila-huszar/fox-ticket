@@ -25,8 +25,9 @@ export default class Article extends Model {
   content!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.DATE,
     allowNull: false,
+    defaultValue: DataType.NOW,
   })
   publish_date!: Date;
 
