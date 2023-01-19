@@ -9,6 +9,7 @@ import Profile from './Profile';
 import Footer from './Footer';
 import NotImplementedPage from './NotImplementedPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import AdminProduct from './admin/AdminProduct';
 
 export default function App() {
   const { pathname } = useLocation();
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/mytickets" element={<MyTickets />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/products" element={<AdminProduct />} />
             <Route path="*" element={<NotImplementedPage />} />
           </Routes>
         </CSSTransition>
