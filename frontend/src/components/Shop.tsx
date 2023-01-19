@@ -1,8 +1,8 @@
 import { Grid, Container, Text } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
-import fetchProducts from '../../api/product';
-import { ProductResponse } from '../../interfaces/product';
-import ProductCard from '../ProductCard';
+import fetchProducts from '../api/product';
+import { ProductResponse } from '../interfaces/product';
+import ProductCard from './ProductCard';
 
 export default function Shop() {
   const [products, setProducts] = useState<ProductResponse[]>([]);
