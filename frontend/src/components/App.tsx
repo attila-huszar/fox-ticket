@@ -9,7 +9,7 @@ import Profile from './Profile';
 import Footer from './Footer';
 import NotImplementedPage from './NotImplementedPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import AdminProduct from './admin/AdminProduct';
+import AdminProduct from './AdminProduct';
 
 export default function App() {
   const { pathname } = useLocation();
