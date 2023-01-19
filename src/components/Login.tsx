@@ -1,5 +1,13 @@
 import React, { useState } from "react";
 import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
+import { AttentionSeeker } from "react-awesome-reveal";
+
+type ConditonalWrapperProps = {
+  children: React.ReactElement;
+  condition: boolean;
+  wrapper: (children: React.ReactElement) => JSX.Element;
+};
+const ConditonalWrapper: React.FC<ConditonalWrapperProps> = ({ condition, wrapper, children }) => (condition ? wrapper(children) : children);
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
@@ -7,11 +15,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const validateEmail = (value: string) => {
-    return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i;
+    return regex.test(value);
   };
 
   const validatePass = (value: string) => {
-    return value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/);
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/;
+    return regex.test(value);
   };
 
   interface help {
@@ -55,7 +65,7 @@ export default function Login() {
     setPassword("");
   };
 
-  const loginHandler = async () => {
+  const loginHandler = () => {
     setVisLogin(false);
     //setToken(token);
   };
@@ -91,18 +101,20 @@ export default function Login() {
         </Modal.Header>
         <Modal.Body>
           <Spacer y={0.2} />
-          <Input
-            onChange={e => setEmail(e.target.value)}
-            required
-            bordered
-            status={helperEmail.color}
-            color={helperEmail.color}
-            helperColor={helperEmail.color}
-            helperText={helperEmail.text}
-            fullWidth
-            labelPlaceholder="Email"
-            size="lg"
-          />
+          <ConditonalWrapper condition={validateEmail(email)} wrapper={(wrappedChildren: any) => <AttentionSeeker effect="headShake">{wrappedChildren}</AttentionSeeker>}>
+            <Input
+              onChange={e => setEmail(e.target.value)}
+              required
+              bordered
+              status={helperEmail.color}
+              color={helperEmail.color}
+              helperColor={helperEmail.color}
+              helperText={helperEmail.text}
+              fullWidth
+              labelPlaceholder="Email"
+              size="lg"
+            />
+          </ConditonalWrapper>
           <Spacer y={1.5} />
           <Input.Password
             onChange={e => setPassword(e.target.value)}
