@@ -26,7 +26,7 @@ export default function Articles() {
         <div className="articles">
           {data.articles.map(article => (
             <Grid>
-              <Card
+              <Card className='articleCard'
                 key={article.id}
                 onPress={() => {
                   setVisible(true);

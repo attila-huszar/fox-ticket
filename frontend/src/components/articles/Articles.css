@@ -8,3 +8,7 @@
 .articles::-webkit-scrollbar {
   width: 0;
 }
+
+.articleCard{
+  background-color: var(--nextui-colors-articleCardBackground);
+}
