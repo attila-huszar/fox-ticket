@@ -9,7 +9,7 @@ import logo from '../static/logo.png';
 import profile_defpic from '../static/profile_def.png';
 import '../styles/Header.css';
 import Cart from './Cart';
-import Admin from './admin/Admin';
+import Admin from './Admin';
 
 export default function Header() {
   // eslint-disable-next-line
