@@ -10,7 +10,7 @@ const lightTheme = createTheme({
       navbarActive: '#cee4fe',
       navbarLink: '#000',
       navbarGradient:
-        'linear-gradient(180deg, rgba(248,250,251,1) 0%, rgba(248,250,251,0.8) 30%, rgba(248,250,251,0) 80%)',
+        'linear-gradient(180deg, rgba(248,250,251,1) 0%, rgba(248,250,251,0.8) 30%, rgba(248,250,251,0) 80%)'
     },
   },
 });
@@ -22,8 +22,9 @@ const darkTheme = createTheme({
       navbarActive: '#10253e',
       navbarLink: '#fff',
       navbarGradient:
-        'linear-gradient(180deg, rgba(19,26,40,1) 0%, rgba(19,26,40,0.95) 30%, rgba(248,250,251,0) 100%)',
-    },
+        'linear-gradient(180deg, rgba(19,26,40,1) 0%, rgba(19,26,40,0.95) 30%, rgba (248,250,251,0) 100%)',
+      articleCardBackground: '#3d4e6f'
+    },  
   },
 });
 
