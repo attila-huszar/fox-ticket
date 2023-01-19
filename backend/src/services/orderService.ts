@@ -4,6 +4,7 @@ import {
   NewOrderRequest,
   OrderResponse,
   UpdateOrderStatusResponse,
+  PendingOrdersResponse,
 } from '../interfaces/order';
 import Order from '../models/Order';
 import User from '../models/User';
@@ -47,9 +48,34 @@ export async function addNewOrder(
   return orderResponse(order) as OrderResponse;
 }
 
+export async function getAllPendingOrdersByUserId(
+  userId: number
+): Promise<PendingOrdersResponse> {
+  if (userId < 0 || !Number.isInteger(userId)) {
+    throw new ParameterError('Invalid userId');
+  }
+  const user: User = await userRepo.getUserById(userId);
+  if (!user) {
+    throw new NotFoundError("User doesn't exist with this id");
+  }
+  const response: Order[] = await orderRepo.getAllPendingOrders(userId);
+  let orders = [];
+  for (let i = 0; i < response.length; i++) {
+    let order = {
+      id: response[i].id,
+      status: response[i].status,
+      orderDate: response[i].orderDate,
+      name: response[i].product.name,
+      price: response[i].product.price,
+    };
+    orders.push(order);
+  }
+  return { orders: orders };
+}
+
 export async function changeOrderStatusByUserId(
   userId: number
-): Promise<UpdateOrderStatusResponse> {
+): Promise<UpdateOrderStatusResponse> {  
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }

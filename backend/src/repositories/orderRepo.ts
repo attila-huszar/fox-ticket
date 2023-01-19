@@ -12,7 +12,7 @@ export function getAllOrders(userId: number): Promise<Order[]> {
 
 export function createOrder(newOrder: NewOrderRequest): Promise<Order> {
   console.log(newOrder);
-  
+
   return Order.create({ ...newOrder });
 }
 
