@@ -16,6 +16,7 @@ router.use(express.json());
 router.get('/hello', helloController.getHelloWorld);
 router.get('/articles', articleController.getAllArticles);
 router.post('/admin/articles', articleController.addNewArticle);
+router.put('/admin/articles/:articleId', articleController.editArticle);
 router.post('/admin/products', productController.addNewProduct);
 router.get('/admin/products', productController.getProductById);
 router.put('/admin/products/:productId', productController.editProductById);
