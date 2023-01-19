@@ -74,7 +74,6 @@ export async function changeOrderStatusByUserId(
       };
       purchases.push(updatedPurchase);
     }
-
-    return {purchases} // orderResponse(purchases) as UpdateOrderStatusResponse;
+    return { purchases };
   }
 }
