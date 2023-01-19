@@ -8,8 +8,8 @@ import {
   Button,
   Spacer,
 } from '@nextui-org/react';
-import './Articles.css';
-import data from './article_data';
+import '../styles/Articles.css';
+import data from '../assets/article_data';
 
 export default function Articles() {
   const { setVisible, bindings } = useModal();

@@ -39,6 +39,6 @@ export default function ProductCard({
           </Row>
         </Card.Footer>
       </Card>
-    </Grid>
+    </Grid> 
   );
 }

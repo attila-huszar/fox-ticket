@@ -16,17 +16,23 @@ router.use(express.json());
 router.get('/hello', helloController.getHelloWorld);
 router.get('/articles', articleController.getAllArticles);
 router.post('/admin/articles', articleController.addNewArticle);
+router.put('/admin/articles/:articleId', articleController.editArticle);
 router.post('/admin/products', productController.addNewProduct);
 router.get('/admin/products', productController.getProductById);
 router.put('/admin/products/:productId', productController.editProductById);
-router.delete('/admin/products/:productId', productController.deleteProductById);
+router.delete(
+  '/admin/products/:productId',
+  productController.deleteProductById
+);
 router.get('/product', productController.getProductById);
 router.get('/products', productController.getAllProducts);
 router.get('/purchases/:userId', orderController.getAllOrders);
 router.post('/purchases', orderController.addNewOrder);
 router.post('/register', userController.registerUser);
 router.delete('/orders/:orderId', cartController.removeProductFromCart);
+router.get('/orders/:userId', orderController.getPendingOrders);
 router.delete('/orders', cartController.removePendingOrderFromCart);
+router.patch('/orders/:userId', orderController.changeOrderStatusByUserId);
 router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
 router.use(apiErrorHandler);
 

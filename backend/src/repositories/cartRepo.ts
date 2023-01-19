@@ -7,3 +7,7 @@ export function removeOrderFromCart(orderId: number): Promise<number> {
 export function removePendingOrderFromCart(): Promise<number> {
   return Order.destroy({ where: { status: 'pending' } });
 }
+
+export function getAllPendingOrdersFromCart(): Promise<Order[] | null> {
+  return Order.findAll({ where: { status: 'pending' } });
+}
