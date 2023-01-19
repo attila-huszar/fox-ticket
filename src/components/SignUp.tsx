@@ -1,28 +1,15 @@
 import React, { useState } from "react";
 import { Modal, Input, Button, Text, Spacer } from "@nextui-org/react";
+import { validateEmail, validatePass } from "../utils/inputFieldValidators";
+import { InputFieldHelper } from "../interfaces/InputFieldHelper";
 
-export default function Login() {
+export default function SignUp() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConf, setPasswordConf] = useState("");
-
+  const [pass, setPass] = useState("");
+  const [passConf, setPassConf] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const validateEmail = (value: string) => {
-    return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
-  };
-
-  const validatePass = (value: string) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,128}$/;
-    return regex.test(value);
-  };
-
-  interface help {
-    text: string;
-    color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
-  }
-
-  const helperEmail: help = React.useMemo(() => {
+  const emailHelper: InputFieldHelper = React.useMemo(() => {
     if (!email)
       return {
         text: "",
@@ -36,52 +23,51 @@ export default function Login() {
     };
   }, [email]);
 
-  const helperPass: help = React.useMemo(() => {
-    if (!password)
+  const passHelper: InputFieldHelper = React.useMemo(() => {
+    if (!pass)
       return {
         text: "",
         color: "default",
       };
 
-    const isValidPass = validatePass(password);
+    const isValidPass = validatePass(pass);
 
     return {
       text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
       color: isValidPass ? "success" : "warning",
     };
-  }, [password]);
+  }, [pass]);
 
-  const helperPassConf: help = React.useMemo(() => {
-    if (!passwordConf)
+  const passConfHelper: InputFieldHelper = React.useMemo(() => {
+    if (!passConf)
       return {
         text: "",
         color: "default",
       };
 
     const validateMatch = (value: string) => {
-      if (value === password) return true;
+      if (value === pass) return true;
     };
 
-    const isValidPass = validatePass(passwordConf);
-    const isMatching = validateMatch(passwordConf);
+    const isValidPass = validatePass(passConf);
+    const isMatching = validateMatch(passConf);
 
     return {
       text: isMatching ? "Passwords Match" : "Passwords Not Matching",
       color: isValidPass && isMatching ? "success" : "warning",
     };
-  }, [password, passwordConf]);
+  }, [pass, passConf]);
 
   const signUpHandler = () => setVisible(true);
   const closeHandler = () => {
     setVisible(false);
     setEmail("");
-    setPassword("");
-    setPasswordConf("");
+    setPass("");
+    setPassConf("");
   };
 
   const handleLogin = async () => {
     setVisible(false);
-    //setToken(token);
   };
 
   return (
@@ -111,38 +97,38 @@ export default function Login() {
             onChange={e => setEmail(e.target.value)}
             required
             bordered
-            status={helperEmail.color}
-            color={helperEmail.color}
-            helperColor={helperEmail.color}
-            helperText={helperEmail.text}
+            status={emailHelper.color}
+            color={emailHelper.color}
+            helperColor={emailHelper.color}
+            helperText={emailHelper.text}
             fullWidth
             labelPlaceholder="Email"
             size="lg"
           />
           <Spacer y={1.5} />
           <Input.Password
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => setPass(e.target.value)}
             required
             bordered
-            status={helperPass.color}
-            color={helperPass.color}
-            helperColor={helperPass.color}
-            helperText={helperPass.text}
+            status={passHelper.color}
+            color={passHelper.color}
+            helperColor={passHelper.color}
+            helperText={passHelper.text}
             type="password"
             labelPlaceholder="Password"
             size="lg"
           />
           <Spacer y={1.5} />
           <Input.Password
-            onChange={e => setPasswordConf(e.target.value)}
+            onChange={e => setPassConf(e.target.value)}
             labelPlaceholder="Confirm Password"
             width="350px"
             required
             bordered
-            status={helperPassConf.color}
-            color={helperPassConf.color}
-            helperColor={helperPassConf.color}
-            helperText={helperPassConf.text}
+            status={passConfHelper.color}
+            color={passConfHelper.color}
+            helperColor={passConfHelper.color}
+            helperText={passConfHelper.text}
             type="password"
             size="lg"
           />
