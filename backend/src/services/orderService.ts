@@ -3,7 +3,7 @@ import {
   GetAllOrdersResponse,
   NewOrderRequest,
   OrderResponse,
-  PurchasedOrdersResponse,
+  UpdateOrderStatusResponse,
   PendingOrdersByUserIdResponse,
 } from '../interfaces/order';
 import Order from '../models/Order';
@@ -60,4 +60,35 @@ export async function getAllPendingOrdersByUserId(
   }
   const orders: Order[] = await orderRepo.getPendingOrders(userId);
   return { pendingOrders: orders };
+}
+
+export async function changeOrderStatusByUserId(
+  userId: number
+): Promise<UpdateOrderStatusResponse> {
+  if (userId < 0 || !Number.isInteger(userId)) {
+    throw new ParameterError('Invalid userId');
+  }
+  const user: User = await userRepo.getUserById(userId);
+  if (!user) {
+    throw new NotFoundError("User doesn't exist with this id");
+  }
+  const findPendingOrders = await orderRepo.getAllPendingOrders(userId);
+  if (findPendingOrders.length === 0) {
+    throw new NotFoundError("User doesn't have pending order(s) in cart");
+  } else {
+    await orderRepo.changeOrderStatusByUserId(userId);
+    let purchases = [];
+    for (let i = 0; i < findPendingOrders.length; i++) {
+      const order = findPendingOrders[i];
+      let updatedPurchase = {
+        id: order.id,
+        status: 'paid',
+        paidDate: Date(),
+        expirationDate: null,
+        productName: order.product.name,
+      };
+      purchases.push(updatedPurchase);
+    }
+    return { purchases };
+  }
 }

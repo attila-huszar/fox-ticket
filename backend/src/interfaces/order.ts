@@ -13,7 +13,7 @@ export interface PurchasedOrdersResponse {
 }
 
 export interface NewOrderRequest {
-  orderDate: string;
+  orderDate: Date;
   status: string;
   paidDate: string;
   expirationDate: string;
@@ -27,4 +27,20 @@ export interface OrderResponse {
   paidDate: string;
   expirationDate: string;
   productId: number;
+}
+
+export interface UpdateOrderStatusRequest {
+  orderByUser: Order[];
+}
+
+export interface UpdateOrderStatusResponse {
+  purchases: UpdatedOrder[]
+}
+
+export interface UpdatedOrder {
+    id: number;
+    status: string;
+    paidDate: string;
+    expirationDate: string;
+    productName: string;
 }

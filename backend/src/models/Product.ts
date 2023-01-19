@@ -3,10 +3,9 @@ import {
   Model,
   Column,
   DataType,
-  BelongsToMany,
+  HasMany,
 } from 'sequelize-typescript';
 import Order from './Order';
-import OrderProduct from './OrderProduct';
 
 @Table({
   timestamps: true,
@@ -42,6 +41,6 @@ export default class Product extends Model {
   })
   type: string;
 
-  @BelongsToMany(() => Order, () => OrderProduct)
+  @HasMany(() => Order)
   orders: Order[];
 }
