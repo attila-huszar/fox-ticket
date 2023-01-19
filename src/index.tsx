@@ -1,20 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import "./index.css";
-import App from "./components/App";
-import { NextUIProvider } from "@nextui-org/react";
-import { darkTheme, lightTheme } from "./components/ThemeSwitch";
+import ThemedApp from "./components/ThemedApp";
 //import reportWebVitals from "./reportWebVitals.ts";
-console.log(darkTheme)
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
-    <NextUIProvider /*theme={IsDark() ? darkTheme : lightTheme}*/>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </NextUIProvider>
+    <ThemedApp />
   </React.StrictMode>
 );
 

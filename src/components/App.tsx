@@ -17,17 +17,14 @@ export default function App() {
         <script src="./noflash.js" type="text/javascript" />
       </Helmet>
       <Header />
-
       <Routes>
         <Route index element={<Home />} />
-
         <Route path="/shop" element={<Shop />} />
         <Route path="/mytickets" element={<MyTickets />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotImplementedPage />} />
       </Routes>
-
       <Footer />
     </HelmetProvider>
   );
