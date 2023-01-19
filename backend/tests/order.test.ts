@@ -35,7 +35,7 @@ describe('GET /api/purchases/:id', () => {
     expect(result.statusCode).toEqual(status.OK);
     const { allOrders } = result.body;
     expect(allOrders.length).toEqual(1);
-  });  
+  });
 });
 
 describe('GET /api/orders/:id', () => {
@@ -52,12 +52,22 @@ describe('GET /api/orders/:id', () => {
 
     await User.create(user);
 
+    const product = {
+      name: 'One month pass',
+      price: 365,
+      duration: 30,
+      description: 'use this for a month',
+      type: 'pass',
+    };
+
+    await Product.create(product);
+
     const order = {
       orderDate: Date.now(),
       status: 'pending',
-      amount: 1,
       paidDate: Date.now(),
       expirationDate: Date.now(),
+      productId: 1,
       userId: 1,
     };
 
@@ -66,14 +76,14 @@ describe('GET /api/orders/:id', () => {
     const result = await request(app).get(`/api/orders/1`);
 
     expect(result.statusCode).toEqual(status.OK);
-    const { pendingOrders } = result.body;
+    const  pendingOrders  = result.body.orders;
     expect(pendingOrders.length).toEqual(1);
-  });  
+  });
 });
 
 describe('PATCH /api/orders/:userId', () => {
   it('returns every just modified paid status orders after request for the given user id', async () => {
-     await User.create({
+    await User.create({
       id: 1,
       name: 'Bácsi',
       email: 'sasa@sadfa.com',
@@ -83,7 +93,7 @@ describe('PATCH /api/orders/:userId', () => {
       token: 'sdfgdf',
     });
 
-      await Product.create({
+    await Product.create({
       name: '1 weeks pass',
       price: 3400,
       duration: 16,
@@ -91,7 +101,7 @@ describe('PATCH /api/orders/:userId', () => {
       type: 'ticket',
     });
 
-       await Order.create({
+    await Order.create({
       orderDate: '2022.01.18.',
       status: 'pending',
       paidDate: '2022.01.18.',
@@ -106,21 +116,22 @@ describe('PATCH /api/orders/:userId', () => {
       paidDate: '2022.01.18.',
       expirationDate: null,
       productName: '1 weeks pass',
-    }
+    };
 
     const result = await request(app).patch(`/api/orders/1`).send(editedOrder);
-    
+
     expect(result.statusCode).toEqual(status.OK);
     const changedOrderStatus = result.body.purchases;
-    
-    expect(changedOrderStatus).toEqual([{
+
+    expect(changedOrderStatus).toEqual([
+      {
         id: 1,
         status: 'paid',
         paidDate: Date(),
         expirationDate: null,
         productName: '1 weeks pass',
       },
-   ]);
+    ]);
   });
 
   it('returns Bad Request for missing or bad id parameter', async () => {

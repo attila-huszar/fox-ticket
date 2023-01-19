@@ -1,9 +1,5 @@
 import Order from '../models/Order';
 
-export interface PendingOrdersByUserIdResponse {
-  pendingOrders: Order[];
-}
-
 export interface GetAllOrdersResponse {
   allOrders: Order[];
 }
@@ -34,13 +30,25 @@ export interface UpdateOrderStatusRequest {
 }
 
 export interface UpdateOrderStatusResponse {
-  purchases: UpdatedOrder[]
+  purchases: UpdatedOrder[];
 }
 
 export interface UpdatedOrder {
-    id: number;
-    status: string;
-    paidDate: string;
-    expirationDate: string;
-    productName: string;
+  id: number;
+  status: string;
+  paidDate: string;
+  expirationDate: string;
+  productName: string;
+}
+
+export interface PendingOrderWithProductDetail {
+  id: number;
+  status: string;
+  orderDate: string;
+  name: string;
+  price: number;
+}
+
+export interface PendingOrdersResponse {
+  orders: PendingOrderWithProductDetail[];
 }

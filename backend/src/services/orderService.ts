@@ -4,7 +4,7 @@ import {
   NewOrderRequest,
   OrderResponse,
   UpdateOrderStatusResponse,
-  PendingOrdersByUserIdResponse,
+  PendingOrdersResponse,
 } from '../interfaces/order';
 import Order from '../models/Order';
 import User from '../models/User';
@@ -50,7 +50,7 @@ export async function addNewOrder(
 
 export async function getAllPendingOrdersByUserId(
   userId: number
-): Promise<PendingOrdersByUserIdResponse> {
+): Promise<PendingOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }
@@ -58,13 +58,24 @@ export async function getAllPendingOrdersByUserId(
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
-  const orders: Order[] = await orderRepo.getPendingOrders(userId);
-  return { pendingOrders: orders };
+  const response: Order[] = await orderRepo.getAllPendingOrders(userId);
+  let orders = [];
+  for (let i = 0; i < response.length; i++) {
+    let order = {
+      id: response[i].id,
+      status: response[i].status,
+      orderDate: response[i].orderDate,
+      name: response[i].product.name,
+      price: response[i].product.price,
+    };
+    orders.push(order);
+  }
+  return { orders: orders };
 }
 
 export async function changeOrderStatusByUserId(
   userId: number
-): Promise<UpdateOrderStatusResponse> {
+): Promise<UpdateOrderStatusResponse> {  
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }

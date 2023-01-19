@@ -5,9 +5,8 @@ import {
   GetAllOrdersResponse,
   NewOrderRequest,
   OrderResponse,
-  PendingOrdersByUserIdResponse,
-  UpdateOrderStatusRequest,
   UpdateOrderStatusResponse,
+  PendingOrdersResponse
 } from '../interfaces/order';
 import * as orderService from '../services/orderService';
 
@@ -53,7 +52,7 @@ export async function addNewOrder(
 
 export async function getPendingOrders(
   req: Request<{ userId: number }, unknown, unknown, unknown>,
-  res: Response<PendingOrdersByUserIdResponse>,
+  res: Response<PendingOrdersResponse>,
   next: NextFunction
 ): Promise<void> {
   const userId = Number(req.params.userId);
