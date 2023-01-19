@@ -7,11 +7,15 @@ import './shop.css';
 
 export default function Shop() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   // <--------- MŰKŐDŐ FETCH AXIOS-SAL PRODUCT.TS-BŐL ------>
 
   useEffect(() => {
-    fetchProducts().then(data => setProducts(data));
+    fetchProducts().then(data => {
+      setProducts(data);
+      setFilteredProducts(data);
+    });
   }, []);
 
   // <--------- MŰKŐDŐ FETCH AXIOS-SAL HELYBEN ------>
@@ -33,20 +37,72 @@ export default function Shop() {
   //   });
   // }, []);
 
+  async function handleTicketsClick() {
+    const allTickets: Product[] = [];
+    products.map(ticket => {
+      if (ticket.type === 'ticket') {
+        allTickets.push(ticket);
+      }
+      setFilteredProducts(allTickets);
+    });
+  }
+
+  async function handlePassesClick() {
+    const allPasses: Product[] = [];
+    products.map(pass => {
+      if (pass.type === 'pass') {
+        allPasses.push(pass);
+      }
+      setFilteredProducts(allPasses);
+    });
+  }
+
+  async function handleAllClick() {
+    setFilteredProducts(products);
+  }
+
   return (
     <Container id="cardContainer">
-      <Text h1 css={{ marginTop: '20px', textAlign: 'center' }}>
+      <Text h1 css={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
         Tickets and Passes
       </Text>
       <Button.Group
         color="gradient"
         ghost
-        css={{ width: '100%', justifyContent: 'center' }}
+        css={{ width: '100%', justifyContent: 'center', marginBottom: '40px' }}
       >
-        <Button shadow size="md" auto color="gradient" id="ticketsTabButton">
+        <Button
+          className="shopTabButton"
+          shadow
+          size="md"
+          color="gradient"
+          css={{ button: focus, outline: 'none', width: '100px' }}
+          id="showAllButton"
+          autoFocus
+          onPress={handleAllClick}
+        >
+          All
+        </Button>
+        <Button
+          className="shopTabButton"
+          shadow
+          size="md"
+          color="gradient"
+          id="ticketsTabButton"
+          css={{ width: '100px' }}
+          onPress={handleTicketsClick}
+        >
           Tickets
         </Button>
-        <Button shadow size="md" auto color="gradient" id="passesTabButton">
+        <Button
+          shadow
+          size="md"
+          color="gradient"
+          id="passesTabButton"
+          className="shopTabButton"
+          css={{ width: '100px' }}
+          onPress={handlePassesClick}
+        >
           Passes
         </Button>
       </Button.Group>
@@ -54,21 +110,24 @@ export default function Shop() {
         id="shopCards"
         gap={2}
         css={{
-          // display: 'flex',
-          margin: '0 auto',
-          display: "grid",
-          gridTemplateColumns: "30% 30% 30%",
+          display: 'grid',
+          gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
-          columnGap: "5%",
-          width: "80%",
+          rowGap: '40px',
+          justifyContent: 'center',
         }}
       >
-        {products.map(product => (
+        {filteredProducts.map(product => (
           <Grid
             sm={12}
             md={5}
             id="cardGrid"
-            css={{ justifyContent: 'flex-start', marginLeft: '10%' }}
+            css={{
+              justifyContent: 'center',
+              marginLeft: '32%',
+              width: '100%',
+              padding: '0',
+            }}
           >
             <Card
               css={{
@@ -78,15 +137,14 @@ export default function Shop() {
               }}
               id="card"
               isHoverable
-              isPressable
             >
               <Card.Header>
                 <Text css={{ margin: 'auto' }}>{product.name}</Text>
               </Card.Header>
               <Card.Divider />
               <Card.Body css={{ py: '$10' }}>
-                <Text css={{ margin: 'auto' }}>{product.duration} days</Text>
                 <Text css={{ margin: 'auto' }}>{product.price} Ft</Text>
+                <Text css={{ margin: 'auto' }}>{product.description}</Text>
               </Card.Body>
               <Card.Divider />
               <Card.Footer>
