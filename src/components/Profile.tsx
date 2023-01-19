@@ -1,14 +1,25 @@
 import React, { useState } from "react";
-import { Button, Input, Text, Spacer, Modal, Col, Row, Container } from "@nextui-org/react";
+import {
+  Button,
+  Input,
+  Text,
+  Spacer,
+  Modal,
+  Col,
+  Row,
+  Container,
+} from "@nextui-org/react";
 import { Fade } from "react-awesome-reveal";
 import profile_defpic from "../static/profile_def.png";
+import { validatePass } from "../utils/inputFieldValidators";
+import { InputFieldHelper } from "../interfaces/InputFieldHelper";
 
 export default function Profile() {
   const [visChangeUser, setVisChangeUser] = useState(false);
   const [visChangePass, setVisChangePass] = useState(false);
-  const [passwordOld, setPasswordOld] = useState("");
-  const [passwordNew, setPasswordNew] = useState("");
-  const [passwordConf, setPasswordConf] = useState("");
+  const [passOld, setPassOld] = useState("");
+  const [passNew, setPassNew] = useState("");
+  const [passConf, setPassConf] = useState("");
 
   const userChangeBtnHandler = () => setVisChangeUser(true);
   const passChangeBtnHandler = () => setVisChangePass(true);
@@ -16,72 +27,66 @@ export default function Profile() {
   const closeHandler = () => {
     setVisChangeUser(false);
     setVisChangePass(false);
-    setPasswordOld("");
-    setPasswordNew("");
-    setPasswordConf("");
+    setPassOld("");
+    setPassNew("");
+    setPassConf("");
   };
 
-  const validatePass = (value: string) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,128}$/;
-    return regex.test(value);
-  };
-
-  interface help {
-    text: string;
-    color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
-  }
-
-  const helperPassOld: help = React.useMemo(() => {
-    if (!passwordOld)
+  const passOldHelper: InputFieldHelper = React.useMemo(() => {
+    if (!passOld)
       return {
         text: "",
         color: "default",
       };
-    const isValidPass = validatePass(passwordOld);
+    const isValidPass = validatePass(passOld);
 
     return {
-      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      text: isValidPass
+        ? "Valid password"
+        : "Minimum eight characters, at least one letter and one number",
       color: isValidPass ? "success" : "warning",
     };
-  }, [passwordOld]);
+  }, [passOld]);
 
-  const helperPassNew: help = React.useMemo(() => {
-    if (!passwordNew)
+  const passNewHelper: InputFieldHelper = React.useMemo(() => {
+    if (!passNew)
       return {
         text: "",
         color: "default",
       };
 
-    const isValidPass = validatePass(passwordNew);
+    const isValidPass = validatePass(passNew);
 
     return {
-      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      text: isValidPass
+        ? "Valid password"
+        : "Minimum eight characters, at least one letter and one number",
       color: isValidPass ? "success" : "warning",
     };
-  }, [passwordNew]);
+  }, [passNew]);
 
-  const helperPassConf: help = React.useMemo(() => {
-    if (!passwordConf)
+  const passConfHelper: InputFieldHelper = React.useMemo(() => {
+    if (!passConf)
       return {
         text: "",
         color: "default",
       };
 
     const validateMatch = (value: string) => {
-      if (value === passwordNew) return true;
+      if (value === passNew) return true;
     };
 
-    const isValidPass = validatePass(passwordConf);
-    const isMatching = validateMatch(passwordConf);
+    const isValidPass = validatePass(passConf);
+    const isMatching = validateMatch(passConf);
 
     return {
       text: isMatching ? "Passwords Match" : "Passwords Not Matching",
       color: isValidPass && isMatching ? "success" : "warning",
     };
-  }, [passwordNew, passwordConf]);
+  }, [passNew, passConf]);
 
   return (
-    <Fade duration={300}>
+    <Fade duration={1000}>
       <Container
         fluid
         wrap="wrap"
@@ -119,22 +124,49 @@ export default function Profile() {
               }}
               alt="profile"
             />
-            <Spacer y={2} />
-            <Button style={{ fontSize: "1rem", margin: "auto" }} auto color="secondary" shadow>
-              Change Picture
-            </Button>
+            <Row style={{ bottom: "10px" }}>
+              <Button
+                style={{ fontSize: "1rem", margin: "auto" }}
+                auto
+                color="secondary"
+                shadow>
+                Change Picture
+              </Button>
+            </Row>
           </Col>
           <Col>
-            <Input readOnly underlined width="100%" style={{ margin: "auto" }} labelLeft="Email" value={" admin@foxticket.com"} />
+            <Input
+              readOnly
+              underlined
+              width="100%"
+              style={{ margin: "auto" }}
+              labelLeft="Email"
+              value={" admin@foxticket.com"}
+            />
             <Spacer y={2} />
-            <Input underlined width="100%" style={{ margin: "auto" }} labelLeft="Username" value={" Admin"} />
+            <Input
+              underlined
+              width="100%"
+              style={{ margin: "auto" }}
+              labelLeft="Username"
+              value={" Admin"}
+            />
             <Spacer y={2} />
-            <Row>
-              <Button style={{ fontSize: "1rem", margin: "auto" }} shadow color="gradient" id="submit" onPress={userChangeBtnHandler}>
+            <Row style={{ bottom: "10px" }}>
+              <Button
+                style={{ fontSize: "1rem", margin: "auto" }}
+                shadow
+                color="gradient"
+                id="submit"
+                onPress={userChangeBtnHandler}>
                 Change Username
               </Button>
               <Spacer y={2} />
-              <Button style={{ fontSize: "1rem", margin: "auto" }} color="primary" shadow onClick={passChangeBtnHandler}>
+              <Button
+                style={{ fontSize: "1rem", margin: "auto" }}
+                color="primary"
+                shadow
+                onClick={passChangeBtnHandler}>
                 Change Password
               </Button>
             </Row>
@@ -142,13 +174,25 @@ export default function Profile() {
         </Row>
         <Spacer y={2} />
 
-        <Modal closeButton blur aria-labelledby="username change form" open={visChangeUser} onClose={closeHandler}>
+        <Modal
+          closeButton
+          blur
+          aria-labelledby="username change form"
+          open={visChangeUser}
+          onClose={closeHandler}>
           <Modal.Header>
             <Text size={18}>Change your Username</Text>
           </Modal.Header>
           <Modal.Body>
             <Spacer y={0.4} />
-            <Input onChange={e => setPasswordOld(e.target.value)} labelPlaceholder="New Username" width="350px" required bordered size="lg" />
+            <Input
+              onChange={e => setPassOld(e.target.value)}
+              labelPlaceholder="New Username"
+              width="350px"
+              required
+              bordered
+              size="lg"
+            />
 
             <Spacer y={0.4} />
           </Modal.Body>
@@ -162,50 +206,55 @@ export default function Profile() {
           </Modal.Footer>
         </Modal>
 
-        <Modal closeButton blur aria-labelledby="password change form" open={visChangePass} onClose={closeHandler}>
+        <Modal
+          closeButton
+          blur
+          aria-labelledby="password change form"
+          open={visChangePass}
+          onClose={closeHandler}>
           <Modal.Header>
             <Text size={18}>Change your Password</Text>
           </Modal.Header>
           <Modal.Body>
             <Spacer y={0.4} />
             <Input.Password
-              onChange={e => setPasswordOld(e.target.value)}
+              onChange={e => setPassOld(e.target.value)}
               labelPlaceholder="Current Password"
               width="350px"
               required
               bordered
-              status={helperPassOld.color}
-              color={helperPassOld.color}
-              helperColor={helperPassOld.color}
-              helperText={helperPassOld.text}
+              status={passOldHelper.color}
+              color={passOldHelper.color}
+              helperColor={passOldHelper.color}
+              helperText={passOldHelper.text}
               type="password"
               size="lg"
             />
             <Spacer y={1.6} />
             <Input.Password
-              onChange={e => setPasswordNew(e.target.value)}
+              onChange={e => setPassNew(e.target.value)}
               labelPlaceholder="New Password"
               width="350px"
               required
               bordered
-              status={helperPassNew.color}
-              color={helperPassNew.color}
-              helperColor={helperPassNew.color}
-              helperText={helperPassNew.text}
+              status={passNewHelper.color}
+              color={passNewHelper.color}
+              helperColor={passNewHelper.color}
+              helperText={passNewHelper.text}
               type="password"
               size="lg"
             />
             <Spacer y={1.6} />
             <Input.Password
-              onChange={e => setPasswordConf(e.target.value)}
+              onChange={e => setPassConf(e.target.value)}
               labelPlaceholder="Confirm Password"
               width="350px"
               required
               bordered
-              status={helperPassConf.color}
-              color={helperPassConf.color}
-              helperColor={helperPassConf.color}
-              helperText={helperPassConf.text}
+              status={passConfHelper.color}
+              color={passConfHelper.color}
+              helperColor={passConfHelper.color}
+              helperText={passConfHelper.text}
               type="password"
               size="lg"
             />

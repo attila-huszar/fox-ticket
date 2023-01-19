@@ -1,35 +1,16 @@
 import React, { useState } from "react";
 import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
 import { AttentionSeeker } from "react-awesome-reveal";
-
-type ConditonalWrapperProps = {
-  children: React.ReactElement;
-  condition: boolean;
-  wrapper: (children: React.ReactElement) => JSX.Element;
-};
-const ConditonalWrapper: React.FC<ConditonalWrapperProps> = ({ condition, wrapper, children }) => (condition ? wrapper(children) : children);
+import { ConditionalWrap } from "../utils/ConditionalWrap";
+import { validateEmail, validatePass } from "../utils/inputFieldValidators";
+import { InputFieldHelper } from "../interfaces/InputFieldHelper";
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [pass, setPass] = useState("");
 
-  const validateEmail = (value: string) => {
-    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i;
-    return regex.test(value);
-  };
-
-  const validatePass = (value: string) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/;
-    return regex.test(value);
-  };
-
-  interface help {
-    text: string;
-    color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
-  }
-
-  const helperEmail: help = React.useMemo(() => {
+  const emailHelper: InputFieldHelper = React.useMemo(() => {
     if (!email)
       return {
         text: "",
@@ -43,31 +24,35 @@ export default function Login() {
     };
   }, [email]);
 
-  const helperPass: help = React.useMemo(() => {
-    if (!password)
+  const passHelper: InputFieldHelper = React.useMemo(() => {
+    if (!pass)
       return {
         text: "",
         color: "default",
       };
-    const isValidPass = validatePass(password);
+    const isValidPass = validatePass(pass);
 
     return {
       text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
       color: isValidPass ? "success" : "warning",
     };
-  }, [password]);
+  }, [pass]);
 
   const LoginBtnHandler = () => setVisLogin(true);
 
   const closeHandler = () => {
     setVisLogin(false);
     setEmail("");
-    setPassword("");
+    setPass("");
   };
 
   const loginHandler = () => {
-    setVisLogin(false);
-    //setToken(token);
+    if (validateEmail(email) === false || validatePass(pass) === false) {
+      return true;
+    } else {
+      setVisLogin(false);
+      return false;
+    }
   };
 
   return (
@@ -101,29 +86,29 @@ export default function Login() {
         </Modal.Header>
         <Modal.Body>
           <Spacer y={0.2} />
-          <ConditonalWrapper condition={validateEmail(email)} wrapper={(wrappedChildren: any) => <AttentionSeeker effect="headShake">{wrappedChildren}</AttentionSeeker>}>
+          <ConditionalWrap condition={loginHandler()} wrapper={(wrappedChildren: any) => <AttentionSeeker effect="headShake">{wrappedChildren}</AttentionSeeker>}>
             <Input
               onChange={e => setEmail(e.target.value)}
               required
               bordered
-              status={helperEmail.color}
-              color={helperEmail.color}
-              helperColor={helperEmail.color}
-              helperText={helperEmail.text}
+              status={emailHelper.color}
+              color={emailHelper.color}
+              helperColor={emailHelper.color}
+              helperText={emailHelper.text}
               fullWidth
               labelPlaceholder="Email"
               size="lg"
             />
-          </ConditonalWrapper>
+          </ConditionalWrap>
           <Spacer y={1.5} />
           <Input.Password
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => setPass(e.target.value)}
             required
             bordered
-            status={helperPass.color}
-            color={helperPass.color}
-            helperColor={helperPass.color}
-            helperText={helperPass.text}
+            status={passHelper.color}
+            color={passHelper.color}
+            helperColor={passHelper.color}
+            helperText={passHelper.text}
             type="password"
             labelPlaceholder="Password"
             size="lg"
