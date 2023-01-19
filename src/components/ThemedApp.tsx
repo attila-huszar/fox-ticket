@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { getDocumentTheme, NextUIProvider } from "@nextui-org/react";
+import { useDarkMode } from "usehooks-ts";
+import { NextUIProvider } from "@nextui-org/react";
 import { createTheme } from "@nextui-org/react";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
@@ -30,28 +30,11 @@ const darkTheme = createTheme({
   },
 });
 
-export default function Theme() {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    let theme = window.localStorage.getItem("data-theme");
-    setIsDark(theme === "dark");
-
-    const observer = new MutationObserver(mutation => {
-      let newTheme = getDocumentTheme(document?.documentElement);
-      setIsDark(newTheme === "dark");
-    });
-
-    observer.observe(document?.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme", "style"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+export default function ThemedApp() {
+  const { isDarkMode } = useDarkMode();
 
   return (
-    <NextUIProvider theme={isDark ? darkTheme : lightTheme}>
+    <NextUIProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>

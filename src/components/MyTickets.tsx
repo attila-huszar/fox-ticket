@@ -1,3 +1,5 @@
+import { Fade } from "react-awesome-reveal";
+
 export default function MyTickets() {
-  return <div></div>;
+  return <Fade duration={300}></Fade>;
 }
