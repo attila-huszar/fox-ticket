@@ -11,7 +11,7 @@ import {
 import '../styles/Articles.css';
 import data from '../assets/article_data';
 
-export default function Articles() {
+export default function Articles({ isAdmin }: any) {
   const { setVisible, bindings } = useModal();
   const [displayedArticleId, setDisplayedArticleId] = useState(0);
 
@@ -77,9 +77,21 @@ export default function Articles() {
           <Text style={{ whiteSpace: 'pre-line' }}>{articleText}</Text>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="primary" onPress={() => setVisible(false)}>
-            Close
-          </Button>
+          {isAdmin ? (
+            <>
+              <Button shadow size="md" auto color="gradient" id="submit">
+                Remove
+              </Button>
+              <Spacer />
+              <Button shadow size="md" auto color="gradient" id="submit">
+                Edit
+              </Button>
+            </>
+          ) : (
+            <Button auto flat color="primary" onPress={() => setVisible(false)}>
+              Close
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>
