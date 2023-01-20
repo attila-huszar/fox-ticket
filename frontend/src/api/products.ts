@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function fetchProducts() {
-  const response = await axios.get(`/api/products`);
+  const response = await axios.get('/api/products');
   return response.data.allProducts;
 }
 
@@ -10,5 +10,3 @@ export async function fetchProducts() {
 //   const responseFetch = await request.json()
 //   return responseFetch;
 // }
-
-export default fetchProducts;

@@ -4,10 +4,8 @@ import {
   Column,
   DataType,
   ForeignKey,
-  BelongsToMany,
   BelongsTo,
 } from 'sequelize-typescript';
-import OrderProduct from './OrderProduct';
 import Product from './Product';
 import User from './User';
 
@@ -28,25 +26,14 @@ export default class Order extends Model {
   status!: string;
 
   @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
+    type: DataType.DATE,
   })
-  amount!: number;
+  paidDate: Date;
 
   @Column({
     type: DataType.DATE,
-    allowNull: false,
   })
-  paidDate!: Date;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-  })
-  expirationDate!: Date;
-
-  @BelongsToMany(() => Product, () => OrderProduct)
-  products: Product[];
+  expirationDate: Date;
 
   @ForeignKey(() => User)
   @Column
@@ -54,4 +41,11 @@ export default class Order extends Model {
 
   @BelongsTo(() => User)
   user: User;
+
+  @ForeignKey(() => Product)
+  @Column
+  productId: number;
+
+  @BelongsTo(() => Product)
+  product: Product;
 }

@@ -7,8 +7,8 @@ import Login from './Login';
 import SignUp from './SignUp';
 import logo from '../static/logo.png';
 import profile_defpic from '../static/profile_def.png';
-import './Header.css';
-import Cart from './cart/Cart';
+import '../styles/Header.css';
+import Cart from './Cart';
 
 export default function Header() {
   // eslint-disable-next-line

@@ -1,24 +1,25 @@
-import { Grid, Button, Container, Card, Row, Text } from '@nextui-org/react';
+import { Grid, Container, Text, Button } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
-import fetchProducts from '../../api/products';
-import Product from './../../interfaces/product';
-import './shop.css';
-// <---- HA HELYBEN AXIOSSAL FETCH VAN, AKKOR KELL: import axios from 'axios';
+import { fetchProducts } from '../api/products';
+import { ProductResponse } from '../interfaces/product';
+import ProductCard from './ProductCard';
+import '../styles/Shop.css';
 
 export default function Shop() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductResponse[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductResponse[]>([]);
 
-  // <--------- MŰKŐDŐ FETCH AXIOS-SAL PRODUCT.TS-BŐL ------>
+
+    // <--------- MŰKŐDŐ FETCH AXIOS-SAL PRODUCT.TS-BŐL ------>
 
   useEffect(() => {
     fetchProducts().then(data => {
-      setProducts(data);
+      setProducts(data)
       setFilteredProducts(data);
     });
   }, []);
 
-  // <--------- MŰKŐDŐ FETCH AXIOS-SAL HELYBEN ------>
+    // <--------- MŰKŐDŐ FETCH AXIOS-SAL HELYBEN ------>
 
   // useEffect(() =>{
   //   async function fetchData(){
@@ -38,7 +39,7 @@ export default function Shop() {
   // }, []);
 
   async function handleTicketsClick() {
-    const allTickets: Product[] = [];
+    const allTickets: ProductResponse[] = [];
     products.map(ticket => {
       if (ticket.type === 'ticket') {
         allTickets.push(ticket);
@@ -48,7 +49,7 @@ export default function Shop() {
   }
 
   async function handlePassesClick() {
-    const allPasses: Product[] = [];
+    const allPasses: ProductResponse[] = [];
     products.map(pass => {
       if (pass.type === 'pass') {
         allPasses.push(pass);
@@ -61,8 +62,12 @@ export default function Shop() {
     setFilteredProducts(products);
   }
 
+// function handleAddToCartClick(){
+    
+// }
+
   return (
-    <Container id="cardContainer">
+    <Container>
       <Text h1 css={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
         Tickets and Passes
       </Text>
@@ -106,56 +111,20 @@ export default function Shop() {
           Passes
         </Button>
       </Button.Group>
-      <Grid.Container
-        id="shopCards"
-        gap={2}
+      <Grid.Container gap={2} id="shopCards"
         css={{
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
-          rowGap: '40px',
+          gap: '40px',
           justifyContent: 'center',
-        }}
-      >
+        }}>
         {filteredProducts.map(product => (
-          <Grid
-            sm={12}
-            md={5}
-            id="cardGrid"
-            css={{
-              justifyContent: 'center',
-              marginLeft: '32%',
-              width: '100%',
-              padding: '0',
-            }}
-          >
-            <Card
-              css={{
-                w: '280px',
-                display: 'flex',
-                margin: '0 auto',
-              }}
-              id="card"
-              isHoverable
-            >
-              <Card.Header>
-                <Text css={{ margin: 'auto' }}>{product.name}</Text>
-              </Card.Header>
-              <Card.Divider />
-              <Card.Body css={{ py: '$10' }}>
-                <Text css={{ margin: 'auto' }}>{product.price} Ft</Text>
-                <Text css={{ margin: 'auto' }}>{product.description}</Text>
-              </Card.Body>
-              <Card.Divider />
-              <Card.Footer>
-                <Row justify="center">
-                  <Button shadow size="md" auto color="gradient" id="submit">
-                    Add to Cart
-                  </Button>
-                </Row>
-              </Card.Footer>
-            </Card>
-          </Grid>
+          <ProductCard
+            name={product.name}
+            description={product.description}
+            price={product.price}
+          />
         ))}
       </Grid.Container>
     </Container>
