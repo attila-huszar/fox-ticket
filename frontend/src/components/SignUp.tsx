@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Text, Spacer } from '@nextui-org/react';
 import fetchRegister from '../api/fetchRegister';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
   const [name, setName] = useState('');
@@ -107,6 +109,18 @@ export default function SignUp() {
     setPasswordConf('');
   };
 
+  const notify = () =>
+    toast.success('You successfully signed up! Please, verify your email address!', {
+      position: 'top-center',
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
+
   const handleSignUp = async () => {
     if (password === passwordConf) {
       try {
@@ -126,6 +140,7 @@ export default function SignUp() {
       setErrorMessage('');
       //setToken(token);
       setVisible(false);
+      notify();
     } else {
       setErrorMessage('Password does not match');
     }
