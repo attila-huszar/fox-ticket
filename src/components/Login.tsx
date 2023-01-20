@@ -1,14 +1,23 @@
 import React, { useState } from "react";
-import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
-import { AttentionSeeker } from "react-awesome-reveal";
-import { ConditionalWrap } from "../utils/ConditionalWrap";
+import {
+  Modal,
+  Input,
+  Row,
+  Checkbox,
+  Button,
+  Text,
+  Spacer,
+} from "@nextui-org/react";
 import { validateEmail, validatePass } from "../utils/inputFieldValidators";
 import { InputFieldHelper } from "../interfaces/InputFieldHelper";
+import "../styles/Login.css";
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [shakeEmail, setShakeEmail] = useState(false);
+  const [shakePass, setShakePass] = useState(false);
 
   const emailHelper: InputFieldHelper = React.useMemo(() => {
     if (!email)
@@ -16,11 +25,11 @@ export default function Login() {
         text: "",
         color: "default",
       };
-    const isValid = validateEmail(email);
+    const isValidEmail = validateEmail(email);
 
     return {
-      text: isValid ? "Valid email" : "Enter a valid email",
-      color: isValid ? "success" : "warning",
+      text: isValidEmail ? "Valid email" : "Please enter a valid email address",
+      color: isValidEmail ? "success" : "warning",
     };
   }, [email]);
 
@@ -33,7 +42,9 @@ export default function Login() {
     const isValidPass = validatePass(pass);
 
     return {
-      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      text: isValidPass
+        ? "Valid password"
+        : "Minimum eight characters, with at least one number",
       color: isValidPass ? "success" : "warning",
     };
   }, [pass]);
@@ -47,12 +58,24 @@ export default function Login() {
   };
 
   const loginHandler = () => {
-    if (validateEmail(email) === false || validatePass(pass) === false) {
-      return true;
-    } else {
-      setVisLogin(false);
-      return false;
+    if (!email) {
+      setShakeEmail(prevCheck => !prevCheck);
+      emailHelper.color = "error";
+      emailHelper.text = "Please enter your email address";
+    } else if (validateEmail(email) === false) {
+      setShakeEmail(prevCheck => !prevCheck);
+      emailHelper.color = "error";
     }
+    if (!pass) {
+      setShakePass(prevCheck => !prevCheck);
+      passHelper.color = "error";
+      passHelper.text = "Please enter your password";
+    } else if (validatePass(pass) === false) {
+      setShakePass(prevCheck => !prevCheck);
+      passHelper.color = "error";
+    }
+    setTimeout(() => setShakeEmail(false), 1000);
+    setTimeout(() => setShakePass(false), 1000);
   };
 
   return (
@@ -70,7 +93,12 @@ export default function Login() {
         onClick={LoginBtnHandler}>
         Login
       </Button>
-      <Modal closeButton blur aria-labelledby="login form" open={visLogin} onClose={closeHandler}>
+      <Modal
+        closeButton
+        blur
+        aria-labelledby="login form"
+        open={visLogin}
+        onClose={closeHandler}>
         <Modal.Header>
           <Text size={18}>
             Welcome to{" "}
@@ -86,22 +114,22 @@ export default function Login() {
         </Modal.Header>
         <Modal.Body>
           <Spacer y={0.2} />
-          <ConditionalWrap condition={loginHandler()} wrapper={(wrappedChildren: any) => <AttentionSeeker effect="headShake">{wrappedChildren}</AttentionSeeker>}>
-            <Input
-              onChange={e => setEmail(e.target.value)}
-              required
-              bordered
-              status={emailHelper.color}
-              color={emailHelper.color}
-              helperColor={emailHelper.color}
-              helperText={emailHelper.text}
-              fullWidth
-              labelPlaceholder="Email"
-              size="lg"
-            />
-          </ConditionalWrap>
+          <Input
+            className={shakeEmail ? "shake" : ""}
+            onChange={e => setEmail(e.target.value)}
+            required
+            bordered
+            status={emailHelper.color}
+            color={emailHelper.color}
+            helperColor={emailHelper.color}
+            helperText={emailHelper.text}
+            fullWidth
+            labelPlaceholder="Email"
+            size="lg"
+          />
           <Spacer y={1.5} />
           <Input.Password
+            className={shakePass ? "shake" : ""}
             onChange={e => setPass(e.target.value)}
             required
             bordered
