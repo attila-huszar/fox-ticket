@@ -7,19 +7,20 @@ import '../styles/Shop.css';
 
 export default function Shop() {
   const [products, setProducts] = useState<ProductResponse[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ProductResponse[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductResponse[]>(
+    []
+  );
 
-
-    // <--------- MŰKŐDŐ FETCH AXIOS-SAL PRODUCT.TS-BŐL ------>
+  // <--------- MŰKŐDŐ FETCH AXIOS-SAL PRODUCT.TS-BŐL ------>
 
   useEffect(() => {
     fetchProducts().then(data => {
-      setProducts(data)
+      setProducts(data);
       setFilteredProducts(data);
     });
   }, []);
 
-    // <--------- MŰKŐDŐ FETCH AXIOS-SAL HELYBEN ------>
+  // <--------- MŰKŐDŐ FETCH AXIOS-SAL HELYBEN ------>
 
   // useEffect(() =>{
   //   async function fetchData(){
@@ -61,10 +62,6 @@ export default function Shop() {
   async function handleAllClick() {
     setFilteredProducts(products);
   }
-
-// function handleAddToCartClick(){
-    
-// }
 
   return (
     <Container>
@@ -111,14 +108,17 @@ export default function Shop() {
           Passes
         </Button>
       </Button.Group>
-      <Grid.Container gap={2} id="shopCards"
+      <Grid.Container
+        gap={2}
+        id="shopCards"
         css={{
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
           gap: '40px',
           justifyContent: 'center',
-        }}>
+        }}
+      >
         {filteredProducts.map(product => (
           <ProductCard
             name={product.name}
