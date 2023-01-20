@@ -21,16 +21,11 @@
     "url": "git+https://github.com/green-fox-academy/dusicyon-viridian-fox-ticket-react.git"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.29.0",
-    "typescript": "^4.9.4",
-    "zod": "^3.20.2",
-    "zod-validation-error": "^0.3.0"
-  },
-  "dependencies": {
-    "axios": "^1.2.2"
+    "eslint": "^8.32.0",
+    "typescript": "^4.9.4"
   }
 }
