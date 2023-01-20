@@ -10,6 +10,7 @@ import Footer from './Footer';
 import NotImplementedPage from './NotImplementedPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AdminProduct from './AdminProduct';
+import AdminArticle from './AdminArticle'
 
 export default function App() {
   const { pathname } = useLocation();
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/products" element={<AdminProduct />} />
+            <Route path="/articles" element={<AdminArticle />} />
             <Route path="*" element={<NotImplementedPage />} />
           </Routes>
         </CSSTransition>
