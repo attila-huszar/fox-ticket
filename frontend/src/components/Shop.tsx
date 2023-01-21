@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchProducts } from '../api/products';
 import { ProductResponse } from '../interfaces/product';
 import ProductCard from './ProductCard';
+import { Fade } from 'react-awesome-reveal';
 import '../styles/Shop.css';
 
 export default function Shop() {
@@ -78,7 +79,7 @@ export default function Shop() {
           shadow
           size="md"
           color="gradient"
-          css={{ button: focus, outline: 'none', width: '100px' }}
+          css={{ button: focus, outline: 'none', width: '100px', zIndex: '0' }}
           id="showAllButton"
           autoFocus
           onPress={handleAllClick}
@@ -91,7 +92,7 @@ export default function Shop() {
           size="md"
           color="gradient"
           id="ticketsTabButton"
-          css={{ width: '100px' }}
+          css={{ width: '100px', zIndex: '0' }}
           onPress={handleTicketsClick}
         >
           Tickets
@@ -102,7 +103,7 @@ export default function Shop() {
           color="gradient"
           id="passesTabButton"
           className="shopTabButton"
-          css={{ width: '100px' }}
+          css={{ width: '100px', zIndex: '0' }}
           onPress={handlePassesClick}
         >
           Passes

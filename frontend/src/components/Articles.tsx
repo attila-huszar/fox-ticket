@@ -21,7 +21,7 @@ export default function Articles() {
 
   return (
     <>
-      <h2 style={{ padding: '20px 0 0 40px' }}>News</h2>
+      {/* <h2 style={{ padding: '20px 0 0 40px' }}>News</h2> */}
       <Grid.Container gap={3}>
         <div className="articles">
           {data.articles.map(article => (
@@ -45,7 +45,7 @@ export default function Articles() {
                     zIndex: 1,
                   }}
                 >
-                  <Text color="white" size={16}>
+                  <Text color="white" size={16} style={{ display: "-webkit-box", overflow: "hidden", textOverflow: "ellipsis", WebkitLineClamp: "2", WebkitBoxOrient: "vertical" }}>
                     {article.title}
                   </Text>
                 </Card.Footer>

@@ -10,3 +10,8 @@ export async function fetchProducts() {
 //   const responseFetch = await request.json()
 //   return responseFetch;
 // }
+
+export default async function fetchPendingOrder() {
+  const purchases = await axios.get('/api/orders/1');
+  return purchases.data.orders;
+}
