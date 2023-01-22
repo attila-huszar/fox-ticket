@@ -14,10 +14,11 @@ export const RegisterUserRequestValidator = z
 
 export type RegisterUserRequest = z.infer<typeof RegisterUserRequestValidator>;
 
-export interface UserResponse {
-  id: number;
-  name: string;
+export interface User {
+  id?: number;
+  name?: string;
   email: string;
-  isAdmin: boolean;
-  isVerified: boolean;
+  password?: string;
+  isAdmin?: boolean;
+  isVerified?: boolean;
 }

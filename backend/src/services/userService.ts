@@ -3,7 +3,7 @@ import * as userRepo from '../repositories/userRepo';
 import {
   RegisterUserRequest,
   RegisterUserRequestValidator,
-  UserResponse,
+  User,
 } from '../interfaces/user';
 import _ from 'lodash';
 import bcrypt from 'bcrypt'
@@ -14,13 +14,13 @@ const userResponse = (user: object) => {
 
 export async function registerUser(
   newUser: RegisterUserRequest
-): Promise<UserResponse> {
+): Promise<User> {
   await RegisterUserRequestValidator.parseAsync(newUser);
   const hashedPassword = await bcrypt.hash(newUser.password, 10)
   const user = await userRepo.registerUser({name: newUser.name, email: newUser.email, password: hashedPassword});
 
   if (user) {
-    return userResponse(user) as UserResponse;
+    return userResponse(user) as User;
   } else {
     throw new NotFoundError();
   }

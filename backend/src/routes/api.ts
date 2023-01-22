@@ -1,39 +1,58 @@
-import express from 'express';
 import status from 'http-status';
-import apiErrorHandler from '../middlewares/apiErrorHandler';
-import * as helloController from '../controllers/helloController';
+import * as loginController from '../controllers/loginController';
+import * as loginTestController from '../controllers/loginTestController';
+import * as refreshController from '../controllers/refreshController';
+import * as logoutController from '../controllers/logoutController';
+import * as userController from '../controllers/userController';
 import * as articleController from '../controllers/articleController';
 import * as productController from '../controllers/productController';
-import * as userController from '../controllers/userController';
 import * as cartController from '../controllers/cartController';
-import { HttpError } from '../errors';
 import * as orderController from '../controllers/orderController';
 
+import { auth } from '../middlewares/auth';
+import apiErrorHandler from '../middlewares/apiErrorHandler';
+import { HttpError } from '../errors';
+
+const express = require('express');
 const router = express.Router();
 
 router.use(express.json());
 
-router.get('/hello', helloController.getHelloWorld);
+//// GET
+router.get('/', auth, loginTestController.loginTest);
 router.get('/articles', articleController.getAllArticles);
-router.post('/admin/articles', articleController.addNewArticle);
-router.put('/admin/articles/:articleId', articleController.editArticle);
-router.post('/admin/products', productController.addNewProduct);
 router.get('/admin/products', productController.getProductById);
+router.get('/products', productController.getAllProducts);
+router.get('/product', productController.getProductById);
+router.get('/purchases/:userId', orderController.getAllOrders);
+router.get('/orders/:userId', orderController.getPendingOrders);
+
+//// POST
+router.post('/login', loginController.login);
+router.post('/refresh', refreshController.refresh);
+router.post('/register', userController.registerUser);
+router.post('/logout', auth, logoutController.logout);
+router.post('/purchases', orderController.addNewOrder);
+router.post('/admin/articles', articleController.addNewArticle);
+router.post('/admin/products', productController.addNewProduct);
+
+//// PUT
 router.put('/admin/products/:productId', productController.editProductById);
+router.put('/admin/articles/:articleId', articleController.editArticle);
+
+//// PATCH
+router.patch('/orders/:userId', orderController.changeOrderStatusByUserId);
+
+//// DELETE
+router.delete('/orders', cartController.removePendingOrderFromCart);
+router.delete('/orders/:orderId', cartController.removeProductFromCart);
 router.delete(
   '/admin/products/:productId',
   productController.deleteProductById
 );
-router.get('/product', productController.getProductById);
-router.get('/products', productController.getAllProducts);
-router.get('/purchases/:userId', orderController.getAllOrders);
-router.post('/purchases', orderController.addNewOrder);
-router.post('/register', userController.registerUser);
-router.delete('/orders/:orderId', cartController.removeProductFromCart);
-router.get('/orders/:userId', orderController.getPendingOrders);
-router.delete('/orders', cartController.removePendingOrderFromCart);
-router.patch('/orders/:userId', orderController.changeOrderStatusByUserId);
-router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
+
+//// 404
 router.use(apiErrorHandler);
+router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
 
 export default router;
