@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Navbar, Text, Avatar, Dropdown, Input } from "@nextui-org/react";
 import { TbHelp, TbLogout, TbSearch, TbUser } from "react-icons/tb";
@@ -9,18 +9,15 @@ import logo from "../static/logo.png";
 import profile_defpic from "../static/profile_def.png";
 import "../styles/Header.css";
 import Cart from "./Cart";
+import { UserContext } from "./App";
+import { User } from "../interfaces/user";
 
 export default function Header() {
-  // eslint-disable-next-line
-  const [isLoginVisible, setIsLoginVisible] = useState(true);
-  // eslint-disable-next-line
-  const handleLoginVis = () => {
-    setIsLoginVisible(isVisible => !isVisible);
-    setIsLoginVisible(false);
-  };
+  const user: User = useContext(UserContext);
+
+  const isLoggedIn: boolean = user.isAdmin;
 
   const navigate = useNavigate();
-
   const navigateDropdown = (key: React.Key) => {
     if (key === "LOGOUT") {
       //logout();
@@ -33,7 +30,6 @@ export default function Header() {
   return (
     <Navbar
       isBordered
-      disableScrollHandler={true}
       variant="floating"
       css={{
         background: "var(--nextui-colors-navbarGradient)",
@@ -55,22 +51,35 @@ export default function Header() {
           Fox
         </Text>
         <Navbar.Content style={{ fontSize: "1.1rem" }}>
-          <NavLink to="/" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "activeLink" : "inactiveLink"
+            }>
             News
           </NavLink>
-          <NavLink to="/shop" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
+          <NavLink
+            to="/shop"
+            className={({ isActive }) =>
+              isActive ? "activeLink" : "inactiveLink"
+            }>
             Shop
           </NavLink>
-          <NavLink to="/mytickets" className={({ isActive }) => (isActive ? "activeLink" : "inactiveLink")}>
+          <NavLink
+            to="/mytickets"
+            className={({ isActive }) =>
+              isActive ? "activeLink" : "inactiveLink"
+            }>
             My Tickets
           </NavLink>
         </Navbar.Content>
       </Navbar.Brand>
 
       <Navbar.Content>
-        <Navbar.Item hideIn="sm">{isLoginVisible && <Login />}</Navbar.Item>
-        <Navbar.Item hideIn="sm">{isLoginVisible && <SignUp />}</Navbar.Item>
-
+        {isLoggedIn ? <Navbar.Item hideIn="sm">{<Login />}</Navbar.Item> : null}
+        {isLoggedIn ? (
+          <Navbar.Item hideIn="sm">{<SignUp />}</Navbar.Item>
+        ) : null}
         <Navbar.Item
           hideIn="sm"
           css={{
@@ -106,9 +115,18 @@ export default function Header() {
                   boxShadow: "0 4px 14px 0 var(--nextui-colors-hoverShadow)",
                 },
               }}>
-              <Avatar bordered as="button" color="gradient" size="md" src={profile_defpic} />
+              <Avatar
+                bordered
+                as="button"
+                color="gradient"
+                size="md"
+                src={profile_defpic}
+              />
             </Dropdown.Trigger>
-            <Dropdown.Menu aria-label="User menu actions" color="secondary" onAction={key => navigateDropdown(key)}>
+            <Dropdown.Menu
+              aria-label="User menu actions"
+              color="secondary"
+              onAction={key => navigateDropdown(key)}>
               <Dropdown.Item key="" css={{ height: "$18" }}>
                 <Text b color="inherit" css={{ d: "flex" }}>
                   Welcome,
@@ -123,7 +141,11 @@ export default function Header() {
               <Dropdown.Item key="/help_and_feedback" icon={<TbHelp />}>
                 Help & Feedback
               </Dropdown.Item>
-              <Dropdown.Item key="LOGOUT" icon={<TbLogout />} withDivider color="error">
+              <Dropdown.Item
+                key="LOGOUT"
+                icon={<TbLogout />}
+                withDivider
+                color="error">
                 Log Out
               </Dropdown.Item>
             </Dropdown.Menu>
