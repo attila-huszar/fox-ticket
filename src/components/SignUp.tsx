@@ -1,13 +1,44 @@
 import React, { useState } from "react";
 import { Modal, Input, Button, Text, Spacer } from "@nextui-org/react";
-import { validateEmail, validatePass } from "../utils/inputFieldValidators";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validateMatch,
+} from "../helper/inputFieldValidators";
 import { InputFieldHelper } from "../interfaces/InputFieldHelper";
+import "../styles/inputFieldHelper.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import fetchRegister from "../api/fetchRegister";
 
 export default function SignUp() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [passConf, setPassConf] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConf, setPasswordConf] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [shakeName, setShakeName] = useState(false);
+  const [shakeEmail, setShakeEmail] = useState(false);
+  const [shakePassword, setShakePassword] = useState(false);
+  const [shakePasswordConf, setShakePasswordConf] = useState(false);
+
+  const nameHelper: InputFieldHelper = React.useMemo(() => {
+    if (!name)
+      return {
+        text: "",
+        color: "default",
+      };
+    const isValid = validateName(name);
+
+    return {
+      text: isValid
+        ? `Nice to meet you ${name}`
+        : "Please enter minimum 3 characters",
+      color: isValid ? "success" : "warning",
+    };
+  }, [name]);
 
   const emailHelper: InputFieldHelper = React.useMemo(() => {
     if (!email)
@@ -18,60 +49,133 @@ export default function SignUp() {
     const isValid = validateEmail(email);
 
     return {
-      text: isValid ? "Valid email" : "Enter a valid email",
+      text: isValid
+        ? "Valid email address"
+        : "Please enter a valid email address",
       color: isValid ? "success" : "warning",
     };
   }, [email]);
 
   const passHelper: InputFieldHelper = React.useMemo(() => {
-    if (!pass)
+    if (!password)
       return {
         text: "",
         color: "default",
       };
 
-    const isValidPass = validatePass(pass);
+    const isValidPass = validatePassword(password);
 
     return {
-      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      text: isValidPass
+        ? "Valid password"
+        : "Please enter minimum eight characters",
       color: isValidPass ? "success" : "warning",
     };
-  }, [pass]);
+  }, [password]);
 
   const passConfHelper: InputFieldHelper = React.useMemo(() => {
-    if (!passConf)
+    if (!passwordConf)
       return {
         text: "",
         color: "default",
       };
 
-    const validateMatch = (value: string) => {
-      if (value === pass) return true;
-    };
-
-    const isValidPass = validatePass(passConf);
-    const isMatching = validateMatch(passConf);
+    const isValidPass = validatePassword(passwordConf);
+    const isMatching = validateMatch(password, passwordConf);
 
     return {
-      text: isMatching ? "Passwords Match" : "Passwords Not Matching",
+      text: isMatching ? "Passwords match" : "Passwords not matching",
       color: isValidPass && isMatching ? "success" : "warning",
     };
-  }, [pass, passConf]);
+  }, [password, passwordConf]);
 
-  const signUpHandler = () => setVisible(true);
   const closeHandler = () => {
-    setVisible(false);
+    setModalVisible(false);
+    setName("");
     setEmail("");
-    setPass("");
-    setPassConf("");
+    setPassword("");
+    setPasswordConf("");
   };
 
-  const handleLogin = async () => {
-    setVisible(false);
+  const signUpHandler = async () => {
+    if (!name) {
+      setShakeName(prevCheck => !prevCheck);
+      nameHelper.color = "error";
+      nameHelper.text = "Please fill this field";
+    }
+    if (!email) {
+      setShakeEmail(prevCheck => !prevCheck);
+      emailHelper.color = "error";
+      emailHelper.text = "Please fill this field";
+    }
+    if (!password) {
+      setShakePassword(prevCheck => !prevCheck);
+      passHelper.color = "error";
+      passHelper.text = "Please fill this field";
+    }
+    if (!passwordConf) {
+      setShakePassword(prevCheck => !prevCheck);
+      passConfHelper.color = "error";
+      passConfHelper.text = "Please fill this field";
+    }
+    if (validateName(name) === false) {
+      setShakeName(prevCheck => !prevCheck);
+      nameHelper.color = "error";
+    }
+    if (validateEmail(email) === false) {
+      setShakeEmail(prevCheck => !prevCheck);
+      emailHelper.color = "error";
+    }
+    if (validatePassword(password) === false) {
+      setShakePassword(prevCheck => !prevCheck);
+      passHelper.color = "error";
+    }
+    if (validatePassword(passwordConf) === false) {
+      setShakePasswordConf(prevCheck => !prevCheck);
+      passConfHelper.color = "error";
+    }
+
+    setTimeout(() => setShakeEmail(false), 1000);
+    setTimeout(() => setShakePassword(false), 1000);
+
+    if (
+      validateName(name) &&
+      validateEmail(email) &&
+      validatePassword(password) &&
+      validateMatch(password, passwordConf)
+    ) {
+      try {
+        const useremail = await fetchRegister({ name, email, password });
+        const notify = () =>
+          toast.success(
+            `${useremail} successfully signed up! Please, verify your email address.`,
+            {
+              position: "top-center",
+              autoClose: 4000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            }
+          );
+        notify();
+      } catch (error) {
+        if (error instanceof Error) {
+          emailHelper.text = error.message[1][0].replace(
+            "Validation error: ",
+            ""
+          );
+        }
+        return;
+      }
+    }
+    setModalVisible(false);
   };
 
   return (
-    <div>
+    <>
       <Button
         css={{
           fontSize: "1rem",
@@ -82,21 +186,37 @@ export default function SignUp() {
         auto
         color="gradient"
         shadow
-        onClick={signUpHandler}>
+        onClick={() => setModalVisible(true)}>
         Sign Up
       </Button>
-      <Modal closeButton blur aria-labelledby="signup form" open={visible} onClose={closeHandler}>
+      <Modal
+        closeButton
+        blur
+        aria-labelledby="signup form"
+        open={modalVisible}
+        onClose={closeHandler}>
         <Modal.Header>
           <Text id="signup form" size={18}>
-            Please sign up with your email address
+            Please sign up with your name and email address
           </Text>
         </Modal.Header>
         <Modal.Body>
           <Spacer y={0.2} />
           <Input
+            onChange={e => setName(e.target.value)}
+            required
+            status={nameHelper.color}
+            color={nameHelper.color}
+            helperColor={nameHelper.color}
+            helperText={nameHelper.text}
+            fullWidth
+            labelPlaceholder="Name"
+            size="lg"
+          />
+          <Spacer y={1.5} />
+          <Input
             onChange={e => setEmail(e.target.value)}
             required
-            bordered
             status={emailHelper.color}
             color={emailHelper.color}
             helperColor={emailHelper.color}
@@ -107,9 +227,8 @@ export default function SignUp() {
           />
           <Spacer y={1.5} />
           <Input.Password
-            onChange={e => setPass(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             required
-            bordered
             status={passHelper.color}
             color={passHelper.color}
             helperColor={passHelper.color}
@@ -120,11 +239,10 @@ export default function SignUp() {
           />
           <Spacer y={1.5} />
           <Input.Password
-            onChange={e => setPassConf(e.target.value)}
+            onChange={e => setPasswordConf(e.target.value)}
             labelPlaceholder="Confirm Password"
             width="350px"
             required
-            bordered
             status={passConfHelper.color}
             color={passConfHelper.color}
             helperColor={passConfHelper.color}
@@ -138,11 +256,11 @@ export default function SignUp() {
           <Button auto flat color="error" onPress={closeHandler}>
             Close
           </Button>
-          <Button auto onPress={handleLogin} color="gradient">
-            Sign in
+          <Button auto onPress={signUpHandler} color="gradient">
+            Sign Up
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 }

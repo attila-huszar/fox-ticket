@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { Navbar, Text, Avatar, Dropdown, Input } from "@nextui-org/react";
 import { TbHelp, TbLogout, TbSearch, TbUser } from "react-icons/tb";
@@ -76,6 +76,7 @@ export default function Header() {
       </Navbar.Brand>
 
       <Navbar.Content>
+        {isLoggedIn ? <Text>Admin</Text> : null}
         {isLoggedIn ? <Navbar.Item hideIn="sm">{<Login />}</Navbar.Item> : null}
         {isLoggedIn ? (
           <Navbar.Item hideIn="sm">{<SignUp />}</Navbar.Item>

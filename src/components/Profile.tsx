@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 import { Fade } from "react-awesome-reveal";
 import profile_defpic from "../static/profile_def.png";
-import { validatePass } from "../utils/inputFieldValidators";
+import { validatePassword } from "../helper/inputFieldValidators";
 import { InputFieldHelper } from "../interfaces/InputFieldHelper";
 
 export default function Profile() {
@@ -38,7 +38,7 @@ export default function Profile() {
         text: "",
         color: "default",
       };
-    const isValidPass = validatePass(passOld);
+    const isValidPass = validatePassword(passOld);
 
     return {
       text: isValidPass
@@ -55,7 +55,7 @@ export default function Profile() {
         color: "default",
       };
 
-    const isValidPass = validatePass(passNew);
+    const isValidPass = validatePassword(passNew);
 
     return {
       text: isValidPass
@@ -76,7 +76,7 @@ export default function Profile() {
       if (value === passNew) return true;
     };
 
-    const isValidPass = validatePass(passConf);
+    const isValidPass = validatePassword(passConf);
     const isMatching = validateMatch(passConf);
 
     return {
@@ -87,7 +87,7 @@ export default function Profile() {
 
   return (
     <>
-      <Fade duration={1000}>
+      <Fade duration={750}>
         <Container
           style={{
             margin: "50px auto",
