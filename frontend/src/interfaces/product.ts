@@ -12,9 +12,4 @@ export interface ProductRequest {
   price: number;
   description: string;
   isAdmin?: boolean;
-} 
-
-export interface PendingOrdersResponse {    
-  name: string;
-  price: number;
 }

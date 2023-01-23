@@ -12,9 +12,7 @@ import '../styles/Header.css';
 import Cart from './Cart';
 
 export default function Header() {
-  // eslint-disable-next-line
   const [isLoginVisible, setIsLoginVisible] = useState(true);
-  // eslint-disable-next-line
   const handleLoginVis = () => {
     setIsLoginVisible(isVisible => !isVisible);
     setIsLoginVisible(false);

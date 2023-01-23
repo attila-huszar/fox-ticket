@@ -1,28 +1,22 @@
 import React from 'react';
-import {useState, useEffect } from 'react';
-import fetchPendingOrder from '../api/products';
-import { PendingOrdersResponse } from '../interfaces/product';
 import { Modal, Button, Badge } from '@nextui-org/react';
 import { FiShoppingCart } from 'react-icons/fi';
-import OrderCart from './OrderCart';
+
+
 export default function Cart() {
   const [visible, setVisible] = React.useState(false);
-  const [orders, setOrders] = useState<PendingOrdersResponse[]>([]);
+
 
   const closeHandler = () => {
     setVisible(false);
   };
   const handler = async () => {
     setVisible(true); }
-
-  useEffect(() => {
-    fetchPendingOrder().then(data => setOrders(data));
-  }, []);
   
 
   return (
     <>
-      <Badge color="error" content={orders.length}>
+      <Badge color="error" content={2}>
         <Button
           auto
           color="secondary"
@@ -40,12 +34,6 @@ export default function Cart() {
         open={visible}
         onClose={closeHandler}
       >
-        <Modal.Body>
-          {orders.map(order => (
-            <OrderCart name={order.name} price={order.price} />
-          ))}
-        </Modal.Body>
-
         <Modal.Footer>
           <Button
             css={{ marginRight: '20px' }}
