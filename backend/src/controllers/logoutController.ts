@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { AuthorizedRequest } from "../interfaces/AuthorizedRequest";
+import { AuthorizedRequest } from "../interfaces/authorizedRequest";
 import { OK } from "http-status";
 
 export async function logout(req: AuthorizedRequest, res: Response) {

@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { AuthorizedRequest } from "../interfaces/AuthorizedRequest";
+import { AuthorizedRequest } from "../interfaces/authorizedRequest";
 import { OK } from "http-status";
 
 export async function home(req: AuthorizedRequest, res: Response, next: NextFunction) {

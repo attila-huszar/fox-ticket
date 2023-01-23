@@ -8,9 +8,12 @@ import {
   Text,
   Spacer,
 } from "@nextui-org/react";
-import { validateEmail, validatePass } from "../utils/inputFieldValidators";
+import {
+  validateEmail,
+  validatePassword,
+} from "../helper/inputFieldValidators";
 import { InputFieldHelper } from "../interfaces/InputFieldHelper";
-import "../styles/Login.css";
+import "../styles/inputFieldHelper.css";
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
@@ -39,7 +42,7 @@ export default function Login() {
         text: "",
         color: "default",
       };
-    const isValidPass = validatePass(pass);
+    const isValidPass = validatePassword(pass);
 
     return {
       text: isValidPass
@@ -70,7 +73,7 @@ export default function Login() {
       setShakePass(prevCheck => !prevCheck);
       passHelper.color = "error";
       passHelper.text = "Please enter your password";
-    } else if (validatePass(pass) === false) {
+    } else if (validatePassword(pass) === false) {
       setShakePass(prevCheck => !prevCheck);
       passHelper.color = "error";
     }

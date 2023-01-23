@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <Fade className="title" duration={1000} triggerOnce={true}>
+      <Fade className="title" duration={750} triggerOnce={true}>
         <h2>
           News
           <p style={{ fontSize: "16" }}>

@@ -1,21 +1,21 @@
-import { UserJwt } from "../interfaces/User";
+import { User } from "../interfaces/user";
 
-export const mockUsers: UserJwt[] = [
+export const mockUsers: User[] = [
   {
     email: "admin@foxticket.com",
-    pass: "admin",
+    password: "admin",
     isAdmin: true,
     isVerified: true,
   },
   {
     email: "user@foxticket.com",
-    pass: "user",
+    password: "user",
     isAdmin: false,
     isVerified: true,
   },
   {
     email: "cinkes@gmail.com",
-    pass: "cinkes",
+    password: "cinkes",
     isAdmin: true,
     isVerified: false,
   },
