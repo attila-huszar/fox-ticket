@@ -21,7 +21,6 @@ export default function Articles() {
 
   return (
     <>
-      {/* <h2 style={{ padding: '20px 0 0 40px' }}>News</h2> */}
       <Grid.Container gap={3}>
         <div className="articles">
           {data.articles.map(article => (
