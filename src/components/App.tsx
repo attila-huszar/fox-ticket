@@ -14,7 +14,7 @@ import { Flip, ToastContainer } from "react-toastify";
 const guestUser: User = {
   name: "Guest",
   email: "guest@foxticket.com",
-  isAdmin: false,
+  isAdmin: true,
 };
 export const UserContext = createContext<User>(guestUser);
 

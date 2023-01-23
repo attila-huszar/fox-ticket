@@ -34,7 +34,7 @@ export default function SignUp() {
 
     return {
       text: isValid
-        ? `Nice to meet you ${name}`
+        ? `Nice to meet you ${name}!`
         : "Please enter minimum 3 characters",
       color: isValid ? "success" : "warning",
     };
@@ -98,45 +98,47 @@ export default function SignUp() {
   };
 
   const signUpHandler = async () => {
-    if (!name) {
-      setShakeName(prevCheck => !prevCheck);
+    if (name.length === 0) {
+      setShakeName(true);
       nameHelper.color = "error";
       nameHelper.text = "Please fill this field";
     }
-    if (!email) {
-      setShakeEmail(prevCheck => !prevCheck);
+    if (email.length === 0) {
+      setShakeEmail(true);
       emailHelper.color = "error";
       emailHelper.text = "Please fill this field";
     }
-    if (!password) {
-      setShakePassword(prevCheck => !prevCheck);
+    if (password.length === 0) {
+      setShakePassword(true);
       passHelper.color = "error";
       passHelper.text = "Please fill this field";
     }
-    if (!passwordConf) {
-      setShakePassword(prevCheck => !prevCheck);
+    if (passwordConf.length === 0) {
+      setShakePasswordConf(true);
       passConfHelper.color = "error";
       passConfHelper.text = "Please fill this field";
     }
     if (validateName(name) === false) {
-      setShakeName(prevCheck => !prevCheck);
+      setShakeName(true);
       nameHelper.color = "error";
     }
     if (validateEmail(email) === false) {
-      setShakeEmail(prevCheck => !prevCheck);
+      setShakeEmail(true);
       emailHelper.color = "error";
     }
     if (validatePassword(password) === false) {
-      setShakePassword(prevCheck => !prevCheck);
+      setShakePassword(true);
       passHelper.color = "error";
     }
-    if (validatePassword(passwordConf) === false) {
-      setShakePasswordConf(prevCheck => !prevCheck);
+    if (validateMatch(password, passwordConf) === false) {
+      setShakePasswordConf(true);
       passConfHelper.color = "error";
     }
 
+    setTimeout(() => setShakeName(false), 1000);
     setTimeout(() => setShakeEmail(false), 1000);
     setTimeout(() => setShakePassword(false), 1000);
+    setTimeout(() => setShakePasswordConf(false), 1000);
 
     if (
       validateName(name) &&
@@ -160,6 +162,7 @@ export default function SignUp() {
               theme: "dark",
             }
           );
+        setModalVisible(false);
         notify();
       } catch (error) {
         if (error instanceof Error) {
@@ -171,7 +174,6 @@ export default function SignUp() {
         return;
       }
     }
-    setModalVisible(false);
   };
 
   return (
@@ -203,32 +205,36 @@ export default function SignUp() {
         <Modal.Body>
           <Spacer y={0.2} />
           <Input
+            className={shakeName ? "shake" : ""}
             onChange={e => setName(e.target.value)}
             required
+            bordered
             status={nameHelper.color}
             color={nameHelper.color}
             helperColor={nameHelper.color}
             helperText={nameHelper.text}
-            fullWidth
             labelPlaceholder="Name"
             size="lg"
           />
           <Spacer y={1.5} />
           <Input
+            className={shakeEmail ? "shake" : ""}
             onChange={e => setEmail(e.target.value)}
             required
+            bordered
             status={emailHelper.color}
             color={emailHelper.color}
             helperColor={emailHelper.color}
             helperText={emailHelper.text}
-            fullWidth
             labelPlaceholder="Email"
             size="lg"
           />
           <Spacer y={1.5} />
           <Input.Password
+            className={shakePassword ? "shake" : ""}
             onChange={e => setPassword(e.target.value)}
             required
+            bordered
             status={passHelper.color}
             color={passHelper.color}
             helperColor={passHelper.color}
@@ -239,10 +245,11 @@ export default function SignUp() {
           />
           <Spacer y={1.5} />
           <Input.Password
+            className={shakePasswordConf ? "shake" : ""}
             onChange={e => setPasswordConf(e.target.value)}
             labelPlaceholder="Confirm Password"
-            width="350px"
             required
+            bordered
             status={passConfHelper.color}
             color={passConfHelper.color}
             helperColor={passConfHelper.color}
