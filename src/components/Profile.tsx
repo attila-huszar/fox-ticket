@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Zoom } from "react-awesome-reveal";
 import {
   Button,
   Input,
@@ -9,7 +10,6 @@ import {
   Row,
   Container,
 } from "@nextui-org/react";
-import { Fade } from "react-awesome-reveal";
 import profile_defpic from "../static/profile_def.png";
 import { validatePassword } from "../helper/inputFieldValidators";
 import { InputFieldHelper } from "../interfaces/InputFieldHelper";
@@ -87,7 +87,7 @@ export default function Profile() {
 
   return (
     <>
-      <Fade duration={750}>
+      <Zoom duration={750}>
         <Container
           style={{
             margin: "50px auto",
@@ -166,7 +166,7 @@ export default function Profile() {
                   margin: "auto",
                 }}
                 shadow
-                color="primary"
+                color="gradient"
                 id="submit"
                 onPress={userChangeBtnHandler}>
                 Change Username
@@ -185,7 +185,7 @@ export default function Profile() {
             </Col>
           </Row>
         </Container>
-      </Fade>
+      </Zoom>
 
       <Modal
         closeButton

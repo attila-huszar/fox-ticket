@@ -6,7 +6,3 @@
   scroll-snap-align: center;
   padding-bottom: 20px;
 }
-
-.articles::-webkit-scrollbar {
-  width: 0;
-}
