@@ -29,6 +29,7 @@ router.get('/products', productController.getAllProducts);
 router.get('/purchases/:userId', orderController.getAllOrders);
 router.post('/purchases', orderController.addNewOrder);
 router.post('/register', userController.registerUser);
+router.post('/login', userController.loginUser);
 router.delete('/orders/:orderId', cartController.removeProductFromCart);
 router.get('/orders/:userId', orderController.getPendingOrders);
 router.delete('/orders', cartController.removePendingOrderFromCart);
