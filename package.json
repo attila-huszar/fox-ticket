@@ -2,6 +2,7 @@
   "name": "fox-component-test",
   "version": "1.0.0",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
     "@nextui-org/react": "^1.0.0-beta.12",
     "@sendgrid/mail": "^7.7.0",
     "axios": "^1.2.3",

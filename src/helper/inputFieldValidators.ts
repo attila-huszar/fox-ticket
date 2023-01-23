@@ -14,6 +14,10 @@ export const validatePassword = (password: string) => {
   return passwordRegex.test(password);
 };
 
-export const validateMatch = (value: string, password: string) => {
-  if (value === password) return true;
+export const validateMatch = (password: string, passwordConf: string) => {
+  if (password === passwordConf) {
+    return true;
+  } else {
+    return false;
+  }
 };
