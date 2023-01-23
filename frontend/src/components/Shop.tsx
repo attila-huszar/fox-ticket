@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { fetchProducts } from '../api/products';
 import { ProductResponse } from '../interfaces/product';
 import ProductCard from './ProductCard';
-import { Fade } from 'react-awesome-reveal';
 import '../styles/Shop.css';
 
 export default function Shop() {
