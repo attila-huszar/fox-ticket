@@ -1,3 +1,4 @@
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useDarkMode } from "usehooks-ts";
 import { NextUIProvider } from "@nextui-org/react";
 import { createTheme } from "@nextui-org/react";
@@ -11,7 +12,8 @@ const lightTheme = createTheme({
       background: "#f8fafb",
       navbarActive: "#cee4fe",
       navbarLink: "#000",
-      navbarGradient: "linear-gradient(180deg, rgba(248,250,251,1) 0%, rgba(248,250,251,0.8) 30%, rgba(248,250,251,0) 80%)",
+      navbarGradient:
+        "linear-gradient(180deg, rgba(248,250,251,1) 0%, rgba(248,250,251,0.8) 30%, rgba(248,250,251,0) 80%)",
       hoverShadow: "#7450dd",
     },
   },
@@ -24,7 +26,8 @@ const darkTheme = createTheme({
       background: "#131a28",
       navbarActive: "#10253e",
       navbarLink: "#fff",
-      navbarGradient: "linear-gradient(180deg, rgba(19,26,40,1) 0%, rgba(19,26,40,0.95) 30%, rgba(248,250,251,0) 100%)",
+      navbarGradient:
+        "linear-gradient(180deg, rgba(19,26,40,1) 0%, rgba(19,26,40,0.95) 30%, rgba(248,250,251,0) 100%)",
       hoverShadow: "#7450dd",
     },
   },
@@ -34,10 +37,16 @@ export default function ThemedApp() {
   const { isDarkMode } = useDarkMode();
 
   return (
-    <NextUIProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </NextUIProvider>
+    <HelmetProvider>
+      <Helmet>
+        <title>Fox Ticket</title>
+        <script src="./noflash.js" type="text/javascript" />
+      </Helmet>
+      <NextUIProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </NextUIProvider>
+    </HelmetProvider>
   );
 }

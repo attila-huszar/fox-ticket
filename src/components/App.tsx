@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
 import Home from "./Home";
 import Header from "./Header";
 import Shop from "./Shop";
@@ -20,11 +19,7 @@ export const UserContext = createContext<User>(guestUser);
 
 export default function App() {
   return (
-    <HelmetProvider>
-      <Helmet>
-        <title>Fox Ticket</title>
-        <script src="./noflash.js" type="text/javascript" />
-      </Helmet>
+    <>
       <UserContext.Provider value={guestUser}>
         <Header />
         <Routes>
@@ -37,6 +32,6 @@ export default function App() {
         </Routes>
         <Footer />
       </UserContext.Provider>
-    </HelmetProvider>
+    </>
   );
 }

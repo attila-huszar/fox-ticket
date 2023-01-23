@@ -3,7 +3,7 @@ import { Fade } from "react-awesome-reveal";
 
 export default function Shop() {
   return (
-    <Fade duration={300}>
+    <Fade duration={1000}>
       <Text h1>Tickets and Passes</Text>
       <Grid.Container gap={2}>
         <Grid sm={12} md={5}>

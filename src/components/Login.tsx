@@ -1,73 +1,81 @@
 import React, { useState } from "react";
-import { Modal, Input, Row, Checkbox, Button, Text, Spacer } from "@nextui-org/react";
-import { AttentionSeeker } from "react-awesome-reveal";
-
-type ConditonalWrapperProps = {
-  children: React.ReactElement;
-  condition: boolean;
-  wrapper: (children: React.ReactElement) => JSX.Element;
-};
-const ConditonalWrapper: React.FC<ConditonalWrapperProps> = ({ condition, wrapper, children }) => (condition ? wrapper(children) : children);
+import {
+  Modal,
+  Input,
+  Row,
+  Checkbox,
+  Button,
+  Text,
+  Spacer,
+} from "@nextui-org/react";
+import { validateEmail, validatePass } from "../utils/inputFieldValidators";
+import { InputFieldHelper } from "../interfaces/InputFieldHelper";
+import "../styles/Login.css";
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [pass, setPass] = useState("");
+  const [shakeEmail, setShakeEmail] = useState(false);
+  const [shakePass, setShakePass] = useState(false);
 
-  const validateEmail = (value: string) => {
-    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i;
-    return regex.test(value);
-  };
-
-  const validatePass = (value: string) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/;
-    return regex.test(value);
-  };
-
-  interface help {
-    text: string;
-    color: "success" | "warning" | "default" | "primary" | "secondary" | "error" | undefined;
-  }
-
-  const helperEmail: help = React.useMemo(() => {
+  const emailHelper: InputFieldHelper = React.useMemo(() => {
     if (!email)
       return {
         text: "",
         color: "default",
       };
-    const isValid = validateEmail(email);
+    const isValidEmail = validateEmail(email);
 
     return {
-      text: isValid ? "Valid email" : "Enter a valid email",
-      color: isValid ? "success" : "warning",
+      text: isValidEmail ? "Valid email" : "Please enter a valid email address",
+      color: isValidEmail ? "success" : "warning",
     };
   }, [email]);
 
-  const helperPass: help = React.useMemo(() => {
-    if (!password)
+  const passHelper: InputFieldHelper = React.useMemo(() => {
+    if (!pass)
       return {
         text: "",
         color: "default",
       };
-    const isValidPass = validatePass(password);
+    const isValidPass = validatePass(pass);
 
     return {
-      text: isValidPass ? "Valid password" : "Minimum eight characters, at least one letter and one number",
+      text: isValidPass
+        ? "Valid password"
+        : "Minimum eight characters, with at least one number",
       color: isValidPass ? "success" : "warning",
     };
-  }, [password]);
+  }, [pass]);
 
   const LoginBtnHandler = () => setVisLogin(true);
 
   const closeHandler = () => {
     setVisLogin(false);
     setEmail("");
-    setPassword("");
+    setPass("");
   };
 
   const loginHandler = () => {
-    setVisLogin(false);
-    //setToken(token);
+    if (!email) {
+      setShakeEmail(prevCheck => !prevCheck);
+      emailHelper.color = "error";
+      emailHelper.text = "Please enter your email address";
+    } else if (validateEmail(email) === false) {
+      setShakeEmail(prevCheck => !prevCheck);
+      emailHelper.color = "error";
+    }
+    if (!pass) {
+      setShakePass(prevCheck => !prevCheck);
+      passHelper.color = "error";
+      passHelper.text = "Please enter your password";
+    } else if (validatePass(pass) === false) {
+      setShakePass(prevCheck => !prevCheck);
+      passHelper.color = "error";
+    }
+    setTimeout(() => setShakeEmail(false), 1000);
+    setTimeout(() => setShakePass(false), 1000);
   };
 
   return (
@@ -85,7 +93,12 @@ export default function Login() {
         onClick={LoginBtnHandler}>
         Login
       </Button>
-      <Modal closeButton blur aria-labelledby="login form" open={visLogin} onClose={closeHandler}>
+      <Modal
+        closeButton
+        blur
+        aria-labelledby="login form"
+        open={visLogin}
+        onClose={closeHandler}>
         <Modal.Header>
           <Text size={18}>
             Welcome to{" "}
@@ -101,29 +114,29 @@ export default function Login() {
         </Modal.Header>
         <Modal.Body>
           <Spacer y={0.2} />
-          <ConditonalWrapper condition={validateEmail(email)} wrapper={(wrappedChildren: any) => <AttentionSeeker effect="headShake">{wrappedChildren}</AttentionSeeker>}>
-            <Input
-              onChange={e => setEmail(e.target.value)}
-              required
-              bordered
-              status={helperEmail.color}
-              color={helperEmail.color}
-              helperColor={helperEmail.color}
-              helperText={helperEmail.text}
-              fullWidth
-              labelPlaceholder="Email"
-              size="lg"
-            />
-          </ConditonalWrapper>
-          <Spacer y={1.5} />
-          <Input.Password
-            onChange={e => setPassword(e.target.value)}
+          <Input
+            className={shakeEmail ? "shake" : ""}
+            onChange={e => setEmail(e.target.value)}
             required
             bordered
-            status={helperPass.color}
-            color={helperPass.color}
-            helperColor={helperPass.color}
-            helperText={helperPass.text}
+            status={emailHelper.color}
+            color={emailHelper.color}
+            helperColor={emailHelper.color}
+            helperText={emailHelper.text}
+            fullWidth
+            labelPlaceholder="Email"
+            size="lg"
+          />
+          <Spacer y={1.5} />
+          <Input.Password
+            className={shakePass ? "shake" : ""}
+            onChange={e => setPass(e.target.value)}
+            required
+            bordered
+            status={passHelper.color}
+            color={passHelper.color}
+            helperColor={passHelper.color}
+            helperText={passHelper.text}
             type="password"
             labelPlaceholder="Password"
             size="lg"
