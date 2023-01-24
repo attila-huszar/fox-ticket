@@ -11,6 +11,9 @@ const lightTheme = createTheme({
       navbarLink: '#000',
       navbarGradient:
         'linear-gradient(180deg, rgba(248,250,251,1) 0%, rgba(248,250,251,0.8) 30%, rgba(248,250,251,0) 80%)',
+      cardBackground:"#fff",
+      cardHeaderBackground: "#646aea",
+      hoverShadow: "#7450dd"
     },
   },
 });
@@ -24,7 +27,10 @@ const darkTheme = createTheme({
       navbarGradient:
         'linear-gradient(180deg, rgba(19,26,40,1) 0%, rgba(19,26,40,0.95) 30%, rgba(248,250,251,0) 100%)',
       featuresBackground: '#0B7498',
-      featuresLogoBackground: '#3d4e6f'
+      featuresLogoBackground: '#3d4e6f',
+      cardBackground: '#10253e',
+      cardHeaderBackground: '#18385d',
+      hoverShadow: "#7450dd"
     },
   },
 });
