@@ -1,17 +1,20 @@
 import { sendVerificationEmail } from "./sendVerificationEmail";
 import readline from "readline";
+import { mockUsers } from "./mockUsers";
 
-export let verificationKey: Promise<string>;
+export const testUser = mockUsers[2];
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+export let testKey: Promise<string>;
 
-function askTestEmail(question: string) {
+export function askTestEmail(question: string) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
   rl.question(question, answer => {
     if (answer === "y") {
-      verificationKey = sendTestEmail();
+      testKey = sendVerificationEmail();
       rl.close();
     } else {
       console.log("Email not sent");
@@ -19,12 +22,3 @@ function askTestEmail(question: string) {
     }
   });
 }
-
-function sendTestEmail(): Promise<string> {
-  const key = sendVerificationEmail();
-  return key;
-}
-
-setTimeout(() => {
-  askTestEmail("Send test email? (y/n*):\n");
-});

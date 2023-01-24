@@ -12,5 +12,5 @@ app.use(compressionMiddleware());
 app.use(helmetMiddleware());
 app.use(pinoHttp());
 
-app.use("api/", apiRouter);
+app.use("/api", apiRouter);
 app.use(staticRouter);
