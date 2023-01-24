@@ -14,7 +14,7 @@ export const RegisterUserRequestValidator = z
 
 export type RegisterUserRequest = z.infer<typeof RegisterUserRequestValidator>;
 
-export interface User {
+export interface UserResponse {
   id?: number;
   name?: string;
   email: string;
@@ -29,6 +29,6 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  status: string
+  success: boolean
   token: string
 }

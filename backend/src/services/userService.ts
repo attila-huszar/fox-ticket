@@ -5,7 +5,6 @@ import {
   LoginResponse,
   RegisterUserRequest,
   RegisterUserRequestValidator,
-  User,
 } from '../interfaces/user';
 import _ from 'lodash';
 import bcrypt from 'bcrypt'
