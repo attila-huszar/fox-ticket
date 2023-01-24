@@ -48,7 +48,7 @@ describe('POST /api/register', () => {
     const user = result.body;
     expect(user).toEqual({
       message:
-        'Validation error: Password must be at least 8 characters. at "password"',
+        'Validation error: Password must be at least 8 characters at "password"',
     });
   });
 
@@ -69,7 +69,7 @@ describe('POST /api/register', () => {
     expect(result.statusCode).toEqual(status.BAD_REQUEST);
     const user = result.body;
     expect(user).toEqual({
-      message: 'Validation error: Email is already taken',
+      message: 'Validation error: Account already exists',
     });
     expect(userRepo.getUserByEmail('asd@asd.com')).toBeTruthy();
   });
