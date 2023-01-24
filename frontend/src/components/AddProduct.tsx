@@ -8,7 +8,7 @@ import {
   Modal,
 } from '@nextui-org/react';
 import { useState } from 'react';
-import { fetchAddNewProduct } from '../api/product';
+import { fetchAddNewProduct } from '../api/products';
 import { ProductRequest, ProductResponse } from '../interfaces/product';
 
 export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductResponse) => void }) {
@@ -21,6 +21,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
   };
   const [data, setData] = useState<ProductRequest>(emptyproduct);
   const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState('');
   const [visAddProduct, setVisAddProduct] = useState(false);
 
   const addProductHandler = async () => {
@@ -38,6 +39,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
       }
     }
     setErrorMessage('');
+    setMessage('Product Successfully Added!')
     setData(emptyproduct);
   };
 
@@ -50,7 +52,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
   return (
     <>
       <Button
-        style={{ fontSize: '1rem', margin: 'auto' }}
+        style={{ fontSize: '1rem', margin: 'auto', marginBottom: '30px'}}
         auto
         color="secondary"
         shadow
@@ -93,6 +95,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
               />
               <Spacer y={0.5} />
               <Input
+                type="number"
                 onChange={e =>
                   setData({ ...data, price: Number(e.target.value) })
                 }
@@ -104,6 +107,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
               />
               <Spacer y={0.5} />
               <Input
+                type="number"
                 onChange={e =>
                   setData({ ...data, duration: Number(e.target.value) })
                 }
@@ -137,6 +141,8 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
               <Text css={{ textAlign: 'center' }} color="error">
                 {errorMessage}
               </Text>
+              <Text css={{ textAlign: 'center' }} color="success">{message}</Text>
+              <Spacer y={1} />
               <Row>
                 <Button
                   onPress={addProductHandler}
