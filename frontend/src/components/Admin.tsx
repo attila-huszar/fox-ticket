@@ -1,17 +1,8 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Navbar, Dropdown, Button } from '@nextui-org/react';
 import { TbBook, TbNews, TbShoppingCart, TbCreditCard } from 'react-icons/tb';
 
 export default function Admin() {
-  // eslint-disable-next-line
-  const [isLoginVisible, setIsLoginVisible] = useState(true);
-  // eslint-disable-next-line
-  const handleAdminVis = () => {
-    setIsLoginVisible(isVisible => !isVisible);
-    setIsLoginVisible(false);
-  };
-
   const navigate = useNavigate();
 
   const navigateDropdown = (key: React.Key) => {
