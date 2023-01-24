@@ -1,7 +1,7 @@
 import { Text, Container } from '@nextui-org/react';
 import Articles from './Articles';
 
-export default function AdminProduct() {
+export default function AdminArticle() {
   return (
     <Container>
       <Text h1 css={{ textAlign: 'center' }}>
