@@ -23,6 +23,8 @@ const darkTheme = createTheme({
       navbarLink: '#fff',
       navbarGradient:
         'linear-gradient(180deg, rgba(19,26,40,1) 0%, rgba(19,26,40,0.95) 30%, rgba(248,250,251,0) 100%)',
+      featuresBackground: '#0B7498',
+      featuresLogoBackground: '#3d4e6f'
     },
   },
 });

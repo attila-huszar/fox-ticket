@@ -1,4 +1,4 @@
-footer {
+/* footer {
   position: fixed;
   width: 100%;
   height: auto;
@@ -8,4 +8,13 @@ footer {
   bottom: 0;
   padding: 8px;
   text-align: center;
+} */
+
+footer{
+  padding: 9.6rem;
+}
+
+.containerGridForFooter{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 }
