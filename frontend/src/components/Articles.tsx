@@ -79,12 +79,20 @@ export default function Articles({ isAdmin }: any) {
         <Modal.Footer>
           {isAdmin ? (
             <>
+              <Button shadow size="md" auto color="secondary" id="submit">
+                Edit
+              </Button>
               <Button shadow size="md" auto color="gradient" id="submit">
                 Remove
               </Button>
               <Spacer />
-              <Button shadow size="md" auto color="gradient" id="submit">
-                Edit
+              <Button
+                auto
+                flat
+                color="primary"
+                onPress={() => setVisible(false)}
+              >
+                Close
               </Button>
             </>
           ) : (
