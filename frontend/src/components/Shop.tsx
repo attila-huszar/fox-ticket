@@ -1,6 +1,6 @@
 import { Grid, Container, Text } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
-import fetchProducts from '../api/product';
+import { fetchProducts } from '../api/product';
 import { ProductResponse } from '../interfaces/product';
 import ProductCard from './ProductCard';
 
