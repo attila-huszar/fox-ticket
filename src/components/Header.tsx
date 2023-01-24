@@ -1,19 +1,22 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "./Providers";
-import { Navbar, Text, Input } from "@nextui-org/react";
+import { Navbar, Text, Input, Switch } from "@nextui-org/react";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import ProfileDropdown from "./ProfileDropdown";
 import Cart from "./Cart";
-import ThemeSwitch from "./ThemeSwitch";
 import { User } from "../interfaces/user";
 import logo from "../static/logo.png";
 import "../styles/Header.css";
+import { useDarkMode } from "usehooks-ts";
+import { TbMoon, TbSun } from "react-icons/tb";
 
 export default function Header() {
   const user: User = useContext(UserContext);
   const isLoggedIn: boolean = user.isAdmin;
+
+  const { isDarkMode, toggle } = useDarkMode();
 
   return (
     <Navbar
@@ -92,12 +95,20 @@ export default function Header() {
             placeholder="Search..."
           />
         </Navbar.Item>
-
         <Cart />
         <Navbar.Item>
           <ProfileDropdown />
         </Navbar.Item>
-        <ThemeSwitch />
+        <Switch
+          checked={isDarkMode}
+          onChange={toggle}
+          iconOn={<TbMoon />}
+          iconOff={<TbSun />}
+          size="lg"
+          color="secondary"
+          bordered
+          shadow
+        />
       </Navbar.Content>
     </Navbar>
   );
