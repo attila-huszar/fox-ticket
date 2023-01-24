@@ -91,15 +91,6 @@ describe('DELETE /api/admin/products/:productId', () => {
     expect(await productRepo.getProductById(1)).toBeFalsy();
   });
 
-  // it('returns not found for missing id parameter', async () => {
-  //   const result = await request(app).delete('/api/admin/products/');
-  //   expect(result.statusCode).toEqual(status.NOT_FOUND);
-  //   const product = result.body;
-  //   expect(product).toEqual({
-  //     message: 'Not Found',
-  //   });
-  // });
-
   it('returns invalid productId for wrond id parameter', async () => {
     const result = await request(app).delete('/api/admin/products/asd');
     expect(result.statusCode).toEqual(status.BAD_REQUEST);
