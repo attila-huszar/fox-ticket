@@ -9,6 +9,8 @@ import Profile from './Profile';
 import Footer from './Footer';
 import NotImplementedPage from './NotImplementedPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AdminProduct from './AdminProduct';
 import AdminArticle from './AdminArticle'
 
@@ -22,7 +24,7 @@ export default function App() {
         <script src="./noflash.js" type="text/javascript" />
       </Helmet>
       <Header />
-
+      <ToastContainer style={{marginTop: "80px"}}/>
       <TransitionGroup>
         <CSSTransition
           key={pathname}

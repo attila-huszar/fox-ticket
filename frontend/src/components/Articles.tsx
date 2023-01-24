@@ -21,13 +21,11 @@ export default function Articles({ isAdmin }: any) {
 
   return (
     <>
-      <h2 style={{ padding: '20px 0 0 40px' }}>News</h2>
       <Grid.Container gap={3}>
         <div className="articles">
           {data.articles.map(article => (
-            <Grid>
+            <Grid key={article.id}>
               <Card
-                key={article.id}
                 onPress={() => {
                   setVisible(true);
                   setDisplayedArticleId(article.id);
@@ -46,7 +44,7 @@ export default function Articles({ isAdmin }: any) {
                     zIndex: 1,
                   }}
                 >
-                  <Text color="white" size={16}>
+                  <Text color="white" size={16} style={{ display: "-webkit-box", overflow: "hidden", textOverflow: "ellipsis", WebkitLineClamp: "2", WebkitBoxOrient: "vertical" }}>
                     {article.title}
                   </Text>
                 </Card.Footer>
