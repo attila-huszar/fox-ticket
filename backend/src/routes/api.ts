@@ -8,6 +8,7 @@ import * as articleController from "../controllers/articleController";
 import * as productController from "../controllers/productController";
 import * as cartController from "../controllers/cartController";
 import * as orderController from "../controllers/orderController";
+import * as emailVerificationController from "../controllers/emailVerificationController";
 
 import { auth } from "../middlewares/auth";
 import { HttpError } from "../errors";
@@ -18,13 +19,14 @@ const router = express.Router();
 router.use(express.json());
 
 //// GET
-router.get("/", auth, loginTestController.loginTest);
+router.get("/logintest", auth, loginTestController.loginTest);
 router.get("/articles", articleController.getAllArticles);
 router.get("/admin/products", productController.getProductById);
 router.get("/products", productController.getAllProducts);
 router.get("/product", productController.getProductById);
 router.get("/purchases/:userId", orderController.getAllOrders);
 router.get("/orders/:userId", orderController.getPendingOrders);
+router.get("/verify", emailVerificationController.emailVerification);
 
 //// POST
 router.post("/login", loginController.login);
