@@ -13,7 +13,8 @@ const lightTheme = createTheme({
         'linear-gradient(180deg, rgba(248,250,251,1) 0%, rgba(248,250,251,0.8) 30%, rgba(248,250,251,0) 80%)',
       cardBackground:"#fff",
       cardHeaderBackground: "#646aea",
-      hoverShadow: "#7450dd"
+      hoverShadow: "#7450dd",
+      footerBackground: "#F0F0F0"
     },
   },
 });
@@ -30,7 +31,8 @@ const darkTheme = createTheme({
       featuresLogoBackground: '#3d4e6f',
       cardBackground: '#10253e',
       cardHeaderBackground: '#18385d',
-      hoverShadow: "#7450dd"
+      hoverShadow: "#7450dd",
+      footerBackground:'#3d4e6f'
     },
   },
 });
