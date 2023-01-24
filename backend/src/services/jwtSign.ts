@@ -1,7 +1,7 @@
 import jwt, { Secret } from 'jsonwebtoken';
-import { UserResponse } from '../interfaces/user';
+import { RegisterResponse } from '../interfaces/user';
 
-export function signAccessToken(user: UserResponse): string {
+export function signAccessToken(user: RegisterResponse): string {
   return jwt.sign(
     { email: user.email, isAdmin: user.isAdmin },
     process.env.ACCESS_TOKEN as Secret,
@@ -9,7 +9,7 @@ export function signAccessToken(user: UserResponse): string {
   );
 }
 
-export function signRefreshToken(user: UserResponse): string {
+export function signRefreshToken(user: RegisterResponse): string {
   return jwt.sign(
     { email: user.email, isAdmin: user.isAdmin },
     process.env.REFRESH_TOKEN as Secret,
@@ -17,7 +17,7 @@ export function signRefreshToken(user: UserResponse): string {
   );
 }
 
-export function signEmailVerification(user: UserResponse): string {
+export function signEmailVerification(user: RegisterResponse): string {
   return jwt.sign(
     { email: user.email, isAdmin: user.isAdmin },
     process.env.ACCESS_TOKEN as Secret,

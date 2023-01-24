@@ -5,8 +5,8 @@ import { fromZodError } from 'zod-validation-error';
 import {
   LoginRequest,
   LoginResponse,
-  RegisterUserRequest,
-  UserResponse,
+  RegisterRequest,
+  RegisterResponse,
 } from '../interfaces/user';
 import * as userService from '../services/userService';
 import { ZodError } from 'zod';
@@ -14,8 +14,8 @@ import { OK, UNAUTHORIZED } from 'http-status';
 import { signAccessToken, signRefreshToken } from '../services/jwtSign';
 
 export async function registerUser(
-  req: Request<unknown, unknown, RegisterUserRequest, unknown>,
-  res: Response<UserResponse>,
+  req: Request<unknown, unknown, RegisterRequest, unknown>,
+  res: Response<RegisterResponse>,
   next: NextFunction
 ): Promise<void> {
   const user = req.body;
@@ -37,13 +37,13 @@ export async function loginUser(
   res: Response<LoginResponse>,
   next: NextFunction
 ): Promise<void> {
-  const user = req.body;
+  const user: LoginRequest = req.body;
 
   try {
-    await userService.loginUser(user);
-    if (user) {
-      const accessToken = signAccessToken(user);
-      const refreshToken = signRefreshToken(user);
+    const loggedInUser: LoginResponse = await userService.loginUser(user);
+    if (loggedInUser) {
+      const accessToken = signAccessToken(loggedInUser);
+      const refreshToken = signRefreshToken(loggedInUser);
 
       res.cookie('jwt', refreshToken, {
         path: '/api/refresh',
@@ -53,9 +53,16 @@ export async function loginUser(
         maxAge: 30 * 24 * 60 * 60 * 1000,
       });
 
-      res.status(OK).json({ success: true, token: accessToken });
+      res.status(OK).json({
+        name: loggedInUser.name,
+        email: loggedInUser.email,
+        isAdmin: loggedInUser.isAdmin,
+        token: accessToken,
+      });
     } else {
-      res.status(UNAUTHORIZED).json({ success: false, token: '' });
+      res.status(UNAUTHORIZED).json({
+        email: user.email,
+      });
     }
   } catch (error) {
     if (error instanceof ZodError) {

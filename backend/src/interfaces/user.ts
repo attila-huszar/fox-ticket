@@ -1,34 +1,44 @@
 import * as userRepo from '../repositories/userRepo';
 import { z } from 'zod';
 
-export const RegisterUserRequestValidator = z
+export const RegisterRequest = z
   .object({
-    name: z.string().min(1, 'Name is required'),
-    email: z.string().email().min(1, 'Email is required'),
-    password: z.string().min(8, 'Password must be at least 8 characters.'),
+    name: z.string().min(1, 'Name is required').max(50, 'Max 50 characters'),
+    email: z
+      .string()
+      .email('Must be a valid email address')
+      .min(1, 'Email is required')
+      .max(254, 'Max 254 characters')
+      .trim(),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .max(254, 'Max 254 characters'),
   })
-  .refine(async userRequest => {
-    const user = await userRepo.getUserByEmail(userRequest.email);
+  .refine(async regRequest => {
+    const user = await userRepo.getUserByEmail(regRequest.email);
     return !user;
-  }, 'Email is already taken');
+  }, 'Account already exists');
 
-export type RegisterUserRequest = z.infer<typeof RegisterUserRequestValidator>;
+export type RegisterRequest = z.infer<typeof RegisterRequest>;
 
-export interface UserResponse {
+export interface RegisterResponse {
   id?: number;
   name?: string;
-  email: string;
-  password?: string;
+  email?: string;
   isAdmin?: boolean;
   isVerified?: boolean;
 }
 
 export interface LoginRequest {
+  name: string;
   email: string;
   password: string;
 }
 
 export interface LoginResponse {
-  success: boolean
-  token: string
+  name?: string;
+  email: string;
+  isAdmin?: boolean;
+  token?: string;
 }

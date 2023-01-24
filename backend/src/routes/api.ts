@@ -18,7 +18,7 @@ const router = express.Router();
 router.use(express.json());
 
 //// GET
-router.get('/', auth, loginTestController.loginTest);
+router.get('/logintest', auth, loginTestController.loginTest);
 router.get('/articles', articleController.getAllArticles);
 router.get('/admin/products', productController.getProductById);
 router.get('/products', productController.getAllProducts);

@@ -1,7 +1,7 @@
-import { RegisterUserRequest } from '../interfaces/user';
+import { RegisterRequest } from '../interfaces/user';
 import User from '../models/User';
 
-export function registerUser(newUser: RegisterUserRequest): Promise<User> {
+export function registerUser(newUser: RegisterRequest): Promise<User> {
   return User.create({ ...newUser });
 }
 

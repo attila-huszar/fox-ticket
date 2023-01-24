@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { OK, UNAUTHORIZED } from 'http-status';
 import { verifyRefreshToken } from '../services/jwtVerify';
 import { signAccessToken, signRefreshToken } from '../services/jwtSign';
-import { UserResponse } from '../interfaces/user';
+import { RegisterResponse } from '../interfaces/user';
 
 export async function refresh(req: Request, res: Response, next: NextFunction) {
   const cookie = req.headers.cookie?.split('=')[1];
@@ -15,7 +15,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
         .status(UNAUTHORIZED)
         .json({ success: false, message: decoded });
 
-    const user: UserResponse = { email: decoded.email, isAdmin: decoded.isAdmin };
+    const user: RegisterResponse = { email: decoded.email, isAdmin: decoded.isAdmin };
 
     const accessToken = signAccessToken(user);
     const refreshToken = signRefreshToken(user);
