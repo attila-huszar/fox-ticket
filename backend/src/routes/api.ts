@@ -51,7 +51,7 @@ router.delete(
 );
 
 //// 404
-router.use(apiErrorHandler);
 router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
+router.use(apiErrorHandler);
 
 export default router;
