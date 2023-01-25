@@ -1,7 +1,6 @@
 import status from 'http-status';
 import * as authTestController from '../controllers/authTestController';
 import * as refreshController from '../controllers/refreshController';
-import * as logoutController from '../controllers/logoutController';
 import * as userController from '../controllers/userController';
 import * as articleController from '../controllers/articleController';
 import * as productController from '../controllers/productController';
@@ -28,9 +27,9 @@ router.get('/orders/:userId', orderController.getPendingOrders);
 
 //// POST
 router.post('/login', userController.loginUser);
-router.post('/refresh', refreshController.refresh);
 router.post('/register', userController.registerUser);
-router.post('/logout', auth, logoutController.logout);
+router.post('/logout', auth, userController.logoutUser);
+router.post('/refresh', refreshController.refresh);
 router.post('/purchases', orderController.addNewOrder);
 router.post('/admin/articles', articleController.addNewArticle);
 router.post('/admin/products', productController.addNewProduct);

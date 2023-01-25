@@ -8,6 +8,7 @@ import {
   RegisterRequest,
   RegisterResponse,
 } from '../interfaces/user';
+import { AuthorizedRequest } from '../interfaces/authorizedRequest';
 import * as userService from '../services/userService';
 import { ZodError } from 'zod';
 import { OK, UNAUTHORIZED } from 'http-status';
@@ -73,4 +74,16 @@ export async function loginUser(
       next(new HttpError(status.INTERNAL_SERVER_ERROR));
     }
   }
+}
+
+export async function logoutUser(req: AuthorizedRequest, res: Response) {
+  const user = req.email;
+
+  res.clearCookie('jwt', {
+    path: '/api/refresh',
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  });
+  res.status(OK).json({ message: `${user} logged out` });
 }
