@@ -100,6 +100,7 @@ export default function Shop() {
       >
         {filteredProducts.map(product => (
           <ProductCard
+            id={product.id}
             name={product.name}
             description={product.description}
             price={product.price}
