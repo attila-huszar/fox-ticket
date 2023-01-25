@@ -1,5 +1,5 @@
 import status from 'http-status';
-import * as loginTestController from '../controllers/loginTestController';
+import * as authTestController from '../controllers/authTestController';
 import * as refreshController from '../controllers/refreshController';
 import * as logoutController from '../controllers/logoutController';
 import * as userController from '../controllers/userController';
@@ -18,7 +18,7 @@ const router = express.Router();
 router.use(express.json());
 
 //// GET
-router.get('/logintest', auth, loginTestController.loginTest);
+router.get('/authtest', auth, authTestController.authTest);
 router.get('/articles', articleController.getAllArticles);
 router.get('/admin/products', productController.getProductById);
 router.get('/products', productController.getAllProducts);
@@ -51,7 +51,11 @@ router.delete(
 );
 
 //// 404
-router.use('/*', (req, res, next) => next(new HttpError(status.NOT_FOUND)));
+router.use(
+  '/*',
+  (req: Request, res: Response, next: (arg0: HttpError) => any) =>
+    next(new HttpError(status.NOT_FOUND))
+);
 router.use(apiErrorHandler);
 
 export default router;

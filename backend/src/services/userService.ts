@@ -39,7 +39,7 @@ export async function loginUser(user: LoginRequest): Promise<LoginResponse> {
   const checkUser: LoginRequest = await userRepo.getUserByEmail(user.email);
   if (!checkUser) {
     throw new ParameterError(
-      'The email address or password is incorrect. Please try again.'
+      'The email address or password is incorrect'
     );
   }
   const checkPassword = await bcrypt.compare(user.password, checkUser.password);
@@ -48,7 +48,7 @@ export async function loginUser(user: LoginRequest): Promise<LoginResponse> {
     return loginResponse(checkUser);
   } else {
     throw new ParameterError(
-      'The email address or password is incorrect. Please try again.'
+      'The email address or password is incorrect'
     );
   }
 }

@@ -11,5 +11,5 @@ export async function logout(req: AuthorizedRequest, res: Response) {
     sameSite: 'none',
     secure: true,
   });
-  res.status(OK).json({ success: true, message: `${user} logged out` });
+  res.status(OK).json({ message: `${user} logged out` });
 }
