@@ -1,12 +1,12 @@
-import { Request, Response, NextFunction } from "express";
-import status from "http-status";
-import { HttpError, NotFoundError, ParameterError } from "../errors";
+import { Request, Response, NextFunction } from 'express';
+import status from 'http-status';
+import { HttpError, NotFoundError, ParameterError } from '../errors';
 import {
   GetAllOrdersResponse,
   NewOrderRequest,
   OrderResponse,
-} from "../interfaces/order";
-import * as orderService from "../services/orderService";
+} from '../interfaces/order';
+import * as orderService from '../services/orderService';
 
 export async function getAllOrders(
   req: Request<{ userId: number }, unknown, unknown, unknown>,
@@ -80,7 +80,7 @@ export async function changeOrderStatusByUserId(
     const data = await orderService.changeOrderStatusByUserId(userId);
     res.send(data);
   } catch (error) {
-    console.log(error);
+    console.log(error)
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
     } else if (error instanceof NotFoundError) {

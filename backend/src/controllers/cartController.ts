@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import status, { BAD_REQUEST } from 'http-status';
-import { HttpError, NotFoundError, ParameterError } from '../errors';
-import * as cartService from '../services/cartService';
+import { Request, Response, NextFunction } from "express";
+import status from "http-status";
+import { HttpError, NotFoundError, ParameterError } from "../errors";
+import * as cartService from "../services/cartService";
 
 export async function removeProductFromCart(
   req: Request<{ orderId: number }, unknown, unknown, unknown>,

@@ -1,30 +1,49 @@
 import * as userRepo from "../repositories/userRepo";
 import { z } from "zod";
 
-export const RegisterUserRequestValidator = z
+export const RegisterRequest = z
   .object({
-    name: z
+    name: z.string().min(1, "Name is required").max(50, "Max 50 characters"),
+    email: z
       .string()
-      .min(1, "Name is required")
-      .max(100, "Must be 100 or fewer characters long"),
-    email: z.string().email("Invalid email address").trim(),
+      .email("Must be a valid email address")
+      .min(1, "Email is required")
+      .max(254, "Max 254 characters")
+      .trim(),
     password: z
       .string()
-      .min(8, "Must be 8 or more characters long")
-      .max(255, "Must be 255 or fewer characters long"),
+      .min(8, "Password must be at least 8 characters")
+      .max(254, "Max 254 characters"),
   })
-  .refine(async userRequest => {
-    const user = await userRepo.getUserByEmail(userRequest.email);
+  .refine(async regRequest => {
+    const user = await userRepo.getUserByEmail(regRequest.email);
     return !user;
-  }, "Email address is already registered");
+  }, "Account already exists");
 
-export type RegisterUserRequest = z.infer<typeof RegisterUserRequestValidator>;
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type RegisterRequest = z.infer<typeof RegisterRequest>;
 
-export interface User {
+export interface RegisterRequestWithToken extends RegisterRequest {
+  verificationToken: string;
+}
+
+export interface RegisterResponse {
   id?: number;
   name?: string;
   email: string;
-  password?: string;
   isAdmin?: boolean;
   isVerified?: boolean;
+}
+
+export interface LoginRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  name?: string;
+  email: string;
+  isAdmin?: boolean;
+  token?: string;
 }
