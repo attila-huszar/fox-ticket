@@ -1,6 +1,5 @@
 import status from "http-status";
-import * as loginController from "../controllers/loginController";
-import * as loginTestController from "../controllers/loginTestController";
+import * as authTestController from "../controllers/authTestController";
 import * as refreshController from "../controllers/refreshController";
 import * as logoutController from "../controllers/logoutController";
 import * as userController from "../controllers/userController";
@@ -19,19 +18,19 @@ const router = express.Router();
 router.use(express.json());
 
 //// GET
-router.get("/logintest", auth, loginTestController.loginTest);
+router.get("/authtest", auth, authTestController.authTest);
 router.get("/articles", articleController.getAllArticles);
 router.get("/admin/products", productController.getProductById);
 router.get("/products", productController.getAllProducts);
 router.get("/product", productController.getProductById);
 router.get("/purchases/:userId", orderController.getAllOrders);
 router.get("/orders/:userId", orderController.getPendingOrders);
-router.get("/verify", emailVerificationController.emailVerification);
 
 //// POST
-router.post("/login", loginController.login);
-router.post("/refresh", refreshController.refresh);
+router.post("/login", userController.loginUser);
 router.post("/register", userController.registerUser);
+router.post("/verify", emailVerificationController.emailVerification);
+router.post("/refresh", refreshController.refresh);
 router.post("/logout", auth, logoutController.logout);
 router.post("/purchases", orderController.addNewOrder);
 router.post("/admin/articles", articleController.addNewArticle);
@@ -53,8 +52,10 @@ router.delete(
 );
 
 //// 404
-router.use("/*", (req: any, res: any, next: (arg0: HttpError) => any) =>
-  next(new HttpError(status.NOT_FOUND))
+router.use(
+  "/*",
+  (req: Request, res: Response, next: (arg0: HttpError) => any) =>
+    next(new HttpError(status.NOT_FOUND))
 );
 
 export default router;

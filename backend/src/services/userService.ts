@@ -1,30 +1,56 @@
+import { NotFoundError, ParameterError } from "../errors";
 import * as userRepo from "../repositories/userRepo";
 import {
-  RegisterUserRequest,
-  RegisterUserRequestValidator,
-  User,
+  RegisterRequest,
+  RegisterResponse,
+  LoginRequest,
+  LoginResponse,
 } from "../interfaces/user";
 import _ from "lodash";
 import bcrypt from "bcrypt";
+import { sendVerificationEmail } from "./sendVerificationEmail";
 
-const userResponse = (user: User) => {
+const registerResponse = (user: RegisterResponse) => {
   return _.pick(user, ["id", "name", "email", "isAdmin", "isVerified"]);
 };
 
-export async function registerUser(
-  newUser: RegisterUserRequest
-): Promise<User> {
-  const validatedUser = await RegisterUserRequestValidator.parseAsync(newUser);
-  const hashedPassword = await bcrypt.hash(newUser.password, 10);
-  const user = await userRepo.registerUser({
-    name: validatedUser.name,
-    email: validatedUser.email,
-    password: hashedPassword,
-  });
+const loginResponse = (user: LoginResponse) => {
+  return _.pick(user, ["name", "email", "isAdmin", "token"]);
+};
 
-  if (user) {
-    return userResponse(user);
+export async function registerUser(
+  newUser: RegisterRequest
+): Promise<RegisterResponse> {
+  await RegisterRequest.parseAsync(newUser);
+  const hashedPassword = await bcrypt.hash(newUser.password, 10);
+  const verificationToken = await sendVerificationEmail(newUser);
+
+  const user = await userRepo.registerUser({
+    name: newUser.name,
+    email: newUser.email,
+    password: hashedPassword,
+    verificationToken: verificationToken,
+  });
+  
+  if (user.dataValues) {
+    return registerResponse(user.dataValues);
   } else {
-    throw new Error();
+    throw new NotFoundError();
+  }
+}
+
+export async function loginUser(user: LoginRequest): Promise<LoginResponse> {
+  const checkUser: LoginRequest | null = await userRepo.getUserByEmail(
+    user.email
+  );
+  if (!checkUser) {
+    throw new ParameterError("The email address or password is incorrect");
+  }
+  const checkPassword = await bcrypt.compare(user.password, checkUser.password);
+
+  if (checkPassword) {
+    return loginResponse(checkUser);
+  } else {
+    throw new ParameterError("The email address or password is incorrect");
   }
 }

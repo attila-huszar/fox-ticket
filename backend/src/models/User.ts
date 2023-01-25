@@ -5,10 +5,10 @@ import {
   DataType,
   HasMany,
   BelongsToMany,
-} from 'sequelize-typescript';
-import Article from './Article';
-import ArticleUser from './ArticleUser';
-import Order from './Order';
+} from "sequelize-typescript";
+import Article from "./Article";
+import ArticleUser from "./ArticleUser";
+import Order from "./Order";
 
 @Table({
   timestamps: true,
@@ -50,7 +50,7 @@ export default class User extends Model {
   @Column({
     type: DataType.STRING,
   })
-  token!: string;
+  verificationToken!: Promise<string>;
 
   @BelongsToMany(() => Article, () => ArticleUser)
   articles!: Article[];

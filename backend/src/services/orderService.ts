@@ -1,23 +1,23 @@
-import { NotFoundError, ParameterError } from "../errors";
+import { NotFoundError, ParameterError } from '../errors';
 import {
   GetAllOrdersResponse,
   NewOrderRequest,
   OrderResponse,
-} from "../interfaces/order";
-import Order from "../models/Order";
-import User from "../models/User";
-import * as orderRepo from "../repositories/orderRepo";
-import * as userRepo from "../repositories/userRepo";
-import _ from "lodash";
+} from '../interfaces/order';
+import Order from '../models/Order';
+import User from '../models/User';
+import * as orderRepo from '../repositories/orderRepo';
+import * as userRepo from '../repositories/userRepo';
+import _ from 'lodash';
 
 const orderResponse = (order: object) => {
   return _.pick(order, [
-    "id",
-    "orderDate",
-    "status",
-    "paidDate",
-    "expirationDate",
-    "productId",
+    'id',
+    'orderDate',
+    'status',
+    'paidDate',
+    'expirationDate',
+    'productId',
   ]);
 };
 
@@ -25,9 +25,9 @@ export async function getAllOrders(
   userId: number
 ): Promise<GetAllOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
-    throw new ParameterError("Invalid userId");
+    throw new ParameterError('Invalid userId');
   }
-  const user: User | null = await userRepo.getUserById(userId);
+  const user: User = await userRepo.getUserById(userId) as User;
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
@@ -39,18 +39,20 @@ export async function addNewOrder(
   newOrder: NewOrderRequest
 ): Promise<OrderResponse> {
   if (!newOrder) {
-    throw new ParameterError("Invalid product");
+    throw new ParameterError('Invalid product');
   }
 
   const order = await orderRepo.createOrder(newOrder);
   return orderResponse(order) as OrderResponse;
 }
 
-export async function getAllPendingOrdersByUserId(userId: number) {
+export async function getAllPendingOrdersByUserId(
+  userId: number
+) {
   if (userId < 0 || !Number.isInteger(userId)) {
-    throw new ParameterError("Invalid userId");
+    throw new ParameterError('Invalid userId');
   }
-  const user: User | null = await userRepo.getUserById(userId);
+  const user: User = await userRepo.getUserById(userId) as User;
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
@@ -69,11 +71,13 @@ export async function getAllPendingOrdersByUserId(userId: number) {
   return { orders: orders };
 }
 
-export async function changeOrderStatusByUserId(userId: number) {
+export async function changeOrderStatusByUserId(
+  userId: number
+) {  
   if (userId < 0 || !Number.isInteger(userId)) {
-    throw new ParameterError("Invalid userId");
+    throw new ParameterError('Invalid userId');
   }
-  const user: User | null = await userRepo.getUserById(userId);
+  const user: User = await userRepo.getUserById(userId) as User;
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
@@ -87,7 +91,7 @@ export async function changeOrderStatusByUserId(userId: number) {
       const order = findPendingOrders[i];
       let updatedPurchase = {
         id: order.id,
-        status: "paid",
+        status: 'paid',
         paidDate: Date(),
         expirationDate: null,
         productName: order.product.name,

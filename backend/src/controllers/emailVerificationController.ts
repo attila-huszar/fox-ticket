@@ -7,17 +7,17 @@ import {
   OK,
 } from "http-status";
 import { HttpError, NotFoundError, ParameterError } from "../errors";
-import { jwtParse } from "../services/jwtParse";
-import { testKey } from "../services/sendTestEmail";
+import { getUserByVerToken, setUserVerified } from "../repositories/userRepo";
 
 export async function emailVerification(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const verificationQuery = req.query.key as string;
+  const verificationQuery = req.body.verifyToken;
+  const user = await getUserByVerToken(verificationQuery);
 
-  if (verificationQuery) {
+  if (verificationQuery && user) {
     try {
       const jwtRegex = /[a-z0-9]+\.[a-z0-9]+\.[a-z0-9]+/i;
       if (!jwtRegex.test(verificationQuery))
@@ -25,17 +25,17 @@ export async function emailVerification(
           .status(FORBIDDEN)
           .send({ message: "Malformed verification query" });
 
-      const jwtPayload = jwtParse(verificationQuery);
-      if (jwtPayload.email === "")
-        return res
-          .status(FORBIDDEN)
-          .json({ message: "Invalid verification token" });
+      if (verificationQuery === user?.dataValues.verificationToken) {
+        const [affectedCount] = await setUserVerified(user);
 
-      if (verificationQuery === (await testKey)) {
-        res.status(OK).send({ email: jwtPayload.email, message: "Verified" });
+        if (affectedCount === 1) {
+          res.send(OK).json({ name: user.name, email: user.email });
+        } else {
+          res.send(FORBIDDEN).json({ modified: affectedCount });
+        }
       } else {
-        res.status(FORBIDDEN).send({
-          email: jwtPayload.email,
+        res.status(FORBIDDEN).json({
+          email: user.email,
           message: "Token is expired or invalid",
         });
       }
