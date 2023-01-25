@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { Navbar, Text, Avatar, Dropdown, Input } from '@nextui-org/react';
 import { TbHelp, TbLogout, TbSearch, TbUser } from 'react-icons/tb';
+import { Fade, Slide } from "react-awesome-reveal";
 import Theme from './Theme';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -11,9 +12,7 @@ import '../styles/Header.css';
 import Cart from './Cart';
 
 export default function Header() {
-  // eslint-disable-next-line
   const [isLoginVisible, setIsLoginVisible] = useState(true);
-  // eslint-disable-next-line
   const handleLoginVis = () => {
     setIsLoginVisible(isVisible => !isVisible);
     setIsLoginVisible(false);
@@ -59,6 +58,8 @@ export default function Header() {
     >
       <Navbar.Brand css={{ mr: '$4' }} style={{ display: 'flex', gap: '15px' }}>
         <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
+        <NavLink
+            to="/">
         <Text
           b
           color="inherit"
@@ -70,6 +71,7 @@ export default function Header() {
         >
           Fox
         </Text>
+        </NavLink>
         <Navbar.Content style={{ fontSize: '1.1rem' }}>
           <NavLink
             to="/"

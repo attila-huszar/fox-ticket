@@ -1,150 +1,34 @@
-import { Grid, Card, Text, Col } from '@nextui-org/react';
-import Articles from './Articles';
+import Articles from "./Articles";
+import { Fade, Slide } from "react-awesome-reveal";
+import "../styles/Home.css";
+import m1 from "../assets/m1a.png";
 
 export default function Home() {
+  const date = new Date();
+  const localDate = date.toLocaleDateString();
+  const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const day = weekday[date.getDay()];
+
   return (
     <>
-      <Articles />
-      <Grid.Container gap={3} justify="center" id="landing">
-        <Grid xs={6}>
-          <Card>
-            <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-              <Col>
-                <Text
-                  size={12}
-                  weight="bold"
-                  transform="uppercase"
-                  color="#ffffffAA"
-                >
-                  What to watch
-                </Text>
-                <Text h4 color="white">
-                  Stream the Acme event
-                </Text>
-              </Col>
-            </Card.Header>
-            <Card.Image
-              src="https://nextui.org/images/card-example-4.jpeg"
-              objectFit="cover"
-              width="100%"
-              height={340}
-              alt="Card image background"
-            />
-          </Card>
-        </Grid>
-
-        <Grid xs={6}>
-          <Card css={{ w: '100%' }}>
-            <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-              <Col>
-                <Text
-                  size={12}
-                  weight="bold"
-                  transform="uppercase"
-                  color="#ffffffAA"
-                >
-                  Plant a tree
-                </Text>
-                <Text h4 color="white">
-                  Contribute to the planet
-                </Text>
-              </Col>
-            </Card.Header>
-            <Card.Image
-              src="https://nextui.org/images/card-example-3.jpeg"
-              width="100%"
-              height={340}
-              objectFit="cover"
-              alt="Card image background"
-            />
-          </Card>
-        </Grid>
-
-        <Grid xs={6}>
-          <Card css={{ bg: '$black', w: '100%' }}>
-            <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-              <Col>
-                <Text
-                  size={12}
-                  weight="bold"
-                  transform="uppercase"
-                  color="#ffffffAA"
-                >
-                  Supercharged
-                </Text>
-                <Text h4 color="white">
-                  Creates beauty like a beast
-                </Text>
-              </Col>
-            </Card.Header>
-            <Card.Image
-              src="https://nextui.org/images/card-example-2.jpeg"
-              width="100%"
-              height={340}
-              objectFit="cover"
-              alt="Card image background"
-            />
-          </Card>
-        </Grid>
-
-        <Grid xs={3}>
-          <Card css={{ w: '100%', h: '400px' }}>
-            <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-              <Col>
-                <Text
-                  size={12}
-                  weight="bold"
-                  transform="uppercase"
-                  color="#ffffffAA"
-                >
-                  New
-                </Text>
-                <Text h3 color="black">
-                  Acme camera
-                </Text>
-              </Col>
-            </Card.Header>
-            <Card.Body css={{ p: 0 }}>
-              <Card.Image
-                src="https://nextui.org/images/card-example-6.jpeg"
-                width="100%"
-                height="100%"
-                objectFit="cover"
-                alt="Card example background"
-              />
-            </Card.Body>
-          </Card>
-        </Grid>
-
-        <Grid xs={3}>
-          <Card css={{ w: '100%', h: '400px' }}>
-            <Card.Header css={{ position: 'absolute', zIndex: 1, top: 5 }}>
-              <Col>
-                <Text
-                  size={12}
-                  weight="bold"
-                  transform="uppercase"
-                  color="#9E9E9E"
-                >
-                  Your day your way
-                </Text>
-                <Text h3 color="white">
-                  Your checklist for better sleep
-                </Text>
-              </Col>
-            </Card.Header>
-            <Card.Body css={{ p: 0 }}>
-              <Card.Image
-                src="https://nextui.org/images/card-example-5.jpeg"
-                objectFit="cover"
-                width="100%"
-                height="100%"
-                alt="Relaxing app background"
-              />
-            </Card.Body>
-          </Card>
-        </Grid>
-      </Grid.Container>
+      <Fade className="title" duration={750} triggerOnce={true}>
+        <h2>
+          News
+          <p style={{ fontSize: "16" }}>
+            <em>
+              Budapest, {localDate}, {day}
+            </em>
+          </p>
+        </h2>
+      </Fade>
+      <Slide className="background" direction="down" duration={500} triggerOnce={true}>
+        <div>
+          <img className="m1" src={m1} alt="m1 metro" style={{ objectFit: "cover", width: "100vw", height: "450px" }}></img>
+        </div>
+      </Slide>
+      <Fade duration={1000}>
+        <Articles />
+      </Fade>
     </>
   );
 }

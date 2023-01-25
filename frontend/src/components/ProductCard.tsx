@@ -8,15 +8,38 @@ export default function ProductCard({
   isAdmin,
 }: ProductRequest) {
   return (
-    <Grid sm={12} md={5}>
-      <Card css={{ mw: '350px' }}>
-        <Card.Header>
-          <Text css={{ margin: 'auto' }}>{name}</Text>
+    <Grid
+      sm={12}
+      md={5}
+      id="cardGrid"
+      css={{
+        justifyContent: 'center',
+        marginLeft: '32%',
+        width: '100%',
+        padding: '0',
+      }}
+    >
+      <Card
+        css={{
+          w: '280px',
+          display: 'flex',
+          margin: '0 auto',
+          backgroundColor: 'var(--nextui-colors-cardBackground)',
+        }}
+        id="card"
+        isHoverable
+      >
+        <Card.Header
+          css={{ backgroundColor: 'var(--nextui-colors-cardHeaderBackground)' }}
+        >
+          <Text css={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
+            {name}
+          </Text>
         </Card.Header>
         <Card.Divider />
         <Card.Body css={{ py: '$10' }}>
-          <Text css={{ margin: 'auto' }}>{description}</Text>
           <Text css={{ margin: 'auto' }}>{price} Ft</Text>
+          <Text css={{ margin: 'auto' }}>{description}</Text>
         </Card.Body>
         <Card.Divider />
         <Card.Footer>
@@ -39,6 +62,6 @@ export default function ProductCard({
           </Row>
         </Card.Footer>
       </Card>
-    </Grid> 
+    </Grid>
   );
 }

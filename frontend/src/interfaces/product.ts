@@ -12,4 +12,4 @@ export interface ProductRequest {
   price: number;
   description: string;
   isAdmin?: boolean;
-} 
+}
