@@ -47,7 +47,7 @@ export default function Login() {
     return {
       text: isValidPass
         ? "Valid password"
-        : "Minimum eight characters, with at least one number",
+        : "Please enter minimum eight characters",
       color: isValidPass ? "success" : "warning",
     };
   }, [pass]);
@@ -103,18 +103,22 @@ export default function Login() {
         open={visLogin}
         onClose={closeHandler}>
         <Modal.Header>
-          <Text size={18}>
-            Welcome to{" "}
-            <Text
-              b
-              size={18}
-              css={{
-                textGradient: "45deg, $blue600 -20%, $pink600 50%",
-              }}>
-              Fox Ticket
-            </Text>
+          <Text size={26}>Welcome to&nbsp; </Text>
+          <Text
+            size={28}
+            css={{
+              textGradient: "45deg, $blue600 -20%, $pink600 50%",
+              letterSpacing: "$wide",
+            }}>
+            <strong>Fox</strong>Ticket
           </Text>
         </Modal.Header>
+        <hr
+          style={{
+            color: "#f2f2f2",
+            height: 5,
+          }}
+        />
         <Modal.Body>
           <Spacer y={0.2} />
           <Input
