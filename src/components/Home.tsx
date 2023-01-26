@@ -2,8 +2,31 @@ import Articles from "./Articles";
 import { Fade } from "react-awesome-reveal";
 import "../styles/Home.css";
 import m1 from "../assets/m1a.png";
+import { toast } from "react-toastify";
 
 export default function Home() {
+  const notify = () =>
+    toast.success(
+      `${useremail} successfully verified! Please log in with your email address.`,
+      {
+        position: "top-center",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      }
+    );
+
+  let useremail = "";
+  if (document.location.href.includes("?verified=")) {
+    const verifiedEmail: string = document.location.href.split("?verified=")[1];
+    useremail = decodeURI(verifiedEmail);
+    notify();
+  }
+
   const date = new Date();
   const localDate = date.toLocaleDateString();
   const weekday = [
@@ -33,7 +56,7 @@ export default function Home() {
         </div>
         <Articles />
       </Fade>
-      
+
       <div className="title">
         <h2>
           News

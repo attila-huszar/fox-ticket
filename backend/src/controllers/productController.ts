@@ -1,15 +1,15 @@
-import { Request, Response, NextFunction } from "express";
-import status from "http-status";
-import { ZodError } from "zod";
-import { HttpError, NotFoundError, ParameterError } from "../errors";
-import { fromZodError } from "zod-validation-error";
+import { Request, Response, NextFunction } from 'express';
+import status from 'http-status';
+import { ZodError } from 'zod';
+import { HttpError, NotFoundError, ParameterError } from '../errors';
+import { fromZodError } from 'zod-validation-error';
 import {
   ProductResponse,
   NewProductRequest,
   EditProductRequest,
   EditProductResponse,
-} from "../interfaces/product";
-import * as productService from "../services/productService";
+} from '../interfaces/product';
+import * as productService from '../services/productService';
 
 export async function addNewProduct(
   req: Request<unknown, unknown, NewProductRequest, unknown>,
@@ -101,7 +101,7 @@ export async function editProductById(
       next(new HttpError(status.BAD_REQUEST, error.message));
     } else if (error instanceof ZodError) {
       next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
-    } else if (error instanceof NotFoundError) {
+    }else if (error instanceof NotFoundError) {
       next(new HttpError(status.NOT_FOUND));
     } else {
       next(new HttpError(status.INTERNAL_SERVER_ERROR));

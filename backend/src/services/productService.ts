@@ -1,5 +1,5 @@
-import { NotFoundError, ParameterError } from "../errors";
-import * as productRepo from "../repositories/productRepo";
+import { NotFoundError, ParameterError } from '../errors';
+import * as productRepo from '../repositories/productRepo';
 import {
   ProductResponse,
   NewProductRequest,
@@ -7,23 +7,23 @@ import {
   EditProductResponse,
   EditProductRequestValidator,
   NewProductRequestValidator,
-} from "../interfaces/product";
-import _ from "lodash";
+} from '../interfaces/product';
+import _ from 'lodash';
 
 const productResponse = (productObject: object) => {
   return _.pick(productObject, [
-    "id",
-    "name",
-    "price",
-    "duration",
-    "description",
-    "type",
+    'id',
+    'name',
+    'price',
+    'duration',
+    'description',
+    'type',
   ]);
 };
 
 export async function addNewProduct(
   newProduct: NewProductRequest
-): Promise<ProductResponse | undefined> {
+) {
   await NewProductRequestValidator.parseAsync(newProduct);
   const product = await productRepo.createProduct(newProduct);
 
@@ -36,7 +36,7 @@ export async function getProductById(
   productId: number
 ): Promise<ProductResponse> {
   if (productId < 0 || !Number.isInteger(productId)) {
-    throw new ParameterError("Invalid productId");
+    throw new ParameterError('Invalid productId');
   }
   const product = await productRepo.getProductById(productId);
 
@@ -55,7 +55,7 @@ export async function getAllProducts() {
 
 export async function deleteProductById(productId: number): Promise<void> {
   if (productId < 0 || !Number.isInteger(productId)) {
-    throw new ParameterError("Invalid productId");
+    throw new ParameterError('Invalid productId');
   }
   const result = await productRepo.deleteProductById(productId);
 
@@ -64,26 +64,20 @@ export async function deleteProductById(productId: number): Promise<void> {
   }
 }
 
-export async function editProductById(
-  productId: number,
-  editProduct: EditProductRequest
-): Promise<EditProductResponse> {
+export async function editProductById(productId: number, editProduct: EditProductRequest): Promise<EditProductResponse> {
   if (productId < 0 || !Number.isInteger(productId)) {
-    throw new ParameterError("Invalid productId");
+    throw new ParameterError('Invalid productId');
   }
-  await EditProductRequestValidator.parseAsync(editProduct);
-  const affectedRows = await productRepo.editProductById(
-    productId,
-    editProduct
-  );
+  await EditProductRequestValidator.parseAsync(editProduct)
+  const affectedRows = await productRepo.editProductById(productId, editProduct);
 
   if (affectedRows[0] === 0) {
     throw new NotFoundError();
   } else {
-    let editedProduct = {
-      id: productId,
-      ...editProduct,
-    };
+   let editedProduct={ 
+      id : productId, 
+      ...editProduct
+    }
     return editedProduct as EditProductResponse;
   }
 }

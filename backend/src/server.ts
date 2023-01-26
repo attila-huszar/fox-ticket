@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import { app } from "./app";
 import db from "./db";
-import { askTestEmail } from "./services/sendTestEmail";
 
 dotenv.config({ path: __dirname + "./../../.env.local" });
 
@@ -14,6 +13,6 @@ app.listen(port, async () => {
   console.log("DB has been initialized");
 });
 
-setTimeout(() => {
-  askTestEmail("Send test email? (y):\n");
-}, 1000);
+// setTimeout(() => {
+//   askTestEmail();
+// }, 1000);
