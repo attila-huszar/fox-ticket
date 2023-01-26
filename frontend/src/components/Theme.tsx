@@ -14,7 +14,8 @@ const lightTheme = createTheme({
       cardBackground:"#fff",
       cardHeaderBackground: "#646aea",
       hoverShadow: "#7450dd",
-      footerBackground: "#F0F0F0"
+      footerBackground: "#F0F0F0",
+      ctaSectionBackgroundImg: 'linear-gradient(90deg, #be59d9, #0072f5)',
     },
   },
 });
@@ -32,7 +33,8 @@ const darkTheme = createTheme({
       cardBackground: '#10253e',
       cardHeaderBackground: '#18385d',
       hoverShadow: "#7450dd",
-      footerBackground:'#3d4e6f'
+      footerBackground:'#3d4e6f',
+      ctaSectionBackgroundImg: 'linear-gradient(90deg, #be59d9, #0072f5)',
     },
   },
 });
