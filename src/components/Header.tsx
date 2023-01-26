@@ -68,33 +68,10 @@ export default function Header() {
 
       <Navbar.Content>
         {isLoggedIn ? <Text>Admin</Text> : null}
-        {isLoggedIn ? <Navbar.Item hideIn="sm">{<Login />}</Navbar.Item> : null}
+        {isLoggedIn ? <Navbar.Item>{<Login />}</Navbar.Item> : null}
         {isLoggedIn ? (
-          <Navbar.Item hideIn="sm">{<SignUp />}</Navbar.Item>
+          <Navbar.Item>{<SignUp />}</Navbar.Item>
         ) : null}
-        <Navbar.Item
-          hideIn="sm"
-          css={{
-            "@xsMax": {
-              w: "100%",
-              jc: "center",
-            },
-          }}>
-          <Input
-            css={{
-              w: "100%",
-              "@xsMax": {
-                mw: "300px",
-              },
-              "& .nextui-input-content--left": {
-                h: "100%",
-                ml: "$4",
-                dflex: "center",
-              },
-            }}
-            placeholder="Search..."
-          />
-        </Navbar.Item>
         <Cart />
         <Navbar.Item>
           <ProfileDropdown />
