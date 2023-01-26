@@ -50,7 +50,7 @@ export default class User extends Model {
   @Column({
     type: DataType.STRING,
   })
-  token: string;
+  verificationToken: string;
 
   @BelongsToMany(() => Article, () => ArticleUser)
   articles: Article[];

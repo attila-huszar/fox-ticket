@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { Navbar, Text, Avatar, Dropdown, Input } from '@nextui-org/react';
-import { TbHelp, TbLogout, TbSearch, TbUser } from 'react-icons/tb';
-import { Fade, Slide } from "react-awesome-reveal";
+import { Navbar, Text, Avatar, Dropdown } from '@nextui-org/react';
+import { TbHelp, TbLogout, TbUser } from 'react-icons/tb';
 import Theme from './Theme';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -12,31 +10,11 @@ import '../styles/Header.css';
 import Cart from './Cart';
 
 export default function Header() {
-  const [isLoginVisible, setIsLoginVisible] = useState(true);
-  const handleLoginVis = () => {
-    setIsLoginVisible(isVisible => !isVisible);
-    setIsLoginVisible(false);
-  };
-
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiam9obiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3Mjg0OTc1NSwiZXhwIjoxNjcyODUwMzU1fQ.QX_zMO5kwum8vMYUxHCP0jfxbtGILXr1Fcn0v1ADi1o';
-
-  async function logout() {
-    await fetch('http://localhost:5000/logout', {
-      method: 'POST',
-      mode: 'cors', // no-cors, *cors, same-origin
-      headers: {
-        //'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
-      },
-    });
-  }
-
   const navigate = useNavigate();
 
   const navigateDropdown = (key: React.Key) => {
     if (key === 'LOGOUT') {
-      logout();
+      //logout();
     } else {
       const path = String(key);
       navigate(path);
@@ -58,19 +36,18 @@ export default function Header() {
     >
       <Navbar.Brand css={{ mr: '$4' }} style={{ display: 'flex', gap: '15px' }}>
         <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
-        <NavLink
-            to="/">
-        <Text
-          b
-          color="inherit"
-          style={{
-            margin: '0 10px 0 0',
-            fontFamily: 'Helvetica, sans-serif',
-            fontSize: '34px',
-          }}
-        >
-          Fox
-        </Text>
+        <NavLink to="/">
+          <Text
+            b
+            color="inherit"
+            style={{
+              margin: '0 10px 0 0',
+              fontFamily: 'Helvetica, sans-serif',
+              fontSize: '34px',
+            }}
+          >
+            Fox
+          </Text>
         </NavLink>
         <Navbar.Content style={{ fontSize: '1.1rem' }}>
           <NavLink
@@ -101,33 +78,11 @@ export default function Header() {
       </Navbar.Brand>
 
       <Navbar.Content>
-        <Navbar.Item hideIn="sm">{isLoginVisible && <Login />}</Navbar.Item>
-        <Navbar.Item hideIn="sm">{isLoginVisible && <SignUp />}</Navbar.Item>
-
-        <Navbar.Item
-          hideIn="sm"
-          css={{
-            '@xsMax': {
-              w: '100%',
-              jc: 'center',
-            },
-          }}
-        >
-          <Input
-            contentRight={<TbSearch />}
-            css={{
-              w: '100%',
-              '@xsMax': {
-                mw: '300px',
-              },
-              '& .nextui-input-content--left': {
-                h: '100%',
-                ml: '$4',
-                dflex: 'center',
-              },
-            }}
-            placeholder="Search..."
-          />
+        <Navbar.Item>
+          <Login />
+        </Navbar.Item>
+        <Navbar.Item>
+          <SignUp />
         </Navbar.Item>
         <Navbar.Item>
           <Cart />

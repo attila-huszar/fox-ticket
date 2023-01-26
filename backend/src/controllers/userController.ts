@@ -6,6 +6,7 @@ import {
   LoginRequest,
   LoginResponse,
   RegisterRequest,
+  RegisterRequestWithToken,
   RegisterResponse,
 } from '../interfaces/user';
 import { AuthorizedRequest } from '../interfaces/authorizedRequest';
@@ -15,7 +16,7 @@ import { OK, UNAUTHORIZED } from 'http-status';
 import { signAccessToken, signRefreshToken } from '../services/jwtSign';
 
 export async function registerUser(
-  req: Request<unknown, unknown, RegisterRequest, unknown>,
+  req: Request<unknown, unknown, RegisterRequestWithToken, unknown>,
   res: Response<RegisterResponse>,
   next: NextFunction
 ): Promise<void> {

@@ -9,7 +9,7 @@ import {
   Spacer,
 } from '@nextui-org/react';
 import { fetchLogin } from '../api/fetchRegister';
-import { validateEmail, validatePass  } from '../helpers/userValidation';
+import { validateEmail, validatePassword  } from '../helpers/inputFieldValidators';
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
@@ -49,7 +49,7 @@ export default function Login() {
         text: '',
         color: 'default',
       };
-    const isValidPass = validatePass(password);
+    const isValidPass = validatePassword(password);
 
     return {
       text: isValidPass

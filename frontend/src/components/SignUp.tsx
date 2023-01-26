@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Modal, Input, Button, Text, Spacer } from '@nextui-org/react';
 import fetchRegister from '../api/fetchRegister';
 import { toast } from 'react-toastify';
-import { validateEmail, validatePass, validateName  } from '../helpers/userValidation';
+import {
+  validateEmail,
+  validatePassword,
+  validateName,
+} from '../helpers/inputFieldValidators';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
@@ -63,7 +67,7 @@ export default function SignUp() {
         text: '',
         color: 'default',
       };
-    const isValidPass = validatePass(password);
+    const isValidPass = validatePassword(password);
 
     return {
       text: isValidPass
@@ -97,22 +101,27 @@ export default function SignUp() {
     setPasswordConf('');
   };
 
+  let useremail: string;
+
   const notify = () =>
-    toast.success('You successfully signed up! Please, verify your email address!', {
-      position: 'top-center',
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    });
+    toast.success(
+      `${useremail} successfully signed up! Please, verify your email address.`,
+      {
+        position: 'top-center',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      }
+    );
 
   const handleSignUp = async () => {
     if (password === passwordConf) {
       try {
-        await fetchRegister({ name, email, password });
+        useremail = await fetchRegister({ name, email, password });
       } catch (error) {
         if (error instanceof Error) {
           const errors = [];

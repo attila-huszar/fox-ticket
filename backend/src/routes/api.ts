@@ -6,6 +6,7 @@ import * as articleController from '../controllers/articleController';
 import * as productController from '../controllers/productController';
 import * as cartController from '../controllers/cartController';
 import * as orderController from '../controllers/orderController';
+import * as emailVerificationController from '../controllers/emailVerificationController';
 
 import { auth } from '../middlewares/auth';
 import apiErrorHandler from '../middlewares/apiErrorHandler';
@@ -28,6 +29,7 @@ router.get('/orders/:userId', orderController.getPendingOrders);
 //// POST
 router.post('/login', userController.loginUser);
 router.post('/register', userController.registerUser);
+router.post('/verify', emailVerificationController.emailVerification);
 router.post('/logout', auth, userController.logoutUser);
 router.post('/refresh', refreshController.refresh);
 router.post('/purchases', orderController.addNewOrder);

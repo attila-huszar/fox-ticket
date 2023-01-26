@@ -9,11 +9,67 @@ import Profile from './Profile';
 import Footer from './Footer';
 import NotImplementedPage from './NotImplementedPage';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { ToastContainer } from 'react-toastify';
+import { Flip, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
+import emailVerify from '../api/emailVerify';
+import { jwtParse } from '../helpers/jwtParse';
 
 export default function App() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+
+  let verifiedEmail: string | Error;
+
+  const notifyVerified = () =>
+    toast.success(
+      `${verifiedEmail} successfully verified! Please log in with your email address.`,
+      {
+        position: 'top-center',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      }
+    );
+  const notifyAlredySent = () =>
+    toast.warn(
+      `Verification email already sent to ${verifiedEmail}. Please check your inbox.`,
+      {
+        position: 'top-center',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      }
+    );
+
+  async function notifyIfVerified() {
+    const jwtRegex = /[a-z0-9]+\.[a-z0-9]+\.[a-z0-9]+/i;
+    if (search.includes('?verify=') && jwtRegex.test(search)) {
+      if (jwtParse(search)) {
+        try {
+          verifiedEmail = await emailVerify(search.split('?verify=')[1]);
+          if (verifiedEmail === undefined) return;
+          notifyVerified();
+        } catch (error: any | undefined) {
+          console.log(error);
+          error = error.toString().split('Error: ')[1];
+          verifiedEmail = error;
+          notifyAlredySent();
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    notifyIfVerified();
+  }, [search]);
 
   return (
     <HelmetProvider>
@@ -22,7 +78,7 @@ export default function App() {
         <script src="./noflash.js" type="text/javascript" />
       </Helmet>
       <Header />
-      <ToastContainer style={{marginTop: "80px"}}/>
+      <ToastContainer transition={Flip} style={{ marginTop: '80px' }} />
       <TransitionGroup>
         <CSSTransition
           key={pathname}

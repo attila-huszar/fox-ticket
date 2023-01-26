@@ -9,7 +9,7 @@ if (!databaseUrl) {
   throw new Error('Missing environment variable MYSQL_URL');
 }
 
-const db = new Sequelize(databaseUrl, {
+export const db = new Sequelize(databaseUrl, {
   logging: (sql: string) => logger.debug(sql),
   models: [path.join(__dirname, 'models')],
 });

@@ -5,9 +5,11 @@ import {
   RegisterResponse,
   LoginRequest,
   LoginResponse,
+  RegisterRequestWithToken,
 } from '../interfaces/user';
 import _ from 'lodash';
 import bcrypt from 'bcrypt';
+import { sendVerificationEmail } from './sendVerificationEmail';
 
 const registerResponse = (user: RegisterResponse) => {
   return _.pick(user, ['id', 'name', 'email', 'isAdmin', 'isVerified']);
@@ -18,14 +20,18 @@ const loginResponse = (user: LoginResponse) => {
 };
 
 export async function registerUser(
-  newUser: RegisterRequest
+  newUser: RegisterRequestWithToken
 ): Promise<RegisterResponse> {
   await RegisterRequest.parseAsync(newUser);
   const hashedPassword = await bcrypt.hash(newUser.password, 10);
-  const user: RegisterRequest = await userRepo.registerUser({
+
+  const verificationKey = await sendVerificationEmail(newUser);
+
+  const user: RegisterRequestWithToken = await userRepo.registerUser({
     name: newUser.name,
     email: newUser.email,
     password: hashedPassword,
+    verificationToken: verificationKey,
   });
 
   if (user) {
@@ -38,17 +44,13 @@ export async function registerUser(
 export async function loginUser(user: LoginRequest): Promise<LoginResponse> {
   const checkUser: LoginRequest = await userRepo.getUserByEmail(user.email);
   if (!checkUser) {
-    throw new ParameterError(
-      'The email address or password is incorrect'
-    );
+    throw new ParameterError('The email address or password is incorrect');
   }
   const checkPassword = await bcrypt.compare(user.password, checkUser.password);
 
   if (checkPassword) {
     return loginResponse(checkUser);
   } else {
-    throw new ParameterError(
-      'The email address or password is incorrect'
-    );
+    throw new ParameterError('The email address or password is incorrect');
   }
 }

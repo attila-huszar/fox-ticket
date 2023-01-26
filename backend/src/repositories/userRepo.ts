@@ -1,7 +1,9 @@
-import { RegisterRequest } from '../interfaces/user';
+import { RegisterRequestWithToken } from '../interfaces/user';
 import User from '../models/User';
+const { QueryTypes } = require('sequelize');
+import db from '../db';
 
-export function registerUser(newUser: RegisterRequest): Promise<User> {
+export function registerUser(newUser: RegisterRequestWithToken): Promise<User> {
   return User.create({ ...newUser });
 }
 
@@ -15,4 +17,17 @@ export function getUserById(userId: number): Promise<User | null> {
 
 export function getUserByEmail(userEmail: string): Promise<User | null> {
   return User.findOne({ where: { email: userEmail } });
+}
+
+export function getUserByVerToken(token: string): Promise<User | null> {
+  return User.findOne({
+    where: { verificationToken: token },
+  });
+}
+
+export function setUserVerified(user: User): Promise<User[]> {
+  return db.query(`UPDATE users SET isVerified = 1 WHERE id = ${user.id}`, {
+    model: User,
+    type: QueryTypes.UPDATE,
+  });
 }

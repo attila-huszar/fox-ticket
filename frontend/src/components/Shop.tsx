@@ -74,13 +74,13 @@ export default function Shop() {
         css={{ width: '100%', justifyContent: 'center', marginBottom: '40px' }}
       >
         <Button
+          autoFocus
           className="shopTabButton"
           shadow
           size="md"
           color="gradient"
-          css={{ button: focus, outline: 'none', width: '100px', zIndex: '0' }}
+          css={{ width: '100px', zIndex: '0' }}
           id="showAllButton"
-          autoFocus
           onPress={handleAllClick}
         >
           All
