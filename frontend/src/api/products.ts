@@ -23,3 +23,7 @@ export async function fetchAddNewProduct(productData: ProductRequest): Promise<P
     throw error
   }
 }
+
+export async function fetchDeleteProduct(id: number) {
+    const response = await axios.delete(`/api/admin/products/${id}`)  
+}

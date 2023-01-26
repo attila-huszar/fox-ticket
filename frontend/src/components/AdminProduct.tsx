@@ -17,7 +17,7 @@ export default function AdminProduct() {
       const response = await fetchProducts();
       setProducts(response);
     };
-    fetchData()
+    fetchData();
   }, []);
 
   return (
@@ -39,6 +39,10 @@ export default function AdminProduct() {
       >
         {products.map(product => (
           <ProductCard
+            removeProduct={(productId: number) =>
+              setProducts(products.filter(product => product.id !== productId))
+            }
+            id={product.id}
             name={product.name}
             price={product.price}
             description={product.description}
