@@ -35,7 +35,7 @@ export default function SignUp() {
     return {
       text: isValid
         ? `Nice to meet you ${name}!`
-        : "Please enter minimum 3 characters",
+        : "Please only use common formats",
       color: isValid ? "success" : "warning",
     };
   }, [name]);
@@ -50,7 +50,7 @@ export default function SignUp() {
 
     return {
       text: isValid
-        ? "Valid email address"
+        ? "Valid email"
         : "Please enter a valid email address",
       color: isValid ? "success" : "warning",
     };
@@ -202,6 +202,12 @@ export default function SignUp() {
             Please sign up with your name and email address
           </Text>
         </Modal.Header>
+        <hr
+          style={{
+            color: "#f2f2f2",
+            height: 5,
+          }}
+        />
         <Modal.Body>
           <Spacer y={0.2} />
           <Input
