@@ -10,11 +10,16 @@ import '../styles/Header.css';
 import Cart from './Cart';
 
 export default function Header() {
+  let loggedIn = Boolean(localStorage.getItem('token'));
   const navigate = useNavigate();
 
   const navigateDropdown = (key: React.Key) => {
     if (key === 'LOGOUT') {
       localStorage.removeItem('token');
+      localStorage.removeItem('name');
+      localStorage.removeItem('email');
+      localStorage.removeItem('isAdmin');
+      loggedIn = false;
     } else {
       const path = String(key);
       navigate(path);
@@ -78,8 +83,8 @@ export default function Header() {
       </Navbar.Brand>
 
       <Navbar.Content>
-        {false ? null : <Navbar.Item>{<Login />}</Navbar.Item>}
-        {false ? null : <Navbar.Item>{<SignUp />}</Navbar.Item>}
+        {loggedIn ? null : <Login />}
+        {loggedIn ? null : <SignUp />}
         <Cart />
         <Navbar.Item>
           <Dropdown placement="bottom-right">

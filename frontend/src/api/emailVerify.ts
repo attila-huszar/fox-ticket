@@ -12,4 +12,6 @@ export default async function emailVerify(queryString: string) {
       throw new Error(error.response?.data.email);
     }
   }
+  const baseUrl = window.location.href.split('?')[0];
+  window.history.pushState('name', '', baseUrl);
 }
