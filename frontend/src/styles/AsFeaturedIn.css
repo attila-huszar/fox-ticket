@@ -8,21 +8,21 @@
 .headingFeaturedIn{
   width: 100%;
   justify-content: center;
-  color: gray;
+  margin-left: 40%;
 }
 
 
 .containerFeaturedIn{
   display: grid;
-  width: 80%;
+  width: 100%;
   flex-direction: row;
   justify-content: center;
   align-content: space-around ;
 }
 
 .featuredInlogos{
-  align-items: center;
-  width: 100px;
+  width: 130px;
   display: inline-flex;
   align-content: space-between;
+  margin-right: 30px;
 }
