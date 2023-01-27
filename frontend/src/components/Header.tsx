@@ -8,9 +8,13 @@ import logo from '../static/logo.png';
 import profile_defpic from '../static/profile_def.png';
 import '../styles/Header.css';
 import Cart from './Cart';
+import { useState } from 'react';
 
 export default function Header() {
-  let loggedIn = Boolean(localStorage.getItem('token'));
+  const [loggedIn, setLoggedIn] = useState<boolean>(
+    Boolean(localStorage.getItem('token'))
+  );
+
   const navigate = useNavigate();
 
   const navigateDropdown = (key: React.Key) => {
@@ -19,7 +23,7 @@ export default function Header() {
       localStorage.removeItem('name');
       localStorage.removeItem('email');
       localStorage.removeItem('isAdmin');
-      loggedIn = false;
+      setLoggedIn(false);
     } else {
       const path = String(key);
       navigate(path);
