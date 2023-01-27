@@ -14,7 +14,7 @@ export default function Header() {
 
   const navigateDropdown = (key: React.Key) => {
     if (key === 'LOGOUT') {
-      //logout();
+      localStorage.removeItem('token');
     } else {
       const path = String(key);
       navigate(path);
@@ -78,15 +78,9 @@ export default function Header() {
       </Navbar.Brand>
 
       <Navbar.Content>
-        <Navbar.Item>
-          <Login />
-        </Navbar.Item>
-        <Navbar.Item>
-          <SignUp />
-        </Navbar.Item>
-        <Navbar.Item>
-          <Cart />
-        </Navbar.Item>
+        {false ? null : <Navbar.Item>{<Login />}</Navbar.Item>}
+        {false ? null : <Navbar.Item>{<SignUp />}</Navbar.Item>}
+        <Cart />
         <Navbar.Item>
           <Dropdown placement="bottom-right">
             <Dropdown.Trigger>

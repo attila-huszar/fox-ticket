@@ -48,6 +48,7 @@ export interface LoginResponse {
   name?: string;
   email: string;
   isAdmin?: boolean;
+  isVerified?: boolean;
   token?: string;
 }
 

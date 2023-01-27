@@ -9,7 +9,11 @@ import {
   Spacer,
 } from '@nextui-org/react';
 import { fetchLogin } from '../api/fetchRegister';
-import { validateEmail, validatePassword  } from '../helpers/inputFieldValidators';
+import {
+  validateEmail,
+  validatePassword,
+} from '../helpers/inputFieldValidators';
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
@@ -67,24 +71,53 @@ export default function Login() {
     setPassword('');
   };
 
-  const loginHandler = async () => {
-      try {
-        await fetchLogin({ email, password });
-      } catch (error) {
-        if (error instanceof Error) {
-          const errors = [];
-          errors.push(error.message.split(';'));
+  const notifyNotVerified = () =>
+    toast.warn(`Please verify your email before logging in.`, {
+      position: 'top-center',
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
 
-          for (let i = 0; i < errors.length; i++) {
-            setErrorMessage(errors[0][i]);
-          }
-          setVisLogin(true);
-          return;
+  const loginHandler = async () => {
+    try {
+      const result = await fetchLogin({ email, password });
+
+      if (result) {
+        const verified = result.isVerified;
+        if (verified) {
+          // userCon = {
+          //   name: result.name,
+          //   email: result.email,
+          //   isAdmin: result.isAdmin,
+          //   token: result.token,
+          // };
+          localStorage.setItem('name', result.name);
+          localStorage.setItem('email', result.email);
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('isAdmin', result.isAdmin);
+        } else {
+          notifyNotVerified();
         }
       }
-      setErrorMessage('');
-      //setToken(token);
-      setVisLogin(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        const errors = [];
+        errors.push(error.message.split(';'));
+
+        for (let i = 0; i < errors.length; i++) {
+          setErrorMessage(errors[0][i]);
+        }
+        setVisLogin(true);
+        return;
+      }
+    }
+    setErrorMessage('');
+    setVisLogin(false);
   };
 
   return (
@@ -160,7 +193,7 @@ export default function Login() {
             Close
           </Button>
           <Button auto onPress={loginHandler} color="gradient">
-            Sign in
+            Login
           </Button>
         </Modal.Footer>
       </Modal>

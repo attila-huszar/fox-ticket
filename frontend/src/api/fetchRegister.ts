@@ -17,12 +17,14 @@ export default async function fetchRegister(userData: RegisterRequest) {
   return result?.data.email;
 }
 
-export async function fetchLogin(userData: LoginRequest) {
+export async function fetchLogin(userData: LoginRequest): Promise<any> {
   try {
-    await axios.post('/api/login', {
+    const response = await axios.post('/api/login', {
       email: userData.email,
       password: userData.password,
     });
+
+    return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message);

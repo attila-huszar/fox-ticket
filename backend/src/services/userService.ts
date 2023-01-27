@@ -16,7 +16,7 @@ const registerResponse = (user: RegisterResponse) => {
 };
 
 const loginResponse = (user: LoginResponse) => {
-  return _.pick(user, ['name', 'email', 'isAdmin', 'token']);
+  return _.pick(user, ['name', 'email', 'isAdmin', 'isVerified', 'token']);
 };
 
 export async function registerUser(
@@ -42,12 +42,11 @@ export async function registerUser(
 }
 
 export async function loginUser(user: LoginRequest): Promise<LoginResponse> {
-  const checkUser: LoginRequest = await userRepo.getUserByEmail(user.email);
+  const checkUser = await userRepo.getUserByEmail(user.email);
   if (!checkUser) {
     throw new ParameterError('The email address or password is incorrect');
   }
   const checkPassword = await bcrypt.compare(user.password, checkUser.password);
-
   if (checkPassword) {
     return loginResponse(checkUser);
   } else {

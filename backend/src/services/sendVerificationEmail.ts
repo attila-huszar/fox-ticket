@@ -32,7 +32,7 @@ export async function sendVerificationEmail(
     .then(() => {
       console.log(`Email sent to ${recipient.email}`);
     })
-    .catch(error => {
+    .catch((error: any) => {
       console.error(error.response.body.errors);
     });
 

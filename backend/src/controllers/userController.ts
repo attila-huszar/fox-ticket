@@ -59,6 +59,7 @@ export async function loginUser(
         name: loggedInUser.name,
         email: loggedInUser.email,
         isAdmin: loggedInUser.isAdmin,
+        isVerified: loggedInUser.isVerified,
         token: accessToken,
       });
     } else {

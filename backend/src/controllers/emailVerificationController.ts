@@ -17,14 +17,12 @@ export async function emailVerification(
 ) {
   const verificationKey = req.body.key;
   const user = await getUserByVerToken(verificationKey);
-  console.log('first');
+  
   if (verificationKey && user) {
     try {
       if (verificationKey === user?.dataValues.verificationToken) {
         const affectedRows = await setUserVerified(user);
         const count = affectedRows[1];
-    
-        console.log(count);
 
         if (Number(count) === 1) {
           res.status(OK).json({
