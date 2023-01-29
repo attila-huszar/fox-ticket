@@ -8,19 +8,14 @@ import {
   Text,
   Spacer,
 } from '@nextui-org/react';
+import { fetchLogin } from '../api/fetchRegister';
+import { validateEmail, validatePass  } from '../helpers/userValidation';
 
 export default function Login() {
   const [visLogin, setVisLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const validateEmail = (value: string) => {
-    return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
-  };
-
-  const validatePass = (value: string) => {
-    return value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/);
-  };
+  const [errorMessage, setErrorMessage] = useState('');
 
   interface help {
     text: string;
@@ -73,8 +68,23 @@ export default function Login() {
   };
 
   const loginHandler = async () => {
-    setVisLogin(false);
-    //setToken(token);
+      try {
+        await fetchLogin({ email, password });
+      } catch (error) {
+        if (error instanceof Error) {
+          const errors = [];
+          errors.push(error.message.split(';'));
+
+          for (let i = 0; i < errors.length; i++) {
+            setErrorMessage(errors[0][i]);
+          }
+          setVisLogin(true);
+          return;
+        }
+      }
+      setErrorMessage('');
+      //setToken(token);
+      setVisLogin(false);
   };
 
   return (
@@ -84,7 +94,7 @@ export default function Login() {
         auto
         color="secondary"
         shadow
-        onClick={LoginBtnHandler}
+        onPress={LoginBtnHandler}
       >
         Login
       </Button>
@@ -144,6 +154,7 @@ export default function Login() {
             <Text size={14}>Forgot password?</Text>
           </Row>
         </Modal.Body>
+        <Text color="error">{errorMessage}</Text>
         <Modal.Footer>
           <Button auto flat color="error" onPress={closeHandler}>
             Close

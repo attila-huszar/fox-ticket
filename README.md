@@ -13,8 +13,9 @@ Backend: the backend code using Express
 [React Query](https://react-query-v3.tanstack.com/overview)  
 [React Icons](https://react-icons.github.io/react-icons)  
 [usehooks-ts React hooks library](https://usehooks-ts.com/)  
+[Axios](https://www.npmjs.com/package/axios)  
 [React Helmet](https://www.npmjs.com/package/react-helmet-async)  
-[react-transition-group](https://www.npmjs.com/package/react-transition-group)  
+[React Awesome Reveal](https://react-awesome-reveal.morello.dev/)  
 [QR Generator](https://www.npmjs.com/package/react-qr-code)
 
 ### Backend Packages
