@@ -9,6 +9,7 @@ import profile_defpic from '../static/profile_def.png';
 import '../styles/Header.css';
 import Cart from './Cart';
 import { useState } from 'react';
+import Admin from './Admin';
 
 export default function Header() {
   const [loggedIn, setLoggedIn] = useState<boolean>(

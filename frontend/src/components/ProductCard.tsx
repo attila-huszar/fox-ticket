@@ -1,12 +1,25 @@
 import { Grid, Button, Card, Row, Text, Spacer } from '@nextui-org/react';
+import { fetchDeleteProduct } from '../api/products';
 import { ProductRequest } from '../interfaces/product';
 
+interface PropTypes extends ProductRequest {
+  removeProduct?: (productId: number) => void;
+}
+
 export default function ProductCard({
+  id,
   name,
   description,
   price,
   isAdmin,
-}: ProductRequest) {
+  removeProduct,
+}: PropTypes) {
+
+  const deleteProductHandler = async () => {
+    await fetchDeleteProduct(id!);
+    removeProduct!(id!);
+  };
+  
   return (
     <Grid
       sm={12}
@@ -46,7 +59,14 @@ export default function ProductCard({
           <Row justify="center">
             {isAdmin ? (
               <>
-                <Button shadow size="md" auto color="gradient" id="submit">
+                <Button
+                  onPress={deleteProductHandler}
+                  shadow
+                  size="md"
+                  auto
+                  color="gradient"
+                  id="submit"
+                >
                   Remove
                 </Button>
                 <Spacer />

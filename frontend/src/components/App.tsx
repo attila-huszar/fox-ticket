@@ -16,14 +16,10 @@ import { RegisterRequest } from '../interfaces/user';
 import { createContext, useState } from 'react';
 
 export const UserContext = createContext({});
+import AdminProduct from './AdminProduct';
+import AdminArticle from './AdminArticle';
 
 export default function App() {
-  const [userGlobal, setUserGlobal] = useState({
-    name: 'Guest',
-    email: 'guest@foxticket.com',
-    isAdmin: true,
-    token: '',
-  });
   const { pathname, search } = useLocation();
 
   let verifiedUser: RegisterRequest;
@@ -85,28 +81,28 @@ export default function App() {
         <title>Fox Ticket</title>
         <script src="./noflash.js" type="text/javascript" />
       </Helmet>
-      <UserContext.Provider value={userGlobal}>
-        <Header />
-        <ToastContainer transition={Flip} style={{ marginTop: '80px' }} />
-        <TransitionGroup>
-          <CSSTransition
-            key={pathname}
-            timeout={300}
-            classNames="fade"
-            unmountOnExit
-          >
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/mytickets" element={<MyTickets />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="*" element={<NotImplementedPage />} />
-            </Routes>
-          </CSSTransition>
-        </TransitionGroup>
-        <Footer />
-      </UserContext.Provider>
+      <Header />
+      <ToastContainer style={{ marginTop: '80px' }} />
+      <TransitionGroup>
+        <CSSTransition
+          key={pathname}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
+        >
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/mytickets" element={<MyTickets />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/products" element={<AdminProduct />} />
+            <Route path="/articles" element={<AdminArticle />} />
+            <Route path="*" element={<NotImplementedPage />} />
+          </Routes>
+        </CSSTransition>
+      </TransitionGroup>
+      <Footer />
     </HelmetProvider>
   );
 }

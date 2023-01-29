@@ -11,34 +11,13 @@ export default function Shop() {
     []
   );
 
-  // <--------- MŰKŐDŐ FETCH AXIOS-SAL PRODUCT.TS-BŐL ------>
-
   useEffect(() => {
     fetchProducts().then(data => {
       setProducts(data);
       setFilteredProducts(data);
     });
   }, []);
-
-  // <--------- MŰKŐDŐ FETCH AXIOS-SAL HELYBEN ------>
-
-  // useEffect(() =>{
-  //   async function fetchData(){
-  //     const request = await axios.get(`/api/products`);
-  //     console.log(request)
-  //     setProducts(request.data.allProducts)
-  //     return request;
-  //   }
-  //   fetchData();
-  // }, [`/api/products`])
-
-  // <--------- MŰKŐDŐ FETCH AXIOS NÉLKÜL ------>
-  // useEffect(() => {
-  //   fetchProducts().then(productsData => {
-  //     setProducts(productsData.allProducts);
-  //   });
-  // }, []);
-
+  
   async function handleTicketsClick() {
     const allTickets: ProductResponse[] = [];
     products.map(ticket => {
@@ -121,6 +100,7 @@ export default function Shop() {
       >
         {filteredProducts.map(product => (
           <ProductCard
+            id={product.id}
             name={product.name}
             description={product.description}
             price={product.price}
