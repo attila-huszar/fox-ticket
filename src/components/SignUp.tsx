@@ -6,7 +6,7 @@ import {
   validatePassword,
   validateMatch,
 } from "../helper/inputFieldValidators";
-import { InputFieldHelper } from "../interfaces/InputFieldHelper";
+import { InputField } from "../interfaces/InputFieldHelper";
 import "../styles/inputFieldHelper.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +24,7 @@ export default function SignUp() {
   const [shakePassword, setShakePassword] = useState(false);
   const [shakePasswordConf, setShakePasswordConf] = useState(false);
 
-  const nameHelper: InputFieldHelper = React.useMemo(() => {
+  const nameHelper: InputField = React.useMemo(() => {
     if (!name)
       return {
         text: "",
@@ -40,7 +40,7 @@ export default function SignUp() {
     };
   }, [name]);
 
-  const emailHelper: InputFieldHelper = React.useMemo(() => {
+  const emailHelper: InputField = React.useMemo(() => {
     if (!email)
       return {
         text: "",
@@ -56,7 +56,7 @@ export default function SignUp() {
     };
   }, [email]);
 
-  const passHelper: InputFieldHelper = React.useMemo(() => {
+  const passHelper: InputField = React.useMemo(() => {
     if (!password)
       return {
         text: "",
@@ -73,7 +73,7 @@ export default function SignUp() {
     };
   }, [password]);
 
-  const passConfHelper: InputFieldHelper = React.useMemo(() => {
+  const passConfHelper: InputField = React.useMemo(() => {
     if (!passwordConf)
       return {
         text: "",
