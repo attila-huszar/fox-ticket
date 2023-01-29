@@ -12,7 +12,7 @@ import {
   validateEmail,
   validatePassword,
 } from "../helper/inputFieldValidators";
-import { InputFieldHelper } from "../interfaces/InputFieldHelper";
+import { InputField } from "../interfaces/InputFieldHelper";
 import "../styles/inputFieldHelper.css";
 
 export default function Login() {
@@ -22,7 +22,7 @@ export default function Login() {
   const [shakeEmail, setShakeEmail] = useState(false);
   const [shakePass, setShakePass] = useState(false);
 
-  const emailHelper: InputFieldHelper = React.useMemo(() => {
+  const emailHelper: InputField = React.useMemo(() => {
     if (!email)
       return {
         text: "",
@@ -36,7 +36,7 @@ export default function Login() {
     };
   }, [email]);
 
-  const passHelper: InputFieldHelper = React.useMemo(() => {
+  const passHelper: InputField = React.useMemo(() => {
     if (!pass)
       return {
         text: "",

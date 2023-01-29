@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/react";
 import profile_defpic from "../static/profile_def.png";
 import { validatePassword } from "../helper/inputFieldValidators";
-import { InputFieldHelper } from "../interfaces/InputFieldHelper";
+import { InputField } from "../interfaces/InputFieldHelper";
 
 export default function Profile() {
   const [visChangeUser, setVisChangeUser] = useState(false);
@@ -32,7 +32,7 @@ export default function Profile() {
     setPassConf("");
   };
 
-  const passOldHelper: InputFieldHelper = React.useMemo(() => {
+  const passOldHelper: InputField = React.useMemo(() => {
     if (!passOld)
       return {
         text: "",
@@ -48,7 +48,7 @@ export default function Profile() {
     };
   }, [passOld]);
 
-  const passNewHelper: InputFieldHelper = React.useMemo(() => {
+  const passNewHelper: InputField = React.useMemo(() => {
     if (!passNew)
       return {
         text: "",
@@ -65,7 +65,7 @@ export default function Profile() {
     };
   }, [passNew]);
 
-  const passConfHelper: InputFieldHelper = React.useMemo(() => {
+  const passConfHelper: InputField = React.useMemo(() => {
     if (!passConf)
       return {
         text: "",

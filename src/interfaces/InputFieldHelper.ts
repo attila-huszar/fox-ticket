@@ -1,4 +1,4 @@
-export interface InputFieldHelper {
+export interface InputField {
   text: string;
   color:
     | "success"
