@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Input, Button, Text, Spacer } from '@nextui-org/react';
-import fetchRegister from '../api/fetchRegister';
+import { postRegister } from '../api/postRegister';
 import { toast } from 'react-toastify';
 import {
   validateEmail,
@@ -121,7 +121,7 @@ export default function SignUp() {
   const handleSignUp = async () => {
     if (password === passwordConf) {
       try {
-        useremail = await fetchRegister({ name, email, password });
+        useremail = await postRegister({ name, email, password });
       } catch (error) {
         if (error instanceof Error) {
           const errors = [];

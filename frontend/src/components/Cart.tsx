@@ -24,7 +24,7 @@ export default function Cart() {
   };
 
   useEffect(() => {
-    fetchPendingOrders();
+    //fetchPendingOrders();
   }, []);
 
   function fetchPendingOrders() {

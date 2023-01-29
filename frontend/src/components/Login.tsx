@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Modal,
   Input,
@@ -8,32 +8,23 @@ import {
   Text,
   Spacer,
 } from '@nextui-org/react';
-import { fetchLogin } from '../api/fetchRegister';
+import { postLogin } from '../api/postLogin';
 import {
   validateEmail,
   validatePassword,
 } from '../helpers/inputFieldValidators';
+import { InputField, LoggedInUser } from '../interfaces/user';
 import { toast } from 'react-toastify';
+import { UserContext } from './UserProvider';
 
 export default function Login() {
-  const [visLogin, setVisLogin] = useState(false);
+  const currentUser = useContext<LoggedInUser>(UserContext);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  interface help {
-    text: string;
-    color:
-      | 'success'
-      | 'warning'
-      | 'default'
-      | 'primary'
-      | 'secondary'
-      | 'error'
-      | undefined;
-  }
-
-  const helperEmail: help = React.useMemo(() => {
+  const helperEmail: InputField = React.useMemo(() => {
     if (!email)
       return {
         text: '',
@@ -47,7 +38,7 @@ export default function Login() {
     };
   }, [email]);
 
-  const helperPass: help = React.useMemo(() => {
+  const helperPass: InputField = React.useMemo(() => {
     if (!password)
       return {
         text: '',
@@ -63,47 +54,37 @@ export default function Login() {
     };
   }, [password]);
 
-  const LoginBtnHandler = () => setVisLogin(true);
-
-  const closeHandler = () => {
-    setVisLogin(false);
+  const closeModalHandler = () => {
+    setLoginModalVisible(false);
     setEmail('');
     setPassword('');
+    setErrorMessage('');
   };
 
   const notifyNotVerified = () =>
-    toast.warn(`Please verify your email before logging in.`, {
-      position: 'top-center',
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'dark',
-    });
+    toast.warn('Please verify your email address before logging in.');
 
   const loginHandler = async () => {
     try {
-      const result = await fetchLogin({ email, password });
+      const response = await postLogin({ email, password });
 
-      if (result) {
-        const verified = result.isVerified;
+      if (response) {
+        const verified = response.isVerified;
         if (verified) {
-          // userCon = {
-          //   name: result.name,
-          //   email: result.email,
-          //   isAdmin: result.isAdmin,
-          //   token: result.token,
-          // };
-          localStorage.setItem('name', result.name);
-          localStorage.setItem('email', result.email);
-          localStorage.setItem('token', result.token);
-          localStorage.setItem('isAdmin', result.isAdmin);
+          localStorage.setItem('name', response.name);
+          localStorage.setItem('email', response.email);
+          localStorage.setItem('token', response.token);
+
+          currentUser.name = response.name;
+          currentUser.email = response.email;
+          currentUser.token = response.token;
         } else {
           notifyNotVerified();
         }
       }
+      setLoginModalVisible(false);
+      setErrorMessage('');
+      return response;
     } catch (error) {
       if (error instanceof Error) {
         const errors = [];
@@ -112,22 +93,18 @@ export default function Login() {
         for (let i = 0; i < errors.length; i++) {
           setErrorMessage(errors[0][i]);
         }
-        setVisLogin(true);
-        return;
       }
     }
-    setErrorMessage('');
-    setVisLogin(false);
   };
 
   return (
-    <div>
+    <>
       <Button
         style={{ fontSize: '1rem' }}
         auto
         color="secondary"
         shadow
-        onPress={LoginBtnHandler}
+        onPress={() => setLoginModalVisible(true)}
       >
         Login
       </Button>
@@ -135,8 +112,8 @@ export default function Login() {
         closeButton
         blur
         aria-labelledby="login form"
-        open={visLogin}
-        onClose={closeHandler}
+        open={loginModalVisible}
+        onClose={closeModalHandler}
       >
         <Modal.Header>
           <Text size={18}>
@@ -189,7 +166,7 @@ export default function Login() {
         </Modal.Body>
         <Text color="error">{errorMessage}</Text>
         <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandler}>
+          <Button auto flat color="error" onPress={closeModalHandler}>
             Close
           </Button>
           <Button auto onPress={loginHandler} color="gradient">
@@ -197,6 +174,6 @@ export default function Login() {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 }

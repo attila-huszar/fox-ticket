@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function fetchPendingOrder() {
-  const purchases = await axios.get('/api/orders/2');
+  const purchases = await axios.get('/api/orders/');
 
   return purchases.data.orders;
 }

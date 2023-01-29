@@ -1,30 +1,53 @@
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { Navbar, Text, Avatar, Dropdown } from '@nextui-org/react';
 import { TbHelp, TbLogout, TbUser } from 'react-icons/tb';
+import { UserContext } from './UserProvider';
 import Theme from './Theme';
 import Login from './Login';
 import SignUp from './SignUp';
+import Cart from './Cart';
+import Admin from './Admin';
 import logo from '../static/logo.png';
 import profile_defpic from '../static/profile_def.png';
+import postLogout from '../api/postLogout';
 import '../styles/Header.css';
-import Cart from './Cart';
-import { useState } from 'react';
-import Admin from './Admin';
+import { LoggedInUser } from '../interfaces/user';
+import { toast } from 'react-toastify';
 
 export default function Header() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(
-    Boolean(localStorage.getItem('token'))
-  );
-
   const navigate = useNavigate();
+  const currentUser = useContext<LoggedInUser>(UserContext);
 
-  const navigateDropdown = (key: React.Key) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (currentUser.token) setIsLoggedIn(true);
+  }, [currentUser.token]);
+
+  useEffect(() => {
+    if (currentUser.isAdmin) setIsAdmin(true);
+  }, [currentUser.isAdmin]);
+
+  const notifyLoggedOut = () =>
+    toast.success(`${currentUser.email} successfully logged out.`);
+
+  const navigateDropdown = async (key: React.Key) => {
     if (key === 'LOGOUT') {
-      localStorage.removeItem('token');
-      localStorage.removeItem('name');
-      localStorage.removeItem('email');
-      localStorage.removeItem('isAdmin');
-      setLoggedIn(false);
+      try {
+        const response = await postLogout({
+          email: currentUser.email,
+          token: currentUser.token,
+        });
+
+        if (currentUser.email === (await response)) {
+          notifyLoggedOut();
+          setIsLoggedIn(false);
+        }
+      } catch {
+        null;
+      }
     } else {
       const path = String(key);
       navigate(path);
@@ -76,20 +99,23 @@ export default function Header() {
           >
             Shop
           </NavLink>
-          <NavLink
-            to="/mytickets"
-            className={({ isActive }) =>
-              isActive ? 'activeLink' : 'inactiveLink'
-            }
-          >
-            My Tickets
-          </NavLink>
+          {isLoggedIn ? (
+            <NavLink
+              to="/mytickets"
+              className={({ isActive }) =>
+                isActive ? 'activeLink' : 'inactiveLink'
+              }
+            >
+              My Tickets
+            </NavLink>
+          ) : null}
         </Navbar.Content>
       </Navbar.Brand>
 
       <Navbar.Content>
-        {loggedIn ? null : <Login />}
-        {loggedIn ? null : <SignUp />}
+        {isAdmin && isLoggedIn ? <Admin /> : null}
+        {isLoggedIn ? null : <Login />}
+        {isLoggedIn ? null : <SignUp />}
         <Cart />
         <Navbar.Item>
           <Dropdown placement="bottom-right">
