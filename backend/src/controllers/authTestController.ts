@@ -8,5 +8,5 @@ export async function authTest(
   next: NextFunction
 ) {
   const user = req.email;
-  res.status(OK).send(`<h2>Welcome ${user}</h2>`);
+  res.status(OK).send(user);
 }

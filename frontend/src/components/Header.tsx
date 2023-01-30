@@ -14,6 +14,7 @@ import { UserContext } from '../components/App';
 import { toast } from 'react-toastify';
 import { UserContextInterface } from '../interfaces/user';
 import { useDarkMode } from 'usehooks-ts';
+import postAuthTest from '../api/postAuthTest';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -41,6 +42,20 @@ export default function Header() {
             isAdmin: false,
           });
           notifyLoggedOut();
+        }
+      } catch {
+        null;
+      }
+    } else if (key === '/help_and_feedback') {
+      try {
+        const response = await postAuthTest({
+          email: currentUser.email,
+          token: currentUser.token,
+        });
+
+        if (currentUser.email === response) {
+          const authTest = response;
+          console.log(authTest, 'is authenticated');
         }
       } catch {
         null;
@@ -156,7 +171,7 @@ export default function Header() {
                 Profile
               </Dropdown.Item>
               <Dropdown.Item key="/help_and_feedback" icon={<TbHelp />}>
-                Help & Feedback
+                Authentication Test
               </Dropdown.Item>
               <Dropdown.Item
                 key="LOGOUT"
@@ -169,6 +184,7 @@ export default function Header() {
             </Dropdown.Menu>
           </Dropdown>
         </Navbar.Item>
+
         <Switch
           checked={isDarkMode}
           onChange={toggle}

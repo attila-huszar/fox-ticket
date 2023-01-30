@@ -18,7 +18,6 @@ const router = express.Router();
 router.use(express.json());
 
 //// GET
-router.get('/authtest', auth, authTestController.authTest);
 router.get('/articles', articleController.getAllArticles);
 router.get('/admin/products', productController.getProductById);
 router.get('/products', productController.getAllProducts);
@@ -27,6 +26,7 @@ router.get('/purchases/:userId', orderController.getAllOrders);
 router.get('/orders/:userId', orderController.getPendingOrders);
 
 //// POST
+router.post('/authtest', auth, authTestController.authTest);
 router.post('/login', userController.loginUser);
 router.post('/register', userController.registerUser);
 router.post('/verify', emailVerificationController.emailVerification);
