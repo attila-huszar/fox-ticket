@@ -14,6 +14,7 @@ export interface LoggedInUser {
   email: string;
   token: string;
   isAdmin: boolean;
+  isVerified?: boolean;
 }
 
 export interface UserContextInterface {

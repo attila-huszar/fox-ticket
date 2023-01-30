@@ -14,7 +14,6 @@
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
-    "react-transition-group": "^4.4.5",
     "usehooks-ts": "^2.9.1",
     "web-vitals": "^3.1.1"
   },
@@ -49,7 +48,6 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-helmet": "^6.1.6",
-    "@types/react-router-dom": "^5.3.3",
-    "@types/react-transition-group": "^4.4.5"
+    "@types/react-router-dom": "^5.3.3"
   }
 }

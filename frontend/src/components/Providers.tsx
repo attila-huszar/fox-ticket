@@ -19,7 +19,7 @@ export default function Providers() {
 
   const notifyVerified = () =>
     toast.success(
-      `Welcome ${verifiedUser}! You can now log in with your email address and password.`
+      `${verifiedUser} was successfully verified! You can now log in with your email address and password.`
     );
 
   const notifyAlredySent = () =>

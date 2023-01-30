@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { Navbar, Text, Avatar, Dropdown } from '@nextui-org/react';
-import { TbHelp, TbLogout, TbUser } from 'react-icons/tb';
-import Theme from './Theme';
+import { Navbar, Text, Avatar, Dropdown, Switch } from '@nextui-org/react';
+import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb';
 import Login from './Login';
 import SignUp from './SignUp';
 import Cart from './Cart';
@@ -14,12 +13,14 @@ import '../styles/Header.css';
 import { UserContext } from '../components/App';
 import { toast } from 'react-toastify';
 import { UserContextInterface } from '../interfaces/user';
+import { useDarkMode } from 'usehooks-ts';
 
 export default function Header() {
-  
   const navigate = useNavigate();
   const { currentUser, setCurrentUser } =
     useContext<UserContextInterface>(UserContext);
+
+  const { isDarkMode, toggle } = useDarkMode();
 
   const notifyLoggedOut = () =>
     toast.success(`${currentUser.email} successfully logged out.`);
@@ -53,7 +54,6 @@ export default function Header() {
   return (
     <Navbar
       isBordered
-      disableScrollHandler={true}
       variant="floating"
       css={{
         background: 'var(--nextui-colors-navbarGradient)',
@@ -114,7 +114,14 @@ export default function Header() {
         <Cart />
         <Navbar.Item>
           <Dropdown placement="bottom-right">
-            <Dropdown.Trigger>
+            <Dropdown.Trigger
+              css={{
+                fontSize: '1rem',
+                '&:hover, &:focus': {
+                  boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
+                },
+              }}
+            >
               <Avatar
                 bordered
                 as="button"
@@ -162,7 +169,16 @@ export default function Header() {
             </Dropdown.Menu>
           </Dropdown>
         </Navbar.Item>
-        <Theme />
+        <Switch
+          checked={isDarkMode}
+          onChange={toggle}
+          iconOn={<TbMoon />}
+          iconOff={<TbSun />}
+          size="lg"
+          color="secondary"
+          bordered
+          shadow
+        />
       </Navbar.Content>
     </Navbar>
   );

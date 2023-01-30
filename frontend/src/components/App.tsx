@@ -22,7 +22,7 @@ export default function App() {
     name: localStorage.getItem('name') || 'Guest',
     email: localStorage.getItem('email') || 'visitor',
     token: localStorage.getItem('token') || '',
-    isAdmin: Boolean(localStorage.getItem('admin')) || false,
+    isAdmin: localStorage.getItem('admin') === 'true' ? true : false,
   });
 
   return (

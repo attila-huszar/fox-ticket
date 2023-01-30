@@ -36,6 +36,12 @@ export default function Cart() {
       {orders.length ? (
         <Badge color="error" content={orders.length}>
           <Button
+            css={{
+              fontSize: '1rem',
+              '&:hover, &:focus': {
+                boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
+              },
+            }}
             auto
             color="secondary"
             shadow
@@ -46,6 +52,12 @@ export default function Cart() {
         </Badge>
       ) : (
         <Button
+          css={{
+            fontSize: '1rem',
+            '&:hover, &:focus': {
+              boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
+            },
+          }}
           auto
           color="secondary"
           shadow

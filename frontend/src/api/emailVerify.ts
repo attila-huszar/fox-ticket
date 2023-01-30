@@ -6,7 +6,7 @@ export default async function emailVerify(queryString: string) {
       key: queryString,
     });
 
-    return res.data.name;
+    return res.data.email;
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.email);

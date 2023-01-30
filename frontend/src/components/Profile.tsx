@@ -114,7 +114,7 @@ export default function Profile() {
 
   return (
     <>
-      <Zoom duration={750}>
+      <Zoom duration={500} triggerOnce>
         <Container
           style={{
             margin: '50px auto',
