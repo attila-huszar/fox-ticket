@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { Navbar, Text, Avatar, Dropdown } from '@nextui-org/react';
 import { TbHelp, TbLogout, TbUser } from 'react-icons/tb';
-import { UserContext } from './UserProvider';
 import Theme from './Theme';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -12,23 +11,15 @@ import logo from '../static/logo.png';
 import profile_defpic from '../static/profile_def.png';
 import postLogout from '../api/postLogout';
 import '../styles/Header.css';
-import { LoggedInUser } from '../interfaces/user';
+import { UserContext } from '../components/App';
 import { toast } from 'react-toastify';
+import { UserContextInterface } from '../interfaces/user';
 
 export default function Header() {
+  
   const navigate = useNavigate();
-  const currentUser = useContext<LoggedInUser>(UserContext);
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    if (currentUser.token) setIsLoggedIn(true);
-  }, [currentUser.token]);
-
-  useEffect(() => {
-    if (currentUser.isAdmin) setIsAdmin(true);
-  }, [currentUser.isAdmin]);
+  const { currentUser, setCurrentUser } =
+    useContext<UserContextInterface>(UserContext);
 
   const notifyLoggedOut = () =>
     toast.success(`${currentUser.email} successfully logged out.`);
@@ -42,8 +33,13 @@ export default function Header() {
         });
 
         if (currentUser.email === (await response)) {
+          setCurrentUser({
+            name: 'Guest',
+            email: '',
+            token: '',
+            isAdmin: false,
+          });
           notifyLoggedOut();
-          setIsLoggedIn(false);
         }
       } catch {
         null;
@@ -99,7 +95,7 @@ export default function Header() {
           >
             Shop
           </NavLink>
-          {isLoggedIn ? (
+          {currentUser.token ? (
             <NavLink
               to="/mytickets"
               className={({ isActive }) =>
@@ -111,11 +107,10 @@ export default function Header() {
           ) : null}
         </Navbar.Content>
       </Navbar.Brand>
-
       <Navbar.Content>
-        {isAdmin && isLoggedIn ? <Admin /> : null}
-        {isLoggedIn ? null : <Login />}
-        {isLoggedIn ? null : <SignUp />}
+        {currentUser.isAdmin && currentUser.token ? <Admin /> : null}
+        {currentUser.token ? null : <Login />}
+        {currentUser.token ? null : <SignUp />}
         <Cart />
         <Navbar.Item>
           <Dropdown placement="bottom-right">
@@ -134,12 +129,21 @@ export default function Header() {
               onAction={key => navigateDropdown(key)}
             >
               <Dropdown.Item key="" css={{ height: '$18' }}>
-                <Text b color="inherit" css={{ d: 'flex' }}>
-                  Welcome,
-                </Text>
-                <Text b color="warning" css={{ d: 'flex' }}>
-                  Guest!
-                </Text>
+                {currentUser.token ? (
+                  <Text>
+                    Logged in as{'\n'}
+                    <Text b color="warning" css={{ d: 'flex' }}>
+                      {currentUser.email}
+                    </Text>
+                  </Text>
+                ) : (
+                  <Text>
+                    Welcome,{'\n'}
+                    <Text b color="warning" css={{ d: 'flex' }}>
+                      {currentUser.name}!
+                    </Text>
+                  </Text>
+                )}
               </Dropdown.Item>
               <Dropdown.Item key="/profile" icon={<TbUser />} withDivider>
                 Profile

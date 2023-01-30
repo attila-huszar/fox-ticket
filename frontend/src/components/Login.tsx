@@ -13,12 +13,15 @@ import {
   validateEmail,
   validatePassword,
 } from '../helpers/inputFieldValidators';
-import { InputField, LoggedInUser } from '../interfaces/user';
+import { InputField } from '../interfaces/user';
 import { toast } from 'react-toastify';
-import { UserContext } from './UserProvider';
+import { UserContext } from './App';
+import { UserContextInterface } from '../interfaces/user';
 
 export default function Login() {
-  const currentUser = useContext<LoggedInUser>(UserContext);
+  const { currentUser, setCurrentUser } =
+    useContext<UserContextInterface>(UserContext);
+
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -74,10 +77,13 @@ export default function Login() {
           localStorage.setItem('name', response.name);
           localStorage.setItem('email', response.email);
           localStorage.setItem('token', response.token);
-
-          currentUser.name = response.name;
-          currentUser.email = response.email;
-          currentUser.token = response.token;
+          localStorage.setItem('admin', response.isAdmin);
+          setCurrentUser({
+            name: response.name,
+            email: response.email,
+            token: response.token,
+            isAdmin: response.isAdmin,
+          });
         } else {
           notifyNotVerified();
         }

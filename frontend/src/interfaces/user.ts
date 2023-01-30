@@ -16,6 +16,11 @@ export interface LoggedInUser {
   isAdmin: boolean;
 }
 
+export interface UserContextInterface {
+  currentUser: LoggedInUser;
+  setCurrentUser: (user: LoggedInUser) => void;
+}
+
 export interface InputField {
   text: string;
   color:

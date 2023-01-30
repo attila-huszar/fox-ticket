@@ -4,7 +4,6 @@ import { lightTheme, darkTheme } from '../styles/theme';
 import { useDarkMode } from 'usehooks-ts';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import UserProvider from './UserProvider';
 import { Flip, toast, ToastContainer } from 'react-toastify';
 import emailVerify from '../api/emailVerify';
 import { RegisterRequest } from '../interfaces/user';
@@ -65,9 +64,7 @@ export default function Providers() {
           theme={isDarkMode ? 'dark' : 'light'}
         />
         <BrowserRouter>
-          <UserProvider>
-            <App />
-          </UserProvider>
+          <App />
         </BrowserRouter>
       </NextUIProvider>
     </HelmetProvider>

@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { createContext, useState } from 'react';
 import Home from './Home';
 import Header from './Header';
 import Shop from './Shop';
@@ -10,10 +11,22 @@ import NotImplementedPage from './NotImplementedPage';
 import AdminProduct from './AdminProduct';
 import AdminArticle from './AdminArticle';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoggedInUser, UserContextInterface } from '../interfaces/user';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+export const UserContext = createContext<UserContextInterface>();
 
 export default function App() {
+  const [currentUser, setCurrentUser] = useState<LoggedInUser>({
+    name: localStorage.getItem('name') || 'Guest',
+    email: localStorage.getItem('email') || 'visitor',
+    token: localStorage.getItem('token') || '',
+    isAdmin: Boolean(localStorage.getItem('admin')) || false,
+  });
+
   return (
-    <>
+    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
       <Header />
       <Routes>
         <Route index element={<Home />} />
@@ -26,6 +39,6 @@ export default function App() {
         <Route path="*" element={<NotImplementedPage />} />
       </Routes>
       <Footer />
-    </>
+    </UserContext.Provider>
   );
 }

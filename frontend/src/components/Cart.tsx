@@ -33,7 +33,18 @@ export default function Cart() {
 
   return (
     <>
-      <Badge color="error" content={orders.length}>
+      {orders.length ? (
+        <Badge color="error" content={orders.length}>
+          <Button
+            auto
+            color="secondary"
+            shadow
+            rounded
+            icon={<FiShoppingCart />}
+            onClick={handler}
+          ></Button>
+        </Badge>
+      ) : (
         <Button
           auto
           color="secondary"
@@ -42,7 +53,7 @@ export default function Cart() {
           icon={<FiShoppingCart />}
           onClick={handler}
         ></Button>
-      </Badge>
+      )}
 
       <Modal
         closeButton
