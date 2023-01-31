@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState, useEffect } from 'react';
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
 } from '../api/orders';
-import { PendingOrdersResponse } from '../interfaces/orders';
+import { PendingOrdersResponse,CartContextInterface } from '../interfaces/orders';
 import { Modal, Button, Badge } from '@nextui-org/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import OrderCart from './OrderCart';
+import { CartContext } from './App';
+
+
+
 export default function Cart() {
+  const {cart, setCart} = useContext<CartContextInterface>(CartContext)
   const [visible, setVisible] = React.useState(false);
   const [orders, setOrders] = useState<PendingOrdersResponse[]>([]);
   const closeHandler = () => {
@@ -30,6 +35,8 @@ export default function Cart() {
   function fetchPendingOrders() {
     return fetchPendingOrder().then(data => setOrders(data));
   }
+
+ 
 
   return (
     <>

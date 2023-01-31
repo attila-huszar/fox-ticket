@@ -13,6 +13,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminProduct from './AdminProduct';
 import AdminArticle from './AdminArticle'
+import { createContext } from 'react';
+import { CartContextInterface } from '../interfaces/orders';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+export const CartContext= createContext<CartContextInterface>();
 
 export default function App() {
   const { pathname } = useLocation();

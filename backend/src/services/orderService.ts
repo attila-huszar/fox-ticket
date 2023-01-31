@@ -65,8 +65,8 @@ export async function getAllPendingOrdersByUserId(
       id: response[i].id,
       status: response[i].status,
       orderDate: response[i].orderDate,
-      name: response[i].product.name,
-      price: response[i].product.price,
+      name: response[i].product?.name,
+      price: response[i].product?.price,
     };
     orders.push(order);
   }

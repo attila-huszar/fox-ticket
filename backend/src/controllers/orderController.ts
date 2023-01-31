@@ -42,6 +42,7 @@ export async function addNewOrder(
     const result = await orderService.addNewOrder(order);
     res.send(result);
   } catch (error) {
+    console.log(error)
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
     } else {
