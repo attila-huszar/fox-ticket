@@ -15,14 +15,14 @@ export default function Footer() {
             <li><a href="" className="footerLink"><TbBrandFacebook  className='socialIcon'/></a></li>
             <li><a href="" className="footerLink"><TbBrandInstagram className='socialIcon'  /></a></li>
             <li><a href="" className="footerLink"><TbBrandTwitter className='socialIcon' /></a></li>
-            <li><a href="" className="footerLink"><TbBrandTiktok className='socialIcon'  /></a></li>
+            <li><a href="" className="footerLink"><TbBrandTiktok className='socialIcon'/></a></li>
           </ul>
             <p className='copyright'>Copyright ©  {year} by Virides Caelestes. <br/>All rights reserved.</p>
           </div>
           <div className="addressColumn">
             <p className='footerHeader'> Contact us</p>
             <address className='contacts'>
-              <p>1062 Budapest, Andrassy Street 66. 3rd Floor
+              <p>1062 Budapest, <br/>Andrassy Street 66.<br/> 3rd Floor
               </p>
               <p>0630 123 4567</p>
               <p>hello@foxticket.com</p>

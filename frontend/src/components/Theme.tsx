@@ -15,7 +15,9 @@ const lightTheme = createTheme({
       cardHeaderBackground: "#646aea",
       hoverShadow: "#7450dd",
       footerBackground: "#F0F0F0",
+      featuresLogoBackground: '#8cacec',
       ctaSectionBackgroundImg: 'linear-gradient(90deg, #be59d9, #0072f5)',
+      myTicketsSmallHeading: '#000000' 
     },
   },
 });
@@ -35,6 +37,7 @@ const darkTheme = createTheme({
       hoverShadow: "#7450dd",
       footerBackground:'#3d4e6f',
       ctaSectionBackgroundImg: 'linear-gradient(90deg, #be59d9, #0072f5)',
+      myTicketsSmallHeading: '#F0F0F0' 
     },
   },
 });

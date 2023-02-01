@@ -7,7 +7,7 @@
   /* margin-bottom: 10%; */
   padding: 80px;
   background-color: var(--nextui-colors-navbarActive);
-  margin-top: 20%;
+  margin-top: 5%;
 }
 
 .featureIcon{
@@ -16,7 +16,7 @@
   margin-bottom: 1.6rem;
   padding: 0.5rem;
   border-radius: 50%;
-  background-color: var(--nextui-colors-navbarActive);
+  background-color: var(--nextui-colors-featuresLogoBackground);
 }
 
 .feautureTitle{

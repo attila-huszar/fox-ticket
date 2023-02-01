@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, Container, Grid } from '@nextui-org/react';
+import { Text, Container, Grid, css } from '@nextui-org/react';
 import { fetchProducts } from '../api/products';
 import { ProductResponse } from '../interfaces/product';
 import ProductCard from './ProductCard';
@@ -22,7 +22,7 @@ export default function AdminProduct() {
 
   return (
     <Container>
-      <Text h1 css={{ textAlign: 'center' }}>
+      <Text h1 css={{ textAlign: 'center', zIndex: "0" }}>
         Tickets and Passes
       </Text>
       <AddProduct addProduct={addProduct} />
@@ -33,7 +33,7 @@ export default function AdminProduct() {
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
-          gap: '40px',
+          gap: '5%',
           justifyContent: 'center',
         }}
       >
