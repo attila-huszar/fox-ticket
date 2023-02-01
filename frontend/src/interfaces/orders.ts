@@ -15,3 +15,4 @@ export interface CartContextInterface {
   cart: PendingOrdersResponse[]
   setCart: (pendingOrders: PendingOrdersResponse[])=> void
 }
+
