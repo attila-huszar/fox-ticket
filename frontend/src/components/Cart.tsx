@@ -42,7 +42,24 @@ export default function Cart() {
 
   return (
     <>
-      <Badge color="error" content={cart.length}>
+      {cart.length !== 0 ? (
+        <Badge color="error" content={cart.length}>
+          <Button
+            css={{
+              fontSize: '1rem',
+              '&:hover, &:focus': {
+                boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
+              },
+            }}
+            auto
+            color="secondary"
+            shadow
+            rounded
+            icon={<FiShoppingCart />}
+            onClick={handler}
+          ></Button>
+        </Badge>
+      ) : (
         <Button
           css={{
             fontSize: '1rem',
@@ -57,7 +74,8 @@ export default function Cart() {
           icon={<FiShoppingCart />}
           onClick={handler}
         ></Button>
-      </Badge>
+      )}
+     
       <Modal
         closeButton
         blur
