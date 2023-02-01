@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
+  fetchChangeOrderStatusByUserId
 } from '../api/orders';
 import { CartContextInterface } from '../interfaces/orders';
 import { Modal, Button, Badge } from '@nextui-org/react';
@@ -27,6 +28,12 @@ export default function Cart() {
     fetchRemovePendingOrderFromCart();
     fetchPendingOrders();
   };
+
+  const buyProductHandler= async () =>{
+    fetchChangeOrderStatusByUserId()
+    fetchPendingOrders();
+
+  }
 
   useEffect(() => {
     fetchPendingOrders();
@@ -79,6 +86,7 @@ export default function Cart() {
             size="sm"
             auto
             color="secondary"
+            onClick={buyProductHandler}
           >
             Buy
           </Button>

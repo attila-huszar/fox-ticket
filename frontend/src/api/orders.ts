@@ -30,3 +30,7 @@ export async function fetchCreateNewPendingOrder(orderDate: Date, productId: num
     throw error
   }
 }
+
+export async function fetchChangeOrderStatusByUserId( ){
+  await axios.patch('/api/orders/1');
+}
