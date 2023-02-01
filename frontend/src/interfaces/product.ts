@@ -10,7 +10,7 @@ export interface ProductResponse {
 export interface ProductRequest {
   id?: number;
   name: string;
-  price: number;
+  price?: number;
   description: string;
   duration?: number;
   type?: string;

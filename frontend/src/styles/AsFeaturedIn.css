@@ -10,8 +10,8 @@ display: flex;
 
 .headingFeaturedIn{
   width: 100%;
-  justify-content: center;
-  margin-left: 40%;
+  text-align: center;
+  /* margin-left: 40%; */
 }
 
 
@@ -31,6 +31,7 @@ display: flex;
   flex-direction: column;
   align-content: space-between;
   margin-right: 30px;
+  filter: grayscale(80%);
 }
 
 #m1logo,

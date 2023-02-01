@@ -81,6 +81,7 @@ export async function deleteProductById(
     } else if (error instanceof NotFoundError) {
       next(new HttpError(status.NOT_FOUND));
     } else {
+      console.log(error)
       next(new HttpError(status.INTERNAL_SERVER_ERROR));
     }
   }

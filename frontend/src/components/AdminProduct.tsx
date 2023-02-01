@@ -45,7 +45,9 @@ export default function AdminProduct() {
             id={product.id}
             name={product.name}
             price={product.price}
+            duration={product.duration}
             description={product.description}
+            type={product.type}
             isAdmin={true}
           />
         ))}

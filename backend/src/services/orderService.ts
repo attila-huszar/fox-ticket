@@ -65,8 +65,8 @@ export async function getAllPendingOrdersByUserId(
       id: response[i].id,
       status: response[i].status,
       orderDate: response[i].orderDate,
-      name: response[i].product.name,
-      price: response[i].product.price,
+      name: response[i].product?.name,
+      price: response[i].product?.price,
     };
     orders.push(order);
   }
@@ -75,7 +75,7 @@ export async function getAllPendingOrdersByUserId(
 
 export async function changeOrderStatusByUserId(
   userId: number
-): Promise<UpdateOrderStatusResponse> {  
+): Promise<UpdateOrderStatusResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }
@@ -102,4 +102,30 @@ export async function changeOrderStatusByUserId(
     }
     return { purchases };
   }
+}
+
+export async function getActiveOrdersByUserId(
+  userId: number
+): Promise<PendingOrdersResponse> {
+  if (userId < 0 || !Number.isInteger(userId)) {
+    throw new ParameterError('Invalid userId');
+  }
+  const user: User = await userRepo.getUserById(userId);
+  if (!user) {
+    throw new NotFoundError("User doesn't exist with this id");
+  }
+  const response: Order[] = await orderRepo.getActiveOrders(userId);
+  let orders = [];
+  for (let i = 0; i < response.length; i++) {
+    let order = {
+      id: response[i].id,
+      status: response[i].status,
+      orderDate: response[i].orderDate,
+      name: response[i].product?.name,
+      price: response[i].product?.price,
+      description: response[i].product.description,
+    };
+    orders.push(order);
+  }
+  return { orders: orders };
 }

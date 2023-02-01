@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Input, Button, Text, Spacer } from '@nextui-org/react';
 import fetchRegister from '../api/fetchRegister';
 import { toast } from 'react-toastify';
+import { validateEmail, validatePass, validateName  } from '../helpers/userValidation';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function SignUp() {
@@ -12,23 +13,10 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState('');
   const [visible, setVisible] = useState(false);
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePass = (password: string) => {
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,30}$/;
-    return passwordRegex.test(password);
-  };
-
   const validateMatch = (value: string) => {
     if (value === password) return true;
   };
 
-  const validateName = (name: string) => {
-    if (name.length > 3 && name.length < 24) return true;
-  };
   interface help {
     text: string;
     color:
