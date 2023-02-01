@@ -15,7 +15,7 @@ export default function MyTickets() {
   return (
     <>
     {actives.map(active => (
-      <ActiveTickets name={active.name} description={active.description} />
+      <ActiveTickets key={active.id} name={active.name} description={active.description} />
     ))}
     </>
   );

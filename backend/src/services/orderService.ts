@@ -75,7 +75,7 @@ export async function getAllPendingOrdersByUserId(
 
 export async function changeOrderStatusByUserId(
   userId: number
-): Promise<UpdateOrderStatusResponse> {  
+): Promise<UpdateOrderStatusResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }
@@ -123,6 +123,7 @@ export async function getActiveOrdersByUserId(
       orderDate: response[i].orderDate,
       name: response[i].product?.name,
       price: response[i].product?.price,
+      description: response[i].product.description,
     };
     orders.push(order);
   }

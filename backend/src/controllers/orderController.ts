@@ -102,7 +102,8 @@ export async function getActiveOrders(
   const userId = Number(req.params.userId);
 
   try {
-    const data = await orderService.getAllPendingOrdersByUserId(userId);
+    const data = await orderService.getActiveOrdersByUserId(userId);
+    console.log(data)    
     res.send(data);
   } catch (error) {
     if (error instanceof ParameterError) {

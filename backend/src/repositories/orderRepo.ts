@@ -32,7 +32,7 @@ export function changeOrderStatusByUserId(userId: number): Promise<number[]> {
 
 export function getActiveOrders(userId: number): Promise<Order[]> {
   return Order.findAll({
-    where: { userId: userId, status: 'pending' },
+    where: { userId: userId, status: 'paid' },
     include: Product,
   });
 }
