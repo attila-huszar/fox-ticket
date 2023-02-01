@@ -1,7 +1,11 @@
 import { Grid, Button, Card, Row, Text, Spacer } from '@nextui-org/react';
 import { fetchDeleteProduct } from '../api/products';
+import { fetchCreateNewPendingOrder , fetchPendingOrder} from '../api/orders';
 import { ProductRequest } from '../interfaces/product';
 import { EditProduct } from './EditProduct';
+import { CartContextInterface } from '../interfaces/orders';
+import { CartContext } from './App';
+import { useContext } from 'react';
 
 interface PropTypes extends ProductRequest {
   removeProduct?: (productId: number) => void;
@@ -17,10 +21,19 @@ export default function ProductCard({
   type,
   removeProduct,
 }: PropTypes) {
+
+  const {cart, setCart} = useContext<CartContextInterface>(CartContext)
   const deleteProductHandler = async () => {
     await fetchDeleteProduct(id!);
     removeProduct!(id!);
-  };
+  }
+
+  const createNewOrderHadler = async () =>{
+    
+    await fetchCreateNewPendingOrder (new Date(), id!, 1);
+    const pendingOrders = await fetchPendingOrder();
+    setCart(pendingOrders)
+  }
 
   return (
     <Grid
@@ -82,7 +95,7 @@ export default function ProductCard({
                 />
               </>
             ) : (
-              <Button shadow size="md" auto color="gradient" id="submit">
+              <Button shadow size="md" auto color="gradient" id="submit" onPress={createNewOrderHadler}>
                 Add to Cart
               </Button>
             )}
