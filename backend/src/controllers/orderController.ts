@@ -6,7 +6,7 @@ import {
   NewOrderRequest,
   OrderResponse,
   UpdateOrderStatusResponse,
-  PendingOrdersResponse
+  PendingOrdersResponse,
 } from '../interfaces/order';
 import * as orderService from '../services/orderService';
 
@@ -42,7 +42,7 @@ export async function addNewOrder(
     const result = await orderService.addNewOrder(order);
     res.send(result);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
     } else {
@@ -83,11 +83,32 @@ export async function changeOrderStatusByUserId(
     const data = await orderService.changeOrderStatusByUserId(userId);
     res.send(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
     if (error instanceof ParameterError) {
       next(new HttpError(status.BAD_REQUEST, error.message));
     } else if (error instanceof NotFoundError) {
       next(new HttpError(status.NOT_FOUND, error.message));
+    } else {
+      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+    }
+  }
+}
+
+export async function getActiveOrders(
+  req: Request<{ userId: number }, unknown, unknown, unknown>,
+  res: Response<PendingOrdersResponse>,
+  next: NextFunction
+): Promise<void> {
+  const userId = Number(req.params.userId);
+
+  try {
+    const data = await orderService.getAllPendingOrdersByUserId(userId);
+    res.send(data);
+  } catch (error) {
+    if (error instanceof ParameterError) {
+      next(new HttpError(status.BAD_REQUEST, error.message));
+    } else if (error instanceof NotFoundError) {
+      next(new HttpError(status.NOT_FOUND));
     } else {
       next(new HttpError(status.INTERNAL_SERVER_ERROR));
     }

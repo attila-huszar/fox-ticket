@@ -34,3 +34,8 @@ export async function fetchCreateNewPendingOrder(orderDate: Date, productId: num
 export async function fetchChangeOrderStatusByUserId( ){
   await axios.patch('/api/orders/1');
 }
+
+export async function fetchActiveOrders() {
+  const purchases = await axios.get('/api/mytickets/1');
+  return purchases.data.orders;
+}
