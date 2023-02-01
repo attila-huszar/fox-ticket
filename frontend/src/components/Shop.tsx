@@ -94,7 +94,7 @@ export default function Shop() {
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
-          gap: '40px',
+          gap: '5%',
           justifyContent: 'center',
         }}
       >

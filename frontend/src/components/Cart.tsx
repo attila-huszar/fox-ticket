@@ -1,18 +1,24 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
+  fetchChangeOrderStatusByUserId,
 } from '../api/orders';
-import { PendingOrdersResponse } from '../interfaces/orders';
-import { Modal, Button, Badge } from '@nextui-org/react';
+import { CartContextInterface } from '../interfaces/orders';
+import { Modal, Button, Badge, Text } from '@nextui-org/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import OrderCart from './OrderCart';
+import { CartContext } from './App';
+
 export default function Cart() {
+  const { cart, setCart } = useContext<CartContextInterface>(CartContext);
+
   const [visible, setVisible] = React.useState(false);
-  const [orders, setOrders] = useState<PendingOrdersResponse[]>([]);
+  const [message, setMessage] = React.useState('');
+
   const closeHandler = () => {
     setVisible(false);
+    setMessage('');
   };
   const handler = async () => {
     setVisible(true);
@@ -21,36 +27,22 @@ export default function Cart() {
   const resetAllOrdersHandler = async () => {
     fetchRemovePendingOrderFromCart();
     fetchPendingOrders();
+    setMessage('Your cart is empty!');
   };
 
-  useEffect(() => {
-    //fetchPendingOrders();
-  }, []);
+  const buyProductHandler = async () => {
+    fetchChangeOrderStatusByUserId();
+    fetchPendingOrders();
+    setVisible(false);
+  };
 
   function fetchPendingOrders() {
-    return fetchPendingOrder().then(data => setOrders(data));
+    return fetchPendingOrder().then(data => setCart(data));
   }
 
   return (
     <>
-      {orders.length ? (
-        <Badge color="error" content={orders.length}>
-          <Button
-            css={{
-              fontSize: '1rem',
-              '&:hover, &:focus': {
-                boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
-              },
-            }}
-            auto
-            color="secondary"
-            shadow
-            rounded
-            icon={<FiShoppingCart />}
-            onClick={handler}
-          ></Button>
-        </Badge>
-      ) : (
+      <Badge color="error" content={cart.length}>
         <Button
           css={{
             fontSize: '1rem',
@@ -65,8 +57,7 @@ export default function Cart() {
           icon={<FiShoppingCart />}
           onClick={handler}
         ></Button>
-      )}
-
+      </Badge>
       <Modal
         closeButton
         blur
@@ -75,10 +66,11 @@ export default function Cart() {
         onClose={closeHandler}
       >
         <Modal.Body>
-          {orders.map(order => (
+          <Text>{message}</Text>
+          {cart.map(order => (
             <OrderCart
               removeOrder={(orderId: number) =>
-                setOrders(orders.filter(order => order.id !== orderId))
+                setCart(cart.filter(order => order.id !== orderId))
               }
               key={order.id}
               name={order.name}
@@ -95,6 +87,7 @@ export default function Cart() {
             size="sm"
             auto
             color="secondary"
+            onClick={buyProductHandler}
           >
             Buy
           </Button>

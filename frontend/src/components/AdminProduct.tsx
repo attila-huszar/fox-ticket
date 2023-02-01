@@ -22,7 +22,7 @@ export default function AdminProduct() {
 
   return (
     <Container>
-      <Text h1 css={{ textAlign: 'center' }}>
+      <Text h1 css={{ textAlign: 'center', zIndex: "0" }}>
         Tickets and Passes
       </Text>
       <AddProduct addProduct={addProduct} />
@@ -33,7 +33,7 @@ export default function AdminProduct() {
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
-          gap: '40px',
+          gap: '5%',
           justifyContent: 'center',
         }}
       >
@@ -45,7 +45,9 @@ export default function AdminProduct() {
             id={product.id}
             name={product.name}
             price={product.price}
+            duration={product.duration}
             description={product.description}
+            type={product.type}
             isAdmin={true}
           />
         ))}

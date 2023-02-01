@@ -1,7 +1,11 @@
-import Articles from './Articles';
-import { Fade, Slide } from 'react-awesome-reveal';
-import '../styles/Home.css';
-import m1 from '../assets/m1a.png';
+import Articles from "./Articles";
+import { Fade, Slide } from "react-awesome-reveal";
+import "../styles/Home.css";
+import m1 from "../assets/m1a.png";
+import Features from "./Features";
+import CtaSection from "./CtaSection";
+import AsFeaturedIn from "./AsFeaturedIn";
+
 
 export default function Home() {
   const date = new Date();
@@ -41,6 +45,9 @@ export default function Home() {
       </Slide>
       <Fade duration={1000} triggerOnce>
         <Articles />
+        <AsFeaturedIn/>
+        <Features />
+        <CtaSection />
       </Fade>
     </>
   );

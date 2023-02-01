@@ -5,6 +5,7 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  Default
 } from 'sequelize-typescript';
 import Product from './Product';
 import User from './User';
@@ -19,11 +20,12 @@ export default class Order extends Model {
   })
   orderDate!: Date;
 
+  @Default('pending')
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  status!: string;
+  status: string;
 
   @Column({
     type: DataType.DATE,

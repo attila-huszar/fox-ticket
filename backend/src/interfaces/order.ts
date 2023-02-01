@@ -10,8 +10,6 @@ export interface PurchasedOrdersResponse {
 
 export interface NewOrderRequest {
   orderDate: Date;
-  status: string;
-  paidDate: string;
   expirationDate: string;
   productId: number;
   userId: number;
@@ -47,6 +45,7 @@ export interface PendingOrderWithProductDetail {
   orderDate: string;
   name: string;
   price: number;
+  description: string;
 }
 
 export interface PendingOrdersResponse {
