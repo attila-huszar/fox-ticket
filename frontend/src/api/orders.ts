@@ -14,12 +14,12 @@ export async function fetchRemovePendingOrderFromCart() {
   await axios.delete('/api/orders');
 }
 
-export async function fetchCreateNewPendingOrder(orderDate: Date, id: number, userId: number ) {
-  console.log(orderDate, id, userId)
+export async function fetchCreateNewPendingOrder(orderDate: Date, productId: number, userId: number ) {
+  console.log(orderDate, productId, userId)
   try {
     const response = await axios.post('/api/purchases', {
       orderDate,
-      id,
+      productId,
       userId      
     });
     return response.data

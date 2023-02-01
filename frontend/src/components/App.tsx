@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import Home from './Home';
@@ -12,45 +13,51 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminProduct from './AdminProduct';
-import AdminArticle from './AdminArticle'
+import AdminArticle from './AdminArticle';
 import { createContext } from 'react';
-import { CartContextInterface } from '../interfaces/orders';
+import {
+  CartContextInterface,
+  PendingOrdersResponse,
+} from '../interfaces/orders';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-export const CartContext= createContext<CartContextInterface>();
+export const CartContext = createContext<CartContextInterface>();
 
 export default function App() {
   const { pathname } = useLocation();
+  const [cart, setCart] = useState<PendingOrdersResponse[]>([]);
 
   return (
     <HelmetProvider>
-      <Helmet>
-        <title>Fox Ticket</title>
-        <script src="./noflash.js" type="text/javascript" />
-      </Helmet>
-      <Header />
-      <ToastContainer style={{marginTop: "80px"}}/>
-      <TransitionGroup>
-        <CSSTransition
-          key={pathname}
-          timeout={300}
-          classNames="fade"
-          unmountOnExit
-        >
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/mytickets" element={<MyTickets />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/products" element={<AdminProduct />} />
-            <Route path="/articles" element={<AdminArticle />} />
-            <Route path="*" element={<NotImplementedPage />} />
-          </Routes>
-        </CSSTransition>
-      </TransitionGroup>
-      <Footer />
+      <CartContext.Provider value={{ cart, setCart }}>
+        <Helmet>
+          <title>Fox Ticket</title>
+          <script src="./noflash.js" type="text/javascript" />
+        </Helmet>
+        <Header />
+        <ToastContainer style={{ marginTop: '80px' }} />
+        <TransitionGroup>
+          <CSSTransition
+            key={pathname}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/mytickets" element={<MyTickets />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/products" element={<AdminProduct />} />
+              <Route path="/articles" element={<AdminArticle />} />
+              <Route path="*" element={<NotImplementedPage />} />
+            </Routes>
+          </CSSTransition>
+        </TransitionGroup>
+        <Footer />
+      </CartContext.Provider>
     </HelmetProvider>
   );
 }
