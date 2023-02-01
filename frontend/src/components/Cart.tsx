@@ -1,16 +1,21 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { useEffect } from 'react';
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
 } from '../api/orders';
-import { PendingOrdersResponse } from '../interfaces/orders';
+import { CartContextInterface } from '../interfaces/orders';
 import { Modal, Button, Badge } from '@nextui-org/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import OrderCart from './OrderCart';
+import { CartContext } from './App';
+
+
+
 export default function Cart() {
+  const {cart, setCart} = useContext<CartContextInterface>(CartContext);
+
   const [visible, setVisible] = React.useState(false);
-  const [orders, setOrders] = useState<PendingOrdersResponse[]>([]);
   const closeHandler = () => {
     setVisible(false);
   };
@@ -28,12 +33,14 @@ export default function Cart() {
   }, []);
 
   function fetchPendingOrders() {
-    return fetchPendingOrder().then(data => setOrders(data));
+    return fetchPendingOrder().then(data => setCart(data));
   }
+
+ 
 
   return (
     <>
-      <Badge color="error" content={orders.length}>
+      <Badge color="error" content={cart.length}>
         <Button
           auto
           color="secondary"
@@ -52,10 +59,10 @@ export default function Cart() {
         onClose={closeHandler}
       >
         <Modal.Body>
-          {orders.map(order => (
+          {cart.map(order => (
             <OrderCart
               removeOrder={(orderId: number) =>
-                setOrders(orders.filter(order => order.id !== orderId))
+                setCart(cart.filter(order => order.id !== orderId))
               }
               key={order.id}
               name={order.name}
