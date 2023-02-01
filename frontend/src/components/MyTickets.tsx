@@ -1,3 +1,22 @@
+import { useEffect, useState } from 'react';
+import { fetchActiveOrders } from '../api/orders';
+import { ProductResponse } from '../interfaces/product';
+import ActiveTickets from './ActiveTickets';
+
 export default function MyTickets() {
-  return <div></div>;
+  const [actives, setActive] = useState<ProductResponse[]>([]);
+
+  useEffect(() => {
+    fetchActiveOrders().then(data => {
+      setActive(data);
+    });
+  }, []);
+
+  return (
+    <>
+    {actives.map(active => (
+      <ActiveTickets key={active.id} name={active.name} description={active.description} />
+    ))}
+    </>
+  );
 }

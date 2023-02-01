@@ -9,7 +9,6 @@ import Cart from './Cart';
 import Profile from './Profile';
 import Footer from './Footer';
 import NotImplementedPage from './NotImplementedPage';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminProduct from './AdminProduct';
@@ -37,13 +36,6 @@ export default function App() {
         </Helmet>
         <Header />
         <ToastContainer style={{ marginTop: '80px' }} />
-        <TransitionGroup>
-          <CSSTransition
-            key={pathname}
-            timeout={300}
-            classNames="fade"
-            unmountOnExit
-          >
             <Routes>
               <Route index element={<Home />} />
               <Route path="/shop" element={<Shop />} />
@@ -54,8 +46,6 @@ export default function App() {
               <Route path="/articles" element={<AdminArticle />} />
               <Route path="*" element={<NotImplementedPage />} />
             </Routes>
-          </CSSTransition>
-        </TransitionGroup>
         <Footer />
       </CartContext.Provider>
     </HelmetProvider>

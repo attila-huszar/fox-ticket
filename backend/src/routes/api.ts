@@ -24,6 +24,7 @@ router.get('/products', productController.getAllProducts);
 router.get('/product', productController.getProductById);
 router.get('/purchases/:userId', orderController.getAllOrders);
 router.get('/orders/:userId', orderController.getPendingOrders);
+router.get('/mytickets/:userId', orderController.getActiveOrders);
 
 //// POST
 router.post('/login', userController.loginUser);
