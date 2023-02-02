@@ -3,6 +3,7 @@ import { fetchActiveOrders } from '../api/orders';
 import { ProductResponse } from '../interfaces/product';
 import ActiveTickets from './ActiveTickets';
 import { Grid, Button, Container } from '@nextui-org/react';
+import '../styles/Shop.css';
 
 export default function MyTickets() {
   const [actives, setActive] = useState<ProductResponse[]>([]);
@@ -61,15 +62,15 @@ export default function MyTickets() {
           </Button>
         </Button.Group>
         <Grid.Container
-            gap={2}
-            id="shopCards"
-            css={{
-              display: 'grid',
-              gridTemplateColumns: '20% 20% 20%',
-              gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
-              gap: '5%',
-              justifyContent: 'center',
-            }}
+          gap={2}
+          id="shopCards"
+          css={{
+            display: 'grid',
+            gridTemplateColumns: '20% 20% 20%',
+            gridTemplateRows: '1fr 1fr 1fr',
+            gap: '5%',
+            justifyContent: 'center',
+          }}
         >
           {actives.map(active => (
             <ActiveTickets

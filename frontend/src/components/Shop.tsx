@@ -43,7 +43,12 @@ export default function Shop() {
   }
 
   return (
-    <Container style={{ marginBottom: '13%', height: 'fit-content' }}>
+    <Container
+      style={{
+        display: 'grid',
+        marginBottom: '13%',
+      }}
+    >
       <Text h1 css={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
         Tickets and Passes
       </Text>
@@ -93,13 +98,14 @@ export default function Shop() {
         css={{
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
-          gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
+          gridTemplateRows: '1fr 1fr 1fr',
           gap: '5%',
           justifyContent: 'center',
         }}
       >
         {filteredProducts.map(product => (
           <ProductCard
+            key={product.id}
             id={product.id}
             name={product.name}
             description={product.description}

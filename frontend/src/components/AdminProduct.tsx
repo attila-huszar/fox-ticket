@@ -21,8 +21,8 @@ export default function AdminProduct() {
   }, []);
 
   return (
-    <Container style={{ marginBottom: '10%'}}>
-      <Text h1 css={{ textAlign: 'center', zIndex: "0" }}>
+    <Container style={{ marginBottom: '10%' }}>
+      <Text h1 css={{ textAlign: 'center', zIndex: '0' }}>
         Tickets and Passes
       </Text>
       <AddProduct addProduct={addProduct} />
@@ -42,6 +42,7 @@ export default function AdminProduct() {
             removeProduct={(productId: number) =>
               setProducts(products.filter(product => product.id !== productId))
             }
+            key={product.id}
             id={product.id}
             name={product.name}
             price={product.price}
