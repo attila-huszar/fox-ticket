@@ -17,7 +17,7 @@ export default function Shop() {
       setFilteredProducts(data);
     });
   }, []);
-  
+
   async function handleTicketsClick() {
     const allTickets: ProductResponse[] = [];
     products.map(ticket => {
@@ -43,7 +43,7 @@ export default function Shop() {
   }
 
   return (
-    <Container>
+    <Container style={{ marginBottom: '13%', height: 'fit-content' }}>
       <Text h1 css={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
         Tickets and Passes
       </Text>

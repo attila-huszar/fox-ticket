@@ -21,7 +21,7 @@ export default function AdminProduct() {
   }, []);
 
   return (
-    <Container>
+    <Container style={{ marginBottom: '10%'}}>
       <Text h1 css={{ textAlign: 'center', zIndex: "0" }}>
         Tickets and Passes
       </Text>

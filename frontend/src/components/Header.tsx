@@ -171,7 +171,7 @@ export default function Header() {
                 Profile
               </Dropdown.Item>
               <Dropdown.Item key="/help_and_feedback" icon={<TbHelp />}>
-                Authentication Test
+                Help
               </Dropdown.Item>
               <Dropdown.Item
                 key="LOGOUT"

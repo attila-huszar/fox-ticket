@@ -1,7 +1,6 @@
 import { Grid, Button, Card, Row, Text, Spacer } from '@nextui-org/react';
-import { Zoom } from 'react-awesome-reveal';
 import { fetchDeleteProduct } from '../api/products';
-import { fetchCreateNewPendingOrder , fetchPendingOrder} from '../api/orders';
+import { fetchCreateNewPendingOrder, fetchPendingOrder } from '../api/orders';
 import { ProductRequest } from '../interfaces/product';
 import { EditProduct } from './EditProduct';
 import { CartContextInterface } from '../interfaces/orders';
@@ -22,19 +21,17 @@ export default function ProductCard({
   type,
   removeProduct,
 }: PropTypes) {
-
-  const {cart, setCart} = useContext<CartContextInterface>(CartContext)
+  const { cart, setCart } = useContext<CartContextInterface>(CartContext);
   const deleteProductHandler = async () => {
     await fetchDeleteProduct(id!);
     removeProduct!(id!);
-  }
+  };
 
-  const createNewOrderHadler = async () =>{
-    
-    await fetchCreateNewPendingOrder (new Date(), id!, 1);
+  const createNewOrderHadler = async () => {
+    await fetchCreateNewPendingOrder(new Date(), id!, 1);
     const pendingOrders = await fetchPendingOrder();
-    setCart(pendingOrders)
-  }
+    setCart(pendingOrders);
+  };
 
   return (
     <Grid
@@ -42,22 +39,28 @@ export default function ProductCard({
       md={5}
       id="cardGrid"
       css={{
-        margin: 'auto',
+        justifyContent: 'center',
+        margin: '0 auto',
         width: '100%',
+        padding: '0',
       }}
     >
-      <Zoom duration={500} triggerOnce>
-        <Card
-          key={id}
+      <Card
+        key={id}
+        css={{
+          w: '280px',
+          display: 'flex',
+          margin: '0 auto',
+          backgroundColor: 'var(--nextui-colors-cardBackground)',
+        }}
+        id="card"
+        isHoverable
+      >
+        <Card.Header
           css={{
-            w: '280px',
-            display: 'flex',
-            margin: '0 auto',
-            backgroundColor: 'var(--nextui-colors-cardBackground)',
+            backgroundColor: 'var(--nextui-colors-cardHeaderBackground)',
           }}
-          id="card"
-          isHoverable
-        ><Card.Header>
+        >
           <Text css={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
             {name}
           </Text>
@@ -72,6 +75,15 @@ export default function ProductCard({
           <Row justify="center">
             {isAdmin ? (
               <>
+                <EditProduct
+                  id={id}
+                  name={name}
+                  price={price}
+                  duration={duration}
+                  description={description}
+                  type={type}
+                />
+                <Spacer />
                 <Button
                   onPress={deleteProductHandler}
                   shadow
@@ -82,25 +94,22 @@ export default function ProductCard({
                 >
                   Remove
                 </Button>
-                <Spacer />
-                <EditProduct
-                  id={id}
-                  name={name}
-                  price={price}
-                  duration={duration}
-                  description={description}
-                  type={type}
-                />
               </>
             ) : (
-              <Button shadow size="md" auto color="gradient" id="submit" onPress={createNewOrderHadler}>
+              <Button
+                shadow
+                size="md"
+                auto
+                color="gradient"
+                id="submit"
+                onPress={createNewOrderHadler}
+              >
                 Add to Cart
               </Button>
             )}
           </Row>
         </Card.Footer>
       </Card>
-      </Zoom>
     </Grid>
   );
 }
