@@ -32,7 +32,7 @@ export default function AdminProduct() {
         css={{
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
-          gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
+          gridTemplateRows: '1fr 1fr 1fr',
           gap: '5%',
           justifyContent: 'center',
         }}

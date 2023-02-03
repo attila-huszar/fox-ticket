@@ -5,7 +5,7 @@ export function signAccessToken(user: RegisterResponse): string {
   return jwt.sign(
     { email: user.email, isAdmin: user.isAdmin },
     process.env.ACCESS_TOKEN as Secret,
-    { expiresIn: '10m' }
+    { expiresIn: '60m' }
   );
 }
 

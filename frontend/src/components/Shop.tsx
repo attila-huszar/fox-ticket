@@ -46,7 +46,6 @@ export default function Shop() {
     <Container
       style={{
         display: 'grid',
-        marginBottom: '13%',
       }}
     >
       <Text h1 css={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
