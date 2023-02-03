@@ -1,6 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { Navbar, Dropdown, Button } from '@nextui-org/react';
-import { TbBook, TbNews, TbShoppingCart, TbCreditCard } from 'react-icons/tb';
+import {
+  TbBook,
+  TbNews,
+  TbShoppingCart,
+  TbCreditCard,
+  TbSettings,
+} from 'react-icons/tb';
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -12,9 +18,16 @@ export default function Admin() {
 
   return (
     <Navbar.Item>
-      <Dropdown placement="bottom-right">
-        <Dropdown.Trigger>
-          <Button style={{ fontSize: '1rem' }} auto color="gradient" shadow>
+      <Dropdown placement="bottom">
+        <Dropdown.Trigger
+          css={{
+            fontSize: '1rem',
+            '&:hover, &:focus': {
+              boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
+            },
+          }}
+        >
+          <Button auto color="gradient" shadow icon={<TbSettings />}>
             Admin
           </Button>
         </Dropdown.Trigger>

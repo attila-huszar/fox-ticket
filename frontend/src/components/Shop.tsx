@@ -17,7 +17,7 @@ export default function Shop() {
       setFilteredProducts(data);
     });
   }, []);
-  
+
   async function handleTicketsClick() {
     const allTickets: ProductResponse[] = [];
     products.map(ticket => {
@@ -43,7 +43,11 @@ export default function Shop() {
   }
 
   return (
-    <Container>
+    <Container
+      style={{
+        display: 'grid',
+      }}
+    >
       <Text h1 css={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
         Tickets and Passes
       </Text>
@@ -53,13 +57,13 @@ export default function Shop() {
         css={{ width: '100%', justifyContent: 'center', marginBottom: '40px' }}
       >
         <Button
+          autoFocus
           className="shopTabButton"
           shadow
           size="md"
           color="gradient"
-          css={{ button: focus, outline: 'none', width: '100px', zIndex: '0' }}
+          css={{ width: '100px', zIndex: '0' }}
           id="showAllButton"
-          autoFocus
           onPress={handleAllClick}
         >
           All
@@ -93,13 +97,14 @@ export default function Shop() {
         css={{
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
-          gridTemplateRows: 'repeat(autofill, minmax(300px, 1fr))',
-          gap: '40px',
+          gridTemplateRows: '1fr 1fr 1fr',
+          gap: '5%',
           justifyContent: 'center',
         }}
       >
         {filteredProducts.map(product => (
           <ProductCard
+            key={product.id}
             id={product.id}
             name={product.name}
             description={product.description}

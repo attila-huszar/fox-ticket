@@ -6,6 +6,7 @@ import {
   LoginRequest,
   LoginResponse,
   RegisterRequest,
+  RegisterRequestWithToken,
   RegisterResponse,
 } from '../interfaces/user';
 import { AuthorizedRequest } from '../interfaces/authorizedRequest';
@@ -15,7 +16,7 @@ import { OK, UNAUTHORIZED } from 'http-status';
 import { signAccessToken, signRefreshToken } from '../services/jwtSign';
 
 export async function registerUser(
-  req: Request<unknown, unknown, RegisterRequest, unknown>,
+  req: Request<unknown, unknown, RegisterRequestWithToken, unknown>,
   res: Response<RegisterResponse>,
   next: NextFunction
 ): Promise<void> {
@@ -58,6 +59,7 @@ export async function loginUser(
         name: loggedInUser.name,
         email: loggedInUser.email,
         isAdmin: loggedInUser.isAdmin,
+        isVerified: loggedInUser.isVerified,
         token: accessToken,
       });
     } else {
@@ -85,5 +87,5 @@ export async function logoutUser(req: AuthorizedRequest, res: Response) {
     sameSite: 'none',
     secure: true,
   });
-  res.status(OK).json({ message: `${user} logged out` });
+  res.status(OK).json({ email: user });
 }

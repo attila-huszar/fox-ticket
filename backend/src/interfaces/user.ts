@@ -20,12 +20,20 @@ export const RegisterRequest = z
     return !user;
   }, 'Account already exists');
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type RegisterRequest = z.infer<typeof RegisterRequest>;
+
+export interface RegisterRequestWithToken {
+  name: string;
+  email: string;
+  password: string;
+  verificationToken: string;
+}
 
 export interface RegisterResponse {
   id?: number;
   name?: string;
-  email?: string;
+  email: string;
   isAdmin?: boolean;
   isVerified?: boolean;
 }
@@ -40,5 +48,18 @@ export interface LoginResponse {
   name?: string;
   email: string;
   isAdmin?: boolean;
+  isVerified?: boolean;
   token?: string;
+}
+
+export interface VerificationRequest {
+  name: string;
+  email: string;
+}
+
+export interface VerificationResponse {
+  message: string;
+  name?: string;
+  email?: string;
+  isVerified?: boolean;
 }

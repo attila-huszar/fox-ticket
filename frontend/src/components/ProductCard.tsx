@@ -1,6 +1,6 @@
 import { Grid, Button, Card, Row, Text, Spacer } from '@nextui-org/react';
 import { fetchDeleteProduct } from '../api/products';
-import { fetchCreateNewPendingOrder , fetchPendingOrder} from '../api/orders';
+import { fetchCreateNewPendingOrder, fetchPendingOrder } from '../api/orders';
 import { ProductRequest } from '../interfaces/product';
 import { EditProduct } from './EditProduct';
 import { CartContextInterface } from '../interfaces/orders';
@@ -21,19 +21,17 @@ export default function ProductCard({
   type,
   removeProduct,
 }: PropTypes) {
-
-  const {cart, setCart} = useContext<CartContextInterface>(CartContext)
+  const { cart, setCart } = useContext<CartContextInterface>(CartContext);
   const deleteProductHandler = async () => {
     await fetchDeleteProduct(id!);
     removeProduct!(id!);
-  }
+  };
 
-  const createNewOrderHadler = async () =>{
-    
-    await fetchCreateNewPendingOrder (new Date(), id!, 1);
+  const createNewOrderHadler = async () => {
+    await fetchCreateNewPendingOrder(new Date(), id!, 1);
     const pendingOrders = await fetchPendingOrder();
-    setCart(pendingOrders)
-  }
+    setCart(pendingOrders);
+  };
 
   return (
     <Grid
@@ -42,12 +40,13 @@ export default function ProductCard({
       id="cardGrid"
       css={{
         justifyContent: 'center',
-        marginLeft: '32%',
+        margin: '0 auto',
         width: '100%',
         padding: '0',
       }}
     >
       <Card
+        key={id}
         css={{
           w: '280px',
           display: 'flex',
@@ -58,7 +57,9 @@ export default function ProductCard({
         isHoverable
       >
         <Card.Header
-          css={{ backgroundColor: 'var(--nextui-colors-cardHeaderBackground)' }}
+          css={{
+            backgroundColor: 'var(--nextui-colors-cardHeaderBackground)',
+          }}
         >
           <Text css={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
             {name}
@@ -74,6 +75,15 @@ export default function ProductCard({
           <Row justify="center">
             {isAdmin ? (
               <>
+                <EditProduct
+                  id={id}
+                  name={name}
+                  price={price}
+                  duration={duration}
+                  description={description}
+                  type={type}
+                />
+                <Spacer />
                 <Button
                   onPress={deleteProductHandler}
                   shadow
@@ -84,18 +94,16 @@ export default function ProductCard({
                 >
                   Remove
                 </Button>
-                <Spacer />
-                <EditProduct
-                  id={id}
-                  name={name}
-                  price={price}
-                  duration={duration}
-                  description={description}
-                  type={type}
-                />
               </>
             ) : (
-              <Button shadow size="md" auto color="gradient" id="submit" onPress={createNewOrderHadler}>
+              <Button
+                shadow
+                size="md"
+                auto
+                color="gradient"
+                id="submit"
+                onPress={createNewOrderHadler}
+              >
                 Add to Cart
               </Button>
             )}

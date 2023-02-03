@@ -6,6 +6,7 @@ import * as articleController from '../controllers/articleController';
 import * as productController from '../controllers/productController';
 import * as cartController from '../controllers/cartController';
 import * as orderController from '../controllers/orderController';
+import * as emailVerificationController from '../controllers/emailVerificationController';
 
 import { auth } from '../middlewares/auth';
 import apiErrorHandler from '../middlewares/apiErrorHandler';
@@ -17,7 +18,6 @@ const router = express.Router();
 router.use(express.json());
 
 //// GET
-router.get('/authtest', auth, authTestController.authTest);
 router.get('/articles', articleController.getAllArticles);
 router.get('/admin/products', productController.getProductById);
 router.get('/products', productController.getAllProducts);
@@ -27,8 +27,10 @@ router.get('/orders/:userId', orderController.getPendingOrders);
 router.get('/mytickets/:userId', orderController.getActiveOrders);
 
 //// POST
+router.post('/authtest', auth, authTestController.authTest);
 router.post('/login', userController.loginUser);
 router.post('/register', userController.registerUser);
+router.post('/verify', emailVerificationController.emailVerification);
 router.post('/logout', auth, userController.logoutUser);
 router.post('/refresh', refreshController.refresh);
 router.post('/purchases', orderController.addNewOrder);

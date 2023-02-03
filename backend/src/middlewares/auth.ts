@@ -8,10 +8,9 @@ export function auth(
   res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.headers.authorization;
+  const token = req.headers.authorization;
 
-  if (authHeader) {
-    const token = authHeader.split(' ')[1];
+  if (token) {
     const decoded = verifyAccessToken(token);
 
     if (decoded instanceof Error || !decoded.hasOwnProperty('email'))

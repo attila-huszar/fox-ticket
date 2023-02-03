@@ -14,9 +14,9 @@ export default function OrderCart({ name, price, id, removeOrder }: PropTypes) {
 
   return (
     <Row justify="space-between">
-      <Text>{name}</Text>
+      <Text style={{ width: '60%'}}>{name}</Text>
       <Text>{price} Ft</Text>
-      <Button size="sm" auto flat color="warning" onClick={removeOrderHandler}>
+      <Button size="xs" auto flat color="warning" onClick={removeOrderHandler}>
         Remove
       </Button>
     </Row>

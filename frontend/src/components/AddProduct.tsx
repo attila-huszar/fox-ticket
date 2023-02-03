@@ -52,7 +52,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
   return (
     <>
       <Button
-        style={{ fontSize: '1rem', margin: 'auto', marginBottom: '30px'}}
+        style={{ fontSize: '1rem', margin: 'auto', marginBottom: '30px', zIndex:"0"}}
         auto
         color="secondary"
         shadow
