@@ -1,5 +1,5 @@
 {
-  "name": "dusicyon-viridian-fox-ticket-react",
+  "name": "fox-ticket-react",
   "version": "1.0.0",
   "private": true,
   "directories": {
@@ -18,18 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/green-fox-academy/dusicyon-viridian-fox-ticket-react.git"
+    "url": "git+https://github.com/green-fox-academy/fox-ticket-react.git"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.48.2",
-    "@typescript-eslint/parser": "^5.48.2",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.32.0",
-    "typescript": "^4.9.4"
-  },
-  "dependencies": {
-    "react-qr-code": "^2.0.11",
-    "react-icons": "^4.7.1"
+    "eslint": "^8.33.0",
+    "typescript": "^4.9.5"
   }
 }
