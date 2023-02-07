@@ -1,6 +1,6 @@
 ## Fox Ticket Full Stack Project
 
-CI
+[![CI](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml)
 
 ### Workspaces
 
