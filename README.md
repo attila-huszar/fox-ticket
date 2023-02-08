@@ -1,6 +1,10 @@
 ## Fox Ticket Full Stack Project
 
 [![CI](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml)
+[![GitHub last commit](https://img.shields.io/github/last-commit/attila-huszar/fox-component-test)](https://github.com/attila-huszar/fox-component-test/commits/master)
+![React](https://badges.aleen42.com/src/react.svg)
+![Node](https://badges.aleen42.com/src/node.svg)
+![TS](https://badges.aleen42.com/src/typescript.svg)
 
 ### Workspaces
 
@@ -36,9 +40,9 @@ Backend: Express
 [pino HTTP logger](https://www.npmjs.com/package/pino-http)  
 [pino Formatter](https://www.npmjs.com/package/pino-pretty)
 
-## Scripts
+---
 
-|                               |                                          |
+| **scripts**                   |                                          |
 | ----------------------------- | ---------------------------------------- |
 | npm run build                 | Build the app for production             |
 | npm start                     | Start the full stack in production mode  |

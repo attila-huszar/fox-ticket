@@ -33,7 +33,7 @@ export default function Providers() {
   }
 
   async function checkVerificationQuery() {
-    const jwtRegex = /[a-z0-9]+\.[a-z0-9]+\.[a-z0-9]+/i;
+    const jwtRegex = /[a-z\d]+\.[a-z\d]+\.[a-z\d]+/i;
     if (jwtRegex.test(search)) {
       try {
         verifiedUser = await emailVerify(search.split('verify=')[1]);
