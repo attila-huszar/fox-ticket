@@ -1,4 +1,5 @@
 import {
+  Sequelize,
   Table,
   Model,
   Column,
@@ -7,9 +8,7 @@ import {
 } from 'sequelize-typescript';
 import Order from './Order';
 
-@Table({
-  timestamps: true,
-})
+@Table({})
 export default class Product extends Model {
   @Column({
     type: DataType.STRING,
@@ -40,6 +39,20 @@ export default class Product extends Model {
     allowNull: false,
   })
   type: string;
+
+  @Column({
+    type: 'TIMESTAMP',
+    defaultValue: Sequelize.fn('NOW'),
+    allowNull: false,
+  })
+  createdAt: Date;
+
+  @Column({
+    type: 'TIMESTAMP',
+    defaultValue: Sequelize.fn('NOW'),
+    allowNull: false,
+  })
+  updatedAt: Date;
 
   @HasMany(() => Order)
   orders: Order[];
