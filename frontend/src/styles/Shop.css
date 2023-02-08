@@ -1,0 +1,10 @@
+.shopTabButton:focus {
+  box-shadow: 0 4px 14px 0 var(--nextui-colors-secondaryShadow);
+  width: 150px;
+  outline: none;
+  font-size: larger;
+}
+#shopCards {
+  height: 810px;
+  overflow-y: auto;
+}

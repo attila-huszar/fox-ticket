@@ -1,0 +1,22 @@
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+h2 {
+  padding: 0 12px;
+  color: #131a28;
+  font-weight: bold;
+  letter-spacing: 1.1px;
+}
+.title {
+  position: absolute;
+  top: 150px;
+  left: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

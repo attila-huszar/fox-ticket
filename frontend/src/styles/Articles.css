@@ -1,0 +1,16 @@
+.articles {
+  position: relative;
+  top: 25vh;
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-align: center;
+  padding-bottom: 20px;
+}
+
+/* .articles::-webkit-scrollbar {
+  width: 0;
+} */
+.articleCard{
+  background-color: var(--nextui-colors-cardBackground);
+}
+

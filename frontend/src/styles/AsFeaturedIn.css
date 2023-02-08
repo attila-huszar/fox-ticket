@@ -1,0 +1,57 @@
+.sectionFeatured{
+display: flex;
+  margin-top: 15%;
+  height: 20%;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+
+}
+
+.headingFeaturedIn{
+  width: 100%;
+  text-align: center;
+  /* margin-left: 40%; */
+}
+
+
+.containerFeaturedIn{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-end;
+  align-content: space-around;
+  align-items: center;
+  
+}
+
+.featuredInlogos{
+  width: 130px;
+  display: inline-block;
+  flex-direction: column;
+  align-content: space-between;
+  margin-right: 30px;
+  filter: grayscale(80%);
+}
+
+#m1logo,
+#m2logo{
+  width: 110px;
+}
+
+#rtllogo{
+  margin-bottom: 37px;
+}
+
+#kiskegyedlogo{
+  margin-bottom: 25px;
+}
+
+#nytlogo{
+  margin-bottom: 10px;
+  height: auto;
+}
+
+#forbeslogo{
+  margin-bottom: 13px; 
+}
