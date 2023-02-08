@@ -1,10 +1,12 @@
 ## Fox Ticket Full Stack Project
 
+[![React](https://badges.aleen42.com/src/react.svg)](https://reactjs.org/)
+[![Node](https://badges.aleen42.com/src/node.svg)](https://nodejs.org/)
+[![TS](https://badges.aleen42.com/src/typescript.svg)](https://www.typescriptlang.org/)
+
 [![CI](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml)
+[![Build](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/build.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/build.yml)
 [![GitHub last commit](https://img.shields.io/github/last-commit/attila-huszar/fox-component-test)](https://github.com/attila-huszar/fox-component-test/commits/master)
-![React](https://badges.aleen42.com/src/react.svg)
-![Node](https://badges.aleen42.com/src/node.svg)
-![TS](https://badges.aleen42.com/src/typescript.svg)
 
 ### Workspaces
 
