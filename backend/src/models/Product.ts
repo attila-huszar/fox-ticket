@@ -41,18 +41,24 @@ export default class Product extends Model {
   type: string;
 
   @Column({
-    type: 'TIMESTAMP',
-    defaultValue: Sequelize.fn('NOW'),
+    type: DataType.DATE,
+    defaultValue:
+      process.env.NODE_ENV === 'test'
+        ? 'CURRENT_TIMESTAMP'
+        : Sequelize.fn('NOW'),
     allowNull: false,
   })
-  createdAt: Date;
+  createdAt: string;
 
   @Column({
-    type: 'TIMESTAMP',
-    defaultValue: Sequelize.fn('NOW'),
+    type: DataType.DATE,
+    defaultValue:
+      process.env.NODE_ENV === 'test'
+        ? 'CURRENT_TIMESTAMP'
+        : Sequelize.fn('NOW'),
     allowNull: false,
   })
-  updatedAt: Date;
+  updatedAt: string;
 
   @HasMany(() => Order)
   orders: Order[];
