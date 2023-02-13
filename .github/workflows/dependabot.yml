@@ -1,4 +1,4 @@
-name: Dependabot Pull Request Approve and Merge
+name: Dependabot
 
 on: pull_request_target
 
@@ -15,9 +15,8 @@ jobs:
     steps:
       # This first step will fail if there's no metadata and so the approval
       # will not occur.
-      - name: Dependabot metadata
-        id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1.1.1
+      - name: Fetch Metadata from Dependabot PRs
+        uses: dependabot/fetch-metadata@v1.3.6
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       # Here the PR gets approved.
