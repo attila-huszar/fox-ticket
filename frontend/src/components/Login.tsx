@@ -19,8 +19,7 @@ import { UserContext } from './App';
 import { UserContextInterface } from '../interfaces/user';
 
 export default function Login() {
-  const { currentUser, setCurrentUser } =
-    useContext<UserContextInterface>(UserContext);
+  const { setCurrentUser } = useContext<UserContextInterface>(UserContext);
 
   const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [email, setEmail] = useState('');

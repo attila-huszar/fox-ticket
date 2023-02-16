@@ -19,9 +19,7 @@ import { InputField, UserContextInterface } from '../interfaces/user';
 import { UserContext } from './App';
 
 export default function Profile() {
-  
-  const { currentUser, setCurrentUser } =
-    useContext<UserContextInterface>(UserContext);
+  const { currentUser } = useContext<UserContextInterface>(UserContext);
   const [modalUserVisible, setModalUserVisible] = useState(false);
   const [modalPassVisible, setModalPassVisible] = useState(false);
   const [name, setName] = useState('');

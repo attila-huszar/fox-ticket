@@ -21,14 +21,14 @@ export default function ProductCard({
   type,
   removeProduct,
 }: PropTypes) {
-  const { cart, setCart } = useContext<CartContextInterface>(CartContext);
+  const { setCart } = useContext<CartContextInterface>(CartContext);
   const deleteProductHandler = async () => {
-    await fetchDeleteProduct(id!);
-    removeProduct!(id!);
+    await fetchDeleteProduct(id as number);
+    removeProduct?.(id as number);
   };
 
   const createNewOrderHadler = async () => {
-    await fetchCreateNewPendingOrder(new Date(), id!, 1);
+    await fetchCreateNewPendingOrder(new Date(), id as number, 1);
     const pendingOrders = await fetchPendingOrder();
     setCart(pendingOrders);
   };
