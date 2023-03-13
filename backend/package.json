@@ -31,7 +31,7 @@
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.29.0",
     "sequelize-typescript": "^2.1.5",
-    "stripe": "^11.13.0",
+    "stripe": "^11.14.0",
     "zod": "^3.21.4",
     "zod-validation-error": "^1.0.1"
   },
