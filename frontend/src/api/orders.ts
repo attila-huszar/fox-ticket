@@ -37,6 +37,5 @@ export async function fetchChangeOrderStatusByUserId( ){
 
 export async function fetchActiveOrders() {
   const purchases = await axios.get('/api/mytickets/1');
-  console.log(purchases.data.orders)
   return purchases.data.orders;
 }

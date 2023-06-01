@@ -13,7 +13,7 @@ export async function sendVerificationEmail(
 
   const message = {
     to: recipient.email,
-    from: 'attila.huszar@outlook.com',
+    from: 'cinkes@gmail.com',
     subject: 'Email verification - Fox Ticket',
     text: `Hello ${recipient.name}, please verify your email by copying this link to the browser address bar: ${link}`,
     html: `
