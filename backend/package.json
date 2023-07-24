@@ -27,7 +27,7 @@
     "mysql2": "^3.5.2",
     "pino": "^8.14.1",
     "pino-http": "^8.3.3",
-    "pino-pretty": "^10.0.1",
+    "pino-pretty": "^10.1.0",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.32.1",
     "sequelize-typescript": "^2.1.5",
