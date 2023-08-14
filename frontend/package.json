@@ -5,7 +5,7 @@
   "proxy": "http://localhost:4000/",
   "dependencies": {
     "@nextui-org/react": "^2.0.5",
-    "@stripe/react-stripe-js": "^2.1.1",
+    "@stripe/react-stripe-js": "^2.1.2",
     "@stripe/stripe-js": "^1.54.2",
     "axios": "^1.4.0",
     "react": "^18.2.0",
