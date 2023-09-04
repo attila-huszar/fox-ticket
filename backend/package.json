@@ -26,7 +26,7 @@
     "lodash": "^4.17.21",
     "mysql2": "^3.6.0",
     "pino": "^8.15.0",
-    "pino-http": "^8.4.0",
+    "pino-http": "^8.5.0",
     "pino-pretty": "^10.2.0",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.32.1",
