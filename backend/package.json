@@ -32,7 +32,7 @@
     "sequelize": "^6.33.0",
     "sequelize-typescript": "^2.1.5",
     "stripe": "^13.9.0",
-    "zod": "^3.22.3",
+    "zod": "^3.22.4",
     "zod-validation-error": "^1.5.0"
   },
   "devDependencies": {
