@@ -25,7 +25,7 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mysql2": "^3.6.1",
-    "pino": "^8.15.7",
+    "pino": "^8.16.0",
     "pino-http": "^8.5.0",
     "pino-pretty": "^10.2.3",
     "reflect-metadata": "^0.1.13",
