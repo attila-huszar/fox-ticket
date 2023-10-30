@@ -21,7 +21,7 @@
     "url": "git+https://github.com/green-fox-academy/fox-ticket-react.git"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.8.0",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
