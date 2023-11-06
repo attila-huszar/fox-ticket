@@ -24,7 +24,7 @@
     "http-status": "^1.7.3",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
-    "mysql2": "^3.6.2",
+    "mysql2": "^3.6.3",
     "pino": "^8.16.1",
     "pino-http": "^8.5.0",
     "pino-pretty": "^10.2.3",
