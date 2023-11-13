@@ -6,7 +6,7 @@
   "dependencies": {
     "@nextui-org/react": "^2.2.4",
     "@stripe/react-stripe-js": "^2.3.1",
-    "@stripe/stripe-js": "^2.1.9",
+    "@stripe/stripe-js": "^2.1.11",
     "axios": "^1.6.0",
     "react": "^18.2.0",
     "react-awesome-reveal": "^4.2.7",
