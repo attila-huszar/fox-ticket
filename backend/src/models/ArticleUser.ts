@@ -7,10 +7,8 @@ import User from './User';
 })
 export default class ArticleUser extends Model {
   @ForeignKey(() => Article)
-  @Column
   articleId: number;
 
   @ForeignKey(() => User)
-  @Column
   adminId: number;
 }

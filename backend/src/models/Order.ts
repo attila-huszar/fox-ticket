@@ -5,7 +5,7 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
-  Default
+  Default,
 } from 'sequelize-typescript';
 import Product from './Product';
 import User from './User';
@@ -38,14 +38,12 @@ export default class Order extends Model {
   expirationDate: Date;
 
   @ForeignKey(() => User)
-  @Column
   userId: number;
 
   @BelongsTo(() => User)
   user: User;
 
   @ForeignKey(() => Product)
-  @Column
   productId: number;
 
   @BelongsTo(() => Product)

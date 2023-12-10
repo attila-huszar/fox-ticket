@@ -1,18 +1,25 @@
 import { useState } from 'react';
 import {
   Card,
-  Text,
-  Grid,
-  useModal,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Image,
   Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   Button,
   Spacer,
+  Divider,
+  useDisclosure,
 } from '@nextui-org/react';
 import '../styles/Articles.css';
 import data from '../assets/article_data';
 
 export default function Articles({ isAdmin }: any) {
-  const { setVisible, bindings } = useModal();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [displayedArticleId, setDisplayedArticleId] = useState(0);
 
   const articleTitle = data.articles[displayedArticleId].title;
@@ -21,84 +28,97 @@ export default function Articles({ isAdmin }: any) {
 
   return (
     <>
-      <Grid.Container gap={3}>
+      <div className="gap-1">
         <div className="articles">
           {data.articles.map(article => (
-            <Grid key={article.id}>
+            <div key={article.id}>
               <Card
                 onPress={() => {
-                  setVisible(true);
+                  onOpen;
                   setDisplayedArticleId(article.id);
                 }}
                 style={{ width: '300px', height: '300px' }}
                 isHoverable
                 isPressable
               >
-                <Card.Footer
-                  isBlurred
-                  css={{
+                <CardFooter
+                  style={{
                     position: 'absolute',
-                    bgBlur: '#0f111466',
                     borderTop: '$borderWeights$light solid $gray800',
                     bottom: 0,
                     zIndex: 1,
                   }}
                 >
-                  <Text color="white" size={16} style={{ display: "-webkit-box", overflow: "hidden", textOverflow: "ellipsis", WebkitLineClamp: "2", WebkitBoxOrient: "vertical" }}>
+                  <p
+                    color="white"
+                    style={{
+                      fontSize: '16px',
+                      display: '-webkit-box',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      WebkitLineClamp: '2',
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                  >
                     {article.title}
-                  </Text>
-                </Card.Footer>
-                <Card.Divider />
-                <Card.Image src={article.pic} alt="Card background" />
+                  </p>
+                </CardFooter>
+                <Divider />
+                <CardBody>
+                  <Image src={article.pic} alt="Card background" />
+                </CardBody>
               </Card>
-            </Grid>
+            </div>
           ))}
         </div>
-      </Grid.Container>
+      </div>
 
-      <Modal scroll width="800px" aria-labelledby="news" {...bindings}>
-        <Spacer y={1} />
-        <Modal.Header>
-          <Text size={20}>{articleTitle}</Text>
-        </Modal.Header>
-        <Spacer y={1} />
-        <hr
-          style={{
-            color: '#f2f2f2',
-            height: 5,
-          }}
-        />
-        <Modal.Body>
-          <Text>
-            <em>{articleDate}</em>
-          </Text>
-          <Text style={{ whiteSpace: 'pre-line' }}>{articleText}</Text>
-        </Modal.Body>
-        <Modal.Footer>
-          {isAdmin ? (
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        className="w-[800px]"
+        aria-labelledby="news"
+      >
+        <ModalContent>
+          {onClose => (
             <>
-              <Button shadow size="md" auto color="secondary" id="submit">
-                Edit
-              </Button>
-              <Button shadow size="md" auto color="gradient" id="submit">
-                Remove
-              </Button>
-              <Spacer />
-              <Button
-                auto
-                flat
-                color="primary"
-                onPress={() => setVisible(false)}
-              >
-                Close
-              </Button>
+              <ModalHeader>
+                <p className="text-base">{articleTitle}</p>
+              </ModalHeader>
+              <Spacer y={1} />
+              <hr
+                style={{
+                  color: '#f2f2f2',
+                  height: 5,
+                }}
+              />
+              <ModalBody>
+                <p>
+                  <em>{articleDate}</em>
+                </p>
+                <p style={{ whiteSpace: 'pre-line' }}>{articleText}</p>
+              </ModalBody>
+              <ModalFooter>
+                {isAdmin ? (
+                  <>
+                    <Button size="md" color="secondary" id="submit">
+                      Edit
+                    </Button>
+                    <Button size="md" id="submit">
+                      Remove
+                    </Button>
+                    <Spacer />
+                    <Button color="primary">Close</Button>
+                  </>
+                ) : (
+                  <Button color="primary" onPress={onClose}>
+                    Close
+                  </Button>
+                )}
+              </ModalFooter>
             </>
-          ) : (
-            <Button auto flat color="primary" onPress={() => setVisible(false)}>
-              Close
-            </Button>
           )}
-        </Modal.Footer>
+        </ModalContent>
       </Modal>
     </>
   );
