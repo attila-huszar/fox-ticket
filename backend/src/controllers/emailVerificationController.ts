@@ -13,11 +13,11 @@ import { getUserByVerToken, setUserVerified } from '../repositories/userRepo';
 export async function emailVerification(
   req: Request<unknown, unknown, { key: string }, unknown>,
   res: Response<VerificationResponse>,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const verificationKey = req.body.key;
   const user = await getUserByVerToken(verificationKey);
-  
+
   if (verificationKey && user) {
     try {
       if (verificationKey === user?.dataValues.verificationToken) {
@@ -42,7 +42,7 @@ export async function emailVerification(
           email: user.email,
         });
       }
-    } catch (error: any) {
+    } catch (error) {
       if (error instanceof ParameterError) {
         next(new HttpError(BAD_REQUEST, error.message));
       } else if (error instanceof NotFoundError) {

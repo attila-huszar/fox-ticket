@@ -14,8 +14,8 @@ describe('POST /api/register', () => {
     };
 
     const result = await request(app).post(`/api/register`).send(newUser);
-
     expect(result.statusCode).toEqual(status.OK);
+
     const user = result.body;
     expect(user).toEqual({
       id: 1,
@@ -45,8 +45,8 @@ describe('POST /api/register', () => {
     };
 
     const result = await request(app).post(`/api/register`).send(newUser);
-
     expect(result.statusCode).toEqual(status.BAD_REQUEST);
+
     const user = result.body;
     expect(user).toEqual({
       message:
@@ -60,7 +60,8 @@ describe('POST /api/register', () => {
       email: 'asd@asd.com',
       password: 'johnwick123',
     };
-    const person = await userRepo.registerUser({
+
+    await userRepo.registerUser({
       name: 'John Doe',
       email: 'asd@asd.com',
       password: 'johndoe123',
@@ -68,8 +69,8 @@ describe('POST /api/register', () => {
     });
 
     const result = await request(app).post(`/api/register`).send(newUser);
-
     expect(result.statusCode).toEqual(status.BAD_REQUEST);
+
     const user = result.body;
     expect(user).toEqual({
       message: 'Validation error: Account already exists',

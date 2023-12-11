@@ -2,7 +2,7 @@ import { NotFoundError, ParameterError } from '../errors';
 import * as cartRepo from '../repositories/cartRepo';
 
 export async function removeProductFromCart(
-  orderId: number
+  orderId: number,
 ): Promise<{ orderId: number }> {
   if (orderId < 0 || !Number.isInteger(orderId)) {
     throw new ParameterError('Invalid orderId');

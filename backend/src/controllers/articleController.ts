@@ -13,7 +13,7 @@ import * as articleService from '../services/articleService';
 export async function getAllArticles(
   req: Request,
   res: Response<GetAllArticlesResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   try {
     const data = await articleService.getAllArticles();
@@ -26,7 +26,7 @@ export async function getAllArticles(
 export async function addNewArticle(
   req: Request<unknown, unknown, ArticleRequest, unknown>,
   res: Response<ArticleResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const article = req.body;
 
@@ -47,7 +47,7 @@ export async function addNewArticle(
 export async function editArticle(
   req: Request<{ articleId: string }, unknown, ArticleRequest, unknown>,
   res: Response<ArticleResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const articleId = Number(req.params.articleId);
   const editArticle = req.body;
@@ -60,7 +60,7 @@ export async function editArticle(
       next(new HttpError(status.BAD_REQUEST, error.message));
     } else if (error instanceof ZodError) {
       next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
-    }else if (error instanceof NotFoundError) {
+    } else if (error instanceof NotFoundError) {
       next(new HttpError(status.NOT_FOUND));
     } else {
       next(new HttpError(status.INTERNAL_SERVER_ERROR));

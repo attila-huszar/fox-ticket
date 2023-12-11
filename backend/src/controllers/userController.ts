@@ -1,24 +1,27 @@
 import { Request, Response, NextFunction } from 'express';
-import status from 'http-status';
-import { HttpError, ParameterError } from '../errors';
-import { fromZodError } from 'zod-validation-error';
+import * as userService from '../services/userService';
 import {
   LoginRequest,
   LoginResponse,
-  RegisterRequest,
   RegisterRequestWithToken,
   RegisterResponse,
 } from '../interfaces/user';
 import { AuthorizedRequest } from '../interfaces/authorizedRequest';
-import * as userService from '../services/userService';
-import { ZodError } from 'zod';
-import { OK, UNAUTHORIZED } from 'http-status';
 import { signAccessToken, signRefreshToken } from '../services/jwtSign';
+import { HttpError, ParameterError } from '../errors';
+import {
+  BAD_REQUEST,
+  INTERNAL_SERVER_ERROR,
+  OK,
+  UNAUTHORIZED,
+} from 'http-status';
+import { ZodError } from 'zod';
+import { fromZodError } from 'zod-validation-error';
 
 export async function registerUser(
   req: Request<unknown, unknown, RegisterRequestWithToken, unknown>,
   res: Response<RegisterResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const user = req.body;
 
@@ -27,9 +30,9 @@ export async function registerUser(
     res.send(result);
   } catch (error) {
     if (error instanceof ZodError) {
-      next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
+      next(new HttpError(BAD_REQUEST, fromZodError(error).message));
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR));
     }
   }
 }
@@ -37,7 +40,7 @@ export async function registerUser(
 export async function loginUser(
   req: Request<unknown, unknown, LoginRequest, unknown>,
   res: Response<LoginResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const user: LoginRequest = req.body;
 
@@ -69,11 +72,11 @@ export async function loginUser(
     }
   } catch (error) {
     if (error instanceof ZodError) {
-      next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
+      next(new HttpError(BAD_REQUEST, fromZodError(error).message));
     } else if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message));
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR));
     }
   }
 }

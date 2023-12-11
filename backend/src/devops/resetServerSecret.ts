@@ -19,7 +19,7 @@ export function resetServerSecret(): void {
 
   try {
     fs.renameSync(
-      path.join(__dirname, '..', '..', '.env.local'),
+      path.join(__dirname, '..', '..', '.env'),
       path.join(__dirname, '..', '..', '.env.old'),
     );
 
@@ -31,7 +31,7 @@ export function resetServerSecret(): void {
     const envTemp = env.replace(/(?<=ACCESS_TOKEN=).*/, access);
     const envNew = envTemp.replace(/(?<=REFRESH_TOKEN=).*/, refresh);
 
-    fs.writeFileSync(path.join(__dirname, '..', '..', '.env.local'), envNew);
+    fs.writeFileSync(path.join(__dirname, '..', '..', '.env'), envNew);
   } catch (error) {
     console.error(`ERROR: ${error.message}`);
     return;

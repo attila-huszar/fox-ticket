@@ -45,7 +45,7 @@ export const EditProductRequestValidator = z
     price: z.number().min(1, 'price is required'),
     duration: z.number().min(1, 'duration is required'),
     description: z.string().min(1, 'description is required'),
-    type: z.enum(["pass", "ticket"]),
+    type: z.enum(['pass', 'ticket']),
   })
   .refine(async EditProductRequest => {
     const name = await productRepo.getProductByName(EditProductRequest.name);

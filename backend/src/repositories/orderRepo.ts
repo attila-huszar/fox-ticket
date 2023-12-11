@@ -26,7 +26,7 @@ export function getAllPendingOrders(userId: number): Promise<Order[]> {
 export function changeOrderStatusByUserId(userId: number): Promise<number[]> {
   return Order.update(
     { status: 'paid' },
-    { where: { userId: userId, status: 'pending' } }
+    { where: { userId: userId, status: 'pending' } },
   );
 }
 

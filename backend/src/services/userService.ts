@@ -20,7 +20,7 @@ const loginResponse = (user: LoginResponse) => {
 };
 
 export async function registerUser(
-  newUser: RegisterRequestWithToken
+  newUser: RegisterRequestWithToken,
 ): Promise<RegisterResponse> {
   await RegisterRequest.parseAsync(newUser);
   const hashedPassword = await bcrypt.hash(newUser.password, 10);

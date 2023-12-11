@@ -1,14 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import status from 'http-status';
-import logger from '../logger';
 import { HttpError } from '../errors';
 import { ErrorResponse } from '../interfaces/error';
+import logger from '../logger';
 
 export default function apiErrorHandler(
   err: HttpError,
   req: Request,
   res: Response<ErrorResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): void {
   logger.error(err.stack);
 

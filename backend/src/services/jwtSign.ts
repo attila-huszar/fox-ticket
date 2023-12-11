@@ -1,11 +1,11 @@
 import jwt, { Secret } from 'jsonwebtoken';
-import { RegisterResponse, VerificationRequest, VerificationResponse } from '../interfaces/user';
+import { RegisterResponse, VerificationRequest } from '../interfaces/user';
 
 export function signAccessToken(user: RegisterResponse): string {
   return jwt.sign(
     { email: user.email, isAdmin: user.isAdmin },
     process.env.ACCESS_TOKEN as Secret,
-    { expiresIn: '60m' }
+    { expiresIn: '60m' },
   );
 }
 
@@ -13,7 +13,7 @@ export function signRefreshToken(user: RegisterResponse): string {
   return jwt.sign(
     { email: user.email, isAdmin: user.isAdmin },
     process.env.REFRESH_TOKEN as Secret,
-    { expiresIn: '30d' }
+    { expiresIn: '30d' },
   );
 }
 

@@ -23,7 +23,7 @@ const productResponse = (productObject: object) => {
 };
 
 export async function addNewProduct(
-  newProduct: NewProductRequest
+  newProduct: NewProductRequest,
 ): Promise<ProductResponse> {
   await NewProductRequestValidator.parseAsync(newProduct);
   const product = await productRepo.createProduct(newProduct);
@@ -34,7 +34,7 @@ export async function addNewProduct(
 }
 
 export async function getProductById(
-  productId: number
+  productId: number,
 ): Promise<ProductResponse> {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
@@ -65,20 +65,26 @@ export async function deleteProductById(productId: number): Promise<void> {
   }
 }
 
-export async function editProductById(productId: number, editProduct: EditProductRequest): Promise<EditProductResponse> {
+export async function editProductById(
+  productId: number,
+  editProduct: EditProductRequest,
+): Promise<EditProductResponse> {
   if (productId < 0 || !Number.isInteger(productId)) {
     throw new ParameterError('Invalid productId');
   }
-  await EditProductRequestValidator.parseAsync(editProduct)
-  const affectedRows = await productRepo.editProductById(productId, editProduct);
+  await EditProductRequestValidator.parseAsync(editProduct);
+  const affectedRows = await productRepo.editProductById(
+    productId,
+    editProduct,
+  );
 
   if (affectedRows[0] === 0) {
     throw new NotFoundError();
   } else {
-   let editedProduct={ 
-      id : productId, 
-      ...editProduct
-    }
+    const editedProduct = {
+      id: productId,
+      ...editProduct,
+    };
     return editedProduct as EditProductResponse;
   }
 }

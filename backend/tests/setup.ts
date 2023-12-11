@@ -6,5 +6,5 @@ global.beforeAll(async () => {
 
 global.beforeEach(async () => {
   jest.clearAllMocks();
-  await db.sync({ force: true }); // Clear the database
+  await db.sync({ force: true });
 });

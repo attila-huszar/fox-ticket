@@ -1,12 +1,11 @@
-import request from 'supertest';
-import status from 'http-status';
-import * as productRepo from '../src/repositories/productRepo';
 import app from '../src/app';
 import Product from '../src/models/Product';
+import request from 'supertest';
+import status from 'http-status';
 
 describe('PUT /api/admin/products/:productId', () => {
   it('edit one or more product field by id for existing Product', async () => {
-    const newProduct = await Product.create({
+    await Product.create({
       name: '1 weeks pass',
       price: 3400,
       duration: 16,
@@ -22,7 +21,9 @@ describe('PUT /api/admin/products/:productId', () => {
       type: 'pass',
     };
 
-    const result = await request(app).put(`/api/admin/products/1`).send(editedProduct);
+    const result = await request(app)
+      .put(`/api/admin/products/1`)
+      .send(editedProduct);
     expect(result.statusCode).toEqual(status.OK);
 
     const { name, price, duration, description, type } = result.body;
@@ -34,7 +35,7 @@ describe('PUT /api/admin/products/:productId', () => {
   });
 
   it('returns Bad Request for missing or bad id parameter', async () => {
-    const newProduct = await Product.create({
+    await Product.create({
       name: '1 weeks pass',
       price: 3400,
       duration: 16,
@@ -50,12 +51,14 @@ describe('PUT /api/admin/products/:productId', () => {
       type: 'pass',
     };
 
-    const result = await request(app).put('/api/admin/products/k').send(editedProduct);
+    const result = await request(app)
+      .put('/api/admin/products/k')
+      .send(editedProduct);
     expect(result.statusCode).toEqual(status.BAD_REQUEST);
   });
 
   it('Returns Not Found for missing Product', async () => {
-    const newProduct = await Product.create({
+    await Product.create({
       name: '1 weeks pass',
       price: 3400,
       duration: 16,
@@ -71,7 +74,9 @@ describe('PUT /api/admin/products/:productId', () => {
       type: 'pass',
     };
 
-    const result = await request(app).put('/api/admin/products/5').send(editedProduct);
+    const result = await request(app)
+      .put('/api/admin/products/5')
+      .send(editedProduct);
     expect(result.statusCode).toEqual(status.NOT_FOUND);
   });
 });

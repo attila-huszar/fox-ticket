@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import status from 'http-status';
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';
 import { HttpError, NotFoundError, ParameterError } from '../errors';
 import {
   GetAllOrdersResponse,
@@ -13,7 +13,7 @@ import * as orderService from '../services/orderService';
 export async function getAllOrders(
   req: Request<{ userId: number }, unknown, unknown, unknown>,
   res: Response<GetAllOrdersResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const userId = Number(req.params.userId);
 
@@ -22,11 +22,11 @@ export async function getAllOrders(
     res.send(data);
   } catch (error) {
     if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message));
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(status.NOT_FOUND));
+      next(new HttpError(NOT_FOUND));
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR));
     }
   }
 }
@@ -34,7 +34,7 @@ export async function getAllOrders(
 export async function addNewOrder(
   req: Request<unknown, unknown, NewOrderRequest, unknown>,
   res: Response<OrderResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const order = req.body;
 
@@ -44,9 +44,9 @@ export async function addNewOrder(
   } catch (error) {
     console.log(error);
     if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message));
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR));
     }
   }
 }
@@ -54,7 +54,7 @@ export async function addNewOrder(
 export async function getPendingOrders(
   req: Request<{ userId: number }, unknown, unknown, unknown>,
   res: Response<PendingOrdersResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const userId = Number(req.params.userId);
 
@@ -63,11 +63,11 @@ export async function getPendingOrders(
     res.send(data);
   } catch (error) {
     if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message));
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(status.NOT_FOUND));
+      next(new HttpError(NOT_FOUND));
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR));
     }
   }
 }
@@ -75,7 +75,7 @@ export async function getPendingOrders(
 export async function changeOrderStatusByUserId(
   req: Request<{ userId: number }, unknown, unknown, unknown>,
   res: Response<UpdateOrderStatusResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const userId = Number(req.params.userId);
 
@@ -85,11 +85,11 @@ export async function changeOrderStatusByUserId(
   } catch (error) {
     console.log(error);
     if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message));
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(status.NOT_FOUND, error.message));
+      next(new HttpError(NOT_FOUND, error.message));
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR));
     }
   }
 }
@@ -97,21 +97,21 @@ export async function changeOrderStatusByUserId(
 export async function getActiveOrders(
   req: Request<{ userId: number }, unknown, unknown, unknown>,
   res: Response<PendingOrdersResponse>,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<void> {
   const userId = Number(req.params.userId);
 
   try {
     const data = await orderService.getActiveOrdersByUserId(userId);
-    console.log(data)    
+    console.log(data);
     res.send(data);
   } catch (error) {
     if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message));
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(status.NOT_FOUND));
+      next(new HttpError(NOT_FOUND));
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR));
     }
   }
 }

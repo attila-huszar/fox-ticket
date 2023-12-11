@@ -76,7 +76,7 @@ describe('GET /api/orders/:id', () => {
     const result = await request(app).get(`/api/orders/1`);
 
     expect(result.statusCode).toEqual(status.OK);
-    const  pendingOrders  = result.body.orders;
+    const pendingOrders = result.body.orders;
     expect(pendingOrders.length).toEqual(1);
   });
 });
@@ -135,7 +135,7 @@ describe('PATCH /api/orders/:userId', () => {
   });
 
   it('returns Bad Request for missing or bad id parameter', async () => {
-    const newUser = await User.create({
+    await User.create({
       id: 1,
       name: 'Bácsi',
       email: 'sasa@sadfa.com',
@@ -145,7 +145,7 @@ describe('PATCH /api/orders/:userId', () => {
       token: 'sdfgdf',
     });
 
-    const newProduct = await Product.create({
+    await Product.create({
       name: '1 weeks pass',
       price: 3400,
       duration: 16,
@@ -160,21 +160,13 @@ describe('PATCH /api/orders/:userId', () => {
       expirationDate: null,
       userId: 1,
     });
-
-    const changedOrderStatus = {
-      orderDate: Date.now(),
-      status: 'pending',
-      paidDate: Date.now(),
-      expirationDate: null,
-      userId: 1,
-    };
 
     const result = await request(app).patch('/api/orders/k').send(order);
     expect(result.statusCode).toEqual(status.BAD_REQUEST);
   });
 
   it('Returns Not Found for missing Product', async () => {
-    const newUser = await User.create({
+    await User.create({
       id: 1,
       name: 'Bácsi',
       email: 'sasa@sadfa.com',
@@ -184,7 +176,7 @@ describe('PATCH /api/orders/:userId', () => {
       token: 'sdfgdf',
     });
 
-    const newProduct = await Product.create({
+    await Product.create({
       name: '1 weeks pass',
       price: 3400,
       duration: 16,
@@ -199,14 +191,6 @@ describe('PATCH /api/orders/:userId', () => {
       expirationDate: null,
       userId: 1,
     });
-
-    const changedOrderStatus = {
-      orderDate: Date.now(),
-      status: 'pending',
-      paidDate: Date.now(),
-      expirationDate: null,
-      userId: 1,
-    };
 
     const result = await request(app).patch('/api/orders/5').send(order);
     expect(result.statusCode).toEqual(status.NOT_FOUND);

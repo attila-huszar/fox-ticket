@@ -77,7 +77,7 @@ describe('POST /api/admin/products', () => {
 
 describe('DELETE /api/admin/products/:productId', () => {
   it('deletes an existing product', async () => {
-    const product = await Product.create({
+    await Product.create({
       name: '1 week pass',
       price: 12000,
       duration: 168,

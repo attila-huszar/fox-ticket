@@ -12,6 +12,7 @@ import { auth } from '../middlewares/auth';
 import apiErrorHandler from '../middlewares/apiErrorHandler';
 import { HttpError } from '../errors';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const express = require('express');
 const router = express.Router();
 
@@ -49,14 +50,14 @@ router.delete('/orders', cartController.removePendingOrderFromCart);
 router.delete('/orders/:orderId', cartController.removeProductFromCart);
 router.delete(
   '/admin/products/:productId',
-  productController.deleteProductById
+  productController.deleteProductById,
 );
 
 //// 404
 router.use(
   '/*',
-  (req: Request, res: Response, next: (arg0: HttpError) => any) =>
-    next(new HttpError(status.NOT_FOUND))
+  (req: Request, res: Response, next: (arg0: HttpError) => unknown) =>
+    next(new HttpError(status.NOT_FOUND)),
 );
 router.use(apiErrorHandler);
 

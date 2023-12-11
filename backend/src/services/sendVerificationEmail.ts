@@ -2,10 +2,10 @@ import sgMail from '@sendgrid/mail';
 import { signEmailVerification } from './jwtSign';
 import { VerificationRequest } from '../interfaces/user';
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 export async function sendVerificationEmail(
-  recipient: VerificationRequest
+  recipient: VerificationRequest,
 ): Promise<string> {
   const verificationKey = signEmailVerification(recipient);
 
@@ -27,14 +27,9 @@ export async function sendVerificationEmail(
     </div>`,
   };
 
-  sgMail
-    .send(message)
-    .then(() => {
-      console.log(`Email sent to ${recipient.email}`);
-    })
-    .catch((error: any) => {
-      console.error(error.response.body.errors);
-    });
+  sgMail.send(message).catch(error => {
+    console.error(error.response.body.errors);
+  });
 
   return verificationKey;
 }

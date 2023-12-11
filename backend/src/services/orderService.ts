@@ -24,21 +24,25 @@ const orderResponse = (order: object) => {
 };
 
 export async function getAllOrders(
-  userId: number
+  userId: number,
 ): Promise<GetAllOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }
+
   const user: User = await userRepo.getUserById(userId);
+
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
+
   const orders: Order[] = await orderRepo.getAllOrders(userId);
+
   return { allOrders: orders };
 }
 
 export async function addNewOrder(
-  newOrder: NewOrderRequest
+  newOrder: NewOrderRequest,
 ): Promise<OrderResponse> {
   if (!newOrder) {
     throw new ParameterError('Invalid product');
@@ -49,19 +53,22 @@ export async function addNewOrder(
 }
 
 export async function getAllPendingOrdersByUserId(
-  userId: number
+  userId: number,
 ): Promise<PendingOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }
+
   const user: User = await userRepo.getUserById(userId);
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
+
   const response: Order[] = await orderRepo.getAllPendingOrders(userId);
-  let orders = [];
+  const orders = [];
+
   for (let i = 0; i < response.length; i++) {
-    let order = {
+    const order = {
       id: response[i].id,
       status: response[i].status,
       orderDate: response[i].orderDate,
@@ -70,28 +77,34 @@ export async function getAllPendingOrdersByUserId(
     };
     orders.push(order);
   }
+
   return { orders: orders };
 }
 
 export async function changeOrderStatusByUserId(
-  userId: number
+  userId: number,
 ): Promise<UpdateOrderStatusResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }
+
   const user: User = await userRepo.getUserById(userId);
+
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
+
   const findPendingOrders = await orderRepo.getAllPendingOrders(userId);
+
   if (findPendingOrders.length === 0) {
     throw new NotFoundError("User doesn't have pending order(s) in cart");
   } else {
     await orderRepo.changeOrderStatusByUserId(userId);
-    let purchases = [];
+    const purchases = [];
+
     for (let i = 0; i < findPendingOrders.length; i++) {
       const order = findPendingOrders[i];
-      let updatedPurchase = {
+      const updatedPurchase = {
         id: order.id,
         status: 'paid',
         paidDate: Date(),
@@ -100,24 +113,29 @@ export async function changeOrderStatusByUserId(
       };
       purchases.push(updatedPurchase);
     }
+
     return { purchases };
   }
 }
 
 export async function getActiveOrdersByUserId(
-  userId: number
+  userId: number,
 ): Promise<PendingOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
     throw new ParameterError('Invalid userId');
   }
+
   const user: User = await userRepo.getUserById(userId);
+
   if (!user) {
     throw new NotFoundError("User doesn't exist with this id");
   }
+
   const response: Order[] = await orderRepo.getActiveOrders(userId);
-  let orders = [];
+  const orders = [];
+
   for (let i = 0; i < response.length; i++) {
-    let order = {
+    const order = {
       id: response[i].id,
       status: response[i].status,
       orderDate: response[i].orderDate,
@@ -127,5 +145,6 @@ export async function getActiveOrdersByUserId(
     };
     orders.push(order);
   }
+
   return { orders: orders };
 }

@@ -4,18 +4,22 @@ import { verifyRefreshToken } from '../services/jwtVerify';
 import { signAccessToken, signRefreshToken } from '../services/jwtSign';
 import { RegisterResponse } from '../interfaces/user';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function refresh(req: Request, res: Response, next: NextFunction) {
   const cookie = req.headers.cookie?.split('=')[1];
 
   if (cookie) {
     const decoded = verifyRefreshToken(cookie);
 
-    if (decoded instanceof Error || !decoded.hasOwnProperty('email'))
+    if (decoded instanceof Error || !('email' in decoded))
       return res
         .status(UNAUTHORIZED)
         .json({ success: false, message: decoded });
 
-    const user: RegisterResponse = { email: decoded.email, isAdmin: decoded.isAdmin };
+    const user: RegisterResponse = {
+      email: decoded.email,
+      isAdmin: decoded.isAdmin,
+    };
 
     const accessToken = signAccessToken(user);
     const refreshToken = signRefreshToken(user);
@@ -27,9 +31,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
       secure: true,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
-    res
-      .status(OK)
-      .json({ token: accessToken });
+    res.status(OK).json({ token: accessToken });
   } else {
     res.status(UNAUTHORIZED).json({ success: false, message: 'Unauthorized' });
   }
