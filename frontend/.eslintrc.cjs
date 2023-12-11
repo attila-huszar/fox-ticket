@@ -1,19 +1,20 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2020: true,
   },
-  plugins: ['@typescript-eslint/eslint-plugin', 'regexp', 'react-refresh'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'promise', 'regexp', 'react-refresh'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:promise/recommended',
     'plugin:regexp/recommended',
     'plugin:react-hooks/recommended',
   ],
   ignorePatterns: ['dist', 'build', '.eslint*'],
-  parser: '@typescript-eslint/parser',
   rules: {
-    'prefer-const': 'warn',
     'import/prefer-default-export': 'off',
     'react-refresh/only-export-components': [
       'warn',

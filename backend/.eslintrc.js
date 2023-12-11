@@ -1,18 +1,19 @@
 module.exports = {
+  root: true,
   env: {
     node: true,
     jest: true,
   },
-  plugins: ['@typescript-eslint/eslint-plugin', 'regexp'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'promise', 'regexp'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:promise/recommended',
     'plugin:regexp/recommended',
   ],
   ignorePatterns: ['dist', 'build', '.eslint*'],
-  parser: '@typescript-eslint/parser',
   rules: {
-    'prefer-const': 'warn',
     'import/prefer-default-export': 'off',
   },
 };
