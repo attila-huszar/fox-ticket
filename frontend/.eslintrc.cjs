@@ -5,11 +5,10 @@ module.exports = {
     es2020: true,
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'promise', 'regexp', 'react-refresh'],
+  plugins: ['@typescript-eslint', 'regexp', 'react-refresh'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:promise/recommended',
     'plugin:regexp/recommended',
     'plugin:react-hooks/recommended',
   ],

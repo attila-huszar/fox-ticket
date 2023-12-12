@@ -10,7 +10,7 @@ export default async function postAuthTest(userData: {
       {
         email: userData.email,
       },
-      { headers: { authorization: userData.token } }
+      { headers: { authorization: userData.token } },
     );
 
     return response.data;

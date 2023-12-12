@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Image,
@@ -18,7 +17,7 @@ import {
 import '../styles/Articles.css';
 import data from '../assets/article_data';
 
-export default function Articles({ isAdmin }: any) {
+export default function Articles() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [displayedArticleId, setDisplayedArticleId] = useState(0);
 
@@ -39,16 +38,14 @@ export default function Articles({ isAdmin }: any) {
                 }}
                 style={{ width: '300px', height: '300px' }}
                 isHoverable
-                isPressable
-              >
+                isPressable>
                 <CardFooter
                   style={{
                     position: 'absolute',
                     borderTop: '$borderWeights$light solid $gray800',
                     bottom: 0,
                     zIndex: 1,
-                  }}
-                >
+                  }}>
                   <p
                     color="white"
                     style={{
@@ -58,8 +55,7 @@ export default function Articles({ isAdmin }: any) {
                       textOverflow: 'ellipsis',
                       WebkitLineClamp: '2',
                       WebkitBoxOrient: 'vertical',
-                    }}
-                  >
+                    }}>
                     {article.title}
                   </p>
                 </CardFooter>
@@ -77,8 +73,7 @@ export default function Articles({ isAdmin }: any) {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         className="w-[800px]"
-        aria-labelledby="news"
-      >
+        aria-labelledby="news">
         <ModalContent>
           {onClose => (
             <>
@@ -99,22 +94,9 @@ export default function Articles({ isAdmin }: any) {
                 <p style={{ whiteSpace: 'pre-line' }}>{articleText}</p>
               </ModalBody>
               <ModalFooter>
-                {isAdmin ? (
-                  <>
-                    <Button size="md" color="secondary" id="submit">
-                      Edit
-                    </Button>
-                    <Button size="md" id="submit">
-                      Remove
-                    </Button>
-                    <Spacer />
-                    <Button color="primary">Close</Button>
-                  </>
-                ) : (
-                  <Button color="primary" onPress={onClose}>
-                    Close
-                  </Button>
-                )}
+                <Button color="primary" onPress={onClose}>
+                  Close
+                </Button>
               </ModalFooter>
             </>
           )}

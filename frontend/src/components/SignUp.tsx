@@ -141,13 +141,25 @@ export default function SignUp() {
         await postRegister({ name, email, password });
         setModalVisible(false);
         notifySignUp();
-      } catch (error: any) {
-        if (error.message.includes('Account already exists')) {
-          setShakeEmail(true);
-          emailHelper.color = 'error';
-          emailHelper.text = error.message.replace('Validation error: ', '');
-          setTimeout(() => setShakeEmail(false), 750);
+      } catch (error) {
+        let errorMessage = 'Registration failed';
+
+        setShakeEmail(true);
+        emailHelper.color = 'error';
+
+        if (error instanceof Error) {
+          errorMessage = error.message;
+
+          if (errorMessage.includes('Account already exists')) {
+            emailHelper.text = errorMessage.replace('Validation error: ', '');
+          } else {
+            emailHelper.text = errorMessage;
+          }
+        } else {
+          emailHelper.text = errorMessage;
         }
+
+        setTimeout(() => setShakeEmail(false), 750);
       }
     }
   };
@@ -163,7 +175,7 @@ export default function SignUp() {
   // Notifications
   const notifySignUp = () =>
     toast.success(
-      `${email} successfully signed up! Please, verify your email address!`
+      `${email} successfully signed up! Please, verify your email address!`,
     );
 
   return (
@@ -178,8 +190,7 @@ export default function SignUp() {
         auto
         color="gradient"
         shadow
-        onPress={() => setModalVisible(true)}
-      >
+        onPress={() => setModalVisible(true)}>
         Sign Up
       </Button>
       <Modal
@@ -187,8 +198,7 @@ export default function SignUp() {
         blur
         aria-labelledby="signup form"
         open={modalVisible}
-        onClose={closeModalHandler}
-      >
+        onClose={closeModalHandler}>
         <Modal.Header>
           <Text id="signup form" size={18}>
             Please sign up with your email address

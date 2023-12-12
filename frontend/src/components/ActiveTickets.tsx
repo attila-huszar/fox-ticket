@@ -9,13 +9,9 @@ import {
 } from '@nextui-org/react';
 import { ProductRequest } from '../interfaces/product';
 import QRCode from 'react-qr-code';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
-export default function ActiveTickets({
-  id,
-  name,
-  description,
-}: ProductRequest) {
+export default function ActiveTickets({ name, description }: ProductRequest) {
   const [qrVisible, setQrVisible] = useState(false);
   //const { user } = useContext(UserContext);
 
@@ -34,23 +30,20 @@ export default function ActiveTickets({
           marginLeft: '32%',
           width: '100%',
           padding: '0',
-        }}
-      >
+        }}>
         <Card
-          css={{
-            w: '280px',
+          style={{
+            width: '280px',
             display: 'flex',
             margin: '0 auto',
             backgroundColor: 'var(--nextui-colors-cardBackground)',
           }}
           id="card"
-          isHoverable
-        >
+          isHoverable>
           <Card.Header
             css={{
               backgroundColor: 'var(--nextui-colors-cardHeaderBackground)',
-            }}
-          >
+            }}>
             <Text css={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
               {name}
             </Text>
@@ -68,8 +61,7 @@ export default function ActiveTickets({
                 auto
                 color="gradient"
                 id="submit"
-                onPress={() => setQrVisible(true)}
-              >
+                onPress={() => setQrVisible(true)}>
                 Activate
               </Button>
             </Row>
@@ -82,8 +74,7 @@ export default function ActiveTickets({
         blur
         aria-labelledby="login form"
         open={qrVisible}
-        onClose={closeHandler}
-      >
+        onClose={closeHandler}>
         <Modal.Header>
           <Text size={18}>{name}</Text>
         </Modal.Header>
@@ -102,7 +93,7 @@ export default function ActiveTickets({
           }}
         />
         <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandler}>
+          <Button color="warning" onPress={closeHandler}>
             Close
           </Button>
         </Modal.Footer>

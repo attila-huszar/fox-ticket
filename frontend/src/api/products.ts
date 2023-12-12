@@ -7,7 +7,7 @@ export async function fetchProducts() {
 }
 
 export async function fetchAddNewProduct(
-  productData: ProductRequest
+  productData: ProductRequest,
 ): Promise<ProductResponse> {
   try {
     const response = await axios.post('/api/admin/products', {
@@ -27,11 +27,11 @@ export async function fetchAddNewProduct(
 }
 
 export async function fetchDeleteProduct(id: number) {
-  const response = await axios.delete(`/api/admin/products/${id}`);
+  await axios.delete(`/api/admin/products/${id}`);
 }
 
 export async function fetchEditProduct(
-  productData: ProductRequest
+  productData: ProductRequest,
 ): Promise<ProductResponse> {
   console.log(productData);
 

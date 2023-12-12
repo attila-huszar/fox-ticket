@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 
 export default async function emailVerify(queryString: string) {
   try {
-    const res: AxiosResponse<any, any> = await axios.post('/api/verify', {
+    const res: AxiosResponse = await axios.post('/api/verify', {
       key: queryString,
     });
 

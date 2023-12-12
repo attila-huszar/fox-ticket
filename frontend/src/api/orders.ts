@@ -14,24 +14,28 @@ export async function fetchRemovePendingOrderFromCart() {
   await axios.delete('/api/orders');
 }
 
-export async function fetchCreateNewPendingOrder(orderDate: Date, productId: number, userId: number ) {
-  console.log(orderDate, productId, userId)
+export async function fetchCreateNewPendingOrder(
+  orderDate: Date,
+  productId: number,
+  userId: number,
+) {
+  console.log(orderDate, productId, userId);
   try {
     const response = await axios.post('/api/purchases', {
       orderDate,
       productId,
-      userId      
+      userId,
     });
-    return response.data
+    return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message);
     }
-    throw error
+    throw error;
   }
 }
 
-export async function fetchChangeOrderStatusByUserId( ){
+export async function fetchChangeOrderStatusByUserId() {
   await axios.patch('/api/orders/1');
 }
 

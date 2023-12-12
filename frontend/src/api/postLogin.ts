@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { LoginRequest } from '../interfaces/user';
 
-export async function postLogin(userData: LoginRequest): Promise<any> {
+export async function postLogin(userData: LoginRequest): Promise<unknown> {
   try {
     const response = await axios.post('/api/login', {
       email: userData.email,

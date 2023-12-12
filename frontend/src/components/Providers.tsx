@@ -13,16 +13,16 @@ export default function Providers() {
   const baseUrl = url[0];
   const search = url[1] || '';
 
-  let verifiedUser: RegisterRequest;
+  let verifiedUser: RegisterRequest | string;
 
   const notifyVerified = () =>
     toast.success(
-      `${verifiedUser} was successfully verified! You can now log in with your email address and password.`
+      `${verifiedUser} was successfully verified! You can now log in with your email address and password.`,
     );
 
   const notifyAlredySent = () =>
     toast.warn(
-      `${verifiedUser} is already verified. Please log in with your email address and password.`
+      `${verifiedUser} is already verified. Please log in with your email address and password.`,
     );
 
   if (search.includes('verify=')) {
@@ -37,9 +37,10 @@ export default function Providers() {
         verifiedUser = await emailVerify(search.split('verify=')[1]);
 
         if (verifiedUser) notifyVerified();
-      } catch (error: any) {
-        error = error.toString().split('Error: ')[1];
-        verifiedUser = error;
+      } catch (error) {
+        if (error instanceof Error) {
+          verifiedUser = error.toString().split('Error: ')[1];
+        }
 
         if (verifiedUser) notifyAlredySent();
       }

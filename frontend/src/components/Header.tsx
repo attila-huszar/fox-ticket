@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { Key, useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { Navbar, Text, Avatar, Dropdown, Switch } from '@nextui-org/react';
 import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb';
@@ -76,8 +76,7 @@ export default function Header() {
           w: '100%',
           jc: 'space-between',
         },
-      }}
-    >
+      }}>
       <Navbar.Brand css={{ mr: '$4' }} style={{ display: 'flex', gap: '15px' }}>
         <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
         <NavLink to="/">
@@ -88,8 +87,7 @@ export default function Header() {
               margin: '0 10px 0 0',
               fontFamily: 'Helvetica, sans-serif',
               fontSize: '34px',
-            }}
-          >
+            }}>
             Fox
           </Text>
         </NavLink>
@@ -98,16 +96,14 @@ export default function Header() {
             to="/"
             className={({ isActive }) =>
               isActive ? 'activeLink' : 'inactiveLink'
-            }
-          >
+            }>
             News
           </NavLink>
           <NavLink
             to="/shop"
             className={({ isActive }) =>
               isActive ? 'activeLink' : 'inactiveLink'
-            }
-          >
+            }>
             Shop
           </NavLink>
           {currentUser.token ? (
@@ -115,8 +111,7 @@ export default function Header() {
               to="/mytickets"
               className={({ isActive }) =>
                 isActive ? 'activeLink' : 'inactiveLink'
-              }
-            >
+              }>
               My Tickets
             </NavLink>
           ) : null}
@@ -135,8 +130,7 @@ export default function Header() {
                 '&:hover, &:focus': {
                   boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
                 },
-              }}
-            >
+              }}>
               <Avatar
                 bordered
                 as="button"
@@ -148,8 +142,7 @@ export default function Header() {
             <Dropdown.Menu
               aria-label="User menu actions"
               color="secondary"
-              onAction={key => navigateDropdown(key)}
-            >
+              onAction={(key: Key) => navigateDropdown(key)}>
               <Dropdown.Item key="" css={{ height: '$18' }}>
                 {currentUser.token ? (
                   <Text>
@@ -177,8 +170,7 @@ export default function Header() {
                 key="LOGOUT"
                 icon={<TbLogout />}
                 withDivider
-                color="error"
-              >
+                color="error">
                 Log Out
               </Dropdown.Item>
             </Dropdown.Menu>
