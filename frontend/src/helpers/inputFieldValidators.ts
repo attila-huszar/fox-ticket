@@ -5,7 +5,7 @@ export const validateName = (name: string) => {
 
 export const validateEmail = (email: string) => {
   const emailRegex =
-    /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[A-Z\d-]+\.)+[A-Z]{2,6}$/i;
+    /^[\w!#$%&'*+/=?`{}~^|-]+(?:\.[\w!#$%&'*+/=?`{}~^|-]+)*@(?:[A-Z\d-]+\.)+[A-Z]{2,6}$/i;
   if (email.length > 4 && email.length < 255) {
     return emailRegex.test(email);
   } else {
@@ -14,14 +14,10 @@ export const validateEmail = (email: string) => {
 };
 
 export const validatePassword = (password: string) => {
-  const passwordRegex = /\S{8,254}/;
+  const passwordRegex = /^(?=.*[a-ű])(?=.*\d)[a-ű\d]{8,254}$/i;
   return passwordRegex.test(password);
 };
 
 export const validateMatch = (password: string, passwordConf: string) => {
-  if (password === passwordConf) {
-    return true;
-  } else {
-    return false;
-  }
+  return password === passwordConf;
 };

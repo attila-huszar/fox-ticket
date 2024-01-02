@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchActiveOrders } from '../api/orders';
 import { ProductResponse } from '../interfaces/product';
 import ActiveTickets from './ActiveTickets';
-import { Grid, Button, Container } from '@nextui-org/react';
+import { Button, ButtonGroup } from '@nextui-org/react';
 import '../styles/Shop.css';
 
 export default function MyTickets() {
@@ -16,62 +16,48 @@ export default function MyTickets() {
 
   return (
     <>
-      <Container>
+      <div>
         <h1 style={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
           My Tickets
         </h1>
-        <Button.Group
-          color="gradient"
-          ghost
-          css={{
+        <ButtonGroup
+          style={{
             width: '100%',
             justifyContent: 'center',
             marginBottom: '40px',
-          }}
-        >
+          }}>
           <Button
-            shadow
             size="md"
-            color="gradient"
             id="passesTabButton"
             className="shopTabButton"
             autoFocus
-            css={{ width: '100px', zIndex: '0' }}
-          >
+            style={{ width: '100px', zIndex: '0' }}>
             Not active
           </Button>
           <Button
             className="shopTabButton"
-            shadow
             size="md"
-            color="gradient"
             id="ticketsTabButton"
-            css={{ width: '100px', zIndex: '0' }}
-          >
+            style={{ width: '100px', zIndex: '0' }}>
             Active
           </Button>
           <Button
             className="shopTabButton"
-            shadow
             size="md"
-            color="gradient"
             id="ticketsTabButton"
-            css={{ width: '100px', zIndex: '0' }}
-          >
+            style={{ width: '100px', zIndex: '0' }}>
             Expired
           </Button>
-        </Button.Group>
-        <Grid.Container
-          gap={2}
+        </ButtonGroup>
+        <div
           id="shopCards"
-          css={{
+          style={{
             display: 'grid',
             gridTemplateColumns: '20% 20% 20%',
             gridTemplateRows: '1fr 1fr 1fr',
             gap: '5%',
             justifyContent: 'center',
-          }}
-        >
+          }}>
           {actives.map(active => (
             <ActiveTickets
               key={active.id}
@@ -79,8 +65,8 @@ export default function MyTickets() {
               description={active.description}
             />
           ))}
-        </Grid.Container>
-      </Container>
+        </div>
+      </div>
     </>
   );
 }

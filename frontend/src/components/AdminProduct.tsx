@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Text, Container, Grid } from '@nextui-org/react';
 import { fetchProducts } from '../api/products';
 import { ProductResponse } from '../interfaces/product';
 import ProductCard from './ProductCard';
@@ -35,8 +34,7 @@ export default function AdminProduct() {
           gridTemplateRows: '1fr 1fr 1fr',
           gap: '5%',
           justifyContent: 'center',
-        }}
-      >
+        }}>
         {products.map(product => (
           <ProductCard
             removeProduct={(productId: number) =>

@@ -1,6 +1,6 @@
 import path from 'path';
 import { Sequelize } from 'sequelize-typescript';
-import logger from './logger';
+import { logger } from './logger';
 
 const databaseUrl =
   process.env.NODE_ENV === 'test'
@@ -17,5 +17,3 @@ export const db = new Sequelize(databaseUrl, {
 });
 
 db.authenticate();
-
-export default db;

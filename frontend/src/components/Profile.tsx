@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { Zoom } from 'react-awesome-reveal';
 import {
   Button,
   Input,
-  Text,
   Spacer,
   Modal,
-  Col,
-  Row,
-  Container,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from '@nextui-org/react';
-import profile_defpic from '../static/profile_def.png';
+import profile_defpic from '../assets/images/profile_def.png';
 import {
+  validateMatch,
   validateName,
   validatePassword,
 } from '../helpers/inputFieldValidators';
@@ -19,7 +19,7 @@ import { InputField, UserContextInterface } from '../interfaces/user';
 import { UserContext } from './App';
 
 export default function Profile() {
-  const { currentUser } = useContext<UserContextInterface>(UserContext);
+  const { user } = useContext<UserContextInterface>(UserContext);
   const [modalUserVisible, setModalUserVisible] = useState(false);
   const [modalPassVisible, setModalPassVisible] = useState(false);
   const [name, setName] = useState('');
@@ -27,7 +27,7 @@ export default function Profile() {
   const [passNew, setPassNew] = useState('');
   const [passConf, setPassConf] = useState('');
 
-  const nameHelper: InputField = React.useMemo(() => {
+  const nameHelper: InputField = useMemo(() => {
     if (!name)
       return {
         text: '',
@@ -41,7 +41,7 @@ export default function Profile() {
     };
   }, [name]);
 
-  const passOldHelper: InputField = React.useMemo(() => {
+  const passOldHelper: InputField = useMemo(() => {
     if (!passOld)
       return {
         text: '',
@@ -57,7 +57,7 @@ export default function Profile() {
     };
   }, [passOld]);
 
-  const passNewHelper: InputField = React.useMemo(() => {
+  const passNewHelper: InputField = useMemo(() => {
     if (!passNew)
       return {
         text: '',
@@ -65,38 +65,35 @@ export default function Profile() {
       };
 
     const isValidPass = validatePassword(passNew);
+    const isMatching = validateMatch(passNew, passConf);
 
     return {
       text: isValidPass
         ? 'Valid password'
         : 'Please enter minimum eight characters',
-      color: isValidPass ? 'success' : 'warning',
+      color: isValidPass && isMatching ? 'success' : 'warning',
     };
-  }, [passNew]);
+  }, [passNew, passConf]);
 
-  const passConfHelper: InputField = React.useMemo(() => {
+  const passConfHelper: InputField = useMemo(() => {
     if (!passConf)
       return {
         text: '',
         color: 'default',
       };
 
-    const validateMatch = (value: string) => {
-      if (value === passNew) return true;
-    };
-
     const isValidPass = validatePassword(passConf);
-    const isMatching = validateMatch(passConf);
+    const isMatching = validateMatch(passNew, passConf);
 
     return {
-      text: isMatching ? 'Passwords match' : 'Passwords not matching',
+      text: isMatching ? 'Passwords match' : 'Passwords do not match',
       color: isValidPass && isMatching ? 'success' : 'warning',
     };
   }, [passNew, passConf]);
 
   const userNameChangeHandler = async () => {
     if (name.length === 0) {
-      nameHelper.color = 'error';
+      nameHelper.color = 'danger';
       nameHelper.text = 'Please fill this field';
     }
   };
@@ -113,7 +110,7 @@ export default function Profile() {
   return (
     <>
       <Zoom duration={500} triggerOnce>
-        <Container
+        <div
           style={{
             margin: '50px auto',
             padding: '20px',
@@ -122,23 +119,20 @@ export default function Profile() {
             height: '450px',
             border: '4px solid var(--nextui-colors-navbarActive)',
             borderRadius: '12px',
-          }}
-        >
-          <Row>
-            <Text
-              size={30}
-              css={{
+          }}>
+          <div>
+            <p
+              style={{
                 margin: 'auto',
                 textGradient: '45deg, $blue600 -20%, $pink600 50%',
               }}
-              weight="bold"
-            >
+              weight="bold">
               My Profile
-            </Text>
-          </Row>
+            </p>
+          </div>
           <Spacer y={2} />
-          <Row>
-            <Col style={{ margin: 'auto' }}>
+          <div>
+            <div style={{ margin: 'auto' }}>
               <img
                 src={profile_defpic}
                 style={{
@@ -152,52 +146,44 @@ export default function Profile() {
                 }}
                 alt="profile"
               />
-            </Col>
-            <Col>
+            </div>
+            <div>
               <Input
                 readOnly
-                underlined
                 width="100%"
                 size="lg"
                 labelLeft="Email"
-                value={currentUser.email}
+                value={user.email}
               />
               <Spacer y={1.5} />
               <Input
-                underlined
                 width="100%"
                 size="lg"
                 labelLeft="Username"
-                value={currentUser.name}
+                value={user.name}
               />
-            </Col>
-          </Row>
-          <Spacer y={-2} />
-          <Row align="baseline">
-            <Col>
+            </div>
+          </div>
+          <Spacer y={2} />
+          <div>
+            <div>
               <Button
                 style={{
                   fontSize: '0.9rem',
                   margin: 'auto',
                 }}
-                auto
-                color="secondary"
-                shadow
-              >
+                color="secondary">
                 Change Picture
               </Button>
-            </Col>
-            <Col>
+            </div>
+            <div>
               <Button
                 style={{
                   fontSize: '0.9rem',
                   margin: 'auto',
                 }}
-                shadow
-                color="gradient"
                 id="submit"
-                onPress={() => setModalUserVisible(true)}
-              >
+                onPress={() => setModalUserVisible(true)}>
                 Change Username
               </Button>
               <Spacer y={1.5} />
@@ -206,65 +192,53 @@ export default function Profile() {
                   fontSize: '0.9rem',
                   margin: 'auto',
                 }}
-                color="gradient"
-                shadow
-                onClick={() => setModalPassVisible(true)}
-              >
+                onClick={() => setModalPassVisible(true)}>
                 Change Password
               </Button>
-            </Col>
-          </Row>
-        </Container>
+            </div>
+          </div>
+        </div>
       </Zoom>
 
       <Modal
         closeButton
-        blur
         aria-labelledby="username change form"
         open={modalUserVisible}
-        onClose={closeHandler}
-      >
-        <Modal.Header>
-          <Text size={18}>Change your Username</Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Spacer y={0.4} />
+        onClose={closeHandler}>
+        <ModalHeader>
+          <p>Change your Username</p>
+        </ModalHeader>
+        <ModalBody>
+          <Spacer y={1} />
           <Input
             required
-            bordered
             onChange={e => setName(e.target.value)}
-            labelPlaceholder="New Username"
+            placeholder="New Username"
             width="350px"
-            status={nameHelper.color}
             color={nameHelper.color}
-            helperColor={nameHelper.color}
-            helperText={nameHelper.text}
+            errorMessage={nameHelper.text}
             size="lg"
           />
 
-          <Spacer y={0.4} />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandler}>
+          <Spacer y={1} />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onPress={closeHandler}>
             Close
           </Button>
-          <Button auto color="gradient" onPress={userNameChangeHandler}>
-            Change
-          </Button>
-        </Modal.Footer>
+          <Button onPress={userNameChangeHandler}>Change</Button>
+        </ModalFooter>
       </Modal>
       <Modal
         closeButton
-        blur
         aria-labelledby="password change form"
         open={modalPassVisible}
-        onClose={closeHandler}
-      >
-        <Modal.Header>
-          <Text size={18}>Change your Password</Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Spacer y={0.4} />
+        onClose={closeHandler}>
+        <ModalHeader>
+          <p>Change your Password</p>
+        </ModalHeader>
+        <ModalBody>
+          <Spacer y={1} />
           <Input.Password
             onChange={e => setPassOld(e.target.value)}
             labelPlaceholder="Current Password"
@@ -292,7 +266,7 @@ export default function Profile() {
             type="password"
             size="lg"
           />
-          <Spacer y={1.6} />
+          <Spacer y={2} />
           <Input.Password
             onChange={e => setPassConf(e.target.value)}
             labelPlaceholder="Confirm Password"
@@ -306,16 +280,14 @@ export default function Profile() {
             type="password"
             size="lg"
           />
-          <Spacer y={0.4} />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={closeHandler}>
+          <Spacer y={1} />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onPress={closeHandler}>
             Close
           </Button>
-          <Button auto color="gradient" onPress={closeHandler}>
-            Change
-          </Button>
-        </Modal.Footer>
+          <Button onPress={closeHandler}>Change</Button>
+        </ModalFooter>
       </Modal>
     </>
   );

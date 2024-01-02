@@ -1,8 +1,8 @@
 import request from 'supertest';
 import status from 'http-status';
-import * as cartRepo from '../src/repositories/cartRepo';
-import app from '../src/app';
+import { app } from '../src/app';
 import Order from '../src/models/Order';
+import * as cartRepo from '../src/repositories/cartRepo';
 
 describe('DELETE /api/orders/:orderId', () => {
   it('deletes an existing order by ID', async () => {

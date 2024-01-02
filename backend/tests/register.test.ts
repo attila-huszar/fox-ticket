@@ -1,7 +1,7 @@
 import request from 'supertest';
 import status from 'http-status';
+import { app } from '../src/app';
 import * as userRepo from '../src/repositories/userRepo';
-import app from '../src/app';
 
 jest.mock('../src/services/sendVerificationEmail.ts');
 

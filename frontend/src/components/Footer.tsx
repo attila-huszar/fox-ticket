@@ -26,7 +26,7 @@ export default function Footer() {
               </p>
               <p>0630 123 4567</p>
               <p>hello@foxticket.com</p>
-            </address>  
+            </address>
             </div>
           <nav className="navCol">
             <p className='footerHeader'>Account</p>
@@ -50,7 +50,7 @@ export default function Footer() {
             <p className='footerHeader'>Resources</p>
             <ul className="footerNav">
               <li><a className="footerLink" href="">FAQ</a></li>
-              <li><a className="footerLink" href="">Travel Informations</a></li>
+              <li><a className="footerLink" href="">Travel Information</a></li>
               <li><a className="footerLink" href="">Help Center</a></li>
               <li><a className="footerLink" href="">Privacy & terms</a></li>
             </ul>

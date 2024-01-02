@@ -1,4 +1,4 @@
-import db from '../src/db';
+import { db } from '../src/db';
 
 global.beforeAll(async () => {
   await db.query('PRAGMA journal_mode = "OFF"');

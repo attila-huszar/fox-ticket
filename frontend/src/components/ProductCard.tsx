@@ -1,4 +1,4 @@
-import { Grid, Button, Card, Row, Text, Spacer } from '@nextui-org/react';
+import { Button, Card, Spacer } from '@nextui-org/react';
 import { fetchDeleteProduct } from '../api/products';
 import { fetchCreateNewPendingOrder, fetchPendingOrder } from '../api/orders';
 import { ProductRequest } from '../interfaces/product';
@@ -28,9 +28,9 @@ export default function ProductCard({
   };
 
   const createNewOrderHadler = async () => {
-    await fetchCreateNewPendingOrder(new Date(), id as number, 1);
+    await fetchCreateNewPendingOrder(new Date(), Number(id), 1);
     const pendingOrders = await fetchPendingOrder();
-    setCart(pendingOrders);
+    setCart!(pendingOrders);
   };
 
   return (
@@ -43,8 +43,7 @@ export default function ProductCard({
         margin: '0 auto',
         width: '100%',
         padding: '0',
-      }}
-    >
+      }}>
       <Card
         key={id}
         css={{
@@ -54,13 +53,11 @@ export default function ProductCard({
           backgroundColor: 'var(--nextui-colors-cardBackground)',
         }}
         id="card"
-        isHoverable
-      >
+        isHoverable>
         <Card.Header
           css={{
             backgroundColor: 'var(--nextui-colors-cardHeaderBackground)',
-          }}
-        >
+          }}>
           <Text css={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
             {name}
           </Text>
@@ -90,8 +87,7 @@ export default function ProductCard({
                   size="md"
                   auto
                   color="gradient"
-                  id="submit"
-                >
+                  id="submit">
                   Remove
                 </Button>
               </>
@@ -102,8 +98,7 @@ export default function ProductCard({
                 auto
                 color="gradient"
                 id="submit"
-                onPress={createNewOrderHadler}
-              >
+                onPress={createNewOrderHadler}>
                 Add to Cart
               </Button>
             )}

@@ -20,4 +20,9 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  settings: {
+    regexp: {
+      allowedCharacterRanges: ['alphanumeric', 'a-ű'],
+    },
+  },
 };

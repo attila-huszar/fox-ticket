@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import { logger } from '../logger';
 import { HttpError } from '../errors';
 import { ErrorResponse } from '../interfaces/error';
-import logger from '../logger';
 
 export default function apiErrorHandler(
   err: HttpError,

@@ -10,7 +10,6 @@ import Profile from './Profile';
 import Footer from './Footer';
 import NotImplementedPage from './NotImplementedPage';
 import AdminProduct from './AdminProduct';
-import AdminArticle from './AdminArticle';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoggedInUser, UserContextInterface } from '../interfaces/user';
 import {
@@ -18,38 +17,43 @@ import {
   PendingOrdersResponse,
 } from '../interfaces/orders';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
-export const UserContext = createContext<UserContextInterface>();
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
-export const CartContext = createContext<CartContextInterface>();
+const defaultUser: LoggedInUser = {
+  name: 'Guest',
+  email: '',
+  token: '',
+  isAdmin: false,
+};
+
+export const UserContext = createContext<UserContextInterface>({
+  user: defaultUser,
+});
+export const CartContext = createContext<CartContextInterface>({ cart: [] });
 
 export default function App() {
-  const [cart, setCart] = useState<PendingOrdersResponse[]>([]);
-  const [currentUser, setCurrentUser] = useState<LoggedInUser>({
+  const [user, setUser] = useState<LoggedInUser>({
     name: localStorage.getItem('name') || 'Guest',
-    email: localStorage.getItem('email') || 'visitor',
+    email: localStorage.getItem('email') || '',
     token: localStorage.getItem('token') || '',
     isAdmin: localStorage.getItem('admin') === 'true' ? true : false,
   });
 
+  const [cart, setCart] = useState<PendingOrdersResponse[]>([]);
+
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
-        <CartContext.Provider value={{ cart, setCart }}>
-      <Header />
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/mytickets" element={<MyTickets />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/products" element={<AdminProduct />} />
-        <Route path="/articles" element={<AdminArticle />} />
-        <Route path="*" element={<NotImplementedPage />} />
-      </Routes>
-      <Footer />
+    <UserContext.Provider value={{ user, setUser }}>
+      <CartContext.Provider value={{ cart, setCart }}>
+        <Header />
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/mytickets" element={<MyTickets />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/products" element={<AdminProduct />} />
+          <Route path="*" element={<NotImplementedPage />} />
+        </Routes>
+        <Footer />
       </CartContext.Provider>
     </UserContext.Provider>
-  )}
-
+  );
+}

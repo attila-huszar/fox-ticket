@@ -1,7 +1,7 @@
-import app from '../src/app';
-import Product from '../src/models/Product';
 import request from 'supertest';
 import status from 'http-status';
+import { app } from '../src/app';
+import Product from '../src/models/Product';
 
 describe('PUT /api/admin/products/:productId', () => {
   it('edit one or more product field by id for existing Product', async () => {

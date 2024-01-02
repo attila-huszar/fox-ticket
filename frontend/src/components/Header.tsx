@@ -1,13 +1,24 @@
 import { Key, useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { Navbar, Text, Avatar, Dropdown, Switch } from '@nextui-org/react';
+import {
+  Navbar,
+  Avatar,
+  Dropdown,
+  Switch,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from '@nextui-org/react';
 import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb';
 import Login from './Login';
 import SignUp from './SignUp';
 import Cart from './Cart';
 import Admin from './Admin';
-import logo from '../static/logo.png';
-import profile_defpic from '../static/profile_def.png';
+import logo from '../assets/images/logo.png';
+import profile_defpic from '../assets/images/profile_def.png';
 import postLogout from '../api/postLogout';
 import '../styles/Header.css';
 import { UserContext } from '../components/App';
@@ -18,24 +29,23 @@ import postAuthTest from '../api/postAuthTest';
 
 export default function Header() {
   const navigate = useNavigate();
-  const { currentUser, setCurrentUser } =
-    useContext<UserContextInterface>(UserContext);
+  const { user, setUser } = useContext<UserContextInterface>(UserContext);
 
   const { isDarkMode, toggle } = useDarkMode();
 
   const notifyLoggedOut = () =>
-    toast.success(`${currentUser.email} successfully logged out.`);
+    toast.success(`${user.email} successfully logged out.`);
 
   const navigateDropdown = async (key: React.Key) => {
     if (key === 'LOGOUT') {
       try {
         const response = await postLogout({
-          email: currentUser.email,
-          token: currentUser.token,
+          email: user.email,
+          token: user.token,
         });
 
-        if (currentUser.email === (await response)) {
-          setCurrentUser({
+        if (user.email === (await response)) {
+          setUser!({
             name: 'Guest',
             email: '',
             token: '',
@@ -49,11 +59,11 @@ export default function Header() {
     } else if (key === '/help_and_feedback') {
       try {
         const response = await postAuthTest({
-          email: currentUser.email,
-          token: currentUser.token,
+          email: user.email,
+          token: user.token,
         });
 
-        if (currentUser.email === response) {
+        if (user.email === response) {
           const authTest = response;
           console.log(authTest, 'is authenticated');
         }
@@ -69,19 +79,13 @@ export default function Header() {
   return (
     <Navbar
       isBordered
-      variant="floating"
-      css={{
+      style={{
         background: 'var(--nextui-colors-navbarGradient)',
-        '@xsMax': {
-          w: '100%',
-          jc: 'space-between',
-        },
       }}>
-      <Navbar.Brand css={{ mr: '$4' }} style={{ display: 'flex', gap: '15px' }}>
+      <NavbarBrand style={{ display: 'flex', gap: '15px' }}>
         <img src={logo} alt="logo" style={{ width: '50px', height: 'auto' }} />
         <NavLink to="/">
-          <Text
-            b
+          <p
             color="inherit"
             style={{
               margin: '0 10px 0 0',
@@ -89,9 +93,9 @@ export default function Header() {
               fontSize: '34px',
             }}>
             Fox
-          </Text>
+          </p>
         </NavLink>
-        <Navbar.Content style={{ fontSize: '1.1rem' }}>
+        <NavbarContent style={{ fontSize: '1.1rem' }}>
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -106,7 +110,7 @@ export default function Header() {
             }>
             Shop
           </NavLink>
-          {currentUser.token ? (
+          {user.token ? (
             <NavLink
               to="/mytickets"
               className={({ isActive }) =>
@@ -115,79 +119,69 @@ export default function Header() {
               My Tickets
             </NavLink>
           ) : null}
-        </Navbar.Content>
-      </Navbar.Brand>
-      <Navbar.Content>
-        {currentUser.isAdmin && currentUser.token ? <Admin /> : null}
-        {currentUser.token ? null : <Login />}
-        {currentUser.token ? null : <SignUp />}
+        </NavbarContent>
+      </NavbarBrand>
+      <NavbarContent>
+        {user.isAdmin && user.token ? <Admin /> : null}
+        {user.token ? null : <Login />}
+        {user.token ? null : <SignUp />}
         <Cart />
-        <Navbar.Item>
-          <Dropdown placement="bottom-right">
-            <Dropdown.Trigger
-              css={{
-                fontSize: '1rem',
-                '&:hover, &:focus': {
-                  boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
-                },
-              }}>
-              <Avatar
-                bordered
-                as="button"
-                color="gradient"
-                size="md"
-                src={profile_defpic}
-              />
-            </Dropdown.Trigger>
-            <Dropdown.Menu
+        <NavbarItem>
+          <Dropdown>
+            <DropdownTrigger>
+              <Avatar as="button" size="md" src={profile_defpic} />
+            </DropdownTrigger>
+            <DropdownMenu
               aria-label="User menu actions"
               color="secondary"
               onAction={(key: Key) => navigateDropdown(key)}>
-              <Dropdown.Item key="" css={{ height: '$18' }}>
-                {currentUser.token ? (
-                  <Text>
+              <DropdownItem key="" style={{ height: '$18' }}>
+                {user.token ? (
+                  <p>
                     Logged in as{'\n'}
-                    <Text b color="warning" css={{ d: 'flex' }}>
-                      {currentUser.email}
-                    </Text>
-                  </Text>
+                    <p color="warning">{user.email}</p>
+                  </p>
                 ) : (
-                  <Text>
+                  <p>
                     Welcome,{'\n'}
-                    <Text b color="warning" css={{ d: 'flex' }}>
-                      {currentUser.name}!
-                    </Text>
-                  </Text>
+                    <p color="warning">{user.name}!</p>
+                  </p>
                 )}
-              </Dropdown.Item>
-              <Dropdown.Item key="/profile" icon={<TbUser />} withDivider>
+              </DropdownItem>
+              <DropdownItem
+                key="/profile"
+                startContent={<TbUser />}
+                showDivider>
                 Profile
-              </Dropdown.Item>
-              <Dropdown.Item key="/help_and_feedback" icon={<TbHelp />}>
+              </DropdownItem>
+              <DropdownItem key="/help_and_feedback" startContent={<TbHelp />}>
                 Help
-              </Dropdown.Item>
-              <Dropdown.Item
+              </DropdownItem>
+              <DropdownItem
                 key="LOGOUT"
-                icon={<TbLogout />}
-                withDivider
-                color="error">
+                startContent={<TbLogout />}
+                showDivider
+                color="danger">
                 Log Out
-              </Dropdown.Item>
-            </Dropdown.Menu>
+              </DropdownItem>
+            </DropdownMenu>
           </Dropdown>
-        </Navbar.Item>
+        </NavbarItem>
 
         <Switch
           checked={isDarkMode}
           onChange={toggle}
-          iconOn={<TbMoon />}
-          iconOff={<TbSun />}
+          thumbIcon={({ isSelected, className }) =>
+            isSelected ? (
+              <TbSun className={className} />
+            ) : (
+              <TbMoon className={className} />
+            )
+          }
           size="lg"
           color="secondary"
-          bordered
-          shadow
         />
-      </Navbar.Content>
+      </NavbarContent>
     </Navbar>
   );
 }

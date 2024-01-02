@@ -1,6 +1,6 @@
-import app from './app';
-import db from './db';
-import logger from './logger';
+import { app } from './app';
+import { db } from './db';
+import { logger } from './logger';
 
 const host = process.env.HOST || '127.0.0.1';
 const port = process.env.PORT || 4000;

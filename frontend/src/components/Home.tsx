@@ -1,7 +1,7 @@
 import Articles from './Articles';
 import { Fade, Slide } from 'react-awesome-reveal';
 import '../styles/Home.css';
-import m1 from '../assets/m1a.png';
+import m1 from '../assets/images/m1a.png';
 import Features from './Features';
 import CtaSection from './CtaSection';
 
@@ -25,8 +25,7 @@ export default function Home() {
         className="title"
         duration={750}
         triggerOnce
-        style={{ zIndex: '1' }}
-      >
+        style={{ zIndex: '1' }}>
         <h2>
           News
           <p style={{ fontSize: '16' }}>
@@ -42,8 +41,11 @@ export default function Home() {
             className="m1"
             src={m1}
             alt="m1 metro"
-            style={{ objectFit: 'cover', width: '100vw', height: '450px' }}
-          ></img>
+            style={{
+              objectFit: 'cover',
+              width: '100vw',
+              height: '450px',
+            }}></img>
         </div>
       </Slide>
       <Fade duration={1000} triggerOnce>

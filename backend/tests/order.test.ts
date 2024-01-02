@@ -1,9 +1,9 @@
 import request from 'supertest';
 import status from 'http-status';
-import app from '../src/app';
-import Order from '../src/models/Order';
+import { app } from '../src/app';
 import User from '../src/models/User';
 import Product from '../src/models/Product';
+import Order from '../src/models/Order';
 
 describe('GET /api/purchases/:id', () => {
   it('returns every order with the status for the given id', async () => {

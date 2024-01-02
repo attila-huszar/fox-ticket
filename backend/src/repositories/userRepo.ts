@@ -1,7 +1,7 @@
-import { RegisterRequestWithToken } from '../interfaces/user';
 import User from '../models/User';
+import { db } from '../db';
+import { RegisterRequestWithToken } from '../interfaces/user';
 import { QueryTypes } from 'sequelize';
-import db from '../db';
 
 export function registerUser(newUser: RegisterRequestWithToken): Promise<User> {
   return User.create({ ...newUser });

@@ -15,5 +15,5 @@ export interface NewOrderRequest {
 
 export interface CartContextInterface {
   cart: PendingOrdersResponse[];
-  setCart: (pendingOrders: PendingOrdersResponse[]) => void;
+  setCart?: (pendingOrders: PendingOrdersResponse[]) => void;
 }

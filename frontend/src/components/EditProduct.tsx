@@ -1,17 +1,16 @@
-import {
-  Text,
-  Spacer,
-  Button,
-  Row,
-  Col,
-  Input,
-  Modal,
-} from '@nextui-org/react';
+import { Spacer, Button, Input, Modal } from '@nextui-org/react';
 import { useState } from 'react';
 import { fetchEditProduct } from '../api/products';
-import { ProductRequest,  } from '../interfaces/product';
+import { ProductRequest } from '../interfaces/product';
 
-export function EditProduct({id, name, price, duration, description,type}: ProductRequest) {
+export function EditProduct({
+  id,
+  name,
+  price,
+  duration,
+  description,
+  type,
+}: ProductRequest) {
   const loadedproduct = {
     id: id,
     name: name,
@@ -43,7 +42,7 @@ export function EditProduct({id, name, price, duration, description,type}: Produ
     setErrorMessage('');
     setMessage('Product Successfully Edited!');
     setData(loadedproduct);
-    setVisEditProduct(false)
+    setVisEditProduct(false);
   };
 
   const productButtonHandler = () => setVisEditProduct(true);
@@ -54,33 +53,24 @@ export function EditProduct({id, name, price, duration, description,type}: Produ
 
   return (
     <>
-      <Button
-        auto
-        color="secondary"
-        shadow
-        onClick={productButtonHandler}
-      >
+      <Button color="secondary" onClick={productButtonHandler}>
         Edit
       </Button>
       <Modal
         closeButton
-        blur
         aria-labelledby="login form"
         open={visEditProduct}
-        onClose={closeHandler}
-      >
+        onClose={closeHandler}>
         <Modal.Header>
           <Row>
-            <Text
-              size={30}
-              css={{
+            <p
+              style={{
                 margin: 'auto',
                 textGradient: '45deg, $blue600 -20%, $pink600 50%',
               }}
-              weight="bold"
-            >
+              weight="bold">
               Edit Product
-            </Text>
+            </p>
           </Row>
         </Modal.Header>
         <Modal.Body>
@@ -140,12 +130,12 @@ export function EditProduct({id, name, price, duration, description,type}: Produ
                 value={data.type}
               />
               <Spacer y={1} />
-              <Text css={{ textAlign: 'center' }} color="error">
+              <p css={{ textAlign: 'center' }} color="error">
                 {errorMessage}
-              </Text>
-              <Text css={{ textAlign: 'center' }} color="success">
+              </p>
+              <p css={{ textAlign: 'center' }} color="success">
                 {message}
-              </Text>
+              </p>
               <Spacer y={1} />
               <Row>
                 <Button
@@ -157,11 +147,10 @@ export function EditProduct({id, name, price, duration, description,type}: Produ
                   }}
                   shadow
                   color="gradient"
-                  id="submit"
-                >
+                  id="submit">
                   Edit Product
                 </Button>
-                <Button auto flat color="error" onPress={closeHandler}>
+                <Button color="danger" onPress={closeHandler}>
                   Close
                 </Button>
               </Row>

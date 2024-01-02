@@ -1,6 +1,6 @@
 import request from 'supertest';
 import status from 'http-status';
-import app from '../src/app';
+import { app } from '../src/app';
 import Article from '../src/models/Article';
 import * as articleRepo from '../src/repositories/articleRepo';
 

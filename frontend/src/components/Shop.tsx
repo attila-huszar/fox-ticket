@@ -1,4 +1,4 @@
-import { Grid, Container, Text, Button } from '@nextui-org/react';
+import { Button, ButtonGroup } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import { fetchProducts } from '../api/products';
 import { ProductResponse } from '../interfaces/product';
@@ -8,7 +8,7 @@ import '../styles/Shop.css';
 export default function Shop() {
   const [products, setProducts] = useState<ProductResponse[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductResponse[]>(
-    []
+    [],
   );
 
   useEffect(() => {
@@ -43,65 +43,54 @@ export default function Shop() {
   }
 
   return (
-    <Container
+    <div
       style={{
         display: 'grid',
-      }}
-    >
-      <Text h1 css={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
+      }}>
+      <p style={{ marginTop: '20px', textAlign: 'center', width: '100%' }}>
         Tickets and Passes
-      </Text>
-      <Button.Group
-        color="gradient"
-        ghost
-        css={{ width: '100%', justifyContent: 'center', marginBottom: '40px' }}
-      >
+      </p>
+      <ButtonGroup
+        style={{
+          width: '100%',
+          justifyContent: 'center',
+          marginBottom: '40px',
+        }}>
         <Button
           autoFocus
           className="shopTabButton"
-          shadow
           size="md"
-          color="gradient"
-          css={{ width: '100px', zIndex: '0' }}
+          style={{ width: '100px', zIndex: '0' }}
           id="showAllButton"
-          onPress={handleAllClick}
-        >
+          onPress={handleAllClick}>
           All
         </Button>
         <Button
           className="shopTabButton"
-          shadow
           size="md"
-          color="gradient"
           id="ticketsTabButton"
-          css={{ width: '100px', zIndex: '0' }}
-          onPress={handleTicketsClick}
-        >
+          style={{ width: '100px', zIndex: '0' }}
+          onPress={handleTicketsClick}>
           Tickets
         </Button>
         <Button
-          shadow
           size="md"
-          color="gradient"
           id="passesTabButton"
           className="shopTabButton"
-          css={{ width: '100px', zIndex: '0' }}
-          onPress={handlePassesClick}
-        >
+          style={{ width: '100px', zIndex: '0' }}
+          onPress={handlePassesClick}>
           Passes
         </Button>
-      </Button.Group>
-      <Grid.Container
-        gap={2}
+      </ButtonGroup>
+      <div
         id="shopCards"
-        css={{
+        style={{
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: '1fr 1fr 1fr',
           gap: '5%',
           justifyContent: 'center',
-        }}
-      >
+        }}>
         {filteredProducts.map(product => (
           <ProductCard
             key={product.id}
@@ -111,7 +100,7 @@ export default function Shop() {
             price={product.price}
           />
         ))}
-      </Grid.Container>
-    </Container>
+      </div>
+    </div>
   );
 }

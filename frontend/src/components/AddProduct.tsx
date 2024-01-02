@@ -1,17 +1,13 @@
-import {
-  Text,
-  Spacer,
-  Button,
-  Row,
-  Col,
-  Input,
-  Modal,
-} from '@nextui-org/react';
+import { Spacer, Button, Input, Modal } from '@nextui-org/react';
 import { useState } from 'react';
 import { fetchAddNewProduct } from '../api/products';
 import { ProductRequest, ProductResponse } from '../interfaces/product';
 
-export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductResponse) => void }) {
+export function AddProduct({
+  addProduct,
+}: {
+  addProduct: (newProduct: ProductResponse) => void;
+}) {
   const emptyproduct = {
     name: '',
     price: 0,
@@ -39,7 +35,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
       }
     }
     setErrorMessage('');
-    setMessage('Product Successfully Added!')
+    setMessage('Product Successfully Added!');
     setData(emptyproduct);
   };
 
@@ -52,12 +48,16 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
   return (
     <>
       <Button
-        style={{ fontSize: '1rem', margin: 'auto', marginBottom: '30px', zIndex:"0"}}
+        style={{
+          fontSize: '1rem',
+          margin: 'auto',
+          marginBottom: '30px',
+          zIndex: '0',
+        }}
         auto
         color="secondary"
         shadow
-        onClick={productButtonHandler}
-      >
+        onClick={productButtonHandler}>
         Add Product
       </Button>
       <Modal
@@ -65,8 +65,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
         blur
         aria-labelledby="login form"
         open={visAddProduct}
-        onClose={closeHandler}
-      >
+        onClose={closeHandler}>
         <Modal.Header>
           <Row>
             <Text
@@ -75,8 +74,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
                 margin: 'auto',
                 textGradient: '45deg, $blue600 -20%, $pink600 50%',
               }}
-              weight="bold"
-            >
+              weight="bold">
               Add New Product
             </Text>
           </Row>
@@ -141,7 +139,9 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
               <Text css={{ textAlign: 'center' }} color="error">
                 {errorMessage}
               </Text>
-              <Text css={{ textAlign: 'center' }} color="success">{message}</Text>
+              <Text css={{ textAlign: 'center' }} color="success">
+                {message}
+              </Text>
               <Spacer y={1} />
               <Row>
                 <Button
@@ -153,8 +153,7 @@ export function AddProduct({ addProduct }: { addProduct: (newProduct: ProductRes
                   }}
                   shadow
                   color="gradient"
-                  id="submit"
-                >
+                  id="submit">
                   Add Product
                 </Button>
                 <Button auto flat color="error" onPress={closeHandler}>

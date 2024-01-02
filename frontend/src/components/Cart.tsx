@@ -5,7 +5,7 @@ import {
   fetchChangeOrderStatusByUserId,
 } from '../api/orders';
 import { CartContextInterface } from '../interfaces/orders';
-import { Modal, Button, Badge, Text } from '@nextui-org/react';
+import { Modal, Button, Badge } from '@nextui-org/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import OrderCart from './OrderCart';
 import { CartContext } from './App';
@@ -37,7 +37,7 @@ export default function Cart() {
   };
 
   function fetchPendingOrders() {
-    return fetchPendingOrder().then(data => setCart(data));
+    return fetchPendingOrder().then(data => setCart!(data));
   }
 
   return (
@@ -56,8 +56,7 @@ export default function Cart() {
             shadow
             rounded
             icon={<FiShoppingCart />}
-            onClick={handler}
-          ></Button>
+            onClick={handler}></Button>
         </Badge>
       ) : (
         <Button
@@ -72,17 +71,15 @@ export default function Cart() {
           shadow
           rounded
           icon={<FiShoppingCart />}
-          onClick={handler}
-        ></Button>
+          onClick={handler}></Button>
       )}
-     
+
       <Modal
         closeButton
         blur
         aria-labelledby="shopping cart"
         open={visible}
-        onClose={closeHandler}
-      >
+        onClose={closeHandler}>
         <Modal.Body>
           <Text>{message}</Text>
           {cart.map(order => (
@@ -105,8 +102,7 @@ export default function Cart() {
             size="sm"
             auto
             color="secondary"
-            onClick={buyProductHandler}
-          >
+            onClick={buyProductHandler}>
             Buy
           </Button>
           <Button
@@ -116,8 +112,7 @@ export default function Cart() {
             auto
             color="gradient"
             id="submit"
-            onClick={resetAllOrdersHandler}
-          >
+            onClick={resetAllOrdersHandler}>
             Reset
           </Button>
           <Button
@@ -126,8 +121,7 @@ export default function Cart() {
             auto
             color="primary"
             id="submit"
-            onPress={closeHandler}
-          >
+            onPress={closeHandler}>
             Close
           </Button>
         </Modal.Footer>

@@ -1,10 +1,13 @@
 import {
-  Grid,
   Button,
   Card,
-  Row,
-  Text,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
   Spacer,
 } from '@nextui-org/react';
 import { ProductRequest } from '../interfaces/product';
@@ -21,11 +24,9 @@ export default function ActiveTickets({ name, description }: ProductRequest) {
 
   return (
     <>
-      <Grid
-        sm={12}
-        md={5}
+      <div
         id="cardGrid"
-        css={{
+        style={{
           justifyContent: 'center',
           marginLeft: '32%',
           width: '100%',
@@ -40,47 +41,40 @@ export default function ActiveTickets({ name, description }: ProductRequest) {
           }}
           id="card"
           isHoverable>
-          <Card.Header
-            css={{
+          <CardHeader
+            style={{
               backgroundColor: 'var(--nextui-colors-cardHeaderBackground)',
             }}>
-            <Text css={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
+            <p style={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
               {name}
-            </Text>
-          </Card.Header>
-          <Card.Divider />
-          <Card.Body css={{ py: '$10' }}>
-            <Text css={{ margin: 'auto' }}>{description}</Text>
-          </Card.Body>
-          <Card.Divider />
-          <Card.Footer>
-            <Row justify="center">
-              <Button
-                shadow
-                size="md"
-                auto
-                color="gradient"
-                id="submit"
-                onPress={() => setQrVisible(true)}>
+            </p>
+          </CardHeader>
+          <Spacer />
+          <CardBody>
+            <p style={{ margin: 'auto' }}>{description}</p>
+          </CardBody>
+          <Spacer />
+          <CardFooter>
+            <div>
+              <Button size="md" id="submit" onPress={() => setQrVisible(true)}>
                 Activate
               </Button>
-            </Row>
-          </Card.Footer>
+            </div>
+          </CardFooter>
         </Card>
-      </Grid>
+      </div>
 
       <Modal
         closeButton
-        blur
         aria-labelledby="login form"
         open={qrVisible}
         onClose={closeHandler}>
-        <Modal.Header>
-          <Text size={18}>{name}</Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Spacer y={0.2} />
-        </Modal.Body>
+        <ModalHeader>
+          <p>{name}</p>
+        </ModalHeader>
+        <ModalBody>
+          <Spacer y={2} />
+        </ModalBody>
         <QRCode
           value={description}
           style={{
@@ -92,11 +86,11 @@ export default function ActiveTickets({ name, description }: ProductRequest) {
             borderRadius: '12px',
           }}
         />
-        <Modal.Footer>
+        <ModalFooter>
           <Button color="warning" onPress={closeHandler}>
             Close
           </Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Modal>
     </>
   );

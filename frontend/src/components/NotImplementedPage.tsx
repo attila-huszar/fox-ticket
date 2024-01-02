@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@nextui-org/react';
 import { TbArrowBackUp } from 'react-icons/tb';
-import logo from '../static/logo.png';
+import logo from '../assets/images/logo.png';
 import { Zoom } from 'react-awesome-reveal';
 
 export default function NotImplementedPage() {
@@ -19,13 +19,9 @@ export default function NotImplementedPage() {
       />
       <Button
         style={{ margin: 'auto' }}
-        shadow
         size="lg"
-        icon={<TbArrowBackUp />}
-        auto
-        color="gradient"
-        onPress={() => navigate(-1)}
-      >
+        endContent={<TbArrowBackUp />}
+        onPress={() => navigate(-1)}>
         Back
       </Button>
     </Zoom>

@@ -18,18 +18,18 @@ export interface LoggedInUser {
 }
 
 export interface UserContextInterface {
-  currentUser: LoggedInUser;
-  setCurrentUser: (user: LoggedInUser) => void;
+  user: LoggedInUser;
+  setUser?: (user: LoggedInUser) => void;
 }
 
 export interface InputField {
   text: string;
   color:
-    | 'success'
-    | 'warning'
     | 'default'
     | 'primary'
     | 'secondary'
-    | 'error'
+    | 'success'
+    | 'warning'
+    | 'danger'
     | undefined;
 }

@@ -1,11 +1,14 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import {
   Modal,
-  Input,
-  Row,
-  Checkbox,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
   Button,
-  Text,
+  useDisclosure,
+  Input,
+  Checkbox,
   Spacer,
 } from '@nextui-org/react';
 import { postLogin } from '../api/postLogin';
@@ -17,19 +20,25 @@ import { InputField, LoggedInUser } from '../interfaces/user';
 import { toast } from 'react-toastify';
 import { UserContext } from './App';
 import { UserContextInterface } from '../interfaces/user';
+import { EyeSlashFilledIcon } from '../assets/svg/EyeSlashFilledIcon';
+import { EyeFilledIcon } from '../assets/svg/EyeFilledIcon';
 
 export default function Login() {
-  const { setCurrentUser } = useContext<UserContextInterface>(UserContext);
+  const { user, setUser } = useContext<UserContextInterface>(UserContext);
+  console.log(user);
 
-  const [loginModalVisible, setLoginModalVisible] = useState(false);
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+
+  // const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isPassVisible, setIsPassVisible] = useState(false);
   const [shakeEmail, setShakeEmail] = useState(false);
   const [shakePassword, setShakePassword] = useState(false);
+  const togglePassVisibility = () => setIsPassVisible(!isPassVisible);
 
   // Input field helpers
-  const emailHelper: InputField = React.useMemo(() => {
+  const emailHelper: InputField = useMemo(() => {
     if (!email)
       return {
         text: '',
@@ -43,7 +52,7 @@ export default function Login() {
     };
   }, [email]);
 
-  const passHelper: InputField = React.useMemo(() => {
+  const passHelper: InputField = useMemo(() => {
     if (!password)
       return {
         text: '',
@@ -60,30 +69,32 @@ export default function Login() {
   }, [password]);
 
   // Handlers
-  let response: LoggedInUser;
 
   const loginHandler = async () => {
     if (!email) {
       setShakeEmail(true);
-      emailHelper.color = 'error';
+      emailHelper.color = 'danger';
       emailHelper.text = 'Please enter your email address';
     } else if (!validateEmail(email)) {
       setShakeEmail(true);
-      emailHelper.color = 'error';
+      emailHelper.color = 'danger';
     }
     if (!password) {
       setShakePassword(true);
-      passHelper.color = 'error';
+      passHelper.color = 'danger';
       passHelper.text = 'Please enter your password';
     } else if (!validatePassword(password)) {
       setShakePassword(true);
-      passHelper.color = 'error';
+      passHelper.color = 'danger';
     }
     setTimeout(() => setShakeEmail(false), 750);
     setTimeout(() => setShakePassword(false), 750);
 
     try {
-      response = await postLogin({ email, password });
+      const response: LoggedInUser = (await postLogin({
+        email,
+        password,
+      })) as LoggedInUser;
 
       if (response) {
         const verified = response.isVerified;
@@ -92,7 +103,7 @@ export default function Login() {
           localStorage.setItem('email', response.email);
           localStorage.setItem('token', response.token);
           localStorage.setItem('admin', String(response.isAdmin));
-          setCurrentUser({
+          setUser!({
             name: response.name,
             email: response.email,
             token: response.token,
@@ -102,7 +113,7 @@ export default function Login() {
         } else {
           notifyNotVerified();
         }
-        setLoginModalVisible(false);
+        onClose();
       }
 
       return response;
@@ -114,8 +125,8 @@ export default function Login() {
         for (let i = 0; i < errors.length; i++) {
           setShakeEmail(true);
           setShakePassword(true);
-          emailHelper.color = 'error';
-          passHelper.color = 'error';
+          emailHelper.color = 'danger';
+          passHelper.color = 'danger';
           emailHelper.text = errors[0][i];
           passHelper.text = errors[0][i];
           setTimeout(() => {
@@ -127,15 +138,15 @@ export default function Login() {
     }
   };
 
-  const closeModalHandler = () => {
-    setLoginModalVisible(false);
-    setEmail('');
-    setPassword('');
-  };
+  // const closeModalHandler = () => {
+  //   setLoginModalVisible(false);
+  //   setEmail('');
+  //   setPassword('');
+  // };
 
   // Notifications
   const notifyLoggedIn = () =>
-    toast.success(`Successful login. Welcome to Fox Ticket, ${response.name}!`);
+    toast.success(`Successful login. Welcome to Fox Ticket, ${user.name}!`);
 
   const notifyNotVerified = () =>
     toast.warn('Please verify your email address before logging in.');
@@ -143,90 +154,93 @@ export default function Login() {
   return (
     <>
       <Button
-        css={{
-          fontSize: '1rem',
-          '&:hover, &:focus': {
-            boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
-          },
-        }}
-        auto
+        className="hover:[box-shadow:0_4px_14px_0_var(--nextui-colors-hoverShadow)]"
         color="secondary"
-        shadow
-        onPress={() => setLoginModalVisible(true)}
-      >
+        onPress={onOpen}>
         Login
       </Button>
       <Modal
+        backdrop="opaque"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        classNames={{
+          backdrop:
+            'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
+        }}
         closeButton
-        blur
-        aria-labelledby="login form"
-        open={loginModalVisible}
-        onClose={closeModalHandler}
-      >
-        <Modal.Header>
-          <Text size={26}>Welcome to&nbsp; </Text>
-          <Text
-            size={28}
-            css={{
-              textGradient: '45deg, $blue600 -20%, $pink600 50%',
-              letterSpacing: '$wide',
-            }}
-          >
-            <strong>Fox</strong>Ticket
-          </Text>
-        </Modal.Header>
-        <hr
-          style={{
-            color: '#f2f2f2',
-            height: 5,
-          }}
-        />
-        <Modal.Body>
-          <Spacer y={0.2} />
-          <Input
-            className={shakeEmail ? 'shake' : ''}
-            onChange={e => setEmail(e.target.value)}
-            required
-            bordered
-            status={emailHelper.color}
-            color={emailHelper.color}
-            helperColor={emailHelper.color}
-            helperText={emailHelper.text}
-            labelPlaceholder="Email"
-            fullWidth
-            size="lg"
-          />
-          <Spacer y={1.5} />
-          <Input.Password
-            className={shakePassword ? 'shake' : ''}
-            onChange={e => setPassword(e.target.value)}
-            required
-            bordered
-            status={passHelper.color}
-            color={passHelper.color}
-            helperColor={passHelper.color}
-            helperText={passHelper.text}
-            type="password"
-            labelPlaceholder="Password"
-            fullWidth
-            size="lg"
-          />
-          <Spacer y={0.2} />
-          <Row justify="space-between">
-            <Checkbox color="secondary">
-              <Text size={14}>Remember me</Text>
-            </Checkbox>
-            <Text size={14}>Forgot password?</Text>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onPress={closeModalHandler}>
-            Close
-          </Button>
-          <Button auto onPress={loginHandler} color="gradient">
-            Login
-          </Button>
-        </Modal.Footer>
+        aria-labelledby="login form">
+        <ModalContent>
+          {onClose => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                <p>Welcome to&nbsp; </p>
+                <p>
+                  <strong>Fox</strong>Ticket
+                </p>
+              </ModalHeader>
+              <hr
+                style={{
+                  color: '#f2f2f2',
+                  height: 5,
+                }}
+              />
+              <ModalBody>
+                <Spacer y={2} />
+                <Input
+                  className={shakeEmail ? 'shake' : ''}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  color={emailHelper.color}
+                  errorMessage={emailHelper.text}
+                  placeholder="Email"
+                  fullWidth
+                  size="lg"
+                />
+                <Spacer y={1.5} />
+                <Input
+                  label="Password"
+                  variant="bordered"
+                  placeholder="Enter your password"
+                  endContent={
+                    <button
+                      className="focus:outline-none"
+                      type="button"
+                      onClick={togglePassVisibility}>
+                      {isPassVisible ? (
+                        <EyeSlashFilledIcon className="text-default-400 pointer-events-none text-2xl" />
+                      ) : (
+                        <EyeFilledIcon className="text-default-400 pointer-events-none text-2xl" />
+                      )}
+                    </button>
+                  }
+                  type={isPassVisible ? 'text' : 'password'}
+                  className={shakePassword ? 'shake' : ''}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  color={passHelper.color}
+                  errorMessage={passHelper.text}
+                  fullWidth
+                  size="lg"
+                />
+                <Spacer y={2} />
+                <div className="justify-between">
+                  <Checkbox color="secondary">
+                    <p>Remember me</p>
+                  </Checkbox>
+                  <p>Forgot password?</p>
+                </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" onPress={loginHandler}>
+                  Login
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
       </Modal>
     </>
   );

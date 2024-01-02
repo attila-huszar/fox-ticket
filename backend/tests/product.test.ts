@@ -1,8 +1,8 @@
 import request from 'supertest';
 import status from 'http-status';
-import * as productRepo from '../src/repositories/productRepo';
-import app from '../src/app';
+import { app } from '../src/app';
 import Product from '../src/models/Product';
+import * as productRepo from '../src/repositories/productRepo';
 
 describe('POST /api/admin/products', () => {
   it('returns the JSON for the created product', async () => {
