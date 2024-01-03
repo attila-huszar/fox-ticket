@@ -5,12 +5,20 @@ module.exports = {
     es2020: true,
   },
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'regexp', 'react-refresh'],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    jsxPragma: null, // for @typescript/eslint-parser
+  },
+  plugins: ['@typescript-eslint', 'react', 'react-refresh', 'regexp'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:regexp/recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
+    'plugin:regexp/recommended',
   ],
   ignorePatterns: ['dist', 'build', '.eslint*'],
   rules: {
@@ -21,6 +29,9 @@ module.exports = {
     ],
   },
   settings: {
+    react: {
+      version: 'detect',
+    },
     regexp: {
       allowedCharacterRanges: ['alphanumeric', 'a-ű'],
     },

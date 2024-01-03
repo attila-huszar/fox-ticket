@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
@@ -13,8 +13,8 @@ import { CartContext } from './App';
 export default function Cart() {
   const { cart, setCart } = useContext<CartContextInterface>(CartContext);
 
-  const [visible, setVisible] = React.useState(false);
-  const [message, setMessage] = React.useState('');
+  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState('');
 
   const closeHandler = () => {
     setVisible(false);
@@ -43,7 +43,7 @@ export default function Cart() {
   return (
     <>
       {cart.length !== 0 ? (
-        <Badge color="error" content={cart.length}>
+        <Badge color="danger" content={cart.length}>
           <Button
             css={{
               fontSize: '1rem',
