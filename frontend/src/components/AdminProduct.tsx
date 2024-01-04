@@ -20,15 +20,12 @@ export default function AdminProduct() {
   }, []);
 
   return (
-    <Container style={{ marginBottom: '10%' }}>
-      <Text h1 css={{ textAlign: 'center', zIndex: '0' }}>
-        Tickets and Passes
-      </Text>
+    <div style={{ marginBottom: '10%' }}>
+      <p style={{ textAlign: 'center', zIndex: '0' }}>Tickets and Passes</p>
       <AddProduct addProduct={addProduct} />
-      <Grid.Container
-        gap={2}
+      <div
         id="shopCards"
-        css={{
+        style={{
           display: 'grid',
           gridTemplateColumns: '20% 20% 20%',
           gridTemplateRows: '1fr 1fr 1fr',
@@ -50,7 +47,7 @@ export default function AdminProduct() {
             isAdmin={true}
           />
         ))}
-      </Grid.Container>
-    </Container>
+      </div>
+    </div>
   );
 }

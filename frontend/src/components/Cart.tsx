@@ -5,7 +5,13 @@ import {
   fetchChangeOrderStatusByUserId,
 } from '../api/orders';
 import { CartContextInterface } from '../interfaces/orders';
-import { Modal, Button, Badge } from '@nextui-org/react';
+import {
+  Modal,
+  Button,
+  Badge,
+  ModalBody,
+  ModalFooter,
+} from '@nextui-org/react';
 import { FiShoppingCart } from 'react-icons/fi';
 import OrderCart from './OrderCart';
 import { CartContext } from './App';
@@ -45,7 +51,7 @@ export default function Cart() {
       {cart.length !== 0 ? (
         <Badge color="danger" content={cart.length}>
           <Button
-            css={{
+            style={{
               fontSize: '1rem',
               '&:hover, &:focus': {
                 boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
@@ -60,7 +66,7 @@ export default function Cart() {
         </Badge>
       ) : (
         <Button
-          css={{
+          style={{
             fontSize: '1rem',
             '&:hover, &:focus': {
               boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
@@ -76,16 +82,15 @@ export default function Cart() {
 
       <Modal
         closeButton
-        blur
         aria-labelledby="shopping cart"
         open={visible}
         onClose={closeHandler}>
-        <Modal.Body>
-          <Text>{message}</Text>
+        <ModalBody>
+          <p>{message}</p>
           {cart.map(order => (
             <OrderCart
               removeOrder={(orderId: number) =>
-                setCart(cart.filter(order => order.id !== orderId))
+                setCart!(cart.filter(order => order.id !== orderId))
               }
               key={order.id}
               name={order.name}
@@ -93,38 +98,27 @@ export default function Cart() {
               id={order.id}
             />
           ))}
-        </Modal.Body>
+        </ModalBody>
 
-        <Modal.Footer>
+        <ModalFooter>
           <Button
-            css={{ marginRight: '20px' }}
-            shadow
+            style={{ marginRight: '20px' }}
             size="sm"
-            auto
             color="secondary"
             onClick={buyProductHandler}>
             Buy
           </Button>
           <Button
-            css={{ marginRight: '20px' }}
-            shadow
+            style={{ marginRight: '20px' }}
             size="sm"
-            auto
-            color="gradient"
             id="submit"
             onClick={resetAllOrdersHandler}>
             Reset
           </Button>
-          <Button
-            shadow
-            size="sm"
-            auto
-            color="primary"
-            id="submit"
-            onPress={closeHandler}>
+          <Button size="sm" color="primary" id="submit" onPress={closeHandler}>
             Close
           </Button>
-        </Modal.Footer>
+        </ModalFooter>
       </Modal>
     </>
   );

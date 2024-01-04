@@ -1,4 +1,11 @@
-import { Spacer, Button, Input, Modal } from '@nextui-org/react';
+import {
+  Spacer,
+  Button,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from '@nextui-org/react';
 import { useState } from 'react';
 import { fetchAddNewProduct } from '../api/products';
 import { ProductRequest, ProductResponse } from '../interfaces/product';
@@ -54,41 +61,35 @@ export function AddProduct({
           marginBottom: '30px',
           zIndex: '0',
         }}
-        auto
         color="secondary"
-        shadow
         onClick={productButtonHandler}>
         Add Product
       </Button>
       <Modal
         closeButton
-        blur
         aria-labelledby="login form"
         open={visAddProduct}
         onClose={closeHandler}>
-        <Modal.Header>
-          <Row>
-            <Text
-              size={30}
-              css={{
+        <ModalHeader>
+          <div>
+            <p
+              style={{
                 margin: 'auto',
                 textGradient: '45deg, $blue600 -20%, $pink600 50%',
-              }}
-              weight="bold">
+              }}>
               Add New Product
-            </Text>
-          </Row>
-        </Modal.Header>
-        <Modal.Body>
+            </p>
+          </div>
+        </ModalHeader>
+        <ModalBody>
           <Spacer y={0.5} />
-          <Row>
-            <Col>
+          <div>
+            <div>
               <Input
                 onChange={e => setData({ ...data, name: e.target.value })}
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Name"
+                label="Name"
                 value={data.name}
               />
               <Spacer y={0.5} />
@@ -120,30 +121,28 @@ export function AddProduct({
                 onChange={e =>
                   setData({ ...data, description: e.target.value })
                 }
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Description"
+                label="Description"
                 value={data.description}
               />
               <Spacer y={0.5} />
               <Input
                 onChange={e => setData({ ...data, type: e.target.value })}
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Type"
+                label="Type"
                 value={data.type}
               />
               <Spacer y={1} />
-              <Text css={{ textAlign: 'center' }} color="error">
+              <p style={{ textAlign: 'center' }} color="error">
                 {errorMessage}
-              </Text>
-              <Text css={{ textAlign: 'center' }} color="success">
+              </p>
+              <p style={{ textAlign: 'center' }} color="success">
                 {message}
-              </Text>
+              </p>
               <Spacer y={1} />
-              <Row>
+              <div>
                 <Button
                   onPress={addProductHandler}
                   style={{
@@ -151,18 +150,16 @@ export function AddProduct({
                     margin: 'auto',
                     marginBottom: '30px',
                   }}
-                  shadow
-                  color="gradient"
                   id="submit">
                   Add Product
                 </Button>
-                <Button auto flat color="error" onPress={closeHandler}>
+                <Button color="danger" onPress={closeHandler}>
                   Close
                 </Button>
-              </Row>
-            </Col>
-          </Row>
-        </Modal.Body>
+              </div>
+            </div>
+          </div>
+        </ModalBody>
       </Modal>
     </>
   );

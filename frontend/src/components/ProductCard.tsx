@@ -1,4 +1,12 @@
-import { Button, Card, Spacer } from '@nextui-org/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Divider,
+  Spacer,
+} from '@nextui-org/react';
 import { fetchDeleteProduct } from '../api/products';
 import { fetchCreateNewPendingOrder, fetchPendingOrder } from '../api/orders';
 import { ProductRequest } from '../interfaces/product';
@@ -34,11 +42,9 @@ export default function ProductCard({
   };
 
   return (
-    <Grid
-      sm={12}
-      md={5}
+    <div
       id="cardGrid"
-      css={{
+      style={{
         justifyContent: 'center',
         margin: '0 auto',
         width: '100%',
@@ -46,30 +52,30 @@ export default function ProductCard({
       }}>
       <Card
         key={id}
-        css={{
-          w: '280px',
+        style={{
+          width: '280px',
           display: 'flex',
           margin: '0 auto',
           backgroundColor: 'var(--nextui-colors-cardBackground)',
         }}
         id="card"
         isHoverable>
-        <Card.Header
-          css={{
+        <CardHeader
+          style={{
             backgroundColor: 'var(--nextui-colors-cardHeaderBackground)',
           }}>
-          <Text css={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
+          <p style={{ color: 'White', margin: 'auto', fontSize: 'larger' }}>
             {name}
-          </Text>
-        </Card.Header>
-        <Card.Divider />
-        <Card.Body css={{ py: '$10' }}>
-          <Text css={{ margin: 'auto' }}>{price} Ft</Text>
-          <Text css={{ margin: 'auto' }}>{description}</Text>
-        </Card.Body>
-        <Card.Divider />
-        <Card.Footer>
-          <Row justify="center">
+          </p>
+        </CardHeader>
+        <Divider />
+        <CardBody style={{ padding: '10px' }}>
+          <p style={{ margin: 'auto' }}>{price} Ft</p>
+          <p style={{ margin: 'auto' }}>{description}</p>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <div className="justify-center">
             {isAdmin ? (
               <>
                 <EditProduct
@@ -81,30 +87,18 @@ export default function ProductCard({
                   type={type}
                 />
                 <Spacer />
-                <Button
-                  onPress={deleteProductHandler}
-                  shadow
-                  size="md"
-                  auto
-                  color="gradient"
-                  id="submit">
+                <Button onPress={deleteProductHandler} size="md" id="submit">
                   Remove
                 </Button>
               </>
             ) : (
-              <Button
-                shadow
-                size="md"
-                auto
-                color="gradient"
-                id="submit"
-                onPress={createNewOrderHadler}>
+              <Button size="md" id="submit" onPress={createNewOrderHadler}>
                 Add to Cart
               </Button>
             )}
-          </Row>
-        </Card.Footer>
+          </div>
+        </CardFooter>
       </Card>
-    </Grid>
+    </div>
   );
 }

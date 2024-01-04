@@ -1,4 +1,11 @@
-import { Spacer, Button, Input, Modal } from '@nextui-org/react';
+import {
+  Spacer,
+  Button,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from '@nextui-org/react';
 import { useState } from 'react';
 import { fetchEditProduct } from '../api/products';
 import { ProductRequest } from '../interfaces/product';
@@ -61,28 +68,26 @@ export function EditProduct({
         aria-labelledby="login form"
         open={visEditProduct}
         onClose={closeHandler}>
-        <Modal.Header>
-          <Row>
+        <ModalHeader>
+          <div>
             <p
               style={{
                 margin: 'auto',
                 textGradient: '45deg, $blue600 -20%, $pink600 50%',
-              }}
-              weight="bold">
+              }}>
               Edit Product
             </p>
-          </Row>
-        </Modal.Header>
-        <Modal.Body>
+          </div>
+        </ModalHeader>
+        <ModalBody>
           <Spacer y={0.5} />
-          <Row>
-            <Col>
+          <div>
+            <div>
               <Input
                 onChange={e => setData({ ...data, name: e.target.value })}
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Name"
+                label="Name"
                 value={data.name}
               />
               <Spacer y={0.5} />
@@ -94,7 +99,7 @@ export function EditProduct({
                 underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Price"
+                label="Price"
                 value={data.price === 0 ? '' : data.price}
               />
               <Spacer y={0.5} />
@@ -106,7 +111,7 @@ export function EditProduct({
                 underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Duration"
+                label="Duration"
                 value={data.duration === 0 ? '' : data.duration}
               />
               <Spacer y={0.5} />
@@ -114,30 +119,28 @@ export function EditProduct({
                 onChange={e =>
                   setData({ ...data, description: e.target.value })
                 }
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Description"
+                label="Description"
                 value={data.description}
               />
               <Spacer y={0.5} />
               <Input
                 onChange={e => setData({ ...data, type: e.target.value })}
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Type"
+                label="Type"
                 value={data.type}
               />
               <Spacer y={1} />
-              <p css={{ textAlign: 'center' }} color="error">
+              <p style={{ textAlign: 'center' }} color="danger">
                 {errorMessage}
               </p>
-              <p css={{ textAlign: 'center' }} color="success">
+              <p style={{ textAlign: 'center' }} color="success">
                 {message}
               </p>
               <Spacer y={1} />
-              <Row>
+              <div>
                 <Button
                   onPress={editProductHandler}
                   style={{
@@ -145,18 +148,16 @@ export function EditProduct({
                     margin: 'auto',
                     marginBottom: '30px',
                   }}
-                  shadow
-                  color="gradient"
                   id="submit">
                   Edit Product
                 </Button>
                 <Button color="danger" onPress={closeHandler}>
                   Close
                 </Button>
-              </Row>
-            </Col>
-          </Row>
-        </Modal.Body>
+              </div>
+            </div>
+          </div>
+        </ModalBody>
       </Modal>
     </>
   );

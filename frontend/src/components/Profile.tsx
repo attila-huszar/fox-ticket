@@ -125,8 +125,7 @@ export default function Profile() {
               style={{
                 margin: 'auto',
                 textGradient: '45deg, $blue600 -20%, $pink600 50%',
-              }}
-              weight="bold">
+              }}>
               My Profile
             </p>
           </div>
@@ -152,14 +151,14 @@ export default function Profile() {
                 readOnly
                 width="100%"
                 size="lg"
-                labelLeft="Email"
+                label="Email"
                 value={user.email}
               />
               <Spacer y={1.5} />
               <Input
                 width="100%"
                 size="lg"
-                labelLeft="Username"
+                label="Username"
                 value={user.name}
               />
             </div>
