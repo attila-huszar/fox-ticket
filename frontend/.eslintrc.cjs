@@ -11,14 +11,25 @@ module.exports = {
     },
     jsxPragma: null, // for @typescript/eslint-parser
   },
-  plugins: ['@typescript-eslint', 'react', 'react-refresh', 'regexp'],
+  plugins: [
+    '@typescript-eslint',
+    'promise',
+    'react',
+    'react-hooks',
+    'react-refresh',
+    'regexp',
+    'tailwindcss',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:promise/recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:regexp/recommended',
+    'plugin:prettier/recommended',
+    'plugin:tailwindcss/recommended',
   ],
   ignorePatterns: ['dist', 'build', '.eslint*'],
   rules: {

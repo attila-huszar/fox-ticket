@@ -12,10 +12,15 @@ export default function Shop() {
   );
 
   useEffect(() => {
-    fetchProducts().then(data => {
-      setProducts(data);
-      setFilteredProducts(data);
-    });
+    fetchProducts()
+      .then(data => {
+        setProducts(data);
+        setFilteredProducts(data);
+        return null;
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }, []);
 
   async function handleTicketsClick() {

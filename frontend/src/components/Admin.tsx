@@ -25,8 +25,7 @@ export default function Admin() {
             '&:hover, &:focus': {
               boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
             },
-          }}
-        >
+          }}>
           <Button auto color="gradient" shadow icon={<TbSettings />}>
             Admin
           </Button>
@@ -34,8 +33,7 @@ export default function Admin() {
         <Dropdown.Menu
           aria-label="User menu actions"
           color="secondary"
-          onAction={key => navigateDropdown(key)}
-        >
+          onAction={key => navigateDropdown(key)}>
           <Dropdown.Item key="/products" icon={<TbShoppingCart />}>
             Products
           </Dropdown.Item>

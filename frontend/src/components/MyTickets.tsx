@@ -9,9 +9,14 @@ export default function MyTickets() {
   const [actives, setActive] = useState<ProductResponse[]>([]);
 
   useEffect(() => {
-    fetchActiveOrders().then(data => {
-      setActive(data);
-    });
+    fetchActiveOrders()
+      .then(data => {
+        setActive(data);
+        return null;
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }, []);
 
   return (
