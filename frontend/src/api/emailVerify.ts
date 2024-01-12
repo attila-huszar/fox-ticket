@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-export default async function emailVerify(queryString: string) {
+export async function emailVerify(queryString: string) {
   try {
     const res: AxiosResponse = await axios.post('/api/verify', {
       key: queryString,

@@ -11,17 +11,14 @@ import {
   Checkbox,
   Spacer,
 } from '@nextui-org/react';
-import { postLogin } from '../api/postLogin';
-import {
-  validateEmail,
-  validatePassword,
-} from '../helpers/inputFieldValidators';
-import { InputField, LoggedInUser } from '../interfaces/user';
+import { postLogin } from '@api/postLogin';
+import { validateEmail, validatePassword } from '@utils/inputFieldValidators';
+import { InputField, LoggedInUser } from '@interfaces/user';
 import { toast } from 'react-toastify';
 import { UserContext } from './App';
-import { UserContextInterface } from '../interfaces/user';
-import { EyeSlashFilledIcon } from '../assets/svg/EyeSlashFilledIcon';
-import { EyeFilledIcon } from '../assets/svg/EyeFilledIcon';
+import { UserContextInterface } from '@interfaces/user';
+import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon';
+import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon';
 
 export default function Login() {
   const { user, setUser } = useContext<UserContextInterface>(UserContext);

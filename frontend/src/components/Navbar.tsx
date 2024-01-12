@@ -1,5 +1,7 @@
 import { Key, useContext } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
+import { useDarkMode } from 'usehooks-ts';
+import { UserContext } from './App';
 import {
   Navbar,
   Avatar,
@@ -12,20 +14,20 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@nextui-org/react';
-import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb';
+
 import Login from './Login';
 import SignUp from './SignUp';
 import Cart from './Cart';
 import Admin from './Admin';
-import logo from '../assets/images/logo.png';
-import profile_defpic from '../assets/images/profile_def.png';
-import postLogout from '../api/postLogout';
-import '../styles/Header.css';
-import { UserContext } from '../components/App';
+
 import { toast } from 'react-toastify';
-import { UserContextInterface } from '../interfaces/user';
-import { useDarkMode } from 'usehooks-ts';
-import postAuthTest from '../api/postAuthTest';
+import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb';
+import { UserContextInterface } from '@interfaces/user';
+import postAuthTest from '@api/postAuthTest';
+import postLogout from '@api/postLogout';
+import logo from '@assets/images/logo.png';
+import profile_defpic from '@assets/images/profile_def.png';
+import '@styles/Header.css';
 
 export default function Header() {
   const navigate = useNavigate();

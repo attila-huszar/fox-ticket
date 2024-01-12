@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react';
-import { Zoom } from 'react-awesome-reveal';
+import { UserContext } from './App';
 import {
   Button,
   Input,
@@ -14,9 +14,8 @@ import {
   validateMatch,
   validateName,
   validatePassword,
-} from '../helpers/inputFieldValidators';
+} from '../utils/inputFieldValidators';
 import { InputField, UserContextInterface } from '../interfaces/user';
-import { UserContext } from './App';
 
 export default function Profile() {
   const { user } = useContext<UserContextInterface>(UserContext);
@@ -109,95 +108,88 @@ export default function Profile() {
 
   return (
     <>
-      <Zoom duration={500} triggerOnce>
-        <div
-          style={{
-            margin: '50px auto',
-            padding: '20px',
-            minWidth: '450px',
-            maxWidth: '800px',
-            height: '450px',
-            border: '4px solid var(--nextui-colors-navbarActive)',
-            borderRadius: '12px',
-          }}>
-          <div>
-            <p
+      <div
+        style={{
+          margin: '50px auto',
+          padding: '20px',
+          minWidth: '450px',
+          maxWidth: '800px',
+          height: '450px',
+          border: '4px solid var(--nextui-colors-navbarActive)',
+          borderRadius: '12px',
+        }}>
+        <div>
+          <p
+            style={{
+              margin: 'auto',
+              textGradient: '45deg, $blue600 -20%, $pink600 50%',
+            }}>
+            My Profile
+          </p>
+        </div>
+        <Spacer y={2} />
+        <div>
+          <div style={{ margin: 'auto' }}>
+            <img
+              src={profile_defpic}
               style={{
-                margin: 'auto',
-                textGradient: '45deg, $blue600 -20%, $pink600 50%',
-              }}>
-              My Profile
-            </p>
+                margin: '0 auto',
+                borderRadius: '50%',
+                padding: '5px',
+                border: '5px solid var(--nextui-colors-navbarActive)',
+                width: '220px',
+                aspectRatio: '1',
+                height: 'auto',
+              }}
+              alt="profile"
+            />
           </div>
-          <Spacer y={2} />
           <div>
-            <div style={{ margin: 'auto' }}>
-              <img
-                src={profile_defpic}
-                style={{
-                  margin: '0 auto',
-                  borderRadius: '50%',
-                  padding: '5px',
-                  border: '5px solid var(--nextui-colors-navbarActive)',
-                  width: '220px',
-                  aspectRatio: '1',
-                  height: 'auto',
-                }}
-                alt="profile"
-              />
-            </div>
-            <div>
-              <Input
-                readOnly
-                width="100%"
-                size="lg"
-                label="Email"
-                value={user.email}
-              />
-              <Spacer y={1.5} />
-              <Input
-                width="100%"
-                size="lg"
-                label="Username"
-                value={user.name}
-              />
-            </div>
-          </div>
-          <Spacer y={2} />
-          <div>
-            <div>
-              <Button
-                style={{
-                  fontSize: '0.9rem',
-                  margin: 'auto',
-                }}
-                color="secondary">
-                Change Picture
-              </Button>
-            </div>
-            <div>
-              <Button
-                style={{
-                  fontSize: '0.9rem',
-                  margin: 'auto',
-                }}
-                id="submit"
-                onPress={() => setModalUserVisible(true)}>
-                Change Username
-              </Button>
-              <Spacer y={1.5} />
-              <Button
-                style={{
-                  fontSize: '0.9rem',
-                  margin: 'auto',
-                }}
-                onClick={() => setModalPassVisible(true)}>
-                Change Password
-              </Button>
-            </div>
+            <Input
+              readOnly
+              width="100%"
+              size="lg"
+              label="Email"
+              value={user.email}
+            />
+            <Spacer y={1.5} />
+            <Input width="100%" size="lg" label="Username" value={user.name} />
           </div>
         </div>
-      </Zoom>
+        <Spacer y={2} />
+        <div>
+          <div>
+            <Button
+              style={{
+                fontSize: '0.9rem',
+                margin: 'auto',
+              }}
+              color="secondary">
+              Change Picture
+            </Button>
+          </div>
+          <div>
+            <Button
+              style={{
+                fontSize: '0.9rem',
+                margin: 'auto',
+              }}
+              id="submit"
+              onPress={() => setModalUserVisible(true)}>
+              Change Username
+            </Button>
+            <Spacer y={1.5} />
+            <Button
+              style={{
+                fontSize: '0.9rem',
+                margin: 'auto',
+              }}
+              onClick={() => setModalPassVisible(true)}>
+              Change Password
+            </Button>
+          </div>
+        </div>
+      </div>
 
       <Modal
         closeButton

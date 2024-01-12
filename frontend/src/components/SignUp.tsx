@@ -10,19 +10,19 @@ import {
   ModalFooter,
   useDisclosure,
 } from '@nextui-org/react';
-import { postRegister } from '../api/postRegister';
-import { toast } from 'react-toastify';
+import { postRegister } from '@api/postRegister';
+import { InputField } from '@interfaces/user';
 import {
   validateEmail,
   validatePassword,
   validateName,
   validateMatch,
-} from '../helpers/inputFieldValidators';
-import '../styles/inputFieldHelper.css';
+} from '@utils/inputFieldValidators';
+import '@styles/inputFieldHelper.css';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { InputField } from '../interfaces/user';
-import { EyeSlashFilledIcon } from '../assets/svg/EyeSlashFilledIcon';
-import { EyeFilledIcon } from '../assets/svg/EyeFilledIcon';
+import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon';
+import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon';
 
 export default function SignUp() {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();

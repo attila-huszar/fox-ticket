@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   Card,
@@ -10,9 +11,8 @@ import {
   ModalHeader,
   Spacer,
 } from '@nextui-org/react';
-import { ProductRequest } from '../interfaces/product';
+import { ProductRequest } from '@interfaces/product';
 import QRCode from 'react-qr-code';
-import { useState } from 'react';
 
 export default function ActiveTickets({ name, description }: ProductRequest) {
   const [qrVisible, setQrVisible] = useState(false);

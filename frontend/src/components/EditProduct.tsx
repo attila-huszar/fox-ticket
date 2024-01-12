@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Spacer,
   Button,
@@ -6,9 +7,8 @@ import {
   ModalHeader,
   ModalBody,
 } from '@nextui-org/react';
-import { useState } from 'react';
-import { fetchEditProduct } from '../api/products';
-import { ProductRequest } from '../interfaces/product';
+import { fetchEditProduct } from '@api/products';
+import { ProductRequest } from '@interfaces/product';
 
 export function EditProduct({
   id,
