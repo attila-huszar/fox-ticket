@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@nextui-org/react';
-import { TbArrowBackUp } from 'react-icons/tb';
-import logo from '@assets/images/logo.png';
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@nextui-org/react'
+import { TbArrowBackUp } from 'react-icons/tb'
+import logo from '@assets/images/logo.png'
 
 export default function NotImplementedPage() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <>
@@ -24,5 +24,5 @@ export default function NotImplementedPage() {
         Back
       </Button>
     </>
-  );
+  )
 }

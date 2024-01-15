@@ -1,7 +1,7 @@
-import { Key, useContext } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import { useDarkMode } from 'usehooks-ts';
-import { UserContext } from './App';
+import { Key, useContext } from 'react'
+import { useNavigate, NavLink } from 'react-router-dom'
+import { useDarkMode } from 'usehooks-ts'
+import { UserContext } from './App'
 import {
   Navbar,
   Avatar,
@@ -13,30 +13,30 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from '@nextui-org/react';
+} from '@nextui-org/react'
 
-import Login from './Login';
-import SignUp from './SignUp';
-import Cart from './Cart';
-import Admin from './Admin';
+import Login from './Login'
+import SignUp from './SignUp'
+import Cart from './Cart'
+import Admin from './Admin'
 
-import { toast } from 'react-toastify';
-import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb';
-import { UserContextInterface } from '@interfaces/user';
-import postAuthTest from '@api/postAuthTest';
-import postLogout from '@api/postLogout';
-import logo from '@assets/images/logo.png';
-import profile_defpic from '@assets/images/profile_def.png';
-import '@styles/Header.css';
+import { toast } from 'react-toastify'
+import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb'
+import { UserContextInterface } from '@interfaces/user'
+import postAuthTest from '@api/postAuthTest'
+import postLogout from '@api/postLogout'
+import logo from '@assets/images/logo.png'
+import profile_defpic from '@assets/images/profile_def.png'
+import '@styles/Header.css'
 
 export default function Header() {
-  const navigate = useNavigate();
-  const { user, setUser } = useContext<UserContextInterface>(UserContext);
+  const navigate = useNavigate()
+  const { user, setUser } = useContext<UserContextInterface>(UserContext)
 
-  const { isDarkMode, toggle } = useDarkMode();
+  const { isDarkMode, toggle } = useDarkMode()
 
   const notifyLoggedOut = () =>
-    toast.success(`${user.email} successfully logged out.`);
+    toast.success(`${user.email} successfully logged out.`)
 
   const navigateDropdown = async (key: React.Key) => {
     if (key === 'LOGOUT') {
@@ -44,7 +44,7 @@ export default function Header() {
         const response = await postLogout({
           email: user.email,
           token: user.token,
-        });
+        })
 
         if (user.email === (await response)) {
           setUser!({
@@ -52,31 +52,31 @@ export default function Header() {
             email: '',
             token: '',
             isAdmin: false,
-          });
-          notifyLoggedOut();
+          })
+          notifyLoggedOut()
         }
       } catch {
-        null;
+        null
       }
     } else if (key === '/help_and_feedback') {
       try {
         const response = await postAuthTest({
           email: user.email,
           token: user.token,
-        });
+        })
 
         if (user.email === response) {
-          const authTest = response;
-          console.log(authTest, 'is authenticated');
+          const authTest = response
+          console.log(authTest, 'is authenticated')
         }
       } catch {
-        null;
+        null
       }
     } else {
-      const path = String(key);
-      navigate(path);
+      const path = String(key)
+      navigate(path)
     }
-  };
+  }
 
   return (
     <Navbar
@@ -185,5 +185,5 @@ export default function Header() {
         />
       </NavbarContent>
     </Navbar>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import axios, { AxiosError } from 'axios';
-import { RegisterRequest } from '../interfaces/user';
+import axios, { AxiosError } from 'axios'
+import { RegisterRequest } from '../interfaces/user'
 
 export async function postRegister(
   userData: RegisterRequest,
@@ -9,12 +9,12 @@ export async function postRegister(
       name: userData.name,
       email: userData.email,
       password: userData.password,
-    });
+    })
 
-    return response.data.email;
+    return response.data.email
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.message);
+      throw new Error(error.response?.data.message)
     }
   }
 }

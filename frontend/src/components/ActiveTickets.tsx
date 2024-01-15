@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   Button,
   Card,
@@ -10,17 +10,17 @@ import {
   ModalFooter,
   ModalHeader,
   Spacer,
-} from '@nextui-org/react';
-import { ProductRequest } from '@interfaces/product';
-import QRCode from 'react-qr-code';
+} from '@nextui-org/react'
+import { ProductRequest } from '@interfaces/product'
+import QRCode from 'react-qr-code'
 
 export default function ActiveTickets({ name, description }: ProductRequest) {
-  const [qrVisible, setQrVisible] = useState(false);
+  const [qrVisible, setQrVisible] = useState(false)
   //const { user } = useContext(UserContext);
 
   const closeHandler = () => {
-    setQrVisible(false);
-  };
+    setQrVisible(false)
+  }
 
   return (
     <>
@@ -93,5 +93,5 @@ export default function ActiveTickets({ name, description }: ProductRequest) {
         </ModalFooter>
       </Modal>
     </>
-  );
+  )
 }

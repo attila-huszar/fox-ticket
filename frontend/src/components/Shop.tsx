@@ -1,50 +1,50 @@
-import { Button, ButtonGroup } from '@nextui-org/react';
-import { useEffect, useState } from 'react';
-import { fetchProducts } from '../api/products';
-import { ProductResponse } from '../interfaces/product';
-import ProductCard from './ProductCard';
-import '../styles/Shop.css';
+import { Button, ButtonGroup } from '@nextui-org/react'
+import { useEffect, useState } from 'react'
+import { fetchProducts } from '../api/products'
+import { ProductResponse } from '../interfaces/product'
+import ProductCard from './ProductCard'
+import '../styles/Shop.css'
 
 export default function Shop() {
-  const [products, setProducts] = useState<ProductResponse[]>([]);
+  const [products, setProducts] = useState<ProductResponse[]>([])
   const [filteredProducts, setFilteredProducts] = useState<ProductResponse[]>(
     [],
-  );
+  )
 
   useEffect(() => {
     fetchProducts()
-      .then(data => {
-        setProducts(data);
-        setFilteredProducts(data);
-        return null;
+      .then((data) => {
+        setProducts(data)
+        setFilteredProducts(data)
+        return null
       })
-      .catch(err => {
-        console.error(err);
-      });
-  }, []);
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [])
 
   async function handleTicketsClick() {
-    const allTickets: ProductResponse[] = [];
-    products.map(ticket => {
+    const allTickets: ProductResponse[] = []
+    products.map((ticket) => {
       if (ticket.type === 'ticket') {
-        allTickets.push(ticket);
+        allTickets.push(ticket)
       }
-      setFilteredProducts(allTickets);
-    });
+      setFilteredProducts(allTickets)
+    })
   }
 
   async function handlePassesClick() {
-    const allPasses: ProductResponse[] = [];
-    products.map(pass => {
+    const allPasses: ProductResponse[] = []
+    products.map((pass) => {
       if (pass.type === 'pass') {
-        allPasses.push(pass);
+        allPasses.push(pass)
       }
-      setFilteredProducts(allPasses);
-    });
+      setFilteredProducts(allPasses)
+    })
   }
 
   async function handleAllClick() {
-    setFilteredProducts(products);
+    setFilteredProducts(products)
   }
 
   return (
@@ -96,7 +96,7 @@ export default function Shop() {
           gap: '5%',
           justifyContent: 'center',
         }}>
-        {filteredProducts.map(product => (
+        {filteredProducts.map((product) => (
           <ProductCard
             key={product.id}
             id={product.id}
@@ -107,5 +107,5 @@ export default function Shop() {
         ))}
       </div>
     </div>
-  );
+  )
 }

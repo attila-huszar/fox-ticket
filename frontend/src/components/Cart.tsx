@@ -1,49 +1,43 @@
-import { useContext, useState } from 'react';
+import { useContext, useState } from 'react'
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
   fetchChangeOrderStatusByUserId,
-} from '../api/orders';
-import { CartContextInterface } from '../interfaces/orders';
-import {
-  Modal,
-  Button,
-  Badge,
-  ModalBody,
-  ModalFooter,
-} from '@nextui-org/react';
-import { FiShoppingCart } from 'react-icons/fi';
-import OrderCart from './OrderCart';
-import { CartContext } from './App';
+} from '../api/orders'
+import { CartContextInterface } from '../interfaces/orders'
+import { Modal, Button, Badge, ModalBody, ModalFooter } from '@nextui-org/react'
+import { FiShoppingCart } from 'react-icons/fi'
+import OrderCart from './OrderCart'
+import { CartContext } from './App'
 
 export default function Cart() {
-  const { cart, setCart } = useContext<CartContextInterface>(CartContext);
+  const { cart, setCart } = useContext<CartContextInterface>(CartContext)
 
-  const [visible, setVisible] = useState(false);
-  const [message, setMessage] = useState('');
+  const [visible, setVisible] = useState(false)
+  const [message, setMessage] = useState('')
 
   const closeHandler = () => {
-    setVisible(false);
-    setMessage('');
-  };
+    setVisible(false)
+    setMessage('')
+  }
   const handler = async () => {
-    setVisible(true);
-  };
+    setVisible(true)
+  }
 
   const resetAllOrdersHandler = async () => {
-    fetchRemovePendingOrderFromCart();
-    fetchPendingOrders();
-    setMessage('Your cart is empty!');
-  };
+    fetchRemovePendingOrderFromCart()
+    fetchPendingOrders()
+    setMessage('Your cart is empty!')
+  }
 
   const buyProductHandler = async () => {
-    fetchChangeOrderStatusByUserId();
-    fetchPendingOrders();
-    setVisible(false);
-  };
+    fetchChangeOrderStatusByUserId()
+    fetchPendingOrders()
+    setVisible(false)
+  }
 
   function fetchPendingOrders() {
-    return fetchPendingOrder().then(data => setCart!(data));
+    return fetchPendingOrder().then((data) => setCart!(data))
   }
 
   return (
@@ -87,10 +81,10 @@ export default function Cart() {
         onClose={closeHandler}>
         <ModalBody>
           <p>{message}</p>
-          {cart.map(order => (
+          {cart.map((order) => (
             <OrderCart
               removeOrder={(orderId: number) =>
-                setCart!(cart.filter(order => order.id !== orderId))
+                setCart!(cart.filter((order) => order.id !== orderId))
               }
               key={order.id}
               name={order.name}
@@ -121,5 +115,5 @@ export default function Cart() {
         </ModalFooter>
       </Modal>
     </>
-  );
+  )
 }

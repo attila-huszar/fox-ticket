@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react';
-import { fetchProducts } from '../api/products';
-import { ProductResponse } from '../interfaces/product';
-import ProductCard from './ProductCard';
-import { AddProduct } from './AddProduct';
+import { useState, useEffect } from 'react'
+import { fetchProducts } from '../api/products'
+import { ProductResponse } from '../interfaces/product'
+import ProductCard from './ProductCard'
+import { AddProduct } from './AddProduct'
 
 export default function AdminProduct() {
-  const [products, setProducts] = useState<ProductResponse[]>([]);
+  const [products, setProducts] = useState<ProductResponse[]>([])
 
   const addProduct = (newProduct: ProductResponse) => {
-    setProducts([...products, newProduct]);
-  };
+    setProducts([...products, newProduct])
+  }
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetchProducts();
-      setProducts(response);
-    };
-    fetchData();
-  }, []);
+      const response = await fetchProducts()
+      setProducts(response)
+    }
+    fetchData()
+  }, [])
 
   return (
     <div style={{ marginBottom: '10%' }}>
@@ -32,10 +32,12 @@ export default function AdminProduct() {
           gap: '5%',
           justifyContent: 'center',
         }}>
-        {products.map(product => (
+        {products.map((product) => (
           <ProductCard
             removeProduct={(productId: number) =>
-              setProducts(products.filter(product => product.id !== productId))
+              setProducts(
+                products.filter((product) => product.id !== productId),
+              )
             }
             key={product.id}
             id={product.id}
@@ -49,5 +51,5 @@ export default function AdminProduct() {
         ))}
       </div>
     </div>
-  );
+  )
 }

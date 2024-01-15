@@ -5,15 +5,15 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-} from '@nextui-org/react';
-import { useState } from 'react';
-import { fetchAddNewProduct } from '../api/products';
-import { ProductRequest, ProductResponse } from '../interfaces/product';
+} from '@nextui-org/react'
+import { useState } from 'react'
+import { fetchAddNewProduct } from '../api/products'
+import { ProductRequest, ProductResponse } from '../interfaces/product'
 
 export function AddProduct({
   addProduct,
 }: {
-  addProduct: (newProduct: ProductResponse) => void;
+  addProduct: (newProduct: ProductResponse) => void
 }) {
   const emptyproduct = {
     name: '',
@@ -21,36 +21,36 @@ export function AddProduct({
     duration: 0,
     description: '',
     type: '',
-  };
-  const [data, setData] = useState<ProductRequest>(emptyproduct);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [message, setMessage] = useState('');
-  const [visAddProduct, setVisAddProduct] = useState(false);
+  }
+  const [data, setData] = useState<ProductRequest>(emptyproduct)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState('')
+  const [visAddProduct, setVisAddProduct] = useState(false)
 
   const addProductHandler = async () => {
     try {
-      addProduct(await fetchAddNewProduct(data));
+      addProduct(await fetchAddNewProduct(data))
     } catch (error) {
       if (error instanceof Error) {
-        const errors = [];
-        errors.push(error.message.split(';'));
+        const errors = []
+        errors.push(error.message.split(';'))
 
         for (let i = 0; i < errors.length; i++) {
-          setErrorMessage(errors[0][i]);
+          setErrorMessage(errors[0][i])
         }
-        return;
+        return
       }
     }
-    setErrorMessage('');
-    setMessage('Product Successfully Added!');
-    setData(emptyproduct);
-  };
+    setErrorMessage('')
+    setMessage('Product Successfully Added!')
+    setData(emptyproduct)
+  }
 
-  const productButtonHandler = () => setVisAddProduct(true);
+  const productButtonHandler = () => setVisAddProduct(true)
 
   const closeHandler = () => {
-    setVisAddProduct(false);
-  };
+    setVisAddProduct(false)
+  }
 
   return (
     <>
@@ -86,7 +86,7 @@ export function AddProduct({
           <div>
             <div>
               <Input
-                onChange={e => setData({ ...data, name: e.target.value })}
+                onChange={(e) => setData({ ...data, name: e.target.value })}
                 width="100%"
                 style={{ margin: 'auto' }}
                 label="Name"
@@ -95,7 +95,7 @@ export function AddProduct({
               <Spacer y={0.5} />
               <Input
                 type="number"
-                onChange={e =>
+                onChange={(e) =>
                   setData({ ...data, price: Number(e.target.value) })
                 }
                 underlined
@@ -107,7 +107,7 @@ export function AddProduct({
               <Spacer y={0.5} />
               <Input
                 type="number"
-                onChange={e =>
+                onChange={(e) =>
                   setData({ ...data, duration: Number(e.target.value) })
                 }
                 underlined
@@ -118,7 +118,7 @@ export function AddProduct({
               />
               <Spacer y={0.5} />
               <Input
-                onChange={e =>
+                onChange={(e) =>
                   setData({ ...data, description: e.target.value })
                 }
                 width="100%"
@@ -128,7 +128,7 @@ export function AddProduct({
               />
               <Spacer y={0.5} />
               <Input
-                onChange={e => setData({ ...data, type: e.target.value })}
+                onChange={(e) => setData({ ...data, type: e.target.value })}
                 width="100%"
                 style={{ margin: 'auto' }}
                 label="Type"
@@ -162,5 +162,5 @@ export function AddProduct({
         </ModalBody>
       </Modal>
     </>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-import axios, { AxiosError } from 'axios';
-import { ProductRequest, ProductResponse } from '../interfaces/product';
+import axios, { AxiosError } from 'axios'
+import { ProductRequest, ProductResponse } from '../interfaces/product'
 
 export async function fetchProducts() {
-  const response = await axios.get('/api/products');
-  return response.data.allProducts;
+  const response = await axios.get('/api/products')
+  return response.data.allProducts
 }
 
 export async function fetchAddNewProduct(
@@ -16,24 +16,24 @@ export async function fetchAddNewProduct(
       duration: productData.duration,
       description: productData.description,
       type: productData.type,
-    });
-    return response.data;
+    })
+    return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.message);
+      throw new Error(error.response?.data.message)
     }
-    throw error;
+    throw error
   }
 }
 
 export async function fetchDeleteProduct(id: number) {
-  await axios.delete(`/api/admin/products/${id}`);
+  await axios.delete(`/api/admin/products/${id}`)
 }
 
 export async function fetchEditProduct(
   productData: ProductRequest,
 ): Promise<ProductResponse> {
-  console.log(productData);
+  console.log(productData)
 
   try {
     const response = await axios.put(`/api/admin/products/${productData.id}`, {
@@ -42,12 +42,12 @@ export async function fetchEditProduct(
       duration: productData.duration,
       description: productData.description,
       type: productData.type,
-    });
-    return response.data;
+    })
+    return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.message);
+      throw new Error(error.response?.data.message)
     }
-    throw error;
+    throw error
   }
 }

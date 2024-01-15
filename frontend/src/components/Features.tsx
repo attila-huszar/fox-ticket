@@ -1,7 +1,7 @@
-import { TbLeaf } from 'react-icons/tb';
-import { BiSupport } from 'react-icons/bi';
-import { MdOutlineSavings, MdMobileFriendly } from 'react-icons/md';
-import '../styles/Features.css';
+import { TbLeaf } from 'react-icons/tb'
+import { BiSupport } from 'react-icons/bi'
+import { MdOutlineSavings, MdMobileFriendly } from 'react-icons/md'
+import '../styles/Features.css'
 
 export default function Features() {
   return (
@@ -39,5 +39,5 @@ export default function Features() {
         </p>
       </div>
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   Card,
   CardBody,
@@ -13,28 +13,28 @@ import {
   Spacer,
   Divider,
   useDisclosure,
-} from '@nextui-org/react';
-import '../styles/Articles.css';
-import data from '../assets/article_data';
+} from '@nextui-org/react'
+import '../styles/Articles.css'
+import data from '../assets/article_data'
 
 export default function Articles() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [displayedArticleId, setDisplayedArticleId] = useState(0);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [displayedArticleId, setDisplayedArticleId] = useState(0)
 
-  const articleTitle = data.articles[displayedArticleId].title;
-  const articleDate = data.articles[displayedArticleId].date;
-  const articleText = data.articles[displayedArticleId].content;
+  const articleTitle = data.articles[displayedArticleId].title
+  const articleDate = data.articles[displayedArticleId].date
+  const articleText = data.articles[displayedArticleId].content
 
   return (
     <>
       <div className="gap-1">
         <div className="articles">
-          {data.articles.map(article => (
+          {data.articles.map((article) => (
             <div key={article.id}>
               <Card
                 onPress={() => {
-                  onOpen;
-                  setDisplayedArticleId(article.id);
+                  onOpen
+                  setDisplayedArticleId(article.id)
                 }}
                 style={{ width: '300px', height: '300px' }}
                 isHoverable
@@ -75,7 +75,7 @@ export default function Articles() {
         className="w-[800px]"
         aria-labelledby="news">
         <ModalContent>
-          {onClose => (
+          {(onClose) => (
             <>
               <ModalHeader>
                 <p className="text-base">{articleTitle}</p>
@@ -103,5 +103,5 @@ export default function Articles() {
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { useContext, useMemo, useState } from 'react';
-import { UserContext } from './App';
+import { useContext, useMemo, useState } from 'react'
+import { UserContext } from './App'
 import {
   Button,
   Input,
@@ -8,103 +8,103 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from '@nextui-org/react';
-import profile_defpic from '../assets/images/profile_def.png';
+} from '@nextui-org/react'
+import profile_defpic from '../assets/images/profile_def.png'
 import {
   validateMatch,
   validateName,
   validatePassword,
-} from '../utils/inputFieldValidators';
-import { InputField, UserContextInterface } from '../interfaces/user';
+} from '../utils/inputFieldValidators'
+import { InputField, UserContextInterface } from '../interfaces/user'
 
 export default function Profile() {
-  const { user } = useContext<UserContextInterface>(UserContext);
-  const [modalUserVisible, setModalUserVisible] = useState(false);
-  const [modalPassVisible, setModalPassVisible] = useState(false);
-  const [name, setName] = useState('');
-  const [passOld, setPassOld] = useState('');
-  const [passNew, setPassNew] = useState('');
-  const [passConf, setPassConf] = useState('');
+  const { user } = useContext<UserContextInterface>(UserContext)
+  const [modalUserVisible, setModalUserVisible] = useState(false)
+  const [modalPassVisible, setModalPassVisible] = useState(false)
+  const [name, setName] = useState('')
+  const [passOld, setPassOld] = useState('')
+  const [passNew, setPassNew] = useState('')
+  const [passConf, setPassConf] = useState('')
 
   const nameHelper: InputField = useMemo(() => {
     if (!name)
       return {
         text: '',
         color: 'default',
-      };
-    const isValid = validateName(name);
+      }
+    const isValid = validateName(name)
 
     return {
       text: isValid ? 'Valid name' : 'Please only use common formats',
       color: isValid ? 'success' : 'warning',
-    };
-  }, [name]);
+    }
+  }, [name])
 
   const passOldHelper: InputField = useMemo(() => {
     if (!passOld)
       return {
         text: '',
         color: 'default',
-      };
-    const isValidPass = validatePassword(passOld);
+      }
+    const isValidPass = validatePassword(passOld)
 
     return {
       text: isValidPass
         ? 'Valid password'
         : 'Please enter minimum eight characters',
       color: isValidPass ? 'success' : 'warning',
-    };
-  }, [passOld]);
+    }
+  }, [passOld])
 
   const passNewHelper: InputField = useMemo(() => {
     if (!passNew)
       return {
         text: '',
         color: 'default',
-      };
+      }
 
-    const isValidPass = validatePassword(passNew);
-    const isMatching = validateMatch(passNew, passConf);
+    const isValidPass = validatePassword(passNew)
+    const isMatching = validateMatch(passNew, passConf)
 
     return {
       text: isValidPass
         ? 'Valid password'
         : 'Please enter minimum eight characters',
       color: isValidPass && isMatching ? 'success' : 'warning',
-    };
-  }, [passNew, passConf]);
+    }
+  }, [passNew, passConf])
 
   const passConfHelper: InputField = useMemo(() => {
     if (!passConf)
       return {
         text: '',
         color: 'default',
-      };
+      }
 
-    const isValidPass = validatePassword(passConf);
-    const isMatching = validateMatch(passNew, passConf);
+    const isValidPass = validatePassword(passConf)
+    const isMatching = validateMatch(passNew, passConf)
 
     return {
       text: isMatching ? 'Passwords match' : 'Passwords do not match',
       color: isValidPass && isMatching ? 'success' : 'warning',
-    };
-  }, [passNew, passConf]);
+    }
+  }, [passNew, passConf])
 
   const userNameChangeHandler = async () => {
     if (name.length === 0) {
-      nameHelper.color = 'danger';
-      nameHelper.text = 'Please fill this field';
+      nameHelper.color = 'danger'
+      nameHelper.text = 'Please fill this field'
     }
-  };
+  }
 
   const closeHandler = () => {
-    setModalUserVisible(false);
-    setModalPassVisible(false);
-    setName('');
-    setPassOld('');
-    setPassNew('');
-    setPassConf('');
-  };
+    setModalUserVisible(false)
+    setModalPassVisible(false)
+    setName('')
+    setPassOld('')
+    setPassNew('')
+    setPassConf('')
+  }
 
   return (
     <>
@@ -203,7 +203,7 @@ export default function Profile() {
           <Spacer y={1} />
           <Input
             required
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             placeholder="New Username"
             width="350px"
             color={nameHelper.color}
@@ -231,7 +231,7 @@ export default function Profile() {
         <ModalBody>
           <Spacer y={1} />
           <Input.Password
-            onChange={e => setPassOld(e.target.value)}
+            onChange={(e) => setPassOld(e.target.value)}
             labelPlaceholder="Current Password"
             width="350px"
             required
@@ -245,7 +245,7 @@ export default function Profile() {
           />
           <Spacer y={1.6} />
           <Input.Password
-            onChange={e => setPassNew(e.target.value)}
+            onChange={(e) => setPassNew(e.target.value)}
             labelPlaceholder="New Password"
             width="350px"
             required
@@ -259,7 +259,7 @@ export default function Profile() {
           />
           <Spacer y={2} />
           <Input.Password
-            onChange={e => setPassConf(e.target.value)}
+            onChange={(e) => setPassConf(e.target.value)}
             labelPlaceholder="Confirm Password"
             width="350px"
             required
@@ -281,5 +281,5 @@ export default function Profile() {
         </ModalFooter>
       </Modal>
     </>
-  );
+  )
 }

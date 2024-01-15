@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react';
-import { fetchActiveOrders } from '../api/orders';
-import { ProductResponse } from '../interfaces/product';
-import ActiveTickets from './ActiveTickets';
-import { Button, ButtonGroup } from '@nextui-org/react';
-import '../styles/Shop.css';
+import { useEffect, useState } from 'react'
+import { fetchActiveOrders } from '../api/orders'
+import { ProductResponse } from '../interfaces/product'
+import ActiveTickets from './ActiveTickets'
+import { Button, ButtonGroup } from '@nextui-org/react'
+import '../styles/Shop.css'
 
 export default function MyTickets() {
-  const [actives, setActive] = useState<ProductResponse[]>([]);
+  const [actives, setActive] = useState<ProductResponse[]>([])
 
   useEffect(() => {
     fetchActiveOrders()
-      .then(data => {
-        setActive(data);
-        return null;
+      .then((data) => {
+        setActive(data)
+        return null
       })
-      .catch(err => {
-        console.error(err);
-      });
-  }, []);
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [])
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function MyTickets() {
             gap: '5%',
             justifyContent: 'center',
           }}>
-          {actives.map(active => (
+          {actives.map((active) => (
             <ActiveTickets
               key={active.id}
               name={active.name}
@@ -73,5 +73,5 @@ export default function MyTickets() {
         </div>
       </div>
     </>
-  );
+  )
 }

@@ -1,10 +1,10 @@
-import i1 from './article_photos/bkk_busz_mastercard.jpg';
-import i2 from './article_photos/bpgokicsinyitve.jpg';
-import i3 from './article_photos/megujultbuszmegallotabla.jpg';
-import i4 from './article_photos/bkk_automata.jpg';
-import i5 from './article_photos/bkk_foto_molbubigyartas.jpg';
-import i6 from './article_photos/jegyervenyesitesacombinon.jpg';
-import i7 from './article_photos/19es_varosnezo_villamos.jpg';
+import i1 from './article_photos/bkk_busz_mastercard.jpg'
+import i2 from './article_photos/bpgokicsinyitve.jpg'
+import i3 from './article_photos/megujultbuszmegallotabla.jpg'
+import i4 from './article_photos/bkk_automata.jpg'
+import i5 from './article_photos/bkk_foto_molbubigyartas.jpg'
+import i6 from './article_photos/jegyervenyesitesacombinon.jpg'
+import i7 from './article_photos/19es_varosnezo_villamos.jpg'
 
 const data = {
   articles: [
@@ -85,6 +85,6 @@ const data = {
       content: ``,
     },
   ],
-};
+}
 
-export default data;
+export default data

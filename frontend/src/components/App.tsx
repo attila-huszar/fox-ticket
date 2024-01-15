@@ -1,38 +1,35 @@
-import { createContext, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { NextUIProvider } from '@nextui-org/react';
-import { useDarkMode } from 'usehooks-ts';
-import { Flip, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '@utils/emailVerifyToast';
+import { createContext, useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { NextUIProvider } from '@nextui-org/react'
+import { useDarkMode } from 'usehooks-ts'
+import { Flip, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import '@utils/emailVerifyToast'
 
-import { UserContextInterface, LoggedInUser } from '@interfaces/user';
-import {
-  CartContextInterface,
-  PendingOrdersResponse,
-} from '@interfaces/orders';
+import { UserContextInterface, LoggedInUser } from '@interfaces/user'
+import { CartContextInterface, PendingOrdersResponse } from '@interfaces/orders'
 
-import Home from './Home';
-import Navbar from './Navbar';
-import Shop from './Shop';
-import MyTickets from './MyTickets';
-import Cart from './Cart';
-import Profile from './Profile';
-import Footer from './Footer';
-import AdminProduct from './AdminProduct';
-import NotFound from './NotFound';
+import Home from './Home'
+import Navbar from './Navbar'
+import Shop from './Shop'
+import MyTickets from './MyTickets'
+import Cart from './Cart'
+import Profile from './Profile'
+import Footer from './Footer'
+import AdminProduct from './AdminProduct'
+import NotFound from './NotFound'
 
 const defaultUser: LoggedInUser = {
   name: 'Guest',
   email: '',
   token: '',
   isAdmin: false,
-};
+}
 
 export const UserContext = createContext<UserContextInterface>({
   user: defaultUser,
-});
-export const CartContext = createContext<CartContextInterface>({ cart: [] });
+})
+export const CartContext = createContext<CartContextInterface>({ cart: [] })
 
 export default function App() {
   const [user, setUser] = useState<LoggedInUser>({
@@ -40,9 +37,9 @@ export default function App() {
     email: localStorage.getItem('email') || '',
     token: localStorage.getItem('token') || '',
     isAdmin: localStorage.getItem('admin') === 'true' ? true : false,
-  });
-  const [cart, setCart] = useState<PendingOrdersResponse[]>([]);
-  const { isDarkMode } = useDarkMode();
+  })
+  const [cart, setCart] = useState<PendingOrdersResponse[]>([])
+  const { isDarkMode } = useDarkMode()
 
   return (
     <NextUIProvider>
@@ -71,5 +68,5 @@ export default function App() {
         </UserContext.Provider>
       </BrowserRouter>
     </NextUIProvider>
-  );
+  )
 }

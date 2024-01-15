@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react'
 import {
   Modal,
   ModalContent,
@@ -10,29 +10,29 @@ import {
   Input,
   Checkbox,
   Spacer,
-} from '@nextui-org/react';
-import { postLogin } from '@api/postLogin';
-import { validateEmail, validatePassword } from '@utils/inputFieldValidators';
-import { InputField, LoggedInUser } from '@interfaces/user';
-import { toast } from 'react-toastify';
-import { UserContext } from './App';
-import { UserContextInterface } from '@interfaces/user';
-import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon';
-import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon';
+} from '@nextui-org/react'
+import { postLogin } from '@api/postLogin'
+import { validateEmail, validatePassword } from '@utils/inputFieldValidators'
+import { InputField, LoggedInUser } from '@interfaces/user'
+import { toast } from 'react-toastify'
+import { UserContext } from './App'
+import { UserContextInterface } from '@interfaces/user'
+import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon'
+import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon'
 
 export default function Login() {
-  const { user, setUser } = useContext<UserContextInterface>(UserContext);
-  console.log(user);
+  const { user, setUser } = useContext<UserContextInterface>(UserContext)
+  console.log(user)
 
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
 
   // const [loginModalVisible, setLoginModalVisible] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isPassVisible, setIsPassVisible] = useState(false);
-  const [shakeEmail, setShakeEmail] = useState(false);
-  const [shakePassword, setShakePassword] = useState(false);
-  const togglePassVisibility = () => setIsPassVisible(!isPassVisible);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isPassVisible, setIsPassVisible] = useState(false)
+  const [shakeEmail, setShakeEmail] = useState(false)
+  const [shakePassword, setShakePassword] = useState(false)
+  const togglePassVisibility = () => setIsPassVisible(!isPassVisible)
 
   // Input field helpers
   const emailHelper: InputField = useMemo(() => {
@@ -40,100 +40,100 @@ export default function Login() {
       return {
         text: '',
         color: 'default',
-      };
-    const isValid = validateEmail(email);
+      }
+    const isValid = validateEmail(email)
 
     return {
       text: isValid ? 'Valid email' : 'Please enter a valid email address',
       color: isValid ? 'success' : 'warning',
-    };
-  }, [email]);
+    }
+  }, [email])
 
   const passHelper: InputField = useMemo(() => {
     if (!password)
       return {
         text: '',
         color: 'default',
-      };
-    const isValidPass = validatePassword(password);
+      }
+    const isValidPass = validatePassword(password)
 
     return {
       text: isValidPass
         ? 'Valid password'
         : 'Please enter minimum eight characters',
       color: isValidPass ? 'success' : 'warning',
-    };
-  }, [password]);
+    }
+  }, [password])
 
   // Handlers
 
   const loginHandler = async () => {
     if (!email) {
-      setShakeEmail(true);
-      emailHelper.color = 'danger';
-      emailHelper.text = 'Please enter your email address';
+      setShakeEmail(true)
+      emailHelper.color = 'danger'
+      emailHelper.text = 'Please enter your email address'
     } else if (!validateEmail(email)) {
-      setShakeEmail(true);
-      emailHelper.color = 'danger';
+      setShakeEmail(true)
+      emailHelper.color = 'danger'
     }
     if (!password) {
-      setShakePassword(true);
-      passHelper.color = 'danger';
-      passHelper.text = 'Please enter your password';
+      setShakePassword(true)
+      passHelper.color = 'danger'
+      passHelper.text = 'Please enter your password'
     } else if (!validatePassword(password)) {
-      setShakePassword(true);
-      passHelper.color = 'danger';
+      setShakePassword(true)
+      passHelper.color = 'danger'
     }
-    setTimeout(() => setShakeEmail(false), 750);
-    setTimeout(() => setShakePassword(false), 750);
+    setTimeout(() => setShakeEmail(false), 750)
+    setTimeout(() => setShakePassword(false), 750)
 
     try {
       const response: LoggedInUser = (await postLogin({
         email,
         password,
-      })) as LoggedInUser;
+      })) as LoggedInUser
 
       if (response) {
-        const verified = response.isVerified;
+        const verified = response.isVerified
         if (verified) {
-          localStorage.setItem('name', response.name);
-          localStorage.setItem('email', response.email);
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('admin', String(response.isAdmin));
+          localStorage.setItem('name', response.name)
+          localStorage.setItem('email', response.email)
+          localStorage.setItem('token', response.token)
+          localStorage.setItem('admin', String(response.isAdmin))
           setUser!({
             name: response.name,
             email: response.email,
             token: response.token,
             isAdmin: response.isAdmin,
-          });
-          notifyLoggedIn();
+          })
+          notifyLoggedIn()
         } else {
-          notifyNotVerified();
+          notifyNotVerified()
         }
-        onClose();
+        onClose()
       }
 
-      return response;
+      return response
     } catch (error) {
       if (error instanceof Error) {
-        const errors = [];
-        errors.push(error.message.split(';'));
+        const errors = []
+        errors.push(error.message.split(';'))
 
         for (let i = 0; i < errors.length; i++) {
-          setShakeEmail(true);
-          setShakePassword(true);
-          emailHelper.color = 'danger';
-          passHelper.color = 'danger';
-          emailHelper.text = errors[0][i];
-          passHelper.text = errors[0][i];
+          setShakeEmail(true)
+          setShakePassword(true)
+          emailHelper.color = 'danger'
+          passHelper.color = 'danger'
+          emailHelper.text = errors[0][i]
+          passHelper.text = errors[0][i]
           setTimeout(() => {
-            setShakeEmail(false);
-            setShakePassword(false);
-          }, 750);
+            setShakeEmail(false)
+            setShakePassword(false)
+          }, 750)
         }
       }
     }
-  };
+  }
 
   // const closeModalHandler = () => {
   //   setLoginModalVisible(false);
@@ -143,10 +143,10 @@ export default function Login() {
 
   // Notifications
   const notifyLoggedIn = () =>
-    toast.success(`Successful login. Welcome to Fox Ticket, ${user.name}!`);
+    toast.success(`Successful login. Welcome to Fox Ticket, ${user.name}!`)
 
   const notifyNotVerified = () =>
-    toast.warn('Please verify your email address before logging in.');
+    toast.warn('Please verify your email address before logging in.')
 
   return (
     <>
@@ -167,7 +167,7 @@ export default function Login() {
         closeButton
         aria-labelledby="login form">
         <ModalContent>
-          {onClose => (
+          {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 <p>Welcome to&nbsp; </p>
@@ -185,7 +185,7 @@ export default function Login() {
                 <Spacer y={2} />
                 <Input
                   className={shakeEmail ? 'shake' : ''}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   color={emailHelper.color}
                   errorMessage={emailHelper.text}
@@ -212,7 +212,7 @@ export default function Login() {
                   }
                   type={isPassVisible ? 'text' : 'password'}
                   className={shakePassword ? 'shake' : ''}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   color={passHelper.color}
                   errorMessage={passHelper.text}
@@ -240,5 +240,5 @@ export default function Login() {
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }

@@ -1,29 +1,29 @@
 export interface RegisterRequest {
-  name: string;
-  email: string;
-  password: string;
+  name: string
+  email: string
+  password: string
 }
 
 export interface LoginRequest {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export interface LoggedInUser {
-  name: string;
-  email: string;
-  token: string;
-  isAdmin: boolean;
-  isVerified?: boolean;
+  name: string
+  email: string
+  token: string
+  isAdmin: boolean
+  isVerified?: boolean
 }
 
 export interface UserContextInterface {
-  user: LoggedInUser;
-  setUser?: (user: LoggedInUser) => void;
+  user: LoggedInUser
+  setUser?: (user: LoggedInUser) => void
 }
 
 export interface InputField {
-  text: string;
+  text: string
   color:
     | 'default'
     | 'primary'
@@ -31,5 +31,5 @@ export interface InputField {
     | 'success'
     | 'warning'
     | 'danger'
-    | undefined;
+    | undefined
 }

@@ -1,16 +1,16 @@
-import { Button } from '@nextui-org/react';
-import { PendingOrdersResponse } from '../interfaces/orders';
-import { fetchRemoveProductFromCart } from '../api/orders';
+import { Button } from '@nextui-org/react'
+import { PendingOrdersResponse } from '../interfaces/orders'
+import { fetchRemoveProductFromCart } from '../api/orders'
 
 interface PropTypes extends PendingOrdersResponse {
-  removeOrder: (orderId: number) => void;
+  removeOrder: (orderId: number) => void
 }
 
 export default function OrderCart({ name, price, id, removeOrder }: PropTypes) {
   const removeOrderHandler = async () => {
-    await fetchRemoveProductFromCart(id);
-    removeOrder(id);
-  };
+    await fetchRemoveProductFromCart(id)
+    removeOrder(id)
+  }
 
   return (
     <div className="justify-between">
@@ -20,5 +20,5 @@ export default function OrderCart({ name, price, id, removeOrder }: PropTypes) {
         Remove
       </Button>
     </div>
-  );
+  )
 }

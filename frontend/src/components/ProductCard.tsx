@@ -6,17 +6,17 @@ import {
   CardHeader,
   Divider,
   Spacer,
-} from '@nextui-org/react';
-import { fetchDeleteProduct } from '../api/products';
-import { fetchCreateNewPendingOrder, fetchPendingOrder } from '../api/orders';
-import { ProductRequest } from '../interfaces/product';
-import { EditProduct } from './EditProduct';
-import { CartContextInterface } from '../interfaces/orders';
-import { CartContext } from './App';
-import { useContext } from 'react';
+} from '@nextui-org/react'
+import { fetchDeleteProduct } from '../api/products'
+import { fetchCreateNewPendingOrder, fetchPendingOrder } from '../api/orders'
+import { ProductRequest } from '../interfaces/product'
+import { EditProduct } from './EditProduct'
+import { CartContextInterface } from '../interfaces/orders'
+import { CartContext } from './App'
+import { useContext } from 'react'
 
 interface PropTypes extends ProductRequest {
-  removeProduct?: (productId: number) => void;
+  removeProduct?: (productId: number) => void
 }
 
 export default function ProductCard({
@@ -29,17 +29,17 @@ export default function ProductCard({
   type,
   removeProduct,
 }: PropTypes) {
-  const { setCart } = useContext<CartContextInterface>(CartContext);
+  const { setCart } = useContext<CartContextInterface>(CartContext)
   const deleteProductHandler = async () => {
-    await fetchDeleteProduct(id as number);
-    removeProduct?.(id as number);
-  };
+    await fetchDeleteProduct(id as number)
+    removeProduct?.(id as number)
+  }
 
   const createNewOrderHadler = async () => {
-    await fetchCreateNewPendingOrder(new Date(), Number(id), 1);
-    const pendingOrders = await fetchPendingOrder();
-    setCart!(pendingOrders);
-  };
+    await fetchCreateNewPendingOrder(new Date(), Number(id), 1)
+    const pendingOrders = await fetchPendingOrder()
+    setCart!(pendingOrders)
+  }
 
   return (
     <div
@@ -100,5 +100,5 @@ export default function ProductCard({
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }

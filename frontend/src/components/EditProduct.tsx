@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   Spacer,
   Button,
@@ -6,9 +6,9 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-} from '@nextui-org/react';
-import { fetchEditProduct } from '@api/products';
-import { ProductRequest } from '@interfaces/product';
+} from '@nextui-org/react'
+import { fetchEditProduct } from '@api/products'
+import { ProductRequest } from '@interfaces/product'
 
 export function EditProduct({
   id,
@@ -25,38 +25,38 @@ export function EditProduct({
     duration: duration,
     description: description,
     type: type,
-  };
+  }
 
-  const [data, setData] = useState<ProductRequest>(loadedproduct);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [message, setMessage] = useState('');
-  const [visEditProduct, setVisEditProduct] = useState(false);
+  const [data, setData] = useState<ProductRequest>(loadedproduct)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState('')
+  const [visEditProduct, setVisEditProduct] = useState(false)
 
   const editProductHandler = async () => {
     try {
-      await fetchEditProduct(data);
+      await fetchEditProduct(data)
     } catch (error) {
       if (error instanceof Error) {
-        const errors = [];
-        errors.push(error.message.split(';'));
+        const errors = []
+        errors.push(error.message.split(';'))
 
         for (let i = 0; i < errors.length; i++) {
-          setErrorMessage(errors[0][i]);
+          setErrorMessage(errors[0][i])
         }
-        return;
+        return
       }
     }
-    setErrorMessage('');
-    setMessage('Product Successfully Edited!');
-    setData(loadedproduct);
-    setVisEditProduct(false);
-  };
+    setErrorMessage('')
+    setMessage('Product Successfully Edited!')
+    setData(loadedproduct)
+    setVisEditProduct(false)
+  }
 
-  const productButtonHandler = () => setVisEditProduct(true);
+  const productButtonHandler = () => setVisEditProduct(true)
 
   const closeHandler = () => {
-    setVisEditProduct(false);
-  };
+    setVisEditProduct(false)
+  }
 
   return (
     <>
@@ -84,7 +84,7 @@ export function EditProduct({
           <div>
             <div>
               <Input
-                onChange={e => setData({ ...data, name: e.target.value })}
+                onChange={(e) => setData({ ...data, name: e.target.value })}
                 width="100%"
                 style={{ margin: 'auto' }}
                 label="Name"
@@ -93,7 +93,7 @@ export function EditProduct({
               <Spacer y={0.5} />
               <Input
                 type="number"
-                onChange={e =>
+                onChange={(e) =>
                   setData({ ...data, price: Number(e.target.value) })
                 }
                 underlined
@@ -105,7 +105,7 @@ export function EditProduct({
               <Spacer y={0.5} />
               <Input
                 type="number"
-                onChange={e =>
+                onChange={(e) =>
                   setData({ ...data, duration: Number(e.target.value) })
                 }
                 underlined
@@ -116,7 +116,7 @@ export function EditProduct({
               />
               <Spacer y={0.5} />
               <Input
-                onChange={e =>
+                onChange={(e) =>
                   setData({ ...data, description: e.target.value })
                 }
                 width="100%"
@@ -126,7 +126,7 @@ export function EditProduct({
               />
               <Spacer y={0.5} />
               <Input
-                onChange={e => setData({ ...data, type: e.target.value })}
+                onChange={(e) => setData({ ...data, type: e.target.value })}
                 width="100%"
                 style={{ margin: 'auto' }}
                 label="Type"
@@ -160,5 +160,5 @@ export function EditProduct({
         </ModalBody>
       </Modal>
     </>
-  );
+  )
 }

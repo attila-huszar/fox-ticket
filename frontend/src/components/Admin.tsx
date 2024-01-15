@@ -1,20 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import { Navbar, Dropdown, Button } from '@nextui-org/react';
+import { useNavigate } from 'react-router-dom'
+import { Navbar, Dropdown, Button } from '@nextui-org/react'
 import {
   TbBook,
   TbNews,
   TbShoppingCart,
   TbCreditCard,
   TbSettings,
-} from 'react-icons/tb';
+} from 'react-icons/tb'
 
 export default function Admin() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const navigateDropdown = (key: React.Key) => {
-    const path = String(key);
-    navigate(path);
-  };
+    const path = String(key)
+    navigate(path)
+  }
 
   return (
     <Navbar.Item>
@@ -33,7 +33,7 @@ export default function Admin() {
         <Dropdown.Menu
           aria-label="User menu actions"
           color="secondary"
-          onAction={key => navigateDropdown(key)}>
+          onAction={(key) => navigateDropdown(key)}>
           <Dropdown.Item key="/products" icon={<TbShoppingCart />}>
             Products
           </Dropdown.Item>
@@ -49,5 +49,5 @@ export default function Admin() {
         </Dropdown.Menu>
       </Dropdown>
     </Navbar.Item>
-  );
+  )
 }

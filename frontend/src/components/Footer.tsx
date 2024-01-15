@@ -1,14 +1,14 @@
-import logo from '../static/logo.png';
+import logo from '../static/logo.png'
 import {
   TbBrandFacebook,
   TbBrandInstagram,
   TbBrandTwitter,
   TbBrandTiktok,
-} from 'react-icons/tb';
-import '../styles/Footer.css';
+} from 'react-icons/tb'
+import '../styles/Footer.css'
 
 export default function Footer() {
-  const year = new Date().getFullYear();
+  const year = new Date().getFullYear()
 
   return (
     <>
@@ -140,5 +140,5 @@ export default function Footer() {
         </div>
       </footer>
     </>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import '../styles/CtaSection.css';
-import { Button } from '@nextui-org/react';
+import '../styles/CtaSection.css'
+import { Button } from '@nextui-org/react'
 
 export default function CtaSection() {
   return (
@@ -70,5 +70,5 @@ export default function CtaSection() {
         </div>
       </section>
     </>
-  );
+  )
 }

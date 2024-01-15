@@ -1,12 +1,12 @@
-import Articles from './Articles';
-import Features from './Features';
-import CtaSection from './CtaSection';
-import m1 from '@assets/images/m1a.png';
-import '@styles/Home.css';
+import Articles from './Articles'
+import Features from './Features'
+import CtaSection from './CtaSection'
+import m1 from '@assets/images/m1a.png'
+import '@styles/Home.css'
 
 export default function Home() {
-  const date = new Date();
-  const localDate = date.toLocaleDateString();
+  const date = new Date()
+  const localDate = date.toLocaleDateString()
   const weekday = [
     'Sunday',
     'Monday',
@@ -15,8 +15,8 @@ export default function Home() {
     'Thursday',
     'Friday',
     'Saturday',
-  ];
-  const day = weekday[date.getDay()];
+  ]
+  const day = weekday[date.getDay()]
 
   return (
     <>
@@ -45,5 +45,5 @@ export default function Home() {
       <Features />
       <CtaSection />
     </>
-  );
+  )
 }

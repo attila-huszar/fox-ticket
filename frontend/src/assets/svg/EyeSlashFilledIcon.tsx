@@ -1,5 +1,5 @@
-import { SVGProps } from 'react';
-import { JSX } from 'react/jsx-runtime';
+import { SVGProps } from 'react'
+import { JSX } from 'react/jsx-runtime'
 
 export const EyeSlashFilledIcon = (
   props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
@@ -34,4 +34,4 @@ export const EyeSlashFilledIcon = (
       fill="currentColor"
     />
   </svg>
-);
+)

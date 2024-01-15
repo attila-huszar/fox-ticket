@@ -1,19 +1,19 @@
 export interface PendingOrdersResponse {
-  id: number;
-  name: string;
-  price: number;
-  description?: string;
+  id: number
+  name: string
+  price: number
+  description?: string
 }
 
 export interface NewOrderRequest {
-  orderDate: Date;
-  expirationDate: string;
-  productId: number;
-  userId: number;
-  description?: string;
+  orderDate: Date
+  expirationDate: string
+  productId: number
+  userId: number
+  description?: string
 }
 
 export interface CartContextInterface {
-  cart: PendingOrdersResponse[];
-  setCart?: (pendingOrders: PendingOrdersResponse[]) => void;
+  cart: PendingOrdersResponse[]
+  setCart?: (pendingOrders: PendingOrdersResponse[]) => void
 }
