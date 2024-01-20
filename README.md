@@ -13,7 +13,7 @@
 
 [![CI](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml)
 [![Build](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/build.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/build.yml)
-[![CodeQL](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/codeql.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/codeql.yml)
+[![CodeQL](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/github-code-scanning/codeql)
 [![GitHub last commit](https://img.shields.io/github/last-commit/attila-huszar/fox-ticket-react/master?logo=github)](https://github.com/attila-huszar/fox-ticket-react/commits/master)
 
 <img src="https://s3.eu-central-1.amazonaws.com/attila.huszar/portfolio/fox-ticket-react.jpg" alt="fox ticket" width="500">
