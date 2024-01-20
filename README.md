@@ -1,53 +1,19 @@
 ## Fox Ticket Full Stack Project
 
-[![React](https://badges.aleen42.com/src/react.svg)](https://reactjs.org/)
-[![Node](https://badges.aleen42.com/src/node.svg)](https://nodejs.org/)
-[![TS](https://badges.aleen42.com/src/typescript.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/REACT-grey?logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](https://www.typescriptlang.org/)
+[![NextUI](https://img.shields.io/badge/NextUI-000?logo=nextui)](https://nextui.org/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com/)
+[![Framer](https://img.shields.io/badge/Framer-0055FF?logo=framer)](https://www.framer.com/motion/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=fff)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-000?logo=express)](https://expressjs.com/)
+[![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?logo=sequelize&logoColor=fff)](https://sequelize.org/)
+[![JSON Web Tokens](https://img.shields.io/badge/JWT-000?logo=jsonwebtokens)](https://jwt.io/)
+[![Zod](https://img.shields.io/badge/Zod-3E67B1?logo=zod)](https://zod.dev/)
 
 [![CI](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/ci.yml)
 [![Build](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/build.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/build.yml)
-[![GitHub last commit](https://img.shields.io/github/last-commit/attila-huszar/fox-component-test)](https://github.com/attila-huszar/fox-component-test/commits/master)
+[![CodeQL](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/codeql.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket-react/actions/workflows/codeql.yml)
+[![GitHub last commit](https://img.shields.io/github/last-commit/attila-huszar/fox-ticket-react/master?logo=github)](https://github.com/attila-huszar/fox-ticket-react/commits/master)
 
-### Workspaces
-
-Frontend: React  
-Backend: Express
-
-### Frontend Packages
-
-[NextUI](https://nextui.org/docs/guide/getting-started)  
-[Tailwind CSS](https://tailwindcss.com/docs/installation)  
-[Framer Motion](https://www.npmjs.com/package/framer-motion)  
-[Axios](https://www.npmjs.com/package/axios)  
-[usehooks-ts React hooks library](https://usehooks-ts.com/)  
-[React Stripe.js](https://stripe.com/docs/stripe-js/react)  
-[React Icons](https://react-icons.github.io/react-icons)  
-[React Awesome Reveal](https://react-awesome-reveal.morello.dev/)  
-[QR Generator](https://www.npmjs.com/package/react-qr-code)
-
-### Backend Packages
-
-[Express](https://www.npmjs.com/package/express) ([TS types](https://www.npmjs.com/package/@types/express))  
-[Sequelize](https://www.npmjs.com/package/sequelize)  
-[Sequelize Typescript](https://www.npmjs.com/package/sequelize-typescript)  
-[JSON Web Tokens](https://www.npmjs.com/package/jsonwebtoken) ([TS types](https://www.npmjs.com/package/@types/jsonwebtoken))  
-[bcrypt Password hash](https://www.npmjs.com/package/bcrypt) ([TS types](https://www.npmjs.com/package/@types/bcrypt))  
-[CORS](https://www.npmjs.com/package/cors) ([TS types](https://www.npmjs.com/package/@types/cors))  
-[Zod Validation](https://www.npmjs.com/package/zod)  
-[Helmet](https://www.npmjs.com/package/helmet)  
-[Stripe Payment](https://www.npmjs.com/package/stripe)  
-[Mail Service SendGrid](https://www.npmjs.com/package/@sendgrid/mail)  
-[HTTP Status codes](https://www.npmjs.com/package/http-status)  
-[pino HTTP logger](https://www.npmjs.com/package/pino-http)  
-[pino Formatter](https://www.npmjs.com/package/pino-pretty)
-
----
-
-| **scripts**                   |                                          |
-| ----------------------------- | ---------------------------------------- |
-| npm run dev                   | Start full stack app in development mode |
-| npm run build                 | Build the app for production             |
-| npm run lint                  | Run static code analysis                 |
-| npm run test                  | Run automated tests                      |
-| npm install <pkg> -w backend  | Add backend dependency                   |
-| npm install <pkg> -w frontend | Add frontend dependency                  |
+<img src="https://s3.eu-central-1.amazonaws.com/attila.huszar/portfolio/fox-ticket-react.jpg" alt="fox ticket" width="500">
