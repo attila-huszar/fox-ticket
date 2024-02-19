@@ -15,6 +15,6 @@
 [![CI](https://github.com/attila-huszar/fox-ticket/actions/workflows/ci.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket/actions/workflows/ci.yml)
 [![Build](https://github.com/attila-huszar/fox-ticket/actions/workflows/build.yml/badge.svg)](https://github.com/attila-huszar/fox-ticket/actions/workflows/build.yml)
 [![CodeQL](https://github.com/attila-huszar/fox-ticket/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/attila-huszar/fox-ticket/actions/workflows/github-code-scanning/codeql)
-[![GitHub last commit](https://img.shields.io/github/last-commit/attila-huszar/fox-ticket/main?logo=github)](https://github.com/attila-huszar/fox-ticket/commits/master)
+[![GitHub last commit](https://img.shields.io/github/last-commit/attila-huszar/fox-ticket/main?logo=github)](https://github.com/attila-huszar/fox-ticket/commits/main)
 
 <img src="https://s3.eu-central-1.amazonaws.com/attila.huszar/portfolio/fox-ticket.jpg" alt="fox ticket" width="500">
