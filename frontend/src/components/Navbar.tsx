@@ -1,6 +1,6 @@
 import { Key, useContext } from 'react'
 import { useNavigate, NavLink } from 'react-router-dom'
-import { useDarkMode } from 'usehooks-ts'
+import { ThemeContext } from '@context/ThemeProvider'
 import { UserContext } from './App'
 import {
   Navbar,
@@ -33,7 +33,9 @@ export default function Header() {
   const navigate = useNavigate()
   const { user, setUser } = useContext<UserContextInterface>(UserContext)
 
-  const { isDarkMode, toggle } = useDarkMode()
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext)
+
+  toast.configure()
 
   const notifyLoggedOut = () =>
     toast.success(`${user.email} successfully logged out.`)
@@ -172,7 +174,7 @@ export default function Header() {
 
         <Switch
           checked={isDarkMode}
-          onChange={toggle}
+          onChange={toggleDarkMode}
           thumbIcon={({ isSelected, className }) =>
             isSelected ? (
               <TbSun className={className} />

@@ -1,8 +1,8 @@
-import { createContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { NextUIProvider } from '@nextui-org/react'
-import { useDarkMode } from 'usehooks-ts'
 import { Flip, ToastContainer } from 'react-toastify'
+import { ThemeProvider, ThemeContext } from '@context/ThemeProvider'
 import 'react-toastify/dist/ReactToastify.css'
 import '@utils/emailVerifyToast'
 
@@ -39,7 +39,7 @@ export default function App() {
     isAdmin: localStorage.getItem('admin') === 'true' ? true : false,
   })
   const [cart, setCart] = useState<PendingOrdersResponse[]>([])
-  const { isDarkMode } = useDarkMode()
+  const { isDarkMode } = useContext(ThemeContext)
 
   return (
     <NextUIProvider>
@@ -53,17 +53,19 @@ export default function App() {
       <BrowserRouter>
         <UserContext.Provider value={{ user, setUser }}>
           <CartContext.Provider value={{ cart, setCart }}>
-            <Navbar />
-            <Routes>
-              <Route index element={<Home />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/mytickets" element={<MyTickets />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/products" element={<AdminProduct />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <Footer />
+            <ThemeProvider>
+              <Navbar />
+              <Routes>
+                <Route index element={<Home />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/mytickets" element={<MyTickets />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/products" element={<AdminProduct />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+              <Footer />
+            </ThemeProvider>
           </CartContext.Provider>
         </UserContext.Provider>
       </BrowserRouter>
