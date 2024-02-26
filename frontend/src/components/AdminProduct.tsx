@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { fetchProducts } from '../api/products'
-import { ProductResponse } from '../interfaces/product'
-import ProductCard from './ProductCard'
+import { fetchProducts } from '@api/products'
+import { ProductResponse } from '@interfaces/product'
+import { ProductCard } from './ProductCard'
 import { AddProduct } from './AddProduct'
 
-export default function AdminProduct() {
+export function AdminProduct() {
   const [products, setProducts] = useState<ProductResponse[]>([])
 
   const addProduct = (newProduct: ProductResponse) => {
@@ -20,18 +20,10 @@ export default function AdminProduct() {
   }, [])
 
   return (
-    <div style={{ marginBottom: '10%' }}>
-      <p style={{ textAlign: 'center', zIndex: '0' }}>Tickets and Passes</p>
+    <div>
+      <p>Tickets and Passes</p>
       <AddProduct addProduct={addProduct} />
-      <div
-        id="shopCards"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '20% 20% 20%',
-          gridTemplateRows: '1fr 1fr 1fr',
-          gap: '5%',
-          justifyContent: 'center',
-        }}>
+      <div id="shopCards">
         {products.map((product) => (
           <ProductCard
             removeProduct={(productId: number) =>

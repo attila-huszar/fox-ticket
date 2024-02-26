@@ -1,23 +1,21 @@
 import { createContext, useContext, useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { NextUIProvider } from '@nextui-org/react'
-import { Flip, ToastContainer } from 'react-toastify'
 import { ThemeProvider, ThemeContext } from '@context/ThemeProvider'
-import 'react-toastify/dist/ReactToastify.css'
-import '@utils/emailVerifyToast'
-
+import { Home } from '@pages/Home'
+import { Shop } from '@pages/Shop'
+import { MyTickets } from '@pages/MyTickets'
+import { Profile } from '@pages/Profile'
+import { NotFound } from '@pages/NotFound'
+import { Header } from '@components/Header'
+import { Footer } from '@components/Footer'
+import { Cart } from '@components/Cart'
+import { AdminProduct } from '@components/AdminProduct'
+import { Flip, ToastContainer } from 'react-toastify'
 import { UserContextInterface, LoggedInUser } from '@interfaces/user'
 import { CartContextInterface, PendingOrdersResponse } from '@interfaces/orders'
-
-import Home from './Home'
-import Navbar from './Navbar'
-import Shop from './Shop'
-import MyTickets from './MyTickets'
-import Cart from './Cart'
-import Profile from './Profile'
-import Footer from './Footer'
-import AdminProduct from './AdminProduct'
-import NotFound from './NotFound'
+import 'react-toastify/dist/ReactToastify.css'
+import '@utils/emailVerifyToast'
 
 const defaultUser: LoggedInUser = {
   name: 'Guest',
@@ -42,7 +40,7 @@ export default function App() {
   const { isDarkMode } = useContext(ThemeContext)
 
   return (
-    <NextUIProvider>
+    <BrowserRouter>
       <ToastContainer
         className="mt-20"
         transition={Flip}
@@ -50,15 +48,15 @@ export default function App() {
         autoClose={4000}
         theme={isDarkMode ? 'dark' : 'light'}
       />
-      <BrowserRouter>
-        <UserContext.Provider value={{ user, setUser }}>
-          <CartContext.Provider value={{ cart, setCart }}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <CartContext.Provider value={{ cart, setCart }}>
+          <NextUIProvider>
             <ThemeProvider>
-              <Navbar />
+              <Header />
               <Routes>
                 <Route index element={<Home />} />
                 <Route path="/shop" element={<Shop />} />
-                <Route path="/mytickets" element={<MyTickets />} />
+                <Route path="/tickets" element={<MyTickets />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/products" element={<AdminProduct />} />
@@ -66,9 +64,9 @@ export default function App() {
               </Routes>
               <Footer />
             </ThemeProvider>
-          </CartContext.Provider>
-        </UserContext.Provider>
-      </BrowserRouter>
-    </NextUIProvider>
+          </NextUIProvider>
+        </CartContext.Provider>
+      </UserContext.Provider>
+    </BrowserRouter>
   )
 }

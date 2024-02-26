@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from 'react'
-import { UserContext } from './App'
+import { UserContext } from '../App'
 import {
   Button,
   Input,
@@ -9,15 +9,15 @@ import {
   ModalBody,
   ModalFooter,
 } from '@nextui-org/react'
-import profile_defpic from '../assets/images/profile_def.png'
 import {
   validateMatch,
   validateName,
   validatePassword,
-} from '../utils/inputFieldValidators'
-import { InputField, UserContextInterface } from '../interfaces/user'
+} from '@utils/inputFieldValidators'
+import { InputField, UserContextInterface } from '@interfaces/user'
+import { CgProfile } from 'react-icons/cg'
 
-export default function Profile() {
+export function Profile() {
   const { user } = useContext<UserContextInterface>(UserContext)
   const [modalUserVisible, setModalUserVisible] = useState(false)
   const [modalPassVisible, setModalPassVisible] = useState(false)
@@ -108,93 +108,41 @@ export default function Profile() {
 
   return (
     <>
-      <div
-        style={{
-          margin: '50px auto',
-          padding: '20px',
-          minWidth: '450px',
-          maxWidth: '800px',
-          height: '450px',
-          border: '4px solid var(--nextui-colors-navbarActive)',
-          borderRadius: '12px',
-        }}>
+      <p>My Profile</p>
+      <Spacer y={2} />
+      <div>
+        <CgProfile />
         <div>
-          <p
-            style={{
-              margin: 'auto',
-              textGradient: '45deg, $blue600 -20%, $pink600 50%',
-            }}>
-            My Profile
-          </p>
+          <Input
+            readOnly
+            width="100%"
+            size="lg"
+            label="Email"
+            value={user.email}
+          />
+          <Spacer y={1.5} />
+          <Input width="100%" size="lg" label="Username" value={user.name} />
         </div>
-        <Spacer y={2} />
+      </div>
+      <Spacer y={2} />
+      <div>
         <div>
-          <div style={{ margin: 'auto' }}>
-            <img
-              src={profile_defpic}
-              style={{
-                margin: '0 auto',
-                borderRadius: '50%',
-                padding: '5px',
-                border: '5px solid var(--nextui-colors-navbarActive)',
-                width: '220px',
-                aspectRatio: '1',
-                height: 'auto',
-              }}
-              alt="profile"
-            />
-          </div>
-          <div>
-            <Input
-              readOnly
-              width="100%"
-              size="lg"
-              label="Email"
-              value={user.email}
-            />
-            <Spacer y={1.5} />
-            <Input width="100%" size="lg" label="Username" value={user.name} />
-          </div>
+          <Button color="secondary">Change Picture</Button>
         </div>
-        <Spacer y={2} />
         <div>
-          <div>
-            <Button
-              style={{
-                fontSize: '0.9rem',
-                margin: 'auto',
-              }}
-              color="secondary">
-              Change Picture
-            </Button>
-          </div>
-          <div>
-            <Button
-              style={{
-                fontSize: '0.9rem',
-                margin: 'auto',
-              }}
-              id="submit"
-              onPress={() => setModalUserVisible(true)}>
-              Change Username
-            </Button>
-            <Spacer y={1.5} />
-            <Button
-              style={{
-                fontSize: '0.9rem',
-                margin: 'auto',
-              }}
-              onClick={() => setModalPassVisible(true)}>
-              Change Password
-            </Button>
-          </div>
+          <Button id="submit" onPress={() => setModalUserVisible(true)}>
+            Change Username
+          </Button>
+          <Spacer y={1.5} />
+          <Button onClick={() => setModalPassVisible(true)}>
+            Change Password
+          </Button>
         </div>
       </div>
 
       <Modal
         closeButton
         aria-labelledby="username change form"
-        open={modalUserVisible}
         onClose={closeHandler}>
         <ModalHeader>
           <p>Change your Username</p>
@@ -223,51 +171,44 @@ export default function Profile() {
       <Modal
         closeButton
         aria-labelledby="password change form"
-        open={modalPassVisible}
         onClose={closeHandler}>
         <ModalHeader>
           <p>Change your Password</p>
         </ModalHeader>
         <ModalBody>
           <Spacer y={1} />
-          <Input.Password
-            onChange={(e) => setPassOld(e.target.value)}
-            labelPlaceholder="Current Password"
+          <Input
+            onValueChange={(val) => setPassOld(val)}
+            label="Current Password"
             width="350px"
             required
-            bordered
-            status={passOldHelper.color}
+            variant="bordered"
             color={passOldHelper.color}
-            helperColor={passOldHelper.color}
-            helperText={passOldHelper.text}
-            type="password"
-            size="lg"
-          />
-          <Spacer y={1.6} />
-          <Input.Password
-            onChange={(e) => setPassNew(e.target.value)}
-            labelPlaceholder="New Password"
-            width="350px"
-            required
-            bordered
-            status={passNewHelper.color}
-            color={passNewHelper.color}
-            helperColor={passNewHelper.color}
-            helperText={passNewHelper.text}
+            errorMessage={passOldHelper.text}
             type="password"
             size="lg"
           />
           <Spacer y={2} />
-          <Input.Password
-            onChange={(e) => setPassConf(e.target.value)}
-            labelPlaceholder="Confirm Password"
+          <Input
+            onValueChange={(val) => setPassNew(val)}
+            label="New Password"
             width="350px"
             required
-            bordered
-            status={passConfHelper.color}
+            variant="bordered"
+            color={passNewHelper.color}
+            errorMessage={passNewHelper.text}
+            type="password"
+            size="lg"
+          />
+          <Spacer y={2} />
+          <Input
+            onValueChange={(val) => setPassConf(val)}
+            label="Confirm Password"
+            width="350px"
+            required
+            variant="bordered"
             color={passConfHelper.color}
-            helperColor={passConfHelper.color}
-            helperText={passConfHelper.text}
+            errorMessage={passConfHelper.text}
             type="password"
             size="lg"
           />

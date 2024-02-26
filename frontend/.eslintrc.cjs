@@ -38,6 +38,8 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'promise/always-return': 'off',
   },
   settings: {
     react: {
@@ -47,4 +49,4 @@ module.exports = {
       allowedCharacterRanges: ['alphanumeric', 'a-ű'],
     },
   },
-};
+}

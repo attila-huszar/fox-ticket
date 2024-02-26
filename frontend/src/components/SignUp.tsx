@@ -18,25 +18,23 @@ import {
   validateName,
   validateMatch,
 } from '@utils/inputFieldValidators'
-import '@styles/inputFieldHelper.css'
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon'
 import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon'
+import '@styles/inputFieldHelper.css'
+import 'react-toastify/dist/ReactToastify.css'
 
-export default function SignUp() {
+export function SignUp() {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConf, setPasswordConf] = useState('')
-  // const [modalVisible, setModalVisible] = useState(false);
-  const [isPassVisible, setIsPassVisible] = useState(false)
+  const [isPassVis, setIsPassVis] = useState(false)
   const [shakeName, setShakeName] = useState(false)
   const [shakeEmail, setShakeEmail] = useState(false)
   const [shakePassword, setShakePassword] = useState(false)
   const [shakePasswordConf, setShakePasswordConf] = useState(false)
-  const togglePassVisibility = () => setIsPassVisible(!isPassVisible)
 
   // Input field helpers
   const nameHelper: InputField = useMemo(() => {
@@ -103,39 +101,39 @@ export default function SignUp() {
 
   // Handlers
   const handleSignUp = async () => {
-    if (name.length === 0) {
+    if (!name.length) {
       setShakeName(true)
       nameHelper.color = 'danger'
       nameHelper.text = 'Please fill this field'
     }
-    if (email.length === 0) {
+    if (!email.length) {
       setShakeEmail(true)
       emailHelper.color = 'danger'
       emailHelper.text = 'Please fill this field'
     }
-    if (password.length === 0) {
+    if (!password.length) {
       setShakePassword(true)
       passHelper.color = 'danger'
       passHelper.text = 'Please fill this field'
     }
-    if (passwordConf.length === 0) {
+    if (!passwordConf.length) {
       setShakePasswordConf(true)
       passConfHelper.color = 'danger'
       passConfHelper.text = 'Please fill this field'
     }
-    if (validateName(name) === false) {
+    if (!validateName(name)) {
       setShakeName(true)
       nameHelper.color = 'danger'
     }
-    if (validateEmail(email) === false) {
+    if (!validateEmail(email)) {
       setShakeEmail(true)
       emailHelper.color = 'danger'
     }
-    if (validatePassword(password) === false) {
+    if (!validatePassword(password)) {
       setShakePassword(true)
       passHelper.color = 'danger'
     }
-    if (validateMatch(password, passwordConf) === false) {
+    if (!validateMatch(password, passwordConf)) {
       setShakePasswordConf(true)
       passConfHelper.color = 'danger'
     }
@@ -205,20 +203,14 @@ export default function SignUp() {
         }}
         closeButton
         aria-labelledby="signup form"
-        // onClose={onClose}
-      >
+        onClose={onClose}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <p id="signup form">Please sign up with your email address</p>
+                <p>Please sign up with your email address</p>
               </ModalHeader>
-              <hr
-                style={{
-                  color: '#f2f2f2',
-                  height: 5,
-                }}
-              />
+              <hr />
               <ModalBody>
                 <Spacer y={2} />
                 <Input
@@ -251,15 +243,15 @@ export default function SignUp() {
                     <button
                       className="focus:outline-none"
                       type="button"
-                      onClick={togglePassVisibility}>
-                      {isPassVisible ? (
+                      onClick={() => setIsPassVis((prev) => !prev)}>
+                      {isPassVis ? (
                         <EyeSlashFilledIcon className="text-default-400 pointer-events-none text-2xl" />
                       ) : (
                         <EyeFilledIcon className="text-default-400 pointer-events-none text-2xl" />
                       )}
                     </button>
                   }
-                  type={isPassVisible ? 'text' : 'password'}
+                  type={isPassVis ? 'text' : 'password'}
                   className={shakePassword ? 'shake' : ''}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -278,13 +270,13 @@ export default function SignUp() {
                   required
                   color={passConfHelper.color}
                   errorMessage={passConfHelper.text}
-                  type={isPassVisible ? 'text' : 'password'}
+                  type={isPassVis ? 'text' : 'password'}
                   fullWidth
                   size="lg"
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="danger" onPress={onClose}>
                   Close
                 </Button>
                 <Button color="primary" onPress={handleSignUp}>

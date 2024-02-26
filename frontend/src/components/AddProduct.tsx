@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Spacer,
   Button,
@@ -6,26 +7,25 @@ import {
   ModalHeader,
   ModalBody,
 } from '@nextui-org/react'
-import { useState } from 'react'
-import { fetchAddNewProduct } from '../api/products'
-import { ProductRequest, ProductResponse } from '../interfaces/product'
+import { fetchAddNewProduct } from '@api/products'
+import { ProductRequest, ProductResponse } from '@interfaces/product'
 
 export function AddProduct({
   addProduct,
 }: {
   addProduct: (newProduct: ProductResponse) => void
 }) {
-  const emptyproduct = {
+  const initialProduct = {
     name: '',
     price: 0,
     duration: 0,
     description: '',
     type: '',
   }
-  const [data, setData] = useState<ProductRequest>(emptyproduct)
+  const [data, setData] = useState<ProductRequest>(initialProduct)
   const [errorMessage, setErrorMessage] = useState('')
   const [message, setMessage] = useState('')
-  const [visAddProduct, setVisAddProduct] = useState(false)
+  const [isAddProductVis, setIsAddProductVis] = useState(false)
 
   const addProductHandler = async () => {
     try {
@@ -43,13 +43,13 @@ export function AddProduct({
     }
     setErrorMessage('')
     setMessage('Product Successfully Added!')
-    setData(emptyproduct)
+    setData(initialProduct)
   }
 
-  const productButtonHandler = () => setVisAddProduct(true)
+  const productButtonHandler = () => setIsAddProductVis(true)
 
   const closeHandler = () => {
-    setVisAddProduct(false)
+    setIsAddProductVis(false)
   }
 
   return (
@@ -65,17 +65,12 @@ export function AddProduct({
         onClick={productButtonHandler}>
         Add Product
       </Button>
-      <Modal
-        closeButton
-        aria-labelledby="login form"
-        open={visAddProduct}
-        onClose={closeHandler}>
+      <Modal closeButton aria-labelledby="login form" onClose={closeHandler}>
         <ModalHeader>
           <div>
             <p
               style={{
                 margin: 'auto',
-                textGradient: '45deg, $blue600 -20%, $pink600 50%',
               }}>
               Add New Product
             </p>
@@ -98,11 +93,10 @@ export function AddProduct({
                 onChange={(e) =>
                   setData({ ...data, price: Number(e.target.value) })
                 }
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Price"
-                value={data.price === 0 ? '' : data.price}
+                label="Price"
+                value={String(data.price) || ''}
               />
               <Spacer y={0.5} />
               <Input
@@ -110,11 +104,10 @@ export function AddProduct({
                 onChange={(e) =>
                   setData({ ...data, duration: Number(e.target.value) })
                 }
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
-                labelLeft="Duration"
-                value={data.duration === 0 ? '' : data.duration}
+                label="Duration"
+                value={String(data.duration) || ''}
               />
               <Spacer y={0.5} />
               <Input

@@ -1,4 +1,4 @@
-.containerGridForFeatures{
+.containerGridForFeatures {
   display: grid;
   justify-content: center;
   grid-template-columns: 20% 20% 20% 20%;
@@ -10,7 +10,7 @@
   margin-top: 5%;
 }
 
-.featureIcon{
+.featureIcon {
   width: 40px;
   height: 40px;
   margin-bottom: 1.6rem;
@@ -19,13 +19,13 @@
   background-color: var(--nextui-colors-featuresLogoBackground);
 }
 
-.feautureTitle{
+.featureTitle {
   font-size: 24px;
   font-weight: 700;
-  margin-bottom: 0,8rem;
+  margin-bottom: 0, 8rem;
 }
 
-.featureText{
+.featureText {
   font-size: 18px;
   line-height: 1.8;
 }

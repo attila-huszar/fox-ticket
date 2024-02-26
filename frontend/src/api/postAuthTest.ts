@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-export default async function postAuthTest(userData: {
+export async function postAuthTest(userData: {
   email: string
   token: string
 }): Promise<string | undefined> {

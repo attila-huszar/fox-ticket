@@ -18,7 +18,7 @@ export function EditProduct({
   description,
   type,
 }: ProductRequest) {
-  const loadedproduct = {
+  const editProduct = {
     id: id,
     name: name,
     price: price,
@@ -27,7 +27,7 @@ export function EditProduct({
     type: type,
   }
 
-  const [data, setData] = useState<ProductRequest>(loadedproduct)
+  const [data, setData] = useState<ProductRequest>(editProduct)
   const [errorMessage, setErrorMessage] = useState('')
   const [message, setMessage] = useState('')
   const [visEditProduct, setVisEditProduct] = useState(false)
@@ -48,7 +48,7 @@ export function EditProduct({
     }
     setErrorMessage('')
     setMessage('Product Successfully Edited!')
-    setData(loadedproduct)
+    setData(editProduct)
     setVisEditProduct(false)
   }
 
@@ -63,17 +63,12 @@ export function EditProduct({
       <Button color="secondary" onClick={productButtonHandler}>
         Edit
       </Button>
-      <Modal
-        closeButton
-        aria-labelledby="login form"
-        open={visEditProduct}
-        onClose={closeHandler}>
+      <Modal closeButton aria-labelledby="login form" onClose={closeHandler}>
         <ModalHeader>
           <div>
             <p
               style={{
                 margin: 'auto',
-                textGradient: '45deg, $blue600 -20%, $pink600 50%',
               }}>
               Edit Product
             </p>
@@ -96,11 +91,10 @@ export function EditProduct({
                 onChange={(e) =>
                   setData({ ...data, price: Number(e.target.value) })
                 }
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
                 label="Price"
-                value={data.price === 0 ? '' : data.price}
+                value={String(data.price) || ''}
               />
               <Spacer y={0.5} />
               <Input
@@ -108,11 +102,10 @@ export function EditProduct({
                 onChange={(e) =>
                   setData({ ...data, duration: Number(e.target.value) })
                 }
-                underlined
                 width="100%"
                 style={{ margin: 'auto' }}
                 label="Duration"
-                value={data.duration === 0 ? '' : data.duration}
+                value={String(data.duration) || ''}
               />
               <Spacer y={0.5} />
               <Input

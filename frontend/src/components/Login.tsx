@@ -15,18 +15,14 @@ import { postLogin } from '@api/postLogin'
 import { validateEmail, validatePassword } from '@utils/inputFieldValidators'
 import { InputField, LoggedInUser } from '@interfaces/user'
 import { toast } from 'react-toastify'
-import { UserContext } from './App'
+import { UserContext } from '../App'
 import { UserContextInterface } from '@interfaces/user'
 import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon'
 import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon'
 
-export default function Login() {
+export function Login() {
   const { user, setUser } = useContext<UserContextInterface>(UserContext)
-  console.log(user)
-
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
-
-  // const [loginModalVisible, setLoginModalVisible] = useState(false);
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isPassVisible, setIsPassVisible] = useState(false)
@@ -150,10 +146,7 @@ export default function Login() {
 
   return (
     <>
-      <Button
-        className="hover:[box-shadow:0_4px_14px_0_var(--nextui-colors-hoverShadow)]"
-        color="secondary"
-        onPress={onOpen}>
+      <Button color="secondary" onPress={onOpen}>
         Login
       </Button>
       <Modal
@@ -175,12 +168,7 @@ export default function Login() {
                   <strong>Fox</strong>Ticket
                 </p>
               </ModalHeader>
-              <hr
-                style={{
-                  color: '#f2f2f2',
-                  height: 5,
-                }}
-              />
+              <hr />
               <ModalBody>
                 <Spacer y={2} />
                 <Input

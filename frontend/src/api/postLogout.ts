@@ -1,9 +1,6 @@
 import axios, { AxiosError } from 'axios'
 
-export default async function postLogout(userData: {
-  email: string
-  token: string
-}) {
+export async function postLogout(userData: { email: string; token: string }) {
   try {
     localStorage.removeItem('token')
     localStorage.removeItem('name')

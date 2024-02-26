@@ -8,8 +8,12 @@
       "DOM.Iterable"
     ],
     "module": "ESNext",
-    "baseUrl": "src",
+    "outDir": "dist",
+    "baseUrl": "./src",
     "paths": {
+      "@pages/*": [
+        "pages/*"
+      ],
       "@components/*": [
         "components/*"
       ],
@@ -51,11 +55,11 @@
     "forceConsistentCasingInFileNames": true,
   },
   "include": [
-    "src"
+    "src",
   ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
 }

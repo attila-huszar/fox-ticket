@@ -5,14 +5,14 @@ export const ThemeContext = createContext({
   toggleDarkMode: () => {},
 })
 
-export const ThemeProvider = ({ children }) => {
+export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDarkMode, setIsDarkMode] = useState(
-    JSON.parse(localStorage.getItem('dark-mode')) ??
+    JSON.parse(localStorage.getItem('dark-mode')!) ??
       window.matchMedia('(prefers-color-scheme: dark)').matches,
   )
 
   const toggleDarkMode = () => {
-    setIsDarkMode((prevState) => !prevState)
+    setIsDarkMode((prevState: boolean) => !prevState)
     localStorage.setItem('dark-mode', JSON.stringify(!isDarkMode))
   }
 
@@ -31,7 +31,10 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
-      {children}
+      <div
+        className={`${isDarkMode ? 'dark' : 'light'} text-foreground bg-background min-h-screen`}>
+        {children}
+      </div>
     </ThemeContext.Provider>
   )
 }

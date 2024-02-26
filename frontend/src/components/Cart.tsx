@@ -1,16 +1,16 @@
 import { useContext, useState } from 'react'
+import { CartContext } from '../App'
+import { CartContextInterface } from '@interfaces/orders'
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
   fetchChangeOrderStatusByUserId,
-} from '../api/orders'
-import { CartContextInterface } from '../interfaces/orders'
+} from '@api/orders'
+import { OrderCart } from './OrderCart'
 import { Modal, Button, Badge, ModalBody, ModalFooter } from '@nextui-org/react'
 import { FiShoppingCart } from 'react-icons/fi'
-import OrderCart from './OrderCart'
-import { CartContext } from './App'
 
-export default function Cart() {
+export function Cart() {
   const { cart, setCart } = useContext<CartContextInterface>(CartContext)
 
   const [visible, setVisible] = useState(false)
@@ -36,49 +36,26 @@ export default function Cart() {
     setVisible(false)
   }
 
-  function fetchPendingOrders() {
-    return fetchPendingOrder().then((data) => setCart!(data))
+  async function fetchPendingOrders() {
+    const data = await fetchPendingOrder()
+    return setCart!(data)
   }
 
   return (
     <>
-      {cart.length !== 0 ? (
+      {cart.length ? (
         <Badge color="danger" content={cart.length}>
-          <Button
-            style={{
-              fontSize: '1rem',
-              '&:hover, &:focus': {
-                boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
-              },
-            }}
-            auto
-            color="secondary"
-            shadow
-            rounded
-            icon={<FiShoppingCart />}
-            onClick={handler}></Button>
+          <Button isIconOnly variant="shadow" onClick={handler}>
+            <FiShoppingCart size={30} />
+          </Button>
         </Badge>
       ) : (
-        <Button
-          style={{
-            fontSize: '1rem',
-            '&:hover, &:focus': {
-              boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
-            },
-          }}
-          auto
-          color="secondary"
-          shadow
-          rounded
-          icon={<FiShoppingCart />}
-          onClick={handler}></Button>
+        <Button isIconOnly variant="shadow" onClick={handler}>
+          <FiShoppingCart size={30} />
+        </Button>
       )}
 
-      <Modal
-        closeButton
-        aria-labelledby="shopping cart"
-        open={visible}
-        onClose={closeHandler}>
+      <Modal closeButton aria-labelledby="shopping cart" onClose={closeHandler}>
         <ModalBody>
           <p>{message}</p>
           {cart.map((order) => (
@@ -95,18 +72,10 @@ export default function Cart() {
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            style={{ marginRight: '20px' }}
-            size="sm"
-            color="secondary"
-            onClick={buyProductHandler}>
+          <Button size="sm" color="secondary" onClick={buyProductHandler}>
             Buy
           </Button>
-          <Button
-            style={{ marginRight: '20px' }}
-            size="sm"
-            id="submit"
-            onClick={resetAllOrdersHandler}>
+          <Button size="sm" id="submit" onClick={resetAllOrdersHandler}>
             Reset
           </Button>
           <Button size="sm" color="primary" id="submit" onPress={closeHandler}>

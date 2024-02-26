@@ -3,6 +3,7 @@ import { ProductRequest, ProductResponse } from '../interfaces/product'
 
 export async function fetchProducts() {
   const response = await axios.get('/api/products')
+  console.log(response.data)
   return response.data.allProducts
 }
 

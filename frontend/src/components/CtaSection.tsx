@@ -1,28 +1,24 @@
-import '../styles/CtaSection.css'
 import { Button } from '@nextui-org/react'
 
-export default function CtaSection() {
+export function CtaSection() {
   return (
     <>
-      <section className="sectionCta">
+      <section>
         <div>
-          <div className="sectionCtaContainer">
-            <div className="ctaTextBox">
-              <h2 className="headingSecondary">
-                Get your first ticket for free!
-              </h2>
-              <p className="ctaText">
+          <div>
+            <div>
+              <h2>Get your first ticket for free!</h2>
+              <p>
                 Quickly, hassle-free on the go solutions for buying tickets and
                 passes. Start purchasing comfortably today. And the first ticket
                 is on us!
               </p>
-              <form className="ctaForm" action="#">
+              <form>
                 <div>
                   <label htmlFor="ctaName">
                     Full name:
                     <input
                       id="ctaName"
-                      className="ctaForm"
                       type="text"
                       name="name"
                       placeholder="John Doe"
@@ -34,7 +30,6 @@ export default function CtaSection() {
                     E-mail:
                     <input
                       id="ctaEmail"
-                      className="ctaForm"
                       type="email"
                       name="email"
                       placeholder="me@example.com"
@@ -54,14 +49,11 @@ export default function CtaSection() {
                     <option value="others">Others</option>
                   </select>
                 </div>
-                <Button type="submit" className="ctaSignUpButton">
-                  I want the free ticket!
-                </Button>
+                <Button type="submit">I want the free ticket!</Button>
               </form>
             </div>
-            <div className="ctaImageBox">
+            <div>
               <img
-                className="ctaPic"
                 role="img"
                 aria-label="woman enjoying buying tickets on phone"
               />

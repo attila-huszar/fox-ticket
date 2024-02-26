@@ -1,5 +1,12 @@
 import { useNavigate } from 'react-router-dom'
-import { Navbar, Dropdown, Button } from '@nextui-org/react'
+import {
+  NavbarItem,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from '@nextui-org/react'
 import {
   TbBook,
   TbNews,
@@ -8,7 +15,7 @@ import {
   TbSettings,
 } from 'react-icons/tb'
 
-export default function Admin() {
+export function Admin() {
   const navigate = useNavigate()
 
   const navigateDropdown = (key: React.Key) => {
@@ -17,37 +24,40 @@ export default function Admin() {
   }
 
   return (
-    <Navbar.Item>
+    <NavbarItem>
       <Dropdown placement="bottom">
-        <Dropdown.Trigger
-          css={{
+        <DropdownTrigger
+          style={{
             fontSize: '1rem',
-            '&:hover, &:focus': {
-              boxShadow: '0 4px 14px 0 var(--nextui-colors-hoverShadow)',
-            },
           }}>
-          <Button auto color="gradient" shadow icon={<TbSettings />}>
+          <Button
+            color="primary"
+            variant="shadow"
+            startContent={<TbSettings />}>
             Admin
           </Button>
-        </Dropdown.Trigger>
-        <Dropdown.Menu
+        </DropdownTrigger>
+        <DropdownMenu
           aria-label="User menu actions"
           color="secondary"
           onAction={(key) => navigateDropdown(key)}>
-          <Dropdown.Item key="/products" icon={<TbShoppingCart />}>
+          <DropdownItem key="/products" startContent={<TbShoppingCart />}>
             Products
-          </Dropdown.Item>
-          <Dropdown.Item key="/articles" icon={<TbNews />} withDivider>
+          </DropdownItem>
+          <DropdownItem key="/articles" startContent={<TbNews />} showDivider>
             Articles
-          </Dropdown.Item>
-          <Dropdown.Item key="/orders" icon={<TbBook />} withDivider>
+          </DropdownItem>
+          <DropdownItem key="/orders" startContent={<TbBook />} showDivider>
             Orders
-          </Dropdown.Item>
-          <Dropdown.Item key="/purchases" icon={<TbCreditCard />} withDivider>
+          </DropdownItem>
+          <DropdownItem
+            key="/purchases"
+            startContent={<TbCreditCard />}
+            showDivider>
             Purchases
-          </Dropdown.Item>
-        </Dropdown.Menu>
+          </DropdownItem>
+        </DropdownMenu>
       </Dropdown>
-    </Navbar.Item>
+    </NavbarItem>
   )
 }

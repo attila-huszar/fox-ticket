@@ -40,6 +40,6 @@ export async function fetchChangeOrderStatusByUserId() {
 }
 
 export async function fetchActiveOrders() {
-  const purchases = await axios.get('/api/mytickets/1')
+  const purchases = await axios.get('/api/tickets/1')
   return purchases.data.orders
 }
