@@ -192,17 +192,18 @@ export function SignUp() {
 
   return (
     <div>
-      <Button onPress={onOpen}>Sign Up</Button>
+      <Button onPress={onOpen} variant="shadow">
+        Sign Up
+      </Button>
       <Modal
-        backdrop="opaque"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         classNames={{
           backdrop:
             'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
         }}
-        closeButton
         aria-labelledby="signup form"
+        closeButton
         onClose={onClose}>
         <ModalContent>
           {(onClose) => (
@@ -214,6 +215,7 @@ export function SignUp() {
               <ModalBody>
                 <Spacer y={2} />
                 <Input
+                  autoFocus
                   className={shakeName ? 'shake' : ''}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -221,7 +223,6 @@ export function SignUp() {
                   errorMessage={nameHelper.text}
                   placeholder="Name"
                   fullWidth
-                  size="lg"
                 />
                 <Spacer y={1.5} />
                 <Input
@@ -232,12 +233,9 @@ export function SignUp() {
                   errorMessage={emailHelper.text}
                   placeholder="Email"
                   fullWidth
-                  size="lg"
                 />
                 <Spacer y={1.5} />
                 <Input
-                  label="Password"
-                  variant="bordered"
                   placeholder="Enter your password"
                   endContent={
                     <button
@@ -258,12 +256,9 @@ export function SignUp() {
                   color={passHelper.color}
                   errorMessage={passHelper.text}
                   fullWidth
-                  size="lg"
                 />
                 <Spacer y={1.5} />
                 <Input
-                  label="Password"
-                  variant="bordered"
                   placeholder="Confirm Your Password"
                   className={shakePasswordConf ? 'shake' : ''}
                   onChange={(e) => setPasswordConf(e.target.value)}
@@ -272,16 +267,13 @@ export function SignUp() {
                   errorMessage={passConfHelper.text}
                   type={isPassVis ? 'text' : 'password'}
                   fullWidth
-                  size="lg"
                 />
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" onPress={onClose}>
+                <Button color="danger" variant="bordered" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={handleSignUp}>
-                  Sign Up
-                </Button>
+                <Button onPress={handleSignUp}>Sign Up</Button>
               </ModalFooter>
             </>
           )}

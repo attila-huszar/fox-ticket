@@ -40,6 +40,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-unused-vars': 'warn',
     'promise/always-return': 'off',
+    'tailwindcss/classnames-order': 'off',
   },
   settings: {
     react: {

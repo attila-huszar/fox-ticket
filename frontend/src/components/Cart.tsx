@@ -7,22 +7,23 @@ import {
   fetchChangeOrderStatusByUserId,
 } from '@api/orders'
 import { OrderCart } from './OrderCart'
-import { Modal, Button, Badge, ModalBody, ModalFooter } from '@nextui-org/react'
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Badge,
+  useDisclosure,
+} from '@nextui-org/react'
 import { FiShoppingCart } from 'react-icons/fi'
 
 export function Cart() {
   const { cart, setCart } = useContext<CartContextInterface>(CartContext)
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
-  const [visible, setVisible] = useState(false)
   const [message, setMessage] = useState('')
-
-  const closeHandler = () => {
-    setVisible(false)
-    setMessage('')
-  }
-  const handler = async () => {
-    setVisible(true)
-  }
 
   const resetAllOrdersHandler = async () => {
     fetchRemovePendingOrderFromCart()
@@ -33,7 +34,6 @@ export function Cart() {
   const buyProductHandler = async () => {
     fetchChangeOrderStatusByUserId()
     fetchPendingOrders()
-    setVisible(false)
   }
 
   async function fetchPendingOrders() {
@@ -45,43 +45,65 @@ export function Cart() {
     <>
       {cart.length ? (
         <Badge color="danger" content={cart.length}>
-          <Button isIconOnly variant="shadow" onClick={handler}>
-            <FiShoppingCart size={30} />
+          <Button
+            isIconOnly
+            variant="shadow"
+            onPress={onOpen}
+            aria-label="Cart">
+            <FiShoppingCart fill="currentColor" size={18} />
           </Button>
         </Badge>
       ) : (
-        <Button isIconOnly variant="shadow" onClick={handler}>
-          <FiShoppingCart size={30} />
+        <Button isIconOnly variant="shadow" onPress={onOpen} aria-label="Cart">
+          <FiShoppingCart fill="currentColor" size={18} />
         </Button>
       )}
 
-      <Modal closeButton aria-labelledby="shopping cart" onClose={closeHandler}>
-        <ModalBody>
-          <p>{message}</p>
-          {cart.map((order) => (
-            <OrderCart
-              removeOrder={(orderId: number) =>
-                setCart!(cart.filter((order) => order.id !== orderId))
-              }
-              key={order.id}
-              name={order.name}
-              price={order.price}
-              id={order.id}
-            />
-          ))}
-        </ModalBody>
-
-        <ModalFooter>
-          <Button size="sm" color="secondary" onClick={buyProductHandler}>
-            Buy
-          </Button>
-          <Button size="sm" id="submit" onClick={resetAllOrdersHandler}>
-            Reset
-          </Button>
-          <Button size="sm" color="primary" id="submit" onPress={closeHandler}>
-            Close
-          </Button>
-        </ModalFooter>
+      <Modal
+        closeButton
+        aria-labelledby="shopping cart"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Shopping Cart
+              </ModalHeader>
+              <ModalBody>
+                <p>{message}</p>
+                {cart.map((order) => (
+                  <OrderCart
+                    removeOrder={(orderId: number) =>
+                      setCart!(cart.filter((order) => order.id !== orderId))
+                    }
+                    key={order.id}
+                    name={order.name}
+                    price={order.price}
+                    id={order.id}
+                  />
+                ))}
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  size="sm"
+                  onPress={() => {
+                    buyProductHandler()
+                    onClose()
+                  }}>
+                  Buy
+                </Button>
+                <Button
+                  size="sm"
+                  color="warning"
+                  variant="flat"
+                  onPress={resetAllOrdersHandler}>
+                  Reset
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
       </Modal>
     </>
   )

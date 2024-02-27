@@ -146,32 +146,32 @@ export function Login() {
 
   return (
     <>
-      <Button color="secondary" onPress={onOpen}>
+      <Button onPress={onOpen} variant="shadow">
         Login
       </Button>
       <Modal
         backdrop="opaque"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
+        closeButton
         classNames={{
           backdrop:
             'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
         }}
-        closeButton
         aria-labelledby="login form">
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <p>Welcome to&nbsp; </p>
                 <p>
-                  <strong>Fox</strong>Ticket
+                  Welcome to <strong>Fox</strong>Ticket
                 </p>
               </ModalHeader>
               <hr />
               <ModalBody>
                 <Spacer y={2} />
                 <Input
+                  autoFocus
                   className={shakeEmail ? 'shake' : ''}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -179,12 +179,9 @@ export function Login() {
                   errorMessage={emailHelper.text}
                   placeholder="Email"
                   fullWidth
-                  size="lg"
                 />
                 <Spacer y={1.5} />
                 <Input
-                  label="Password"
-                  variant="bordered"
                   placeholder="Enter your password"
                   endContent={
                     <button
@@ -205,23 +202,20 @@ export function Login() {
                   color={passHelper.color}
                   errorMessage={passHelper.text}
                   fullWidth
-                  size="lg"
                 />
                 <Spacer y={2} />
                 <div className="justify-between">
-                  <Checkbox color="secondary">
+                  <Checkbox>
                     <p>Remember me</p>
                   </Checkbox>
-                  <p>Forgot password?</p>
+                  <p className="text-end">Forgot password?</p>
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={loginHandler}>
-                  Login
-                </Button>
+                <Button onPress={loginHandler}>Login</Button>
               </ModalFooter>
             </>
           )}

@@ -1,3 +1,4 @@
+import { Image } from '@nextui-org/react'
 import { Articles } from '../components/Articles'
 import { Features } from '../components/Features'
 import { CtaSection } from '../components/CtaSection'
@@ -18,19 +19,15 @@ export function Home() {
   const day = weekday[date.getDay()]
 
   return (
-    <>
+    <main className="px-10 pb-52">
       <p className="text-4xl font-bold">News</p>
       <p>
         Budapest, {localDate}, {day}
       </p>
-
-      <div>
-        <img src={m1} alt="m1 metro"></img>
-      </div>
-
+      <Image src={m1} alt="m1 metro" />
       <Articles />
       <Features />
       <CtaSection />
-    </>
+    </main>
   )
 }

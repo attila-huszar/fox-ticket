@@ -7,13 +7,8 @@ export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+    '../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
-  fontFamily: {
-    sans: ['Inter', 'sans-serif'],
-    serif: ['Courier', 'serif'],
-    mono: ['Consolas', 'monospace'],
-  },
   extend: {
     spacing: {
       '8xl': '96rem',
@@ -87,8 +82,6 @@ export default {
   },
   plugins: [
     nextui({
-      prefix: 'nextui',
-      defaultTheme: 'light',
       themes: {
         light: {
           extend: 'light',

@@ -23,23 +23,27 @@ export function Shop() {
     : tickets
 
   return (
-    <main className="flex flex-col items-center">
-      <div className="my-10 flex flex-col items-center">
-        <p className="text-2xl font-bold">Tickets and Passes</p>
-        <ButtonGroup>
-          <Button color="primary" onPress={() => setTicketType('')}>
-            All
-          </Button>
-          <Button color="primary" onPress={() => setTicketType('ticket')}>
-            Tickets
-          </Button>
-          <Button color="primary" onPress={() => setTicketType('pass')}>
-            Passes
-          </Button>
-        </ButtonGroup>
-      </div>
+    <main className="flex flex-col items-center pb-52 pt-6">
+      <p className="mb-4 text-2xl font-bold">Tickets and Passes</p>
+      <ButtonGroup variant="ghost">
+        <Button
+          variant={ticketType === '' ? 'solid' : undefined}
+          onPress={() => setTicketType('')}>
+          All
+        </Button>
+        <Button
+          variant={ticketType === 'ticket' ? 'solid' : undefined}
+          onPress={() => setTicketType('ticket')}>
+          Tickets
+        </Button>
+        <Button
+          variant={ticketType === 'pass' ? 'solid' : undefined}
+          onPress={() => setTicketType('pass')}>
+          Passes
+        </Button>
+      </ButtonGroup>
 
-      <div className="flex flex-wrap justify-center gap-10 p-4">
+      <div className="flex flex-wrap justify-center gap-10 py-6">
         {filteredTickets &&
           filteredTickets.map((ticket) => (
             <ProductCard

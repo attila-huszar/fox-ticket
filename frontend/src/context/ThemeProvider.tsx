@@ -32,7 +32,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
       <div
-        className={`${isDarkMode ? 'dark' : 'light'} text-foreground bg-background min-h-screen`}>
+        className={`${isDarkMode ? 'dark' : 'light'} text-foreground bg-background relative min-h-screen`}>
         {children}
       </div>
     </ThemeContext.Provider>

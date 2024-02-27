@@ -8,7 +8,7 @@ import {
 
 export function Footer() {
   return (
-    <footer className="flex justify-between">
+    <footer className="absolute bottom-0 flex w-full justify-between">
       <div>
         <div className="size-8">
           <img src={logo} alt="logo" />

@@ -19,8 +19,6 @@ import { CgProfile } from 'react-icons/cg'
 
 export function Profile() {
   const { user } = useContext<UserContextInterface>(UserContext)
-  const [modalUserVisible, setModalUserVisible] = useState(false)
-  const [modalPassVisible, setModalPassVisible] = useState(false)
   const [name, setName] = useState('')
   const [passOld, setPassOld] = useState('')
   const [passNew, setPassNew] = useState('')
@@ -98,8 +96,6 @@ export function Profile() {
   }
 
   const closeHandler = () => {
-    setModalUserVisible(false)
-    setModalPassVisible(false)
     setName('')
     setPassOld('')
     setPassNew('')
@@ -127,16 +123,12 @@ export function Profile() {
       <Spacer y={2} />
       <div>
         <div>
-          <Button color="secondary">Change Picture</Button>
+          <Button>Change Picture</Button>
         </div>
         <div>
-          <Button id="submit" onPress={() => setModalUserVisible(true)}>
-            Change Username
-          </Button>
+          <Button>Change Username</Button>
           <Spacer y={1.5} />
-          <Button onClick={() => setModalPassVisible(true)}>
-            Change Password
-          </Button>
+          <Button>Change Password</Button>
         </div>
       </div>
 
