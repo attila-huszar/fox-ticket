@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
-    "@stripe/react-stripe-js": "^2.5.0",
-    "@stripe/stripe-js": "^3.0.5",
+    "@stripe/react-stripe-js": "^2.5.1",
+    "@stripe/stripe-js": "^3.0.6",
     "axios": "^1.6.7",
     "framer-motion": "^11.0.6",
     "react": "^18.2.0",
@@ -22,7 +22,7 @@
     "react-toastify": "^10.0.4"
   },
   "devDependencies": {
-    "@types/react": "^18.2.58",
+    "@types/react": "^18.2.59",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.17",
