@@ -1,8 +1,7 @@
 import { useContext, Key } from 'react'
 import { useNavigate, Link, NavLink } from 'react-router-dom'
+import { UserContext } from '@context/UserProvider'
 import { ThemeContext } from '@context/ThemeProvider'
-import { UserContext } from '../App'
-import { UserContextInterface } from '@interfaces/user'
 import { Login } from './Login'
 import { SignUp } from './SignUp'
 import { Cart } from './Cart'
@@ -27,51 +26,9 @@ import { CgProfile } from 'react-icons/cg'
 import logo from '@assets/svg/logo.svg'
 
 export function Header() {
-  const navigate = useNavigate()
-  const { user, setUser } = useContext<UserContextInterface>(UserContext)
+  const { user, setUser } = useContext(UserContext)
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext)
-
-  const notifyLoggedOut = () =>
-    toast.success(`${user.email} successfully logged out.`)
-
-  const navigateDropdown = async (key: React.Key) => {
-    if (key === 'logout') {
-      try {
-        const response = await postLogout({
-          email: user.email,
-          token: user.token,
-        })
-
-        if (user.email === (await response)) {
-          setUser!({
-            name: 'Guest',
-            email: '',
-            token: '',
-            isAdmin: false,
-          })
-          notifyLoggedOut()
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    } else if (key === 'help_and_feedback') {
-      try {
-        const response = await postAuthTest({
-          email: user.email,
-          token: user.token,
-        })
-
-        if (user.email === response) {
-          console.log(response, 'is authenticated')
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    } else {
-      const path = String(key)
-      navigate(path)
-    }
-  }
+  const navigate = useNavigate()
 
   const links = [
     {
@@ -84,6 +41,54 @@ export function Header() {
     },
   ]
 
+  const navigateDropdown = async (key: React.Key) => {
+    if (key === 'logout') {
+      try {
+        const userData = await postLogout({
+          email: user.email,
+          token: user.token,
+        })
+
+        if (user.email === userData.email) {
+          setUser({
+            name: 'Guest',
+            email: '',
+            token: '',
+          })
+
+          localStorage.removeItem('name')
+          localStorage.removeItem('email')
+          localStorage.removeItem('token')
+
+          navigate('/')
+          notifyLoggedOut()
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    } else if (key === 'help_and_feedback') {
+      try {
+        const userData = await postAuthTest({
+          email: user.email,
+          token: user.token,
+        })
+
+        if (user.email === userData.email) {
+          console.log(userData, 'is authenticated')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      const path = String(key)
+      navigate(path)
+    }
+  }
+
+  function notifyLoggedOut() {
+    toast.success(`${user.email} successfully logged out.`)
+  }
+
   return (
     <Navbar isBordered>
       <NavbarBrand className="grow-0 basis-auto">
@@ -94,14 +99,14 @@ export function Header() {
       </NavbarBrand>
 
       <NavbarContent>
-        {links.map((link) => (
-          <NavbarItem
-            key={link.path}
-            className="hover:bg-secondary-700 rounded-xl px-3 py-2 transition-colors">
+        {links.map((link, idx) => (
+          <NavbarItem key={idx}>
             <NavLink
               to={link.path}
               className={({ isActive }) =>
-                isActive ? 'text-orange-600' : undefined
+                isActive
+                  ? 'bg-secondary-700 rounded-xl px-3 py-2'
+                  : 'hover:bg-secondary-700 rounded-xl px-3 py-2 transition-colors'
               }>
               {link.name}
             </NavLink>

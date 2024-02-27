@@ -1,24 +1,22 @@
 import axios, { AxiosError } from 'axios'
+import { UserResponse, UserRequest } from '@interfaces/user'
 
-export async function postLogout(userData: { email: string; token: string }) {
+export async function postLogout(user: UserRequest): Promise<UserResponse> {
   try {
-    localStorage.removeItem('token')
-    localStorage.removeItem('name')
-    localStorage.removeItem('email')
-    localStorage.removeItem('admin')
-
     const response = await axios.post(
       '/api/logout',
       {
-        email: userData.email,
+        email: user.email,
       },
-      { headers: { authorization: userData.token } },
+      { headers: { authorization: user.token } },
     )
 
-    return response.data.email
+    return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message)
+    } else {
+      throw new Error('Something went wrong')
     }
   }
 }

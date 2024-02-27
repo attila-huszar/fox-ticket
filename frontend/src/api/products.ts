@@ -3,7 +3,6 @@ import { ProductRequest, ProductResponse } from '../interfaces/product'
 
 export async function fetchProducts() {
   const response = await axios.get('/api/products')
-  console.log(response.data)
   return response.data.allProducts
 }
 
@@ -18,12 +17,14 @@ export async function fetchAddNewProduct(
       description: productData.description,
       type: productData.type,
     })
+
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message)
+    } else {
+      throw new Error('Something went wrong')
     }
-    throw error
   }
 }
 
@@ -34,8 +35,6 @@ export async function fetchDeleteProduct(id: number) {
 export async function fetchEditProduct(
   productData: ProductRequest,
 ): Promise<ProductResponse> {
-  console.log(productData)
-
   try {
     const response = await axios.put(`/api/admin/products/${productData.id}`, {
       name: productData.name,
@@ -48,7 +47,8 @@ export async function fetchEditProduct(
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message)
+    } else {
+      throw new Error('Something went wrong')
     }
-    throw error
   }
 }

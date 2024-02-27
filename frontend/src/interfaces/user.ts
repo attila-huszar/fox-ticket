@@ -1,7 +1,19 @@
-export interface RegisterRequest {
+export interface IUserContext {
+  user: UserResponse
+  setUser: (user: UserResponse) => void
+}
+
+export interface UserResponse {
   name: string
   email: string
-  password: string
+  token: string
+  isAdmin?: boolean
+  isVerified?: boolean
+}
+
+export interface UserRequest {
+  email: string
+  token: string
 }
 
 export interface LoginRequest {
@@ -9,27 +21,8 @@ export interface LoginRequest {
   password: string
 }
 
-export interface LoggedInUser {
+export interface RegisterRequest {
   name: string
   email: string
-  token: string
-  isAdmin: boolean
-  isVerified?: boolean
-}
-
-export interface UserContextInterface {
-  user: LoggedInUser
-  setUser?: (user: LoggedInUser) => void
-}
-
-export interface InputField {
-  text: string
-  color:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | undefined
+  password: string
 }

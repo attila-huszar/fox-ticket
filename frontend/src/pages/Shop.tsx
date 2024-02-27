@@ -48,8 +48,11 @@ export function Shop() {
           filteredTickets.map((ticket) => (
             <ProductCard
               key={ticket.id}
+              id={ticket.id}
               name={ticket.name}
+              type={ticket.type}
               description={ticket.description}
+              duration={ticket.duration}
               price={ticket.price}
             />
           ))}

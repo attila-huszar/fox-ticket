@@ -10,6 +10,7 @@ import {
   ModalFooter,
   Button,
   Spacer,
+  Divider,
   useDisclosure,
 } from '@nextui-org/react'
 import { articles } from '@assets/article_data'
@@ -25,32 +26,29 @@ export function Articles() {
   })
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <article className="flex flex-wrap justify-center gap-4">
       {articles.map((article) => (
-        <div key={article.id}>
-          <Card
-            onPress={() => {
-              setArticle(article)
-              onOpen()
-            }}
-            isFooterBlurred
-            className="border-none"
-            isPressable>
-            <Image
-              src={article.pic}
-              alt="Card background"
-              className="object-cover"
-              isZoomed
-              height={250}
-              width={400}
-            />
-            <CardFooter className="border-1 rounded-large shadow-small absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden border-white/20 py-1 before:rounded-xl before:bg-white/10">
-              <p className="line-clamp-2 text-balance text-lg">
-                {article.title}
-              </p>
-            </CardFooter>
-          </Card>
-        </div>
+        <Card
+          key={article.id}
+          onPress={() => {
+            setArticle(article)
+            onOpen()
+          }}
+          isFooterBlurred
+          className="border-none"
+          isPressable>
+          <Image
+            src={article.pic}
+            alt="Card background"
+            className="object-cover"
+            isZoomed
+            height={250}
+            width={400}
+          />
+          <CardFooter className="border-1 rounded-large shadow-small absolute bottom-1 z-10 ml-1 w-[calc(100%_-_8px)] justify-between overflow-hidden border-white/20 py-1 before:rounded-xl before:bg-white/10">
+            <p className="line-clamp-2 text-balance text-lg">{article.title}</p>
+          </CardFooter>
+        </Card>
       ))}
 
       <Modal
@@ -67,7 +65,7 @@ export function Articles() {
                 <p>{article.title}</p>
               </ModalHeader>
               <Spacer y={1} />
-              <hr />
+              <Divider />
               <ModalBody>
                 <em>{article.date}</em>
                 <p>{article.content}</p>
@@ -79,6 +77,6 @@ export function Articles() {
           )}
         </ModalContent>
       </Modal>
-    </div>
+    </article>
   )
 }

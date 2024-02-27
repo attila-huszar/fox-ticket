@@ -1,17 +1,19 @@
 import axios, { AxiosError } from 'axios'
-import { LoginRequest } from '../interfaces/user'
+import { UserResponse, LoginRequest } from '@interfaces/user'
 
-export async function postLogin(userData: LoginRequest): Promise<unknown> {
+export async function postLogin(user: LoginRequest): Promise<UserResponse> {
   try {
     const response = await axios.post('/api/login', {
-      email: userData.email,
-      password: userData.password,
+      email: user.email,
+      password: user.password,
     })
 
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message)
+    } else {
+      throw new Error('Something went wrong')
     }
   }
 }

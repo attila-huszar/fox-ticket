@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import {
   Modal,
   Input,
@@ -11,17 +11,21 @@ import {
   useDisclosure,
 } from '@nextui-org/react'
 import { postRegister } from '@api/postRegister'
-import { InputField } from '@interfaces/user'
 import {
+  nameHelper,
+  emailHelper,
+  passHelper,
+  passMatchHelper,
+} from '@utils/inputFieldHelpers'
+import {
+  validateName,
   validateEmail,
   validatePassword,
-  validateName,
   validateMatch,
 } from '@utils/inputFieldValidators'
 import { toast } from 'react-toastify'
 import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon'
 import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon'
-import '@styles/inputFieldHelper.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 export function SignUp() {
@@ -36,106 +40,42 @@ export function SignUp() {
   const [shakePassword, setShakePassword] = useState(false)
   const [shakePasswordConf, setShakePasswordConf] = useState(false)
 
-  // Input field helpers
-  const nameHelper: InputField = useMemo(() => {
-    if (!name)
-      return {
-        text: '',
-        color: 'default',
-      }
-    const isValid = validateName(name)
-
-    return {
-      text: isValid
-        ? `Nice to meet you ${name}!`
-        : 'Please only use common formats',
-      color: isValid ? 'success' : 'warning',
-    }
-  }, [name])
-
-  const emailHelper: InputField = useMemo(() => {
-    if (!email)
-      return {
-        text: '',
-        color: 'default',
-      }
-    const isValid = validateEmail(email)
-
-    return {
-      text: isValid ? 'Valid email' : 'Please enter a valid email address',
-      color: isValid ? 'success' : 'warning',
-    }
-  }, [email])
-
-  const passHelper: InputField = useMemo(() => {
-    if (!password)
-      return {
-        text: '',
-        color: 'default',
-      }
-    const isValidPass = validatePassword(password)
-
-    return {
-      text: isValidPass
-        ? 'Valid password'
-        : 'Please enter minimum eight characters',
-      color: isValidPass ? 'success' : 'warning',
-    }
-  }, [password])
-
-  const passConfHelper: InputField = useMemo(() => {
-    if (!passwordConf)
-      return {
-        text: '',
-        color: 'default',
-      }
-
-    const isValidPass = validatePassword(passwordConf)
-    const isMatching = validateMatch(password, passwordConf)
-
-    return {
-      text: isMatching ? 'Passwords match' : 'Passwords not matching',
-      color: isValidPass && isMatching ? 'success' : 'warning',
-    }
-  }, [password, passwordConf])
-
-  // Handlers
   const handleSignUp = async () => {
     if (!name.length) {
       setShakeName(true)
-      nameHelper.color = 'danger'
-      nameHelper.text = 'Please fill this field'
+      nameHelper(name).color = 'danger'
+      nameHelper(name).text = 'Please fill in this field'
     }
     if (!email.length) {
       setShakeEmail(true)
-      emailHelper.color = 'danger'
-      emailHelper.text = 'Please fill this field'
+      emailHelper(email).color = 'danger'
+      emailHelper(email).text = 'Please fill in this field'
     }
     if (!password.length) {
       setShakePassword(true)
-      passHelper.color = 'danger'
-      passHelper.text = 'Please fill this field'
+      passHelper(password).color = 'danger'
+      passHelper(password).text = 'Please fill in this field'
     }
     if (!passwordConf.length) {
       setShakePasswordConf(true)
-      passConfHelper.color = 'danger'
-      passConfHelper.text = 'Please fill this field'
+      passMatchHelper(password, passwordConf).color = 'danger'
+      passMatchHelper(password, passwordConf).text = 'Please fill in this field'
     }
     if (!validateName(name)) {
       setShakeName(true)
-      nameHelper.color = 'danger'
+      nameHelper(name).color = 'danger'
     }
     if (!validateEmail(email)) {
       setShakeEmail(true)
-      emailHelper.color = 'danger'
+      emailHelper(email).color = 'danger'
     }
     if (!validatePassword(password)) {
       setShakePassword(true)
-      passHelper.color = 'danger'
+      passHelper(password).color = 'danger'
     }
     if (!validateMatch(password, passwordConf)) {
       setShakePasswordConf(true)
-      passConfHelper.color = 'danger'
+      passMatchHelper(password, passwordConf).color = 'danger'
     }
 
     setTimeout(() => setShakeName(false), 750)
@@ -143,48 +83,24 @@ export function SignUp() {
     setTimeout(() => setShakePassword(false), 750)
     setTimeout(() => setShakePasswordConf(false), 750)
 
-    if (
-      validateName(name) &&
-      validateEmail(email) &&
-      validatePassword(password) &&
-      validateMatch(password, passwordConf)
-    ) {
-      try {
-        await postRegister({ name, email, password })
-        onClose()
-        notifySignUp()
-      } catch (error) {
-        let errorMessage = 'Registration failed'
+    try {
+      await postRegister({ name, email, password })
+      notifySignUp()
+      onClose()
+    } catch (error) {
+      setShakeEmail(true)
+      emailHelper(email).color = 'danger'
 
-        setShakeEmail(true)
-        emailHelper.color = 'danger'
-
-        if (error instanceof Error) {
-          errorMessage = error.message
-
-          if (errorMessage.includes('Account already exists')) {
-            emailHelper.text = errorMessage.replace('Validation error: ', '')
-          } else {
-            emailHelper.text = errorMessage
-          }
-        } else {
-          emailHelper.text = errorMessage
-        }
-
-        setTimeout(() => setShakeEmail(false), 750)
+      if (error instanceof Error) {
+        emailHelper(email).text = error.message
+      } else {
+        emailHelper(email).text = 'Registration failed'
       }
+
+      setTimeout(() => setShakeEmail(false), 750)
     }
   }
 
-  // const closeModalHandler = () => {
-  //   setModalVisible(false);
-  //   setName('');
-  //   setEmail('');
-  //   setPassword('');
-  //   setPasswordConf('');
-  // };
-
-  // Notifications
   const notifySignUp = () =>
     toast.success(
       `${email} successfully signed up! Please, verify your email address!`,
@@ -219,8 +135,8 @@ export function SignUp() {
                   className={shakeName ? 'shake' : ''}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  color={nameHelper.color}
-                  errorMessage={nameHelper.text}
+                  color={nameHelper(name).color}
+                  errorMessage={nameHelper(name).text}
                   placeholder="Name"
                   fullWidth
                 />
@@ -229,14 +145,21 @@ export function SignUp() {
                   className={shakeEmail ? 'shake' : ''}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  color={emailHelper.color}
-                  errorMessage={emailHelper.text}
+                  color={emailHelper(email).color}
+                  errorMessage={emailHelper(email).text}
                   placeholder="Email"
                   fullWidth
                 />
                 <Spacer y={1.5} />
                 <Input
+                  type={isPassVis ? 'text' : 'password'}
+                  className={shakePassword ? 'shake' : ''}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                   placeholder="Enter your password"
+                  color={passHelper(password).color}
+                  errorMessage={passHelper(password).text}
+                  fullWidth
                   endContent={
                     <button
                       className="focus:outline-none"
@@ -249,23 +172,16 @@ export function SignUp() {
                       )}
                     </button>
                   }
-                  type={isPassVis ? 'text' : 'password'}
-                  className={shakePassword ? 'shake' : ''}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  color={passHelper.color}
-                  errorMessage={passHelper.text}
-                  fullWidth
                 />
                 <Spacer y={1.5} />
                 <Input
-                  placeholder="Confirm Your Password"
+                  type={isPassVis ? 'text' : 'password'}
                   className={shakePasswordConf ? 'shake' : ''}
                   onChange={(e) => setPasswordConf(e.target.value)}
                   required
-                  color={passConfHelper.color}
-                  errorMessage={passConfHelper.text}
-                  type={isPassVis ? 'text' : 'password'}
+                  placeholder="Confirm Your Password"
+                  color={passMatchHelper(password, passwordConf).color}
+                  errorMessage={passMatchHelper(password, passwordConf).text}
                   fullWidth
                 />
               </ModalBody>

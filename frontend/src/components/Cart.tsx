@@ -1,6 +1,5 @@
-import { useContext, useState } from 'react'
-import { CartContext } from '../App'
-import { CartContextInterface } from '@interfaces/orders'
+import { useContext } from 'react'
+import { CartContext } from '@context/CartProvider'
 import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
@@ -20,25 +19,22 @@ import {
 import { FiShoppingCart } from 'react-icons/fi'
 
 export function Cart() {
-  const { cart, setCart } = useContext<CartContextInterface>(CartContext)
+  const { cart, setCart } = useContext(CartContext)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
-  const [message, setMessage] = useState('')
+  async function fetchPendingOrders() {
+    const data = await fetchPendingOrder()
+    setCart(data)
+  }
 
   const resetAllOrdersHandler = async () => {
     fetchRemovePendingOrderFromCart()
     fetchPendingOrders()
-    setMessage('Your cart is empty!')
   }
 
   const buyProductHandler = async () => {
     fetchChangeOrderStatusByUserId()
     fetchPendingOrders()
-  }
-
-  async function fetchPendingOrders() {
-    const data = await fetchPendingOrder()
-    return setCart!(data)
   }
 
   return (
@@ -71,18 +67,21 @@ export function Cart() {
                 Shopping Cart
               </ModalHeader>
               <ModalBody>
-                <p>{message}</p>
-                {cart.map((order) => (
-                  <OrderCart
-                    removeOrder={(orderId: number) =>
-                      setCart!(cart.filter((order) => order.id !== orderId))
-                    }
-                    key={order.id}
-                    name={order.name}
-                    price={order.price}
-                    id={order.id}
-                  />
-                ))}
+                {cart ? (
+                  cart.map((order) => (
+                    <OrderCart
+                      removeOrder={(orderId: number) =>
+                        setCart(cart.filter((order) => order.id !== orderId))
+                      }
+                      key={order.id}
+                      name={order.name}
+                      price={order.price}
+                      id={order.id}
+                    />
+                  ))
+                ) : (
+                  <p className="text-center">Your cart is empty</p>
+                )}
               </ModalBody>
               <ModalFooter>
                 <Button

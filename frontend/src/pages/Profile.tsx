@@ -1,5 +1,5 @@
-import { useContext, useMemo, useState } from 'react'
-import { UserContext } from '../App'
+import { useContext, useState } from 'react'
+import { UserContext } from '@context/UserProvider'
 import {
   Button,
   Input,
@@ -10,94 +10,28 @@ import {
   ModalFooter,
 } from '@nextui-org/react'
 import {
-  validateMatch,
-  validateName,
-  validatePassword,
-} from '@utils/inputFieldValidators'
-import { InputField, UserContextInterface } from '@interfaces/user'
+  nameHelper,
+  passHelper,
+  passMatchHelper,
+} from '@utils/inputFieldHelpers'
 import { CgProfile } from 'react-icons/cg'
 
 export function Profile() {
-  const { user } = useContext<UserContextInterface>(UserContext)
-  const [name, setName] = useState('')
-  const [passOld, setPassOld] = useState('')
+  const { user } = useContext(UserContext)
+  const [name, setName] = useState(user.name || '')
+  const [passCurr, setPassCurr] = useState('')
   const [passNew, setPassNew] = useState('')
   const [passConf, setPassConf] = useState('')
 
-  const nameHelper: InputField = useMemo(() => {
-    if (!name)
-      return {
-        text: '',
-        color: 'default',
-      }
-    const isValid = validateName(name)
-
-    return {
-      text: isValid ? 'Valid name' : 'Please only use common formats',
-      color: isValid ? 'success' : 'warning',
-    }
-  }, [name])
-
-  const passOldHelper: InputField = useMemo(() => {
-    if (!passOld)
-      return {
-        text: '',
-        color: 'default',
-      }
-    const isValidPass = validatePassword(passOld)
-
-    return {
-      text: isValidPass
-        ? 'Valid password'
-        : 'Please enter minimum eight characters',
-      color: isValidPass ? 'success' : 'warning',
-    }
-  }, [passOld])
-
-  const passNewHelper: InputField = useMemo(() => {
-    if (!passNew)
-      return {
-        text: '',
-        color: 'default',
-      }
-
-    const isValidPass = validatePassword(passNew)
-    const isMatching = validateMatch(passNew, passConf)
-
-    return {
-      text: isValidPass
-        ? 'Valid password'
-        : 'Please enter minimum eight characters',
-      color: isValidPass && isMatching ? 'success' : 'warning',
-    }
-  }, [passNew, passConf])
-
-  const passConfHelper: InputField = useMemo(() => {
-    if (!passConf)
-      return {
-        text: '',
-        color: 'default',
-      }
-
-    const isValidPass = validatePassword(passConf)
-    const isMatching = validateMatch(passNew, passConf)
-
-    return {
-      text: isMatching ? 'Passwords match' : 'Passwords do not match',
-      color: isValidPass && isMatching ? 'success' : 'warning',
-    }
-  }, [passNew, passConf])
-
   const userNameChangeHandler = async () => {
-    if (name.length === 0) {
-      nameHelper.color = 'danger'
-      nameHelper.text = 'Please fill this field'
+    if (!name.trim()) {
+      nameHelper(name).color = 'danger'
+      nameHelper(name).text = 'Please fill in your name'
     }
   }
 
   const closeHandler = () => {
-    setName('')
-    setPassOld('')
+    setPassCurr('')
     setPassNew('')
     setPassConf('')
   }
@@ -109,15 +43,9 @@ export function Profile() {
       <div>
         <CgProfile />
         <div>
-          <Input
-            readOnly
-            width="100%"
-            size="lg"
-            label="Email"
-            value={user.email}
-          />
+          <Input readOnly width="100%" label="Email" value={user.email} />
           <Spacer y={1.5} />
-          <Input width="100%" size="lg" label="Username" value={user.name} />
+          <Input width="100%" label="Username" value={name} />
         </div>
       </div>
       <Spacer y={2} />
@@ -146,9 +74,8 @@ export function Profile() {
             onChange={(e) => setName(e.target.value)}
             placeholder="New Username"
             width="350px"
-            color={nameHelper.color}
-            errorMessage={nameHelper.text}
-            size="lg"
+            color={nameHelper(name).color}
+            errorMessage={nameHelper(name).text}
           />
 
           <Spacer y={1} />
@@ -170,39 +97,33 @@ export function Profile() {
         <ModalBody>
           <Spacer y={1} />
           <Input
-            onValueChange={(val) => setPassOld(val)}
+            type="password"
+            onValueChange={(val) => setPassCurr(val)}
             label="Current Password"
             width="350px"
             required
-            variant="bordered"
-            color={passOldHelper.color}
-            errorMessage={passOldHelper.text}
-            type="password"
-            size="lg"
+            color={passHelper(passCurr).color}
+            errorMessage={passHelper(passCurr).text}
           />
           <Spacer y={2} />
           <Input
+            type="password"
             onValueChange={(val) => setPassNew(val)}
             label="New Password"
             width="350px"
             required
-            variant="bordered"
-            color={passNewHelper.color}
-            errorMessage={passNewHelper.text}
-            type="password"
-            size="lg"
+            color={passHelper(passNew).color}
+            errorMessage={passHelper(passNew).text}
           />
           <Spacer y={2} />
           <Input
+            type="password"
             onValueChange={(val) => setPassConf(val)}
             label="Confirm Password"
             width="350px"
             required
-            variant="bordered"
-            color={passConfHelper.color}
-            errorMessage={passConfHelper.text}
-            type="password"
-            size="lg"
+            color={passMatchHelper(passNew, passConf).color}
+            errorMessage={passMatchHelper(passNew, passConf).text}
           />
           <Spacer y={1} />
         </ModalBody>

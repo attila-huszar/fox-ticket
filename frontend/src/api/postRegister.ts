@@ -1,20 +1,22 @@
 import axios, { AxiosError } from 'axios'
-import { RegisterRequest } from '../interfaces/user'
+import { UserResponse, RegisterRequest } from '@interfaces/user'
 
 export async function postRegister(
-  userData: RegisterRequest,
-): Promise<unknown> {
+  user: RegisterRequest,
+): Promise<UserResponse> {
   try {
     const response = await axios.post('/api/register', {
-      name: userData.name,
-      email: userData.email,
-      password: userData.password,
+      name: user.name,
+      email: user.email,
+      password: user.password,
     })
 
-    return response.data.email
+    return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message)
+    } else {
+      throw new Error('Something went wrong')
     }
   }
 }

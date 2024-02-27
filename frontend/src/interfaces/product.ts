@@ -1,18 +1,19 @@
 export interface ProductResponse {
   id: number
   name: string
-  price: number
-  duration: number
-  description: string
   type: string
+  description: string
+  duration: number
+  price: number
 }
 
 export interface ProductRequest {
-  id?: number
+  id: number
   name: string
-  price?: number
+  type: string
   description: string
-  duration?: number
-  type?: string
+  duration: number
+  price: number
   isAdmin?: boolean
+  removeProduct?: (productId: number) => void
 }

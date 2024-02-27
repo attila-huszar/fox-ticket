@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { CartContext } from '../App'
-import { CartContextInterface } from '@interfaces/orders'
+import { CartContext } from '@context/CartProvider'
+import { ICartContext } from '@interfaces/orders'
 import {
   Card,
   CardHeader,
@@ -10,14 +10,10 @@ import {
   Divider,
   Spacer,
 } from '@nextui-org/react'
-import { ProductRequest } from '@interfaces/product'
 import { EditProduct } from './EditProduct'
-import { fetchDeleteProduct } from '@api/products'
 import { fetchCreateNewPendingOrder, fetchPendingOrder } from '@api/orders'
-
-interface PropTypes extends ProductRequest {
-  removeProduct?: (productId: number) => void
-}
+import { fetchDeleteProduct } from '@api/products'
+import { ProductRequest } from '@interfaces/product'
 
 export function ProductCard({
   id,
@@ -28,17 +24,17 @@ export function ProductCard({
   isAdmin,
   type,
   removeProduct,
-}: PropTypes) {
-  const { setCart } = useContext<CartContextInterface>(CartContext)
+}: ProductRequest) {
+  const { setCart } = useContext<ICartContext>(CartContext)
   const deleteProductHandler = async () => {
-    await fetchDeleteProduct(id as number)
-    removeProduct?.(id as number)
+    await fetchDeleteProduct(id)
+    removeProduct?.(id)
   }
 
   const createNewOrderHandler = async () => {
     await fetchCreateNewPendingOrder(new Date(), Number(id), 1)
     const pendingOrders = await fetchPendingOrder()
-    setCart!(pendingOrders)
+    setCart(pendingOrders)
   }
 
   return (

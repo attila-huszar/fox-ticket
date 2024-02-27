@@ -19,19 +19,20 @@ export async function fetchCreateNewPendingOrder(
   productId: number,
   userId: number,
 ) {
-  console.log(orderDate, productId, userId)
   try {
     const response = await axios.post('/api/purchases', {
       orderDate,
       productId,
       userId,
     })
+
     return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
       throw new Error(error.response?.data.message)
+    } else {
+      throw new Error('Something went wrong')
     }
-    throw error
   }
 }
 
