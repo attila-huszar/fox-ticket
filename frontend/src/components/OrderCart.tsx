@@ -1,6 +1,6 @@
 import { Button } from '@nextui-org/react'
 import { PendingOrder } from '@interfaces/orders'
-import { fetchRemoveProductFromCart } from '@api/orders'
+import { fetchRemoveProductFromCart } from '@api/userOrder'
 
 export function OrderCart({ name, price, id, removeOrder }: PendingOrder) {
   const removeOrderHandler = async () => {

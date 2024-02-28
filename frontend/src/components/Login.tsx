@@ -10,54 +10,119 @@ import {
   Input,
   Checkbox,
   Spacer,
+  Divider,
 } from '@nextui-org/react'
 import { UserContext } from '@context/UserProvider'
-import { postLogin } from '@api/postLogin'
+import { userLogin } from '@api/userLogin'
 import { UserResponse } from '@interfaces/user'
 import { validateEmail, validatePassword } from '@utils/inputFieldValidators'
-import { emailHelper, passHelper } from '@utils/inputFieldHelpers'
 import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon'
 import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon'
 import { toast } from 'react-toastify'
+import { InputHelper } from '@interfaces/user'
 
 export function Login() {
-  const { user, setUser } = useContext(UserContext)
+  const { setUser } = useContext(UserContext)
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [isPassVisible, setIsPassVisible] = useState(false)
-  const [shakeEmail, setShakeEmail] = useState(false)
-  const [shakePassword, setShakePassword] = useState(false)
+  const [emailHelper, setEmailHelper] = useState<InputHelper>({
+    text: '',
+    color: 'default',
+    shake: false,
+  })
+  const [passwordHelper, setPasswordHelper] = useState<InputHelper>({
+    text: '',
+    color: 'default',
+    shake: false,
+  })
+  const [isPassVis, setIsPassVis] = useState(false)
 
-  const loginHandler = async () => {
-    if (!email.trim()) {
-      setShakeEmail(true)
-      emailHelper(email).color = 'danger'
-      emailHelper(email).text = 'Please enter your email address'
-    } else if (!validateEmail(email)) {
-      setShakeEmail(true)
-      emailHelper(email).color = 'danger'
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailField = e.target.value
+    setEmail(emailField)
+
+    setEmailHelper((prevHelper) => {
+      if (!emailField.trim()) {
+        return { text: '', color: 'default', shake: false }
+      }
+
+      const isValid = validateEmail(emailField)
+
+      return {
+        ...prevHelper,
+        text: isValid ? 'Valid email' : 'Please enter a valid email address',
+        color: isValid ? 'success' : 'warning',
+      }
+    })
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const passwordField = e.target.value
+    setPassword(passwordField)
+
+    setPasswordHelper((prevHelper) => {
+      if (!passwordField) {
+        return {
+          text: '',
+          color: 'default',
+          shake: false,
+        }
+      }
+
+      const isValid = validatePassword(passwordField)
+
+      return {
+        ...prevHelper,
+        text: isValid
+          ? 'Valid password'
+          : 'Password must be at least 8 characters long',
+        color: isValid ? 'success' : 'warning',
+      }
+    })
+  }
+
+  const handleLogin = async () => {
+    if (!validateEmail(email)) {
+      setEmailHelper((prevHelper) => ({
+        ...prevHelper,
+        text: 'Please enter a valid email address',
+        color: 'danger',
+        shake: true,
+      }))
+
+      setTimeout(() => {
+        setEmailHelper((prevHelper) => ({
+          ...prevHelper,
+          shake: false,
+        }))
+      }, 750)
     }
-    if (!password) {
-      setShakePassword(true)
-      passHelper(password).color = 'danger'
-      passHelper(password).text = 'Please enter your password'
-    } else if (!validatePassword(password)) {
-      setShakePassword(true)
-      passHelper(password).color = 'danger'
+
+    if (!validatePassword(password)) {
+      setPasswordHelper((prevHelper) => ({
+        ...prevHelper,
+        text: 'Password must be at least 8 characters long',
+        color: 'danger',
+        shake: true,
+      }))
+
+      setTimeout(() => {
+        setPasswordHelper((prevHelper) => ({
+          ...prevHelper,
+          shake: false,
+        }))
+      }, 750)
     }
-    setTimeout(() => setShakeEmail(false), 750)
-    setTimeout(() => setShakePassword(false), 750)
 
-    try {
-      const userData: UserResponse = await postLogin({
-        email,
-        password,
-      })
+    if (validateEmail(email) && validatePassword(password)) {
+      try {
+        const userData: UserResponse = await userLogin({
+          email,
+          password,
+        })
 
-      if (userData) {
-        const verified = userData.isVerified
-        if (verified) {
+        if (userData.isVerified) {
           localStorage.setItem('name', userData.name)
           localStorage.setItem('email', userData.email)
           localStorage.setItem('token', userData.token)
@@ -67,44 +132,84 @@ export function Login() {
             email: userData.email,
             token: userData.token,
           })
-          notifyLoggedIn()
+
+          notifyLoggedIn(userData.name)
         } else {
-          notifyNotVerified()
+          notifyNotVerified(userData.email)
         }
 
         onClose()
+      } catch (error) {
+        setEmailHelper((prevHelper) => ({
+          ...prevHelper,
+          text: String(error),
+          color: 'danger',
+          shake: true,
+        }))
+
+        setPasswordHelper((prevHelper) => ({
+          ...prevHelper,
+          text: String(error),
+          color: 'danger',
+          shake: true,
+        }))
+
+        setTimeout(() => {
+          setEmailHelper((prevHelper) => ({
+            ...prevHelper,
+            shake: false,
+          }))
+          setPasswordHelper((prevHelper) => ({
+            ...prevHelper,
+            shake: false,
+          }))
+        }, 750)
       }
-    } catch (error) {
-      setShakeEmail(true)
-      setShakePassword(true)
-      emailHelper(email).color = 'danger'
-      passHelper(password).color = 'danger'
-
-      emailHelper(email).text = error as string
-
-      passHelper(password).text = error as string
-
-      setTimeout(() => {
-        setShakeEmail(false)
-        setShakePassword(false)
-      }, 750)
     }
   }
 
-  function notifyLoggedIn() {
-    toast.success(`Successful login. Welcome to Fox Ticket, ${user.name}!`)
+  const handleOpenModal = () => {
+    setEmail('')
+    setPassword('')
+    setEmailHelper({ text: '', color: undefined, shake: false })
+    setPasswordHelper({ text: '', color: undefined, shake: false })
+    onOpen()
   }
 
-  function notifyNotVerified() {
-    toast.warn('Please verify your email address before logging in.')
+  function notifyLoggedIn(userName: string) {
+    toast.success(`Successful login. Welcome to Fox Ticket, ${userName}!`)
+  }
+
+  function notifyNotVerified(email: string) {
+    toast.warn(`Please verify ${email} before logging in.`)
   }
 
   return (
     <>
-      <Button onPress={onOpen} variant="shadow">
+      <Button onPress={handleOpenModal} variant="shadow">
         Login
       </Button>
       <Modal
+        motionProps={{
+          variants: {
+            enter: {
+              scale: 'var(--scale-enter)',
+              y: 'var(--slide-enter)',
+              opacity: 1,
+              transition: {
+                scale: { duration: 0.4, ease: [0.36, 0.66, 0.4, 1] },
+                opacity: { duration: 0.4, ease: [0.36, 0.66, 0.4, 1] },
+                y: { type: 'spring', bounce: 0, duration: 0.6 },
+              },
+            },
+            exit: {
+              scale: 'var(--scale-exit)',
+              y: 'var(--slide-exit)',
+              opacity: 0,
+              transition: { duration: 0.3, ease: [0.36, 0.66, 0.4, 1] },
+            },
+          },
+        }}
         backdrop="opaque"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -118,57 +223,67 @@ export function Login() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <p>
-                  Welcome to <strong>Fox</strong>Ticket
+                <p className="text-indigo-950">
+                  Welcome to <strong className="text-orange-700">Fox</strong>
+                  Ticket
                 </p>
               </ModalHeader>
-              <hr />
+              <Divider />
               <ModalBody>
-                <Spacer y={2} />
+                <Spacer y={3} />
                 <Input
                   autoFocus
-                  className={shakeEmail ? 'shake' : ''}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  color={emailHelper(email).color}
-                  errorMessage={emailHelper(email).text}
+                  value={email}
+                  onChange={handleEmailChange}
+                  errorMessage={emailHelper.text}
+                  color={emailHelper.color}
+                  className={`relative ${emailHelper.shake ? 'animate-shake' : undefined}`}
+                  classNames={{
+                    helperWrapper: 'absolute',
+                    errorMessage: `text-${emailHelper.color}`,
+                  }}
                   placeholder="Email"
+                  required
                   fullWidth
                 />
-                <Spacer y={1.5} />
+                <Spacer y={3} />
                 <Input
-                  placeholder="Enter your password"
+                  type={isPassVis ? 'text' : 'password'}
+                  value={password}
+                  onChange={handlePasswordChange}
+                  errorMessage={passwordHelper.text}
+                  color={passwordHelper.color}
+                  className={`relative ${passwordHelper.shake ? 'animate-shake' : undefined}`}
+                  classNames={{
+                    helperWrapper: 'absolute',
+                    errorMessage: `text-${passwordHelper.color}`,
+                  }}
+                  placeholder="Password"
+                  required
+                  fullWidth
                   endContent={
-                    <button
-                      className="focus:outline-none"
-                      type="button"
-                      onClick={() => setIsPassVisible((prev) => !prev)}>
-                      {isPassVisible ? (
+                    <button onClick={() => setIsPassVis((prev) => !prev)}>
+                      {isPassVis ? (
                         <EyeSlashFilledIcon className="text-default-400 pointer-events-none text-2xl" />
                       ) : (
                         <EyeFilledIcon className="text-default-400 pointer-events-none text-2xl" />
                       )}
                     </button>
                   }
-                  type={isPassVisible ? 'text' : 'password'}
-                  className={shakePassword ? 'shake' : ''}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  color={passHelper(password).color}
-                  errorMessage={passHelper(password).text}
-                  fullWidth
                 />
-                <Spacer y={2} />
-                <div className="justify-between">
-                  <Checkbox defaultSelected>Remember me</Checkbox>
-                  <p className="text-end text-sm">Forgot password?</p>
+                <Spacer y={3} />
+                <div className="flex justify-between">
+                  <Checkbox size="sm" defaultSelected>
+                    Remember me
+                  </Checkbox>
+                  <p className="text-sm">Forgot password?</p>
                 </div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button onPress={loginHandler}>Login</Button>
+                <Button onPress={handleLogin}>Login</Button>
               </ModalFooter>
             </>
           )}

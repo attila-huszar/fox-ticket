@@ -3,7 +3,7 @@ import { useNavigate, Link, NavLink } from 'react-router-dom'
 import { UserContext } from '@context/UserProvider'
 import { ThemeContext } from '@context/ThemeProvider'
 import { Login } from './Login'
-import { SignUp } from './SignUp'
+import { Signup } from './Signup_'
 import { Cart } from './Cart'
 import { Admin } from './Admin'
 import {
@@ -18,11 +18,10 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@nextui-org/react'
-import { postAuthTest } from '@api/postAuthTest'
-import { postLogout } from '@api/postLogout'
+import { userAuthTest } from '@api/userAuthTest'
+import { userLogout } from '@api/userLogout'
 import { toast } from 'react-toastify'
 import { TbHelp, TbLogout, TbMoon, TbSun, TbUser } from 'react-icons/tb'
-import { CgProfile } from 'react-icons/cg'
 import logo from '@assets/svg/logo.svg'
 
 export function Header() {
@@ -44,7 +43,7 @@ export function Header() {
   const navigateDropdown = async (key: React.Key) => {
     if (key === 'logout') {
       try {
-        const userData = await postLogout({
+        const userData = await userLogout({
           email: user.email,
           token: user.token,
         })
@@ -68,7 +67,7 @@ export function Header() {
       }
     } else if (key === 'help_and_feedback') {
       try {
-        const userData = await postAuthTest({
+        const userData = await userAuthTest({
           email: user.email,
           token: user.token,
         })
@@ -91,8 +90,10 @@ export function Header() {
 
   return (
     <Navbar isBordered>
-      <NavbarBrand className="grow-0 basis-auto">
-        <Link to="/" className="flex items-center gap-4 text-2xl font-bold">
+      <NavbarBrand className="grow-0">
+        <Link
+          to="/"
+          className="flex w-max items-center gap-4 text-2xl font-bold">
           <img src={logo} width={40} alt="logo" />
           Fox Ticket
         </Link>
@@ -105,8 +106,8 @@ export function Header() {
               to={link.path}
               className={({ isActive }) =>
                 isActive
-                  ? 'bg-secondary-700 rounded-xl px-3 py-2'
-                  : 'hover:bg-secondary-700 rounded-xl px-3 py-2 transition-colors'
+                  ? 'bg-primary-400 rounded-xl px-3 py-2'
+                  : 'hover:bg-primary-400 rounded-xl px-3 py-2 transition-colors'
               }>
               {link.name}
             </NavLink>
@@ -128,7 +129,7 @@ export function Header() {
       <NavbarContent>
         {user.isAdmin && user.token && <Admin />}
         {!user.token && <Login />}
-        {!user.token && <SignUp />}
+        {!user.token && <Signup />}
 
         <Button
           isIconOnly
@@ -152,7 +153,6 @@ export function Header() {
                 className="transition-transform"
                 src=""
                 showFallback
-                fallback={<CgProfile fill="current" size={35} />}
               />
             </DropdownTrigger>
             <DropdownMenu

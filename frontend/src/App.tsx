@@ -15,7 +15,7 @@ import { Cart } from '@components/Cart'
 import { AdminProduct } from '@components/AdminProduct'
 import { Flip, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import '@utils/emailVerifyToast'
+import '@utils/emailVerify'
 
 export default function App() {
   const { isDarkMode } = useContext(ThemeContext)

@@ -11,6 +11,7 @@ export function nameHelper(name: string): InputField {
       text: '',
       color: 'default',
     }
+
   const isValid = validateName(name)
 
   return {
@@ -19,12 +20,13 @@ export function nameHelper(name: string): InputField {
   }
 }
 
-export function emailHelper(email: string): InputField {
+export function emailHelperText(email: string): InputField {
   if (!email.trim())
     return {
       text: '',
       color: 'default',
     }
+
   const isValid = validateEmail(email)
 
   return {
@@ -33,18 +35,19 @@ export function emailHelper(email: string): InputField {
   }
 }
 
-export function passHelper(password: string): InputField {
+export function passHelperText(password: string): InputField {
   if (!password)
     return {
       text: '',
       color: 'default',
     }
+
   const isValidPass = validatePassword(password)
 
   return {
     text: isValidPass
       ? 'Valid password'
-      : 'Please enter minimum eight characters',
+      : 'Password must be at least 8 characters long',
     color: isValidPass ? 'success' : 'warning',
   }
 }

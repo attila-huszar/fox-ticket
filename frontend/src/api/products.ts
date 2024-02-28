@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import { ProductRequest, ProductResponse } from '../interfaces/product'
+import { ProductRequest, ProductResponse } from '@interfaces/product'
 
 export async function fetchProducts() {
   const response = await axios.get('/api/products')

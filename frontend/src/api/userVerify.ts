@@ -1,15 +1,18 @@
 import axios, { AxiosError } from 'axios'
+import { RegisterResponse } from '@interfaces/user'
 
-export async function emailVerify(queryString: string): Promise<string> {
+export async function userVerify(
+  queryString: string,
+): Promise<RegisterResponse> {
   try {
     const response = await axios.post('/api/verify', {
       key: queryString,
     })
 
-    return response.data.email
+    return response.data
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.email)
+      throw new Error(error.response?.data)
     } else {
       throw new Error('Something went wrong')
     }

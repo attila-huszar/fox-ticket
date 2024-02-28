@@ -9,74 +9,52 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
     '../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
-  extend: {
-    spacing: {
-      '8xl': '96rem',
-    },
-    borderRadius: {
-      '4xl': '2rem',
-    },
-  },
-  darkMode: 'class',
+  darkMode: 'selector',
   theme: {
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      slate: colors.slate,
+      emerald: colors.emerald,
+      sky: colors.sky,
+      indigo: colors.indigo,
+      orange: colors.orange,
+      tahiti: {
+        light: '#67e8f9',
+        DEFAULT: '#06b6d4',
+        dark: '#0e7490',
+      },
+    },
     container: {
       center: true,
       padding: {
         DEFAULT: '1rem',
-        md: '1.5rem',
-        lg: '2rem',
-      },
-      screens: {
-        '2xl': '1400px',
+        sm: '2rem',
+        lg: '4rem',
+        xl: '5rem',
+        '2xl': '6rem',
       },
     },
     extend: {
-      colors: {
-        primary: colors.blue,
-        secondary: colors.gray,
-        transparent: 'transparent',
-        current: 'currentColor',
-        navbarLink: {
-          light: colors.gray[800],
-          dark: '#fff',
+      animation: {
+        shake: 'shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both',
+      },
+      keyframes: {
+        shake: {
+          '10%, 90%': { transform: 'translateX(-1px)' },
+          '20%, 80%': { transform: 'translateX(2px)' },
+          '30%, 50%, 70%': { transform: 'translateX(-4px)' },
+          '40%, 60%': { transform: 'translateX(4px)' },
         },
-        navbarLinkActive: {
-          light: colors.blue[500],
-          dark: colors.cyan[500],
-        },
-        navbarGradient: {
-          light:
-            'linear-gradient(180deg, rgba(248,250,251,1) 0%, rgba(248,250,251,0.8) 30%, rgba(248,250,251,0) 80%)',
-          dark: 'linear-gradient(180deg, rgba(19,26,40,1) 0%, rgba(19,26,40,0.95) 30%, rgba(248,250,251,0) 100%)',
-        },
-        cardBg: {
-          light: '#fff',
-          dark: '#10253e',
-        },
-        cardHeaderBg: {
-          light: '#646aea',
-          dark: '#18385d',
-        },
-        hoverShadow: {
-          light: '#7450dd',
-          dark: '#7450dd',
-        },
-        footerBg: {
-          light: '#F0F0F0',
-          dark: '#3d4e6f',
-        },
-        featuresBg: {
-          light: '#8cacec',
-          dark: '#0B7498',
-        },
-        ctaSectionBg: {
-          light: 'linear-gradient(90deg, #be59d9, #0072f5)',
-          dark: 'linear-gradient(90deg, #be59d9, #0072f5)',
-        },
-        myTicketsSmallHeading: {
-          light: '#000',
-          dark: '#F0F0F0',
-        },
+      },
+      spacing: {
+        '13': '3.25rem',
+        '15': '3.75rem',
+        '128': '32rem',
+        '144': '36rem',
+      },
+      borderRadius: {
+        '4xl': '2rem',
       },
     },
   },
@@ -84,14 +62,12 @@ export default {
     nextui({
       themes: {
         light: {
-          extend: 'light',
           colors: {
             foreground: '#0D001A',
             background: '#f8fafb',
           },
         },
         dark: {
-          extend: 'dark',
           colors: {
             foreground: '#f8fafb',
             background: '#0D001A',

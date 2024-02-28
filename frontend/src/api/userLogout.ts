@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios'
-import { UserRequest, UserResponse } from '@interfaces/user'
+import { UserResponse, UserRequest } from '@interfaces/user'
 
-export async function postAuthTest(user: UserRequest): Promise<UserResponse> {
+export async function userLogout(user: UserRequest): Promise<UserResponse> {
   try {
     const response = await axios.post(
-      '/api/authtest',
+      '/api/logout',
       {
         email: user.email,
       },

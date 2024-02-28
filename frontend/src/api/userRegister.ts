@@ -1,9 +1,12 @@
 import axios, { AxiosError } from 'axios'
-import { UserResponse, LoginRequest } from '@interfaces/user'
+import { UserResponse, RegisterRequest } from '@interfaces/user'
 
-export async function postLogin(user: LoginRequest): Promise<UserResponse> {
+export async function userRegister(
+  user: RegisterRequest,
+): Promise<UserResponse> {
   try {
-    const response = await axios.post('/api/login', {
+    const response = await axios.post('/api/register', {
+      name: user.name,
       email: user.email,
       password: user.password,
     })

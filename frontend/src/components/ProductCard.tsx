@@ -11,7 +11,7 @@ import {
   Spacer,
 } from '@nextui-org/react'
 import { EditProduct } from './EditProduct'
-import { fetchCreateNewPendingOrder, fetchPendingOrder } from '@api/orders'
+import { fetchCreateNewPendingOrder, fetchPendingOrder } from '@api/userOrder'
 import { fetchDeleteProduct } from '@api/products'
 import { ProductRequest } from '@interfaces/product'
 

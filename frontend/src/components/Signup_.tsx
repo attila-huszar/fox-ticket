@@ -10,11 +10,13 @@ import {
   ModalFooter,
   useDisclosure,
 } from '@nextui-org/react'
-import { postRegister } from '@api/postRegister'
+import { userRegister } from '@api/userRegister'
+import { UserResponse } from '@interfaces/user'
+import { AxiosError } from 'axios'
 import {
   nameHelper,
-  emailHelper,
-  passHelper,
+  emailHelperText,
+  passHelperText,
   passMatchHelper,
 } from '@utils/inputFieldHelpers'
 import {
@@ -23,24 +25,25 @@ import {
   validatePassword,
   validateMatch,
 } from '@utils/inputFieldValidators'
+
 import { toast } from 'react-toastify'
 import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon'
 import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon'
 import 'react-toastify/dist/ReactToastify.css'
 
-export function SignUp() {
+export function Signup() {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConf, setPasswordConf] = useState('')
-  const [isPassVis, setIsPassVis] = useState(false)
   const [shakeName, setShakeName] = useState(false)
   const [shakeEmail, setShakeEmail] = useState(false)
   const [shakePassword, setShakePassword] = useState(false)
   const [shakePasswordConf, setShakePasswordConf] = useState(false)
+  const [isPassVis, setIsPassVis] = useState(false)
 
-  const handleSignUp = async () => {
+  const handleSignup = async () => {
     if (!name.length) {
       setShakeName(true)
       nameHelper(name).color = 'danger'
@@ -48,13 +51,13 @@ export function SignUp() {
     }
     if (!email.length) {
       setShakeEmail(true)
-      emailHelper(email).color = 'danger'
-      emailHelper(email).text = 'Please fill in this field'
+      emailHelperText(email).color = 'danger'
+      emailHelperText(email).text = 'Please fill in this field'
     }
     if (!password.length) {
       setShakePassword(true)
-      passHelper(password).color = 'danger'
-      passHelper(password).text = 'Please fill in this field'
+      passHelperText(password).color = 'danger'
+      passHelperText(password).text = 'Please fill in this field'
     }
     if (!passwordConf.length) {
       setShakePasswordConf(true)
@@ -67,11 +70,11 @@ export function SignUp() {
     }
     if (!validateEmail(email)) {
       setShakeEmail(true)
-      emailHelper(email).color = 'danger'
+      emailHelperText(email).color = 'danger'
     }
     if (!validatePassword(password)) {
       setShakePassword(true)
-      passHelper(password).color = 'danger'
+      passHelperText(password).color = 'danger'
     }
     if (!validateMatch(password, passwordConf)) {
       setShakePasswordConf(true)
@@ -84,27 +87,35 @@ export function SignUp() {
     setTimeout(() => setShakePasswordConf(false), 750)
 
     try {
-      await postRegister({ name, email, password })
-      notifySignUp()
-      onClose()
+      const userData: UserResponse = await userRegister({
+        name,
+        email,
+        password,
+      })
+
+      if (userData.email) {
+        notifySignUp(userData.email)
+        onClose()
+      }
     } catch (error) {
       setShakeEmail(true)
-      emailHelper(email).color = 'danger'
+      emailHelperText(email).color = 'danger'
 
-      if (error instanceof Error) {
-        emailHelper(email).text = error.message
+      if (error instanceof AxiosError) {
+        emailHelperText(email).text = error.message
       } else {
-        emailHelper(email).text = 'Registration failed'
+        emailHelperText(email).text = 'Registration failed'
       }
 
       setTimeout(() => setShakeEmail(false), 750)
     }
   }
 
-  const notifySignUp = () =>
+  function notifySignUp(email: string) {
     toast.success(
       `${email} successfully signed up! Please, verify your email address!`,
     )
+  }
 
   return (
     <div>
@@ -132,7 +143,7 @@ export function SignUp() {
                 <Spacer y={2} />
                 <Input
                   autoFocus
-                  className={shakeName ? 'shake' : ''}
+                  className={shakeName ? 'animate-shake' : undefined}
                   onChange={(e) => setName(e.target.value)}
                   required
                   color={nameHelper(name).color}
@@ -142,27 +153,26 @@ export function SignUp() {
                 />
                 <Spacer y={1.5} />
                 <Input
-                  className={shakeEmail ? 'shake' : ''}
+                  className={shakeEmail ? 'animate-shake' : undefined}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  color={emailHelper(email).color}
-                  errorMessage={emailHelper(email).text}
+                  color={emailHelperText(email).color}
+                  errorMessage={emailHelperText(email).text}
                   placeholder="Email"
                   fullWidth
                 />
                 <Spacer y={1.5} />
                 <Input
                   type={isPassVis ? 'text' : 'password'}
-                  className={shakePassword ? 'shake' : ''}
+                  className={shakePassword ? 'animate-shake' : undefined}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Enter your password"
-                  color={passHelper(password).color}
-                  errorMessage={passHelper(password).text}
+                  color={passHelperText(password).color}
+                  errorMessage={passHelperText(password).text}
                   fullWidth
                   endContent={
                     <button
-                      className="focus:outline-none"
                       type="button"
                       onClick={() => setIsPassVis((prev) => !prev)}>
                       {isPassVis ? (
@@ -176,7 +186,7 @@ export function SignUp() {
                 <Spacer y={1.5} />
                 <Input
                   type={isPassVis ? 'text' : 'password'}
-                  className={shakePasswordConf ? 'shake' : ''}
+                  className={shakePasswordConf ? 'animate-shake' : undefined}
                   onChange={(e) => setPasswordConf(e.target.value)}
                   required
                   placeholder="Confirm Your Password"
@@ -189,7 +199,7 @@ export function SignUp() {
                 <Button color="danger" variant="bordered" onPress={onClose}>
                   Close
                 </Button>
-                <Button onPress={handleSignUp}>Sign Up</Button>
+                <Button onPress={handleSignup}>Sign Up</Button>
               </ModalFooter>
             </>
           )}

@@ -11,7 +11,7 @@ import {
 } from '@nextui-org/react'
 import {
   nameHelper,
-  passHelper,
+  passHelperText,
   passMatchHelper,
 } from '@utils/inputFieldHelpers'
 import { CgProfile } from 'react-icons/cg'
@@ -102,8 +102,8 @@ export function Profile() {
             label="Current Password"
             width="350px"
             required
-            color={passHelper(passCurr).color}
-            errorMessage={passHelper(passCurr).text}
+            color={passHelperText(passCurr).color}
+            errorMessage={passHelperText(passCurr).text}
           />
           <Spacer y={2} />
           <Input
@@ -112,8 +112,8 @@ export function Profile() {
             label="New Password"
             width="350px"
             required
-            color={passHelper(passNew).color}
-            errorMessage={passHelper(passNew).text}
+            color={passHelperText(passNew).color}
+            errorMessage={passHelperText(passNew).text}
           />
           <Spacer y={2} />
           <Input

@@ -4,7 +4,7 @@ import {
   fetchPendingOrder,
   fetchRemovePendingOrderFromCart,
   fetchChangeOrderStatusByUserId,
-} from '@api/orders'
+} from '@api/userOrder'
 import { OrderCart } from './OrderCart'
 import {
   Modal,
