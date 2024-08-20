@@ -1,13 +1,12 @@
-/// <reference types="vite/client" />
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import svgr from 'vite-plugin-svgr'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
 
   return {
-    plugins: [react(), tsconfigPaths()],
+    plugins: [react(), svgr()],
     server: {
       proxy: {
         '/api': {
@@ -15,6 +14,18 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           //rewrite: (path) => path.replace(/^\/api/, ''),
         },
+      },
+    },
+    resolve: {
+      alias: {
+        '@api': '/src/api',
+        '@assets': '/src/assets',
+        '@components': '/src/components',
+        '@context': '/src/context',
+        '@interfaces': '/src/interfaces',
+        '@pages': '/src/pages',
+        '@styles': '/src/styles',
+        '@utils': '/src/utils',
       },
     },
   }
