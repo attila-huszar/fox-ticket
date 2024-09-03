@@ -1,5 +1,4 @@
-/** @type {import('tailwindcss').Config} */
-
+import { type Config } from 'tailwindcss'
 import { nextui } from '@nextui-org/react'
 import colors from 'tailwindcss/colors'
 
@@ -12,6 +11,8 @@ export default {
   darkMode: 'selector',
   theme: {
     colors: {
+      white: colors.white,
+      black: colors.black,
       transparent: 'transparent',
       current: 'currentColor',
       slate: colors.slate,
@@ -48,10 +49,10 @@ export default {
         },
       },
       spacing: {
-        '13': '3.25rem',
-        '15': '3.75rem',
-        '128': '32rem',
-        '144': '36rem',
+        13: '3.25rem',
+        15: '3.75rem',
+        128: '32rem',
+        144: '36rem',
       },
       borderRadius: {
         '4xl': '2rem',
@@ -76,4 +77,4 @@ export default {
       },
     }),
   ],
-}
+} satisfies Config

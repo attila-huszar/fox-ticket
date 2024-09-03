@@ -30,7 +30,7 @@ export function EditProduct({
   const [data, setData] = useState<ProductRequest>(editProduct)
   const [errorMessage, setErrorMessage] = useState('')
   const [message, setMessage] = useState('')
-  const [visEditProduct, setVisEditProduct] = useState(false)
+  const [, setVisEditProduct] = useState(false)
 
   const editProductHandler = async () => {
     try {
@@ -66,12 +66,7 @@ export function EditProduct({
       <Modal closeButton aria-labelledby="login form" onClose={closeHandler}>
         <ModalHeader>
           <div>
-            <p
-              style={{
-                margin: 'auto',
-              }}>
-              Edit Product
-            </p>
+            <p>Edit Product</p>
           </div>
         </ModalHeader>
         <ModalBody>
@@ -126,12 +121,8 @@ export function EditProduct({
                 value={data.type}
               />
               <Spacer y={1} />
-              <p style={{ textAlign: 'center' }} color="danger">
-                {errorMessage}
-              </p>
-              <p style={{ textAlign: 'center' }} color="success">
-                {message}
-              </p>
+              <p color="danger">{errorMessage}</p>
+              <p color="success">{message}</p>
               <Spacer y={1} />
               <div>
                 <Button

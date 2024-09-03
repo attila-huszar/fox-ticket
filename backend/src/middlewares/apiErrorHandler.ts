@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
-import { logger } from '../logger';
-import { HttpError } from '../errors';
-import { ErrorResponse } from '../interfaces/error';
+import { Request, Response, NextFunction } from 'express'
+import { logger } from '../logger'
+import { HttpError } from '../errors'
+import { ErrorResponse } from '../interfaces/error'
 
 export default function apiErrorHandler(
   err: HttpError,
@@ -9,11 +9,12 @@ export default function apiErrorHandler(
   res: Response<ErrorResponse>,
   next: NextFunction,
 ): void {
-  logger.error(err.stack);
+  logger.error(err.stack)
 
   if (res.headersSent) {
-    return next(err);
+    next(err)
+    return
   }
 
-  res.status(err.statusCode).send({ message: err.message });
+  res.status(err.statusCode).send({ message: err.message })
 }

@@ -1,8 +1,8 @@
-import request from 'supertest';
-import status from 'http-status';
-import { app } from '../src/app';
-import Product from '../src/models/Product';
-import * as productRepo from '../src/repositories/productRepo';
+import request from 'supertest'
+import status from 'http-status'
+import { app } from '../src/app'
+import Product from '../src/models/Product'
+import * as productRepo from '../src/repositories/productRepo'
 
 describe('POST /api/admin/products', () => {
   it('returns the JSON for the created product', async () => {
@@ -12,14 +12,14 @@ describe('POST /api/admin/products', () => {
       duration: 168,
       description: 'Use this pass for a whole week!',
       type: 'pass',
-    };
+    }
 
     const result = await request(app)
       .post(`/api/admin/products`)
-      .send(newProduct);
+      .send(newProduct)
 
-    expect(result.statusCode).toEqual(status.OK);
-    const product = result.body;
+    expect(result.statusCode).toEqual(status.OK)
+    const product = result.body
     expect(product).toEqual({
       id: 1,
       name: '1 week pass',
@@ -27,9 +27,9 @@ describe('POST /api/admin/products', () => {
       duration: 168,
       description: 'Use this pass for a whole week!',
       type: 'pass',
-    });
-    expect(productRepo.getProductByName('1 week pass')).toBeTruthy();
-  });
+    })
+    expect(productRepo.getProductByName('1 week pass')).toBeTruthy()
+  })
 
   it('returns Bad Request for missing parameter', async () => {
     const newProduct = {
@@ -37,13 +37,13 @@ describe('POST /api/admin/products', () => {
       duration: 168,
       description: 'Use this pass for a whole week!',
       type: 'pass',
-    };
+    }
 
     const result = await request(app)
       .post('/api/admin/products')
-      .send(newProduct);
-    expect(result.statusCode).toEqual(status.BAD_REQUEST);
-  });
+      .send(newProduct)
+    expect(result.statusCode).toEqual(status.BAD_REQUEST)
+  })
 
   it('should send an error back with a message of Name already exists', async () => {
     const newProduct = {
@@ -52,7 +52,7 @@ describe('POST /api/admin/products', () => {
       duration: 168,
       description: 'Use this pass for a whole week!',
       type: 'pass',
-    };
+    }
 
     await productRepo.createProduct({
       name: '1 week pass',
@@ -60,20 +60,20 @@ describe('POST /api/admin/products', () => {
       duration: 168,
       description: 'Use this pass for a whole week!',
       type: 'pass',
-    });
+    })
 
     const result = await request(app)
       .post(`/api/admin/products`)
-      .send(newProduct);
+      .send(newProduct)
 
-    expect(result.statusCode).toEqual(status.BAD_REQUEST);
-    const product = result.body;
+    expect(result.statusCode).toEqual(status.BAD_REQUEST)
+    const product = result.body
     expect(product).toEqual({
       message: 'Validation error: Name already exists',
-    });
-    expect(productRepo.getProductByName('1 week pass')).toBeTruthy();
-  });
-});
+    })
+    expect(productRepo.getProductByName('1 week pass')).toBeTruthy()
+  })
+})
 
 describe('DELETE /api/admin/products/:productId', () => {
   it('deletes an existing product', async () => {
@@ -83,20 +83,20 @@ describe('DELETE /api/admin/products/:productId', () => {
       duration: 168,
       description: 'Use this pass for a whole week!',
       type: 'pass',
-    });
+    })
 
-    const result = await request(app).delete(`/api/admin/products/1`);
+    const result = await request(app).delete(`/api/admin/products/1`)
 
-    expect(result.statusCode).toEqual(status.OK);
-    expect(await productRepo.getProductById(1)).toBeFalsy();
-  });
+    expect(result.statusCode).toEqual(status.OK)
+    expect(await productRepo.getProductById(1)).toBeFalsy()
+  })
 
   it('returns invalid productId for wrond id parameter', async () => {
-    const result = await request(app).delete('/api/admin/products/asd');
-    expect(result.statusCode).toEqual(status.BAD_REQUEST);
-    const product = result.body;
+    const result = await request(app).delete('/api/admin/products/asd')
+    expect(result.statusCode).toEqual(status.BAD_REQUEST)
+    const product = result.body
     expect(product).toEqual({
       message: 'Invalid productId',
-    });
-  });
-});
+    })
+  })
+})

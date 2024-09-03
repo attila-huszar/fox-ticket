@@ -1,14 +1,14 @@
-import { Table, Model, ForeignKey } from 'sequelize-typescript';
-import Article from './Article';
-import User from './User';
+import { Table, Model, ForeignKey } from 'sequelize-typescript'
+import Article from './Article'
+import User from './User'
 
 @Table({
   timestamps: true,
 })
 export default class ArticleUser extends Model {
   @ForeignKey(() => Article)
-  articleId: number;
+  articleId!: number
 
   @ForeignKey(() => User)
-  adminId: number;
+  adminId!: number
 }

@@ -16,6 +16,7 @@ export function AddProduct({
   addProduct: (newProduct: ProductResponse) => void
 }) {
   const initialProduct = {
+    id: 0,
     name: '',
     price: 0,
     duration: 0,
@@ -25,7 +26,7 @@ export function AddProduct({
   const [data, setData] = useState<ProductRequest>(initialProduct)
   const [errorMessage, setErrorMessage] = useState('')
   const [message, setMessage] = useState('')
-  const [isAddProductVis, setIsAddProductVis] = useState(false)
+  const [, setIsAddProductVis] = useState(false)
 
   const addProductHandler = async () => {
     try {
@@ -68,12 +69,7 @@ export function AddProduct({
       <Modal closeButton aria-labelledby="login form" onClose={closeHandler}>
         <ModalHeader>
           <div>
-            <p
-              style={{
-                margin: 'auto',
-              }}>
-              Add New Product
-            </p>
+            <p>Add New Product</p>
           </div>
         </ModalHeader>
         <ModalBody>
@@ -128,12 +124,8 @@ export function AddProduct({
                 value={data.type}
               />
               <Spacer y={1} />
-              <p style={{ textAlign: 'center' }} color="error">
-                {errorMessage}
-              </p>
-              <p style={{ textAlign: 'center' }} color="success">
-                {message}
-              </p>
+              <p color="error">{errorMessage}</p>
+              <p color="success">{message}</p>
               <Spacer y={1} />
               <div>
                 <Button

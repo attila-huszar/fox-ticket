@@ -1,47 +1,45 @@
-import { Request, Response, NextFunction } from 'express';
-import status from 'http-status';
-import { HttpError, NotFoundError, ParameterError } from '../errors';
-import { ZodError } from 'zod';
-import { fromZodError } from 'zod-validation-error';
+import { Request, Response, NextFunction } from 'express'
+import status from 'http-status'
+import { HttpError, NotFoundError, ParameterError } from '../errors'
+import { ZodError } from 'zod'
+import { fromZodError } from 'zod-validation-error'
 import {
   GetAllArticlesResponse,
   ArticleRequest,
   ArticleResponse,
-} from '../interfaces/articles';
-import * as articleService from '../services/articleService';
+} from '../interfaces/articles'
+import * as articleService from '../services/articleService'
 
-export async function getAllArticles(
-  req: Request,
+export function getAllArticles(
+  _req: Request,
   res: Response<GetAllArticlesResponse>,
   next: NextFunction,
-): Promise<void> {
-  try {
-    const data = await articleService.getAllArticles();
-    res.send(data);
-  } catch (error) {
-    next(new HttpError(status.INTERNAL_SERVER_ERROR));
-  }
+) {
+  articleService
+    .getAllArticles()
+    .then((data) => res.send(data))
+    .catch(() => next(new HttpError(status.INTERNAL_SERVER_ERROR)))
 }
 
-export async function addNewArticle(
+export function addNewArticle(
   req: Request<unknown, unknown, ArticleRequest, unknown>,
   res: Response<ArticleResponse>,
   next: NextFunction,
-): Promise<void> {
-  const article = req.body;
+) {
+  const article = req.body
 
-  try {
-    const result = await articleService.addNewArticle(article);
-    res.send(result);
-  } catch (error) {
-    if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
-    } else if (error instanceof ZodError) {
-      next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
-    } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
-    }
-  }
+  articleService
+    .addNewArticle(article)
+    .then((result) => res.send(result))
+    .catch((error) => {
+      if (error instanceof ParameterError) {
+        next(new HttpError(status.BAD_REQUEST, error.message))
+      } else if (error instanceof ZodError) {
+        next(new HttpError(status.BAD_REQUEST, fromZodError(error).message))
+      } else {
+        next(new HttpError(status.INTERNAL_SERVER_ERROR))
+      }
+    })
 }
 
 export async function editArticle(
@@ -49,21 +47,21 @@ export async function editArticle(
   res: Response<ArticleResponse>,
   next: NextFunction,
 ): Promise<void> {
-  const articleId = Number(req.params.articleId);
-  const editArticle = req.body;
+  const articleId = Number(req.params.articleId)
+  const editArticle = req.body
 
   try {
-    const data = await articleService.editArticle(articleId, editArticle);
-    res.send(data);
+    const data = await articleService.editArticle(articleId, editArticle)
+    res.send(data)
   } catch (error) {
     if (error instanceof ParameterError) {
-      next(new HttpError(status.BAD_REQUEST, error.message));
+      next(new HttpError(status.BAD_REQUEST, error.message))
     } else if (error instanceof ZodError) {
-      next(new HttpError(status.BAD_REQUEST, fromZodError(error).message));
+      next(new HttpError(status.BAD_REQUEST, fromZodError(error).message))
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(status.NOT_FOUND));
+      next(new HttpError(status.NOT_FOUND))
     } else {
-      next(new HttpError(status.INTERNAL_SERVER_ERROR));
+      next(new HttpError(status.INTERNAL_SERVER_ERROR))
     }
   }
 }

@@ -10,11 +10,9 @@ export function Shop() {
 
   useEffect(() => {
     fetchProducts()
-      .then((data) => {
-        setTickets(data)
-      })
-      .catch((err) => {
-        console.error(err.message)
+      .then((data) => setTickets(data))
+      .catch((error) => {
+        console.error(error)
       })
   }, [])
 
@@ -44,18 +42,17 @@ export function Shop() {
       </ButtonGroup>
 
       <div className="flex flex-wrap justify-center gap-10 py-6">
-        {filteredTickets &&
-          filteredTickets.map((ticket) => (
-            <ProductCard
-              key={ticket.id}
-              id={ticket.id}
-              name={ticket.name}
-              type={ticket.type}
-              description={ticket.description}
-              duration={ticket.duration}
-              price={ticket.price}
-            />
-          ))}
+        {filteredTickets?.map((ticket) => (
+          <ProductCard
+            key={ticket.id}
+            id={ticket.id}
+            name={ticket.name}
+            type={ticket.type}
+            description={ticket.description}
+            duration={ticket.duration}
+            price={ticket.price}
+          />
+        ))}
       </div>
     </main>
   )

@@ -1,16 +1,16 @@
-import { NotFoundError, ParameterError } from '../errors';
+import { NotFoundError, ParameterError } from '../errors'
 import {
   GetAllOrdersResponse,
   NewOrderRequest,
   OrderResponse,
   UpdateOrderStatusResponse,
   PendingOrdersResponse,
-} from '../interfaces/order';
-import Order from '../models/Order';
-import User from '../models/User';
-import * as orderRepo from '../repositories/orderRepo';
-import * as userRepo from '../repositories/userRepo';
-import _ from 'lodash';
+} from '../interfaces/order'
+import Order from '../models/Order'
+import User from '../models/User'
+import * as orderRepo from '../repositories/orderRepo'
+import * as userRepo from '../repositories/userRepo'
+import _ from 'lodash'
 
 const orderResponse = (order: object) => {
   return _.pick(order, [
@@ -20,101 +20,100 @@ const orderResponse = (order: object) => {
     'paidDate',
     'expirationDate',
     'productId',
-  ]);
-};
+  ])
+}
 
 export async function getAllOrders(
   userId: number,
 ): Promise<GetAllOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
-    throw new ParameterError('Invalid userId');
+    throw new ParameterError('Invalid userId')
   }
 
-  const user: User = await userRepo.getUserById(userId);
+  const user: User | null = await userRepo.getUserById(userId)
 
   if (!user) {
-    throw new NotFoundError("User doesn't exist with this id");
+    throw new NotFoundError("User doesn't exist with this id")
   }
 
-  const orders: Order[] = await orderRepo.getAllOrders(userId);
+  const orders: Order[] = await orderRepo.getAllOrders(userId)
 
-  return { allOrders: orders };
+  return { allOrders: orders }
 }
 
 export async function addNewOrder(
   newOrder: NewOrderRequest,
 ): Promise<OrderResponse> {
   if (!newOrder) {
-    throw new ParameterError('Invalid product');
+    throw new ParameterError('Invalid product')
   }
 
-  const order = await orderRepo.createOrder(newOrder);
-  return orderResponse(order) as OrderResponse;
+  const order = await orderRepo.createOrder(newOrder)
+  return orderResponse(order) as OrderResponse
 }
 
 export async function getAllPendingOrdersByUserId(
   userId: number,
 ): Promise<PendingOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
-    throw new ParameterError('Invalid userId');
+    throw new ParameterError('Invalid userId')
   }
 
-  const user: User = await userRepo.getUserById(userId);
+  const user: User | null = await userRepo.getUserById(userId)
   if (!user) {
-    throw new NotFoundError("User doesn't exist with this id");
+    throw new NotFoundError("User doesn't exist with this id")
   }
 
-  const response: Order[] = await orderRepo.getAllPendingOrders(userId);
-  const orders = [];
+  const response: Order[] = await orderRepo.getAllPendingOrders(userId)
+  const orders = []
 
-  for (let i = 0; i < response.length; i++) {
+  for (const item of response) {
     const order = {
-      id: response[i].id,
-      status: response[i].status,
-      orderDate: response[i].orderDate,
-      name: response[i].product?.name,
-      price: response[i].product?.price,
-    };
-    orders.push(order);
+      id: Number(item.id),
+      status: item.status,
+      orderDate: item.orderDate,
+      name: item.product.name,
+      price: item.product.price,
+    }
+    orders.push(order)
   }
 
-  return { orders: orders };
+  return { orders: orders }
 }
 
 export async function changeOrderStatusByUserId(
   userId: number,
 ): Promise<UpdateOrderStatusResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
-    throw new ParameterError('Invalid userId');
+    throw new ParameterError('Invalid userId')
   }
 
-  const user: User = await userRepo.getUserById(userId);
+  const user: User | null = await userRepo.getUserById(userId)
 
   if (!user) {
-    throw new NotFoundError("User doesn't exist with this id");
+    throw new NotFoundError("User doesn't exist with this id")
   }
 
-  const findPendingOrders = await orderRepo.getAllPendingOrders(userId);
+  const findPendingOrders = await orderRepo.getAllPendingOrders(userId)
 
   if (findPendingOrders.length === 0) {
-    throw new NotFoundError("User doesn't have pending order(s) in cart");
+    throw new NotFoundError("User doesn't have pending order(s) in cart")
   } else {
-    await orderRepo.changeOrderStatusByUserId(userId);
-    const purchases = [];
+    await orderRepo.changeOrderStatusByUserId(userId)
+    const purchases = []
 
-    for (let i = 0; i < findPendingOrders.length; i++) {
-      const order = findPendingOrders[i];
+    for (const order of findPendingOrders) {
       const updatedPurchase = {
-        id: order.id,
+        id: Number(order.id),
         status: 'paid',
-        paidDate: Date(),
-        expirationDate: null,
+        paidDate: new Date(),
+        expirationDate: new Date(),
         productName: order.product.name,
-      };
-      purchases.push(updatedPurchase);
+      }
+      purchases.push(updatedPurchase)
     }
 
-    return { purchases };
+    return { purchases }
   }
 }
 
@@ -122,29 +121,29 @@ export async function getActiveOrdersByUserId(
   userId: number,
 ): Promise<PendingOrdersResponse> {
   if (userId < 0 || !Number.isInteger(userId)) {
-    throw new ParameterError('Invalid userId');
+    throw new ParameterError('Invalid userId')
   }
 
-  const user: User = await userRepo.getUserById(userId);
+  const user: User | null = await userRepo.getUserById(userId)
 
   if (!user) {
-    throw new NotFoundError("User doesn't exist with this id");
+    throw new NotFoundError("User doesn't exist with this id")
   }
 
-  const response: Order[] = await orderRepo.getActiveOrders(userId);
-  const orders = [];
+  const response: Order[] = await orderRepo.getActiveOrders(userId)
+  const orders = []
 
-  for (let i = 0; i < response.length; i++) {
+  for (const item of response) {
     const order = {
-      id: response[i].id,
-      status: response[i].status,
-      orderDate: response[i].orderDate,
-      name: response[i].product?.name,
-      price: response[i].product?.price,
-      description: response[i].product.description,
-    };
-    orders.push(order);
+      id: Number(item.id),
+      status: item.status,
+      orderDate: item.orderDate,
+      name: item.product.name,
+      price: item.product.price,
+      description: item.product.description,
+    }
+    orders.push(order)
   }
 
-  return { orders: orders };
+  return { orders: orders }
 }

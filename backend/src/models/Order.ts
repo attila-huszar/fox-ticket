@@ -6,9 +6,9 @@ import {
   ForeignKey,
   BelongsTo,
   Default,
-} from 'sequelize-typescript';
-import Product from './Product';
-import User from './User';
+} from 'sequelize-typescript'
+import Product from './Product'
+import User from './User'
 
 @Table({
   timestamps: true,
@@ -18,34 +18,34 @@ export default class Order extends Model {
     type: DataType.DATE,
     allowNull: false,
   })
-  orderDate!: Date;
+  orderDate!: Date
 
   @Default('pending')
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  status: string;
+  status!: string
 
   @Column({
     type: DataType.DATE,
   })
-  paidDate: Date;
+  paidDate!: Date
 
   @Column({
     type: DataType.DATE,
   })
-  expirationDate: Date;
+  expirationDate!: Date
 
   @ForeignKey(() => User)
-  userId: number;
+  userId!: number
 
   @BelongsTo(() => User)
-  user: User;
+  user!: User
 
   @ForeignKey(() => Product)
-  productId: number;
+  productId!: number
 
   @BelongsTo(() => Product)
-  product: Product;
+  product!: Product
 }

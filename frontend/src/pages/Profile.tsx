@@ -23,7 +23,7 @@ export function Profile() {
   const [passNew, setPassNew] = useState('')
   const [passConf, setPassConf] = useState('')
 
-  const userNameChangeHandler = async () => {
+  const userNameChangeHandler = () => {
     if (!name.trim()) {
       nameHelper(name).color = 'danger'
       nameHelper(name).text = 'Please fill in your name'

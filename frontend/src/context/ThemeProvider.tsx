@@ -1,15 +1,22 @@
 import { createContext, useEffect, useState } from 'react'
 
-export const ThemeContext = createContext({
+export const ThemeContext = createContext<{
+  isDarkMode: boolean
+  toggleDarkMode: () => void
+}>({
   isDarkMode: false,
-  toggleDarkMode: () => {},
+  toggleDarkMode: () => undefined,
 })
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isDarkMode, setIsDarkMode] = useState(
-    JSON.parse(localStorage.getItem('dark-mode')!) ??
-      window.matchMedia('(prefers-color-scheme: dark)').matches,
-  )
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    const storedPreference = localStorage.getItem('dark-mode')
+    const prefersDarkScheme: boolean = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+    ).matches
+
+    return storedPreference ? !!JSON.parse(storedPreference) : prefersDarkScheme
+  })
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevState: boolean) => !prevState)

@@ -1,32 +1,32 @@
-import { Request, Response, NextFunction } from 'express';
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status';
-import { ZodError } from 'zod';
-import { HttpError, NotFoundError, ParameterError } from '../errors';
-import { fromZodError } from 'zod-validation-error';
+import { Request, Response, NextFunction } from 'express'
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND } from 'http-status'
+import { ZodError } from 'zod'
+import { HttpError, NotFoundError, ParameterError } from '../errors'
+import { fromZodError } from 'zod-validation-error'
 import {
   GetAllProductsResponse,
   ProductResponse,
   NewProductRequest,
   EditProductRequest,
   EditProductResponse,
-} from '../interfaces/product';
-import * as productService from '../services/productService';
+} from '../interfaces/product'
+import * as productService from '../services/productService'
 
 export async function addNewProduct(
   req: Request<unknown, unknown, NewProductRequest, unknown>,
   res: Response<ProductResponse>,
   next: NextFunction,
 ): Promise<void> {
-  const product = req.body;
+  const product = req.body
 
   try {
-    const result = await productService.addNewProduct(product);
-    res.send(result);
+    const result = await productService.addNewProduct(product)
+    res.send(result)
   } catch (error) {
     if (error instanceof ZodError) {
-      next(new HttpError(BAD_REQUEST, fromZodError(error).message));
+      next(new HttpError(BAD_REQUEST, fromZodError(error).message))
     } else {
-      next(new HttpError(INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR))
     }
   }
 }
@@ -36,18 +36,18 @@ export async function getProductById(
   res: Response<ProductResponse>,
   next: NextFunction,
 ): Promise<void> {
-  const productId = Number(req.query.productId);
+  const productId = Number(req.query.productId)
 
   try {
-    const data = await productService.getProductById(productId);
-    res.send(data);
+    const data = await productService.getProductById(productId)
+    res.send(data)
   } catch (error) {
     if (error instanceof ParameterError) {
-      next(new HttpError(BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message))
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(NOT_FOUND));
+      next(new HttpError(NOT_FOUND))
     } else {
-      next(new HttpError(INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR))
     }
   }
 }
@@ -58,10 +58,10 @@ export async function getAllProducts(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const data = await productService.getAllProducts();
-    res.send(data);
-  } catch (error) {
-    next(new HttpError(INTERNAL_SERVER_ERROR));
+    const data = await productService.getAllProducts()
+    res.send(data)
+  } catch {
+    next(new HttpError(INTERNAL_SERVER_ERROR))
   }
 }
 
@@ -70,19 +70,19 @@ export async function deleteProductById(
   res: Response<void>,
   next: NextFunction,
 ): Promise<void> {
-  const productId = Number(req.params.productId);
+  const productId = Number(req.params.productId)
 
   try {
-    const data = await productService.deleteProductById(productId);
-    res.send(data);
+    const data = await productService.deleteProductById(productId)
+    res.send(data)
   } catch (error) {
     if (error instanceof ParameterError) {
-      next(new HttpError(BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message))
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(NOT_FOUND));
+      next(new HttpError(NOT_FOUND))
     } else {
-      console.log(error);
-      next(new HttpError(INTERNAL_SERVER_ERROR));
+      console.log(error)
+      next(new HttpError(INTERNAL_SERVER_ERROR))
     }
   }
 }
@@ -92,21 +92,21 @@ export async function editProductById(
   res: Response<EditProductResponse>,
   next: NextFunction,
 ): Promise<void> {
-  const productId = Number(req.params.productId);
-  const editProduct = req.body;
+  const productId = Number(req.params.productId)
+  const editProduct = req.body
 
   try {
-    const data = await productService.editProductById(productId, editProduct);
-    res.send(data);
+    const data = await productService.editProductById(productId, editProduct)
+    res.send(data)
   } catch (error) {
     if (error instanceof ParameterError) {
-      next(new HttpError(BAD_REQUEST, error.message));
+      next(new HttpError(BAD_REQUEST, error.message))
     } else if (error instanceof ZodError) {
-      next(new HttpError(BAD_REQUEST, fromZodError(error).message));
+      next(new HttpError(BAD_REQUEST, fromZodError(error).message))
     } else if (error instanceof NotFoundError) {
-      next(new HttpError(NOT_FOUND));
+      next(new HttpError(NOT_FOUND))
     } else {
-      next(new HttpError(INTERNAL_SERVER_ERROR));
+      next(new HttpError(INTERNAL_SERVER_ERROR))
     }
   }
 }

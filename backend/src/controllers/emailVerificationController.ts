@@ -14,7 +14,7 @@ export async function emailVerification(
   try {
     const user = await getUserByVerToken(verificationKey)
 
-    if (verificationKey === user?.dataValues.verificationToken) {
+    if (verificationKey === user?.verificationToken) {
       const affectedRows = await setUserVerified(user)
 
       if (Number(affectedRows[1]) === 1) {
@@ -35,7 +35,7 @@ export async function emailVerification(
     } else {
       res.status(OK).json({
         message: 'Token is expired or invalid',
-        email: user.email,
+        email: user?.email,
       })
     }
   } catch (error) {

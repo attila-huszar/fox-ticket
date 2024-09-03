@@ -28,13 +28,13 @@ export function Cart() {
   }
 
   const resetAllOrdersHandler = async () => {
-    fetchRemovePendingOrderFromCart()
-    fetchPendingOrders()
+    await fetchRemovePendingOrderFromCart()
+    await fetchPendingOrders()
   }
 
   const buyProductHandler = async () => {
-    fetchChangeOrderStatusByUserId()
-    fetchPendingOrders()
+    await fetchChangeOrderStatusByUserId()
+    await fetchPendingOrders()
   }
 
   return (
@@ -74,9 +74,12 @@ export function Cart() {
                         setCart(cart.filter((order) => order.id !== orderId))
                       }
                       key={order.id}
+                      id={order.id}
                       name={order.name}
                       price={order.price}
-                      id={order.id}
+                      type={order.type}
+                      duration={order.duration}
+                      description={order.description}
                     />
                   ))
                 ) : (
@@ -87,7 +90,7 @@ export function Cart() {
                 <Button
                   size="sm"
                   onPress={() => {
-                    buyProductHandler()
+                    void buyProductHandler()
                     onClose()
                   }}>
                   Buy

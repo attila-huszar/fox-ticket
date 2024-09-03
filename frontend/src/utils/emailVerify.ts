@@ -7,7 +7,7 @@ const baseUrl = url[0]
 
 if (verificationString.includes('verify=')) {
   window.history.pushState('name', '', baseUrl)
-  emailVerify()
+  void emailVerify()
 }
 
 async function emailVerify() {

@@ -3,7 +3,7 @@ import { UserResponse, UserRequest } from '@interfaces/user'
 
 export async function userLogout(user: UserRequest): Promise<UserResponse> {
   try {
-    const response = await axios.post(
+    const { data }: { data: UserResponse } = await axios.post(
       '/api/logout',
       {
         email: user.email,
@@ -11,10 +11,10 @@ export async function userLogout(user: UserRequest): Promise<UserResponse> {
       { headers: { authorization: user.token } },
     )
 
-    return response.data
+    return data
   } catch (error) {
     if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.message)
+      throw new Error(error.message)
     } else {
       throw new Error('Something went wrong')
     }

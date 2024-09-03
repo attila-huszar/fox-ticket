@@ -158,7 +158,7 @@ export function Header() {
             <DropdownMenu
               aria-label="Profile Actions"
               variant="flat"
-              onAction={(key: Key) => navigateDropdown(key)}>
+              onAction={(key: Key) => void navigateDropdown(key)}>
               <DropdownItem key="/" className="h-14 gap-2">
                 {user.token ? (
                   <>

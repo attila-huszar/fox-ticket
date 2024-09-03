@@ -1,4 +1,4 @@
-import rateLimiter from 'express-rate-limit';
+import rateLimiter from 'express-rate-limit'
 
 export const apiLimiter = rateLimiter({
   windowMs: 5 * 60 * 1000, // 5 minutes
@@ -6,7 +6,7 @@ export const apiLimiter = rateLimiter({
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   message: "You can't make any more requests at the moment. Try again later",
-});
+})
 
 export const regLimiter = rateLimiter({
   windowMs: 60 * 60 * 1000, // 1 hour
@@ -15,4 +15,4 @@ export const regLimiter = rateLimiter({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   message:
     'Too many accounts created from this IP, please try again after an hour',
-});
+})

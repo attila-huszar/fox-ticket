@@ -5,18 +5,16 @@ export async function userRegister(
   user: RegisterRequest,
 ): Promise<UserResponse> {
   try {
-    const response = await axios.post('/api/register', {
+    const { data }: { data: UserResponse } = await axios.post('/api/register', {
       name: user.name,
       email: user.email,
       password: user.password,
     })
 
-    return response.data
+    return data
   } catch (error) {
-    if (error instanceof AxiosError) {
-      throw new Error(error.response?.data.message)
-    } else {
-      throw new Error('Something went wrong')
-    }
+    throw new Error(
+      error instanceof AxiosError ? error.message : 'Something went wrong',
+    )
   }
 }

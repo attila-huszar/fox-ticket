@@ -7,7 +7,9 @@ export interface PendingOrder {
   id: number
   name: string
   price: number
-  description?: string
+  type: string
+  duration: number
+  description: string
   removeOrder?: (orderId: number) => void
 }
 

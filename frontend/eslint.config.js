@@ -11,7 +11,7 @@ import prettierConfig from 'eslint-config-prettier'
 
 export default tseslint.config(
   eslint.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   ...tailwind.configs['flat/recommended'],
   promise.configs['flat/recommended'],
@@ -24,7 +24,7 @@ export default tseslint.config(
       parser: tseslint.parser,
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['*.js'],
+          allowDefaultProject: ['postcss.config.js', 'tailwind.config.ts'],
           defaultProject: './tsconfig.json',
         },
         tsconfigRootDir: import.meta.dirname,
@@ -51,6 +51,15 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      '@typescript-eslint/no-misused-promises': [
+        'error',
+        {
+          checksVoidReturn: {
+            attributes: false,
+          },
+        },
+      ],
+      'tailwindcss/classnames-order': 'off',
       'prettier/prettier': 'warn',
     },
     linterOptions: {
@@ -66,7 +75,10 @@ export default tseslint.config(
     },
   },
   {
-    files: ['eslint.config.js', 'tailwind.config.ts'],
+    files: ['eslint.config.js'],
     ...tseslint.configs.disableTypeChecked,
+  },
+  {
+    ignores: ['dist'],
   },
 )

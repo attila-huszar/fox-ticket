@@ -8,7 +8,7 @@
     ],
     "module": "ESNext",
     "outDir": "dist",
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "@pages/*": [
         "pages/*"
@@ -56,7 +56,10 @@
     "forceConsistentCasingInFileNames": true,
   },
   "include": [
-    "src",
+    "src"
+  ],
+  "exclude": [
+    "__tests__/*"
   ],
   "references": [
     {

@@ -15,7 +15,7 @@ import { ProductRequest } from '@interfaces/product'
 import QRCode from 'react-qr-code'
 
 export function ActiveTickets({ name, description }: ProductRequest) {
-  const [qrVisible, setQrVisible] = useState(false)
+  const [, setQrVisible] = useState(false)
 
   const closeHandler = () => {
     setQrVisible(false)

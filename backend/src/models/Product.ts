@@ -5,8 +5,8 @@ import {
   Column,
   DataType,
   HasMany,
-} from 'sequelize-typescript';
-import Order from './Order';
+} from 'sequelize-typescript'
+import Order from './Order'
 
 @Table({})
 export default class Product extends Model {
@@ -14,31 +14,31 @@ export default class Product extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  name!: string;
+  name!: string
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  price!: number;
+  price!: number
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
-  duration!: number;
+  duration!: number
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  description!: string;
+  description!: string
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  type: string;
+  type!: string
 
   @Column({
     type: DataType.DATE,
@@ -48,7 +48,7 @@ export default class Product extends Model {
         : Sequelize.fn('NOW'),
     allowNull: false,
   })
-  createdAt: string;
+  createdAt!: string
 
   @Column({
     type: DataType.DATE,
@@ -58,8 +58,8 @@ export default class Product extends Model {
         : Sequelize.fn('NOW'),
     allowNull: false,
   })
-  updatedAt: string;
+  updatedAt!: string
 
   @HasMany(() => Order)
-  orders: Order[];
+  orders!: Order[]
 }

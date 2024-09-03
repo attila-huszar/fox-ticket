@@ -5,10 +5,10 @@ import {
   DataType,
   HasMany,
   BelongsToMany,
-} from 'sequelize-typescript';
-import Article from './Article';
-import ArticleUser from './ArticleUser';
-import Order from './Order';
+} from 'sequelize-typescript'
+import Article from './Article'
+import ArticleUser from './ArticleUser'
+import Order from './Order'
 
 @Table({
   timestamps: true,
@@ -18,43 +18,43 @@ export default class User extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  name!: string;
+  name!: string
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   })
-  email!: string;
+  email!: string
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password: string;
+  password!: string
 
   @Column({
     type: DataType.BOOLEAN,
     allowNull: false,
     defaultValue: false,
   })
-  isAdmin: boolean;
+  isAdmin!: boolean
 
   @Column({
     type: DataType.BOOLEAN,
     allowNull: false,
     defaultValue: false,
   })
-  isVerified: boolean;
+  isVerified!: boolean
 
   @Column({
     type: DataType.STRING,
   })
-  verificationToken: string;
+  verificationToken!: string
 
   @BelongsToMany(() => Article, () => ArticleUser)
-  articles: Article[];
+  articles!: Article[]
 
   @HasMany(() => Order)
-  orders: Order[];
+  orders!: Order[]
 }

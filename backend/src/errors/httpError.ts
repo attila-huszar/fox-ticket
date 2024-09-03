@@ -1,13 +1,13 @@
-import status from 'http-status';
+import status from 'http-status'
 
 export default class HttpError extends Error {
-  statusCode: number;
+  statusCode: number
 
   constructor(statusCode: number, message?: string) {
     if (!message) {
-      message = status[statusCode] as string;
+      message = status[statusCode] as string
     }
-    super(message);
-    this.statusCode = statusCode;
+    super(message)
+    this.statusCode = statusCode
   }
 }

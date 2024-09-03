@@ -1,15 +1,13 @@
-import sgMail from '@sendgrid/mail';
-import { signEmailVerification } from './jwtSign';
-import { VerificationRequest } from '../interfaces/user';
+import sgMail from '@sendgrid/mail'
+import { signEmailVerification } from './jwtSign'
+import { VerificationRequest } from '../interfaces/user'
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(`${process.env.SENDGRID_API_KEY}`)
 
-export async function sendVerificationEmail(
-  recipient: VerificationRequest,
-): Promise<string> {
-  const verificationKey = signEmailVerification(recipient);
+export function sendVerificationEmail(recipient: VerificationRequest): string {
+  const verificationKey = signEmailVerification(recipient)
 
-  const link = `http://localhost:3000/?verify=${verificationKey}`;
+  const link = `http://localhost:3000/?verify=${verificationKey}`
 
   const message = {
     to: recipient.email,
@@ -25,11 +23,13 @@ export async function sendVerificationEmail(
       <h2 style="text-align: center;">Hello ${recipient.name}, please verify your email address by clicking <b><a href=${link}>this link</a></b>.</h2>
       <p style="text-align: center;"><i>Link is valid for 24 hours.</i></p>
     </div>`,
-  };
+  }
 
-  sgMail.send(message).catch(error => {
-    console.error(error.response.body.errors);
-  });
+  sgMail
+    .send(message)
+    .catch((error: { response: { body: { errors: string } } }) => {
+      console.error(error.response.body.errors)
+    })
 
-  return verificationKey;
+  return verificationKey
 }

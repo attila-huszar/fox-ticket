@@ -8,7 +8,7 @@ import prettierConfig from 'eslint-config-prettier'
 
 export default tseslint.config(
   eslint.configs.recommended,
-  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
   importX.configs.typescript,
   promise.configs['flat/recommended'],
@@ -39,6 +39,8 @@ export default tseslint.config(
       ],
       '@typescript-eslint/consistent-type-definitions': 'off',
       'import-x/named': 'error',
+      'promise/always-return': ['error', { ignoreLastCallback: true }],
+      'promise/no-callback-in-promise': 'off',
       'prettier/prettier': 'warn',
     },
     linterOptions: {
@@ -51,7 +53,10 @@ export default tseslint.config(
     },
   },
   {
-    files: ['eslint.config.mjs', 'jest.config.ts'],
+    files: ['eslint.config.mjs'],
     ...tseslint.configs.disableTypeChecked,
+  },
+  {
+    ignores: ['build', '__tests__'],
   },
 )

@@ -1,6 +1,6 @@
 export interface AuthorizedRequest {
-  email: string;
+  email: string
   headers: {
-    authorization?: string;
-  };
+    authorization?: string
+  }
 }

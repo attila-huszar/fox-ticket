@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react'
 import { fetchActiveOrders } from '@api/userOrder'
-import { ProductResponse } from '@interfaces/product'
 import { ActiveTickets } from '../components/ActiveTickets'
 import { Button, ButtonGroup } from '@nextui-org/react'
+import { PendingOrder } from '@interfaces/orders'
 
 export function MyTickets() {
-  const [tickets, setTickets] = useState<ProductResponse[]>([])
+  const [tickets, setTickets] = useState<PendingOrder[]>([])
 
   useEffect(() => {
     fetchActiveOrders()
-      .then((data) => {
-        setTickets(data)
-      })
+      .then((data) => setTickets(data))
       .catch((err) => {
         console.error(err)
       })

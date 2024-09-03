@@ -1,3 +1,4 @@
+import express from 'express'
 import status from 'http-status'
 import * as authTestController from '../controllers/authTestController'
 import * as refreshController from '../controllers/refreshController'
@@ -7,15 +8,11 @@ import * as productController from '../controllers/productController'
 import * as cartController from '../controllers/cartController'
 import * as orderController from '../controllers/orderController'
 import * as emailVerificationController from '../controllers/emailVerificationController'
-
 import { auth } from '../middlewares/auth'
-import apiErrorHandler from '../middlewares/apiErrorHandler'
 import { HttpError } from '../errors'
+import apiErrorHandler from '../middlewares/apiErrorHandler'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const express = require('express')
 const router = express.Router()
-
 router.use(express.json())
 
 //// GET
@@ -53,8 +50,11 @@ router.delete('/admin/products/:productId', productController.deleteProductById)
 //// 404
 router.use(
   '/*',
-  (req: Request, res: Response, next: (arg0: HttpError) => unknown) =>
-    next(new HttpError(status.NOT_FOUND)),
+  (
+    _req: express.Request,
+    _res: express.Response,
+    next: (arg0: HttpError) => unknown,
+  ) => next(new HttpError(status.NOT_FOUND)),
 )
 router.use(apiErrorHandler)
 

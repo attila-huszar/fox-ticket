@@ -9,7 +9,7 @@ const defaultUser: UserResponse = {
 
 export const UserContext = createContext<IUserContext>({
   user: defaultUser,
-  setUser: () => {},
+  setUser: () => undefined,
 })
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {

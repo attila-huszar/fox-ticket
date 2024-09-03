@@ -11,11 +11,9 @@ import {
   useDisclosure,
 } from '@nextui-org/react'
 import { userRegister } from '@api/userRegister'
-import { UserResponse } from '@interfaces/user'
-import { AxiosError } from 'axios'
+import { InputHelper, UserResponse } from '@interfaces/user'
 import {
   nameHelper,
-  emailHelperText,
   passHelperText,
   passMatchHelper,
 } from '@utils/inputFieldHelpers'
@@ -25,7 +23,6 @@ import {
   validatePassword,
   validateMatch,
 } from '@utils/inputFieldValidators'
-
 import { toast } from 'react-toastify'
 import { EyeSlashFilledIcon } from '@assets/svg/EyeSlashFilledIcon'
 import { EyeFilledIcon } from '@assets/svg/EyeFilledIcon'
@@ -35,10 +32,14 @@ export function Signup() {
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [emailHelper, setEmailHelper] = useState<InputHelper>({
+    text: '',
+    color: 'default',
+    shake: false,
+  })
   const [password, setPassword] = useState('')
   const [passwordConf, setPasswordConf] = useState('')
   const [shakeName, setShakeName] = useState(false)
-  const [shakeEmail, setShakeEmail] = useState(false)
   const [shakePassword, setShakePassword] = useState(false)
   const [shakePasswordConf, setShakePasswordConf] = useState(false)
   const [isPassVis, setIsPassVis] = useState(false)
@@ -48,11 +49,6 @@ export function Signup() {
       setShakeName(true)
       nameHelper(name).color = 'danger'
       nameHelper(name).text = 'Please fill in this field'
-    }
-    if (!email.length) {
-      setShakeEmail(true)
-      emailHelperText(email).color = 'danger'
-      emailHelperText(email).text = 'Please fill in this field'
     }
     if (!password.length) {
       setShakePassword(true)
@@ -68,10 +64,6 @@ export function Signup() {
       setShakeName(true)
       nameHelper(name).color = 'danger'
     }
-    if (!validateEmail(email)) {
-      setShakeEmail(true)
-      emailHelperText(email).color = 'danger'
-    }
     if (!validatePassword(password)) {
       setShakePassword(true)
       passHelperText(password).color = 'danger'
@@ -82,11 +74,32 @@ export function Signup() {
     }
 
     setTimeout(() => setShakeName(false), 750)
-    setTimeout(() => setShakeEmail(false), 750)
     setTimeout(() => setShakePassword(false), 750)
     setTimeout(() => setShakePasswordConf(false), 750)
 
     try {
+      if (!email.length) {
+        setEmailHelper({
+          text: 'Please fill in this field',
+          color: 'danger',
+          shake: true,
+        })
+        setTimeout(() => setEmailHelper({ ...emailHelper, shake: false }), 750)
+
+        return
+      }
+
+      if (!validateEmail(email)) {
+        setEmailHelper({
+          text: 'Please enter a valid email address',
+          color: 'danger',
+          shake: true,
+        })
+        setTimeout(() => setEmailHelper({ ...emailHelper, shake: false }), 750)
+
+        return
+      }
+
       const userData: UserResponse = await userRegister({
         name,
         email,
@@ -98,16 +111,17 @@ export function Signup() {
         onClose()
       }
     } catch (error) {
-      setShakeEmail(true)
-      emailHelperText(email).color = 'danger'
-
-      if (error instanceof AxiosError) {
-        emailHelperText(email).text = error.message
+      if (error instanceof Error) {
+        setEmailHelper({ text: error.message, color: 'danger', shake: true })
       } else {
-        emailHelperText(email).text = 'Registration failed'
+        setEmailHelper({
+          text: 'Registration failed',
+          color: 'danger',
+          shake: true,
+        })
       }
 
-      setTimeout(() => setShakeEmail(false), 750)
+      setTimeout(() => setEmailHelper({ ...emailHelper, shake: false }), 750)
     }
   }
 
@@ -153,14 +167,15 @@ export function Signup() {
                 />
                 <Spacer y={1.5} />
                 <Input
-                  className={shakeEmail ? 'animate-shake' : undefined}
+                  className={emailHelper.shake ? 'animate-shake' : undefined}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  color={emailHelperText(email).color}
-                  errorMessage={emailHelperText(email).text}
+                  color={emailHelper.color}
+                  errorMessage={emailHelper.text}
                   placeholder="Email"
                   fullWidth
                 />
+                <div>{emailHelper.text}</div>
                 <Spacer y={1.5} />
                 <Input
                   type={isPassVis ? 'text' : 'password'}

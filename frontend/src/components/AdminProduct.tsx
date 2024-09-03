@@ -16,7 +16,7 @@ export function AdminProduct() {
       const response = await fetchProducts()
       setProducts(response)
     }
-    fetchData()
+    void fetchData()
   }, [])
 
   return (
