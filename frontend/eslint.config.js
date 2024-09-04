@@ -45,7 +45,6 @@ export default tseslint.config(
         { ignoreRestSiblings: true },
       ],
       '@typescript-eslint/consistent-type-definitions': 'off',
-      'import-x/named': 'error',
       'react/react-in-jsx-scope': 'off',
       'react-refresh/only-export-components': [
         'warn',

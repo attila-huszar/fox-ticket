@@ -38,7 +38,6 @@ export default tseslint.config(
         { ignoreRestSiblings: true },
       ],
       '@typescript-eslint/consistent-type-definitions': 'off',
-      'import-x/named': 'error',
       'promise/always-return': ['error', { ignoreLastCallback: true }],
       'promise/no-callback-in-promise': 'off',
       'promise/no-nesting': 'off',
@@ -58,6 +57,6 @@ export default tseslint.config(
     ...tseslint.configs.disableTypeChecked,
   },
   {
-    ignores: ['build', '__tests__'],
+    ignores: ['build', '__tests__', 'jest-stare'],
   },
 )
