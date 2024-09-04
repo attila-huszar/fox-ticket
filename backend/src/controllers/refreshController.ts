@@ -1,22 +1,20 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { OK, UNAUTHORIZED } from 'http-status'
 import { verifyRefreshToken } from '../services/jwtVerify'
 import { signAccessToken, signRefreshToken } from '../services/jwtSign'
 import { RegisterResponse } from '../interfaces/user'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function refresh(req: Request, res: Response, next: NextFunction) {
+export function refresh(req: Request, res: Response) {
   const cookie = req.headers.cookie?.split('=')[1]
 
   if (cookie) {
     const decoded = verifyRefreshToken(cookie)
 
-    if (decoded instanceof Error || !('email' in decoded))
+    if (decoded instanceof Error)
       return res.status(UNAUTHORIZED).json({ success: false, message: decoded })
 
     const user: RegisterResponse = {
-      email: decoded.email,
-      isAdmin: decoded.isAdmin,
+      email: decoded as string,
     }
 
     const accessToken = signAccessToken(user)

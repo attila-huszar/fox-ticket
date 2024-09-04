@@ -41,6 +41,7 @@ export default tseslint.config(
       'import-x/named': 'error',
       'promise/always-return': ['error', { ignoreLastCallback: true }],
       'promise/no-callback-in-promise': 'off',
+      'promise/no-nesting': 'off',
       'prettier/prettier': 'warn',
     },
     linterOptions: {

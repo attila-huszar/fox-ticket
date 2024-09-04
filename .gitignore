@@ -1,12 +1,12 @@
-node_modules
-build
-dist
-dist-ssr
+node_modules/
+build/
+dist/
 *.local
 .env
 
 # Testing
-/coverage
+coverage/
+jest-stare/
 test.sqlite
 
 # Logs

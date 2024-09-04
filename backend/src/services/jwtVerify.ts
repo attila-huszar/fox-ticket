@@ -1,20 +1,19 @@
 import jwt, { Secret } from 'jsonwebtoken'
-import { RegisterResponse } from '../interfaces/user'
 
-export function verifyAccessToken(token: string): RegisterResponse | Error {
+export function verifyAccessToken(token: string) {
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN as Secret)
-    return decoded as RegisterResponse
-  } catch (error) {
-    return error.message as Error
+    return decoded
+  } catch {
+    throw new Error('Invalid Credentials')
   }
 }
 
-export function verifyRefreshToken(token: string): RegisterResponse | Error {
+export function verifyRefreshToken(token: string) {
   try {
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN as Secret)
-    return decoded as RegisterResponse
-  } catch (error) {
-    return error.message as Error
+    return decoded
+  } catch {
+    throw new Error('Invalid Credentials')
   }
 }
